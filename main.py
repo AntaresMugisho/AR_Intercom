@@ -1,10 +1,7 @@
 # -*- This python file uses the following encoding : coding:utf-8 -*-
 
-from server import Serveur
+# Import module containing callbacks
+from commands import *
 
-print("\n██████ AR INTERCOM Beta ██████\n Designed by a Creative Mind.\n"
-      "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n")
-
-server = Serveur()
-server.create_socket_server()
-server.launch_server()
+if __name__ == "__main__":
+    main = Callbacks()

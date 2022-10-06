@@ -1,59 +1,43 @@
 # -*- This python file uses the following encoding : coding:utf-8 -*-
 
 import socket
-from Popup import popup
-
-print("\n██████ AR INTERCOM Beta ██████\n Designed by a Creative Mind.\n"
-      "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n")
+from tkinter import messagebox
 
 class Client:
 
-    def __init__(self):
+    prefixe = ""
 
-        self.user_code = "Zulu"
-        self.hote = "127.0.0.1" #"192.168.1.101"
-        self.port = 12101
+    def __init__(self, port):
+
+        self.hote = "ANTARES.local"
+        self.port = port
+
+        # Setting the status of connection at False by default
         self.connected = False
-
-        self.create_socket_client()
-        self.connect_to_server()
 
     def create_socket_client(self):
         global sock
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        print("Connecting...\n")
-        i = 0
-        while not self.connected:
-            self.connect_to_server()
-            i += 1
-            if i % 4 == 0:
-                print("Impossible de se conecter au serveur distant!")
-
-            retry = str(input("\nAppuyez sur 'R' pour reessayer."))
-            if retry.lower() == "r":
-                i = 0
 
     def connect_to_server(self):
         """Essaye de connecter le client au serveur demandé."""
 
         try:
             sock.connect((self.hote, self.port))
+            self.connected = True   # The user will be informed by the green online toast canvas.
 
         except ConnectionRefusedError:
-            print("Connection error, retryng...")
-
-        except:
             pass
+            #self.connected = False    # Do nothing if the requested server is not online
 
-        else:
-            self.connected = True
-            print("Connexion établie.\nCommencez la discussion.\n")
-            self.send_message()
+        except:  # Other Errors
+            self.connected = False
 
-    def send_message(self):
+    def send_message(self, msg_body):
         """Envoi le message au destinataire et essaie de montrer l'accusé de réception."""
-        msg_body = str(input(f"{self.user_code} | "))
-        msg_body = self.user_code + "." + msg_body
+        # Concatenate prefixe
+        msg_body = Client.prefixe + msg_body
+
         # Coding in utf-8 to enable the send of print charaters
         msg_body = msg_body.encode("utf8")
 
@@ -61,31 +45,21 @@ class Client:
             sock.send(msg_body)     # Try to send message
 
         except ConnectionResetError:
-            print("Impossible d'envoyer le message car le serveur a été déconnecté.")
+            # Show error if message is not received
+            messagebox.showerror("Message non envoyé",
+                "Le message n'a pas pu être envoyé car le destinataire s'est déconnecté.")
 
         except OSError:
-            print("Erreur d'envoie.")
+            pass
 
         try:
             msg_recu = sock.recv(1024).decode("utf8")
-            splited = msg_recu.split(".")
-
-            self.sender = splited[0]
-            self.body = splited[1]
-
-            popup(self.sender)
-            print(f"{self.sender} | {self.body}")
 
         except OSError:
-            print("Connexion interrompue.")
-
-        else:
-            self.send_message()
+            pass
 
     def disconnect(self):
         """Ferme le socket."""
         sock.close()
 
-# Client test
-if __name__ == "__main__":
-    run = Client()
+# NO TRYING IN THIS

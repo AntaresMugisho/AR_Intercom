@@ -2,47 +2,62 @@
 
 import socket
 import select
-from popup import popup
+from interface import UserInteface
 
-class Serveur:
+# Création de la classe Server
+class Serveur(UserInteface) :
 
     def __init__(self):
 
-        self.port = 12101
-        self.user_code = "Alpha"
+        self.user_code = ""
+        self.port = ""
 
-        # Creating list of connected clients
+        # Creatind list of connected clients
         self.connected = []
 
-        # List of clients that have sent messages
+        # list of clients that have sent messages
         self.readlist = []
 
-        self.create_socket_server()
-        self.launch_server()
+    # Creation des setters
+    def set_usercode(self, p):
+        self.user_code = p
+
+    def set_port(self):
+        self.get_user_code()
+        for x in self.dictionnary.keys():
+            if x == self.user_code:
+                self.port = self.dictionnary[x]
+
+    # Création des getters
+    def get_user_code(self):
+        return self.user_code
+
+    def get_port(self):
+        return self.port
 
     # Creation du socket
     def create_socket_server(self):
         global connexion_principale
 
-        host = "0.0.0.0"
+        hote = "0.0.0.0"
 
         connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            connexion_principale.bind((host, self.port))
+            connexion_principale.bind((hote, self.port))
         except OSError:
             pass
-
+            #messagebox.showwarning("Nom de code reservé",
+               # "Une autre personne est connecté avec votre nom de code!")
         else:
             connexion_principale.listen(5)
-            print("Waiting for connections ...\n")
 
     # Accept connections and wait for messages
     def launch_server(self):
-        """ Cette fonction a pour rôle d'accepter des connexions multiples venant des clients différents
+        """ Cette fonction a pour rôle d'acceter des connexions multiples venant des clients différents
         qui demandent probablement à se connecter,
         ainsi que de lire les messages reçus grêce à l'appel de la fontion 'receive_message'."""
 
-        while True:
+        while True :
             attente, wlist, xlist = select.select([connexion_principale], [], [], 0.50)
 
             for connexion in attente:
@@ -67,30 +82,30 @@ class Serveur:
                 self.msg_recu = client.recv(1024)
                 self.msg_recu = self.msg_recu.decode("utf8")
 
-                splited = self.msg_recu.split(".")
-
-                self.sender = splited[0]
-                self.body = splited[1]
-
-                popup(self.sender)
-                print(f"{self.sender} | {self.body}")
-
             except ConnectionError:
-                print("Erreur de connexion.")
+                pass
+                # If the current client is disconnected, pass and search for another
 
             else:
-                # Reply
-                server_reply = input(f"{self.user_code} | ")
-                server_reply = self.user_code + "." + server_reply
+                # Send status
+                server_reply = "Received"
                 server_reply = server_reply.encode("utf8")
                 try:
                     client.send(server_reply)
                 except:
                     pass
 
+                # Save mesasge and show popup
+                lf_text = self.cadre_discussions.cget("text")
+
+                if self.msg_recu != "":
+                    if lf_text == "" or lf_text[0] != self.msg_recu[0]:
+                        self.put_inbox()    # Save message in the file
+
+                    else:
+                        self.receive_msg_bubble()
+
     def close_socket_server(self):
         connexion_principale.close()
 
-# Server test
-if __name__ == "__main__":
-    run = Serveur()
+# ===================================================== END ============================================================

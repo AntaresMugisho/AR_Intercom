@@ -1,61 +1,76 @@
 # -*- This python file uses the following encoding : coding:utf-8 -*-
 
+from win32api import *
+from win32gui import *
+import win32con
+import sys, os
+import struct
+import time
+
+class BalloonTip:
+    def __init__(self, title, msg):
+
+        message_map = {win32con.WM_DESTROY: self.OnDestroy,}
+
+        # Register the Window class.
+        wc = WNDCLASS()
+        hinst = wc.hInstance = GetModuleHandle(None)
+        wc.lpszClassName = "PythonTaskbar"
+        wc.lpfnWndProc = message_map # could also specify a wndproc.
+        classAtom = RegisterClass(wc)
+
+        # Create the Window.
+        style = win32con.WS_OVERLAPPED | win32con.WS_SYSMENU
+        self.hwnd = CreateWindow( classAtom, "Taskbar", style, \
+                0, 0, win32con.CW_USEDEFAULT, win32con.CW_USEDEFAULT, \
+                0, 0, hinst, None)
+        UpdateWindow(self.hwnd)
+        iconPathName = os.path.abspath(os.path.join(sys.path[0], "ressources/popup.ico"))
+        icon_flags = win32con.LR_LOADFROMFILE | win32con.LR_DEFAULTSIZE
+
+        try:
+           hicon = LoadImage(hinst, iconPathName, win32con.IMAGE_ICON, 0, 0, icon_flags)
+        except:
+          hicon = LoadIcon(0, win32con.IDI_APPLICATION)
+
+        flags = NIF_ICON | NIF_MESSAGE | NIF_TIP
+        nid = (self.hwnd, 0, flags, win32con.WM_USER+20, hicon, "tooltip")
+        Shell_NotifyIcon(NIM_ADD, nid)
+        Shell_NotifyIcon(NIM_MODIFY, \
+                         (self.hwnd, 0, NIF_INFO, win32con.WM_USER+20, hicon, "Balloon  tooltip",msg,200,title))
+
+        # self.show_balloon(title, msg)
+        time.sleep(10)
+        DestroyWindow(self.hwnd)
+
+    def OnDestroy(self, hwnd, msg, wparam, lparam):
+        nid = (self.hwnd, 0)
+        Shell_NotifyIcon(NIM_DELETE, nid)
+        PostQuitMessage(0) # Terminate the app.
+
+def balloon_tip(title, msg):
+    popup = BalloonTip(title, msg)
+
+# ============================================ POPUP RESULT BY PLYER ===================================================
 from plyer.utils import platform
 from plyer import notification
-import os, sys
-
-
-# Only tested on Windows 10 and MacOS X
 
 def popup(sender):
-    if sys.platform == "win32":
-        try:
-            notification.notify(
-                title="Nouveau message",
-                message=f"Un message de {sender}",
-                app_name="AR Intercom Beta",
-                app_icon="popup." + ('ico' if platform == 'win' else 'png'))
+    try:
+        notification.notify(
+            title="Nouveau message",
+            message=sender + " vient de vous envoyer un nouveau message !",
+            app_name="My App",
+            app_icon="ressources/popup." + ('ico' if platform == 'win' else 'png'))
 
-        except Exception as e:
-            print(e)
+    except:
+        pass
 
-    else:
-        msg = f"Un message de {sender}"
-        try:
-            popup_mac(msg, "AR Intercom")
-        except Exception as e:
-            print(e)
+# =============================================== SEE POPUP RESULT =====================================================
+# Run module  -------  Just for
 
-def popup_mac(message, title=None, subtitle=None, soundname=None) :
-    """
-        Display an OSX notification with message title an subtitle
-        sounds are located in /System/Library/Sounds or ~/Library/Sounds
-    """
-    titlePart = ''
-    if (not title is None) :
-        titlePart = 'with title "{0}"'.format(title)
-    subtitlePart = ''
-    if (not subtitle is None) :
-        subtitlePart = 'subtitle "{0}"'.format(subtitle)
-    soundnamePart = ''
-    if (not soundname is None) :
-        soundnamePart = 'sound user_code "{0}"'.format(soundname)
-
-    appleScriptNotification = 'display notification "{0}" {1} {2} {3}'.format(message, titlePart, subtitlePart,
-                                                                                soundnamePart)
-    os.system("osascript -e '{0}'".format(appleScriptNotification))
-
-# Popup test
 if __name__ == '__main__':
-    from plyer import notification
+    sender = "Antares"
+    balloon_tip("Nouveau message", f"{sender} vient de vous envoyer un nouveau message!")
 
-    notification.notify(
-        title="HEADING HERE",
-        message=" DESCRIPTION HERE",
-
-        # displaying time
-        timeout=2
-    )
-
-
-    #popup("Antares")
+# ===================================================== END ============================================================
