@@ -1,10 +1,9 @@
-# -*- coding:utf-8 -*-
+# -*- This python file uses the following encoding : coding:utf-8 -*-
 
 import socket
 import select
 from Popup import popup
 
-# Création de la classe Server
 class Serveur:
 
     def __init__(self):
@@ -15,7 +14,7 @@ class Serveur:
         # Creating list of connected clients
         self.connected = []
 
-        # list of clients that have sent messages
+        # List of clients that have sent messages
         self.readlist = []
 
         self.create_socket_server()
@@ -25,11 +24,11 @@ class Serveur:
     def create_socket_server(self):
         global connexion_principale
 
-        hote = "0.0.0.0"
+        host = "0.0.0.0"
 
         connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            connexion_principale.bind((hote, self.port))
+            connexion_principale.bind((host, self.port))
         except OSError:
             pass
 
@@ -76,7 +75,6 @@ class Serveur:
                 popup(self.sender)
                 print(f"{self.sender} | {self.body}")
 
-
             except ConnectionError:
                 print("Erreur de connexion.")
 
@@ -93,6 +91,6 @@ class Serveur:
     def close_socket_server(self):
         connexion_principale.close()
 
-
+# Server test
 if __name__ == "__main__":
     run = Serveur()

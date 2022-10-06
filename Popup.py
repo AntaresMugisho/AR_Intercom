@@ -1,9 +1,11 @@
-# -*- coding: utf-8 -*-
+# -*- This python file uses the following encoding : coding:utf-8 -*-
 
-# ============================================ POPUP RESULT BY PLYER ===================================================
 from plyer.utils import platform
 from plyer import notification
 import os, sys
+
+
+# Only tested on Windows 10 and MacOS X
 
 def popup(sender):
     if sys.platform == "win32":
@@ -24,7 +26,6 @@ def popup(sender):
         except Exception as e:
             print(e)
 
-
 def popup_mac(message, title=None, subtitle=None, soundname=None) :
     """
         Display an OSX notification with message title an subtitle
@@ -44,10 +45,6 @@ def popup_mac(message, title=None, subtitle=None, soundname=None) :
                                                                                 soundnamePart)
     os.system("osascript -e '{0}'".format(appleScriptNotification))
 
-# =============================================== SEE POPUP RESULT =====================================================
-# Run module  -------  Just for
-
+# Popup test
 if __name__ == '__main__':
     popup("Antares")
-
-# ===================================================== END ============================================================

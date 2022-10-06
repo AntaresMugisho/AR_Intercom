@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- This python file uses the following encoding : coding:utf-8 -*-
 
 import socket
 from Popup import popup
@@ -10,7 +10,6 @@ class Client:
 
     def __init__(self):
 
-
         self.user_code = "Zulu"
         self.hote = "127.0.0.1" #"192.168.1.101"
         self.port = 12101
@@ -18,7 +17,6 @@ class Client:
 
         self.create_socket_client()
         self.connect_to_server()
-
 
     def create_socket_client(self):
         global sock
@@ -31,14 +29,9 @@ class Client:
             if i % 4 == 0:
                 print("Impossible de se conecter au serveur distant!")
 
-                retry = str(input("\nAppuyez sur 'Enter' pour reessayer."))
-                if retry.lower() == "r":
-                    i = 0
-                    continue
-                else:
-                    pass
-
-
+            retry = str(input("\nAppuyez sur 'R' pour reessayer."))
+            if retry.lower() == "r":
+                i = 0
 
     def connect_to_server(self):
         """Essaye de connecter le client au serveur demandé."""
@@ -93,6 +86,6 @@ class Client:
         """Ferme le socket."""
         sock.close()
 
-
+# Client test
 if __name__ == "__main__":
     run = Client()
