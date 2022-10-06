@@ -47,4 +47,15 @@ def popup_mac(message, title=None, subtitle=None, soundname=None) :
 
 # Popup test
 if __name__ == '__main__':
-    popup("Antares")
+    from plyer import notification
+
+    notification.notify(
+        title="HEADING HERE",
+        message=" DESCRIPTION HERE",
+
+        # displaying time
+        timeout=2
+    )
+
+
+    #popup("Antares")
