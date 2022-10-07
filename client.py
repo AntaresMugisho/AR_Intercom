@@ -1,65 +1,106 @@
 # -*- This python file uses the following encoding : coding:utf-8 -*-
 
+
+import sys
 import socket
-from tkinter import messagebox
 
 class Client:
+    """Class client to connect ask connections to servers and send messages."""
 
-    prefixe = ""
+    # Class attribute to identifie usercode when sending a message
+    prefix = ""
 
     def __init__(self, port):
-
-        self.hote = "ANTARES.local"
         self.port = port
 
-        # Setting the status of connection at False by default
-        self.connected = False
+        # Setting the connection status at False by default
+        self.online = False
 
-    def create_socket_client(self):
+    def connect_to_server(self):
+        """Try to connect to a distant server to a specific port but an unknow IP's 4th bit."""
         global sock
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    def connect_to_server(self):
-        """Essaye de connecter le client au serveur demandé."""
+        # IP Attempts (192.168.1.[unkown])
+        ips = (100, 101, 105, 106)
+        ips = reversed(ips)
 
-        try:
-            sock.connect((self.hote, self.port))
-            self.connected = True   # The user will be informed by the green online toast canvas.
+        for i in ips:
+            self.hote = f"192.168.1.{str(i)}"
 
-        except ConnectionRefusedError:
-            pass
-            #self.connected = False    # Do nothing if the requested server is not online
+            #self.hote = "127.0.0.1" # Just for trying
+            try:
+                sock.connect((self.hote, self.port))
+                print(f"Connected to host {self.hote} | Port: {self.port}")
+                self.online = True  # The user will be informed by a small green widget
+                break
 
-        except:  # Other Errors
-            self.connected = False
+            except ConnectionError:
+                print(f"Can't connect to host {self.hote}\n")
 
-    def send_message(self, msg_body):
-        """Envoi le message au destinataire et essaie de montrer l'accusé de réception."""
-        # Concatenate prefixe
-        msg_body = Client.prefixe + msg_body
+            except TimeoutError:
+                pass
 
-        # Coding in utf-8 to enable the send of print charaters
-        msg_body = msg_body.encode("utf8")
+            except OSError:
+                pass
 
-        try:
-            sock.send(msg_body)     # Try to send message
+            except Exception as e:
+                print("ERR46 CL: ", e)
 
-        except ConnectionResetError:
-            # Show error if message is not received
-            messagebox.showerror("Message non envoyé",
-                "Le message n'a pas pu être envoyé car le destinataire s'est déconnecté.")
+    def send_message(self, kind, body):
+        """Send message and try to receive status report."""
 
-        except OSError:
-            pass
+        if kind == "string":
+            code = Client.prefix + "S"
 
-        try:
-            msg_recu = sock.recv(1024).decode("utf8")
+            # SEND USER IDENTIFIER AND HIS TEXT MESSAGE THEN TRY TO GET SERVER RESPONSE
+            text_message = (code + body).encode("utf8")
+            try:
+                sock.send(text_message)
 
-        except OSError:
-            pass
+            except Exception as e:
+                # If an error occured here, it means message wasn't sent
+                self.status = False
+                print("ERR62 CL: ", e)
+
+            else:
+                # Else, it means message was sent and received
+                self.status = sock.recv(1024).decode("utf8")
+                print(f"Message received.")
+
+        else:
+            code = Client.prefix + "B"
+            file_path = body
+
+            # COLLECT MEDIA INFO FIRST
+            with open(file_path, "rb") as file:
+                content = file.read()
+
+            size = str(len(content))
+            extension = f".{str(file_path).split('.')[-1]}"
+            title = str(file_path).split("/")[-1]
+            title = title[:-len(extension)]
+            media_info = f"{kind},{size},{title},{extension}"
+
+            try:
+                # SEND MEDIA INFORMATION
+                informations = (code + media_info).encode("utf8")
+                sock.send(informations)
+
+            except Exception as e:
+                # If an error occured here, it means media information message wasn't sent
+                self.status = False
+                print("ERR91 CL: ", e)
+
+            else:
+                # Else, it means media information message was sent and received, it's time to send media content
+                self.status = sock.recv(1024).decode("utf8")
+
+                # FINALLY SEND MEDIA
+                sock.sendall(content)
 
     def disconnect(self):
-        """Ferme le socket."""
+        """Close the client socket."""
         sock.close()
 
 # NO TRYING IN THIS
