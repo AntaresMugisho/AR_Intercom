@@ -10,7 +10,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 class Ui_SigninWindow(object):
     def setupUi(self, SigninWindow):
         SigninWindow.setObjectName("SigninWindow")
