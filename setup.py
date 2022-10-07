@@ -44,7 +44,7 @@ else:
 
     # Options dictionnary
     options = {"path": path,
-               "include_files": includefiles,
+               # "include_files": includefiles,
                "compressed": False}
 
     # Include dll on windows

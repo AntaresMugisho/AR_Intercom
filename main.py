@@ -8,8 +8,8 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtCore import *
 
 from splash import Ui_SplashScreen
-from FunctionsSL import SignIn
-from Functions import ChatWin
+from functionsSL import SignIn
+from functions import ChatWin
 from resources import img_rc
 
 # GLOBALS

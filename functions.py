@@ -4,9 +4,9 @@
 
 # My own modules
 from server import Server
-from interfaceQt import LoginWindow, ChatWindow
+from interface import LoginWindow, ChatWindow
 from client import Client
-from popup import Popup
+from popup import popup
 from users import Users
 from styles import *
 

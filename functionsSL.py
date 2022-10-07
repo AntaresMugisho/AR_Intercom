@@ -1,9 +1,9 @@
 
 
-import sys,os, sqlite3
+import sys, os, sqlite3
 
-from interfaceQt import SigninWindow
-from Functions import ChatWin
+from interface import SigninWindow
+from functions import ChatWin
 from users import Users
 from styles import *
 
@@ -18,7 +18,6 @@ from PyQt5.QtCore import *
 class SignIn(SigninWindow):
     def __init__(self):
         SigninWindow.__init__(self)
-
 
     def move_window(self, event):
         if event.buttons() == Qt.LeftButton:
