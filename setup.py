@@ -11,7 +11,7 @@ if sys.platform == "darwin":
         python setup.py py2app
     """
 
-    APP = ['ArIntercom.py']
+    APP = ['main.py']
     DATA_FILES = ['resources/Arlogo.icns']
     OPTIONS = {
         'iconfile': 'resources/Arlogo.icns',
@@ -39,8 +39,8 @@ else:
     icone = "resources\ARsoftlogo.ico"
 
     # To able translations
-    includefiles = []
-    includefiles += [(r"resources", "resources")]
+    # includefiles = []
+    # includefiles += [(r"resources", "resources")]
 
     # Options dictionnary
     options = {"path": path,
@@ -53,8 +53,8 @@ else:
 
     setup(name="AR Intercom",
           version="2.0",
-          description="AR Intercom",
+          description="AR Intercom - Secured business chat application",
           author="Antares",
-          executables=[Executable(script="ArIntercom.py", base="Win32GUI", icon=icone)]
+          executables=[Executable(script="main.py", base="Win32GUI", target_name="AR Intercom", icon=icone)]
           )
 # ===================================================== END ============================================================
