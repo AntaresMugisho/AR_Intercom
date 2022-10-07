@@ -76,7 +76,6 @@ class SplashScreen(QWidget):
         else:
             self.main = ChatWin()
 
-
     def progressValue(self, value):
         style = """
         QFrame{
