@@ -3,573 +3,767 @@
 # ================================================ IMPORTING PACKAGES ==================================================
 
 # My own modules
-from server import Serveur
-from interface import UserInteface
+from server import Server
+from interfaceQt import LoginWindow, ChatWindow
 from client import Client
-from popup import popup
+from popup import Popup
+from users import Users
+from styles import *
 
 # Python Library
-import time, threading, os
+import time, threading, os, sys, platform, sqlite3, sounddevice, wavio
+from functools import partial
 
-from sqlite3 import *
-from tkinter import *
-from tkinter import messagebox
+# External packages
+from PyQt5 import QtCore, QtGui, QtWidgets, QtMultimedia
+from PyQt5.QtWidgets import QApplication, QMessageBox, QFrame, QLabel, QPushButton, QSlider, QProgressBar
+from PyQt5.QtMultimedia import *
+from PyQt5.QtCore import *
 
 # ----------------------------------------------------------------------------------------------------------------------
+class LogIn(LoginWindow):
+    def __init__(self):
+        LoginWindow.__init__(self)
+        self.connect_database()
 
-class Callbacks (Serveur, UserInteface):
-    """Commandes de l'interface du logiciel pour interagir avec l'utilisateur."""
-
-    last_row = 1
-
-    def __init__(self) -> object:
-        Serveur.__init__(self)
-        UserInteface.__init__(self)
-
-# ------------------------------------------------ COMMAND FUNCTIONS ---------------------------------------------------
-    def quitter(self):
-        """Quitter le programme"""
-        if messagebox.askyesno("Quitter AR Intercom", "Voulez-vous vraiment quitter AR Intetcom ?"):
-            try:
-                self.close_socket_server()
-                self.client.disconnect()
-            except:
-                pass
-            self.window.quit()
-
-    def signin(self, *event):
-        """Cache la fênetre de connexion (Login window) et affiche celle d'Inscription ("Signin window)."""
-        # Called on clicked "Créer un compte" in the login window
-
-        self.central_login.pack_forget()  # Hiding the login window
-        self.signin_window()
-
-    def hide_signin_window(self, *event):
-        """Cache la fenêtre d'inscription (Sign in window) et affiche celle de connexion (Log in window)."""
-        # Called on clicked button "Créer un compte" in the log in window
-        # Also called as event funtion on clicked "Left arrow" in the sign in window
-
-        self.central_signin.pack_forget()
-        self.login_window()
-
-    def registrer(self):
-        """Vérifie si l'utilisateur a saisi toutes les données lui demandées avec leur conformité.
-        Si toutes les conditions sont respectées, alors elle appelle les autres fonctions nécessaires
-        notamment pour l'enregistrement dans la base de données."""
-        # Called on clicked button "Valider" in the sign in window
-
-        self.client_id["nom"] = self.var_nom.get()
-        self.client_id["code"] = self.var_codename.get()
-        self.client_id["mdp"] = self.var_mdp.get()
-        self.client_id["conf_mdp"] = self.var_conf_mdp.get()
-        #self.client_id["phone"] = self.var_number.get()
-
-        for i in self.client_id.keys():
-
-            if self.client_id[i] == "":
-                messagebox.showerror("Champs vides détectés",
-                                     "Veuillez remplir correctement tous les champs avant de poursuivre.")
-                break
-
-        if self.client_id["mdp"] != "" and self.client_id["mdp"] != self.client_id["conf_mdp"]:
-            messagebox.showwarning("Mots de passe non identiques",
-                                   "Les mots de passe que vous saisissez doivent être identiques.")
-
-        elif self.client_id["nom"] != "" and\
-            self.client_id["code"] != "" and\
-            self.client_id["mdp"] != "" and\
-            self.client_id["conf_mdp"] != "" :
-            #self.client_id["phone"] != "" :
-
-            messagebox.showinfo("Inscription réussie", f"Bienvenue parmi nous {self.client_id['nom']} !\n\n"
-                                "Connectez-vous à présent et chatter sans limite.")
-
-            # If everything is correct, call these functions:
-            self.create_data_base()
-            self.hide_signin_window()
-
-    def create_data_base(self):
-        """Crée la base de données et la charge."""
-        # (This is called by another function "registrer")
-
-        connexion = connect("ressources/dluif.db")
-        curseur = connexion.cursor()
-
-        db_list = [curseur.lastrowid,
-                   self.var_nom.get(),
-                   self.var_codename.get(),
-                   self.var_mdp.get(),
-                   #self.var_number.get(),
-                   0000000000,
-                   self.port] # Attribut d'instance Server
-
-        curseur.execute("INSERT INTO tt_user_info VALUES(?, ?, ?, ?, ?, ?)", db_list)
-
-        connexion.commit()
-        connexion.close()
-
-    # Called on clicked button "Connexion" in the log in window
-    def connect_myself(self, *event):
-        """Vérifie si le nom d'utilisateur et le mot de passe saisis par l'utilisateur sont conformes au contenu de la
-        base de données, et si c'est le cas, appelle les fonctions nécessaires.
-        Si la base de données ne contient aucune information, il est demandé à l'utilisateur de créer un compte."""
-
-        index = 1
-        index = str(index)
-        nom_d_utilisateur = self.var_log_nom.get()
-        mot_de_passe = self.var_log_mdp.get()
-
+    def connect_database(self):
+        # CONNECT TO DATA BASE
         try:
-            connexion = connect("ressources/dluif.db")
+            connection = sqlite3.connect("ui.db")
+            cursor = connection.cursor()
 
-            # Request username cursor
-            curseur_usrn = connexion.cursor()
-            curseur_usrn.execute("SELECT * FROM tt_user_info WHERE user_id = ?", index)
-            requette_username = curseur_usrn.fetchone()[1]
+            i = str(1)
 
-            # Request usercode cursor
-            curseur_usrc = connexion.cursor()
-            curseur_usrc.execute("SELECT * FROM tt_user_info WHERE user_id = ?", index)
-            requette_usrc = curseur_usrc.fetchone()[2]
-            self.client_id["code"] = requette_usrc
+            cursor.execute("SELECT * FROM uidb WHERE id = ?", i)
+            request = cursor.fetchone()
 
-            # Assign prefix
-            Client.prefixe = requette_usrc[0]
+            cursor.close()
+            connection.close()
 
-            # Request password cursor
-            curseur_psw = connexion.cursor()
-            curseur_psw.execute("SELECT * FROM tt_user_info WHERE user_id = ?", index)
-            requette_mdp = curseur_psw.fetchone()[3]
+            # CATCH INFORMATIONS
+            self.u_name = request[1]
+            self.u_code = request[2]
+            self.u_psw = request[3]
 
-        except :
-
-            messagebox.showerror("Erreur d'identification",
-                "Il semble que c'est votre première utilisation de AR Intercom.\n\n"
-                "Veillez commencer par créer un compte. Cela  vous prendra moins de 90 secondes.")
-
-            self.log_username.delete(0, END)
-            self.log_password.delete(0, END)
-            connexion.close()
+        except Exception as e:
+            print(f"Error while connecting to DB: {e}")
 
         else:
-            if nom_d_utilisateur != requette_username:
-                # Change Entry color to show error
-                self.log_username.config(bg="#FDCBCD", relief=SOLID)
+            self.ui.welcome_log.setText(f"Salut {self.u_code} !")
+            Users.ulist.remove(self.u_code)
 
-            elif mot_de_passe != requette_mdp:
-                # Change Entry color to show error
-                self.log_password.config(bg="#FDCBCD", relief=SOLID)
+    def check_username(self, *event):
 
-            else:
-                # Close data base connexion
-                connexion.close()
+        # CHECK USER NAME
+        if not self.ui.log_username.text():
+            self.ui.log_username.setStyleSheet(LineEdit.style_error)
+            self.ui.name_warning.show()
+            self.ui.name_warning.setText("Saisir le nom d'utilisateur")
 
-                # Create and Connect server (Attributes from 'Server')
-                self.create_server()
-                self.create_socket_server()
-                thread = threading.Thread(target=self.launch_server)
-                thread.start()
+        elif self.ui.log_username.text() != self.u_name:
+            self.ui.name_warning.show()
+            self.ui.name_warning.setText("Nom d'utilisateur incorrect !")
 
-                # Hide log in window and show chat window
-                self.central_login.pack_forget()
-                self.container()
-                self.show_left_side()
-                self.show_right_side()
+        else:
+            self.ui.name_warning.hide()
+            self.ui.log_username.setStyleSheet(LineEdit.style_normal)
 
-    # Called on KeyPressed-any in an entry field of log in window after an occured error
-    def reset_psw_entry(self, event):
-        self.log_password.config(bg="#fff", bd=2, relief=GROOVE)
+    def check_password(self, *event):
+        # CHECK PASSWORD
+        if not self.ui.log_password.text():
+            self.ui.log_password.setStyleSheet(LineEdit.style_error)
+            self.ui.psw_warning.show()
+            self.ui.psw_warning.setText("Saisir le mot de passe")
 
-    def reset_usrn_entry(self, event):
-        self.log_username.config(bg="#fff", bd=2, relief=GROOVE)
+        elif self.ui.log_password.text() != self.u_psw:
+            self.ui.psw_warning.show()
+            self.ui.psw_warning.setText("Mot de passe incorrect !")
 
-    # Called by another function, "connect_myself".
-    def show_left_side(self):
-        """Affiche la liste des contacts à gauche."""
-        self.frame_with_quick_menu()
-        self.frame_with_chat_list()
+        else:
+            self.ui.psw_warning.hide()
+            self.ui.log_password.setStyleSheet(LineEdit.style_normal)
 
-    # Called by another function, "connect_myself".
-    def show_right_side(self):
-        """Affiche et les conversations avec contact sélectionné à gauche, et le champ de saisie d'un nouveau message"""
-        self.frame_with_chat()
-        self.frame_entry_zone()
+    def check_data(self, *event):
+        if event is True:
+            if event.key == Qt.Key_Return:
+                self.check_username()
+                self.check_password()
+        else:
+            self.check_username()
+            self.check_password()
 
-    # Called on any clicked name in the contact list
-    def ask_connection(self, event):
-        """Indique le nom cliqué sur le label frame à droite,
-        pour permettre à l'utilisateur de savair à qui il parle. Et demande à se connecter au serveur du nom cliqué."""
+        if (self.ui.log_username.text(), self.ui.log_password.text()) == (self.u_name, self.u_psw):
 
-        # Get the clicked name
-        clef = self.nom_contact.cget('text')
-        self.cadre_discussions.config(text=clef)
+            self.login()
 
-        # Reset message counter
-        self.canevas_msgcounter.itemconfig(self.msg_cc, fill="#FFF", outline="#FFF")
-        self.canevas_msgcounter.itemconfig(self.msg_ct, text=0)
 
-        # Create client port
-        port = self.dictionnary.get(clef)
-        self.client = Client(port)
+##################################################################################################################
+# GLOBALS
+# To count recording time
+chrono, mins = (1,0)
 
-        # Create client port
-        if not self.client.connected:  # If client is not connected
-            self.client.create_socket_client()
-            self.client.connect_to_server()
 
-            if self.client.connected:   # If client is connected
-                # Show green button to mean that connection is on
-                self.canevas_onlinetoast.config(bg="#00FF00")
-            else:
-                self.canevas_onlinetoast.config(bg="#FFF")
+class ChatWin(LogIn, ChatWindow):
+    """Commandes de l'interface du logiciel pour interagir
+    avec l'utilisateur."""
 
-    def ask_connection1(self, event):
-        """Indique le nom cliqué sur le label frame à droite,
-        pour permettre à l'utilisateur de savair à qui il parle. Et demande à se connecter au serveur du nom cliqué."""
+    def __init__(self):
+        LogIn.__init__(self)
+        ChatWindow.__init__(self)
 
-        # Get the clicked name
-        clef = self.nom_contact1.cget('text')
-        self.cadre_discussions.config(text=clef)
 
-        # Reset message counter
-        self.canevas_msgcounter1.itemconfig(self.msg_cc1, fill="#FFF", outline="#FFF")
-        self.canevas_msgcounter1.itemconfig(self.msg_ct1, text=0)
-
-        # Create client port
-        port = self.dictionnary.get(clef)
-        self.client = Client(port)
-
-        # Try to connect client to server
-        if not self.client.connected:  # If client is not connected
-            self.client.create_socket_client()
-            self.client.connect_to_server()
-
-            if self.client.connected:  # If client is connected
-                # Show green button to mean that connection is on
-                self.canevas_onlinetoast1.config(bg="#00FF00")
-            else:
-                self.canevas_onlinetoast1.config(bg="#FFF")
-
-    def ask_connection2(self, event):
-        # Get the clicket name
-        clef = self.nom_contact2.cget('text')
-        self.cadre_discussions.config(text=clef)
-
-        # Reset message counter
-        self.canevas_msgcounter2.itemconfig(self.msg_cc2, fill="#FFF", outline="#FFF")
-        self.canevas_msgcounter2.itemconfig(self.msg_ct2, text=0)
-
-        # Create client port
-        port = self.dictionnary.get(clef)
-        self.client = Client(port)
-
-        # Try to connect to server
-        if not self.client.connected:  # If client is not connected
-            self.client.create_socket_client()
-            self.client.connect_to_server()
-
-            if self.client.connected:  # If client is connected
-                # Show green button to mean that connection is on
-                self.canevas_onlinetoast2.config(bg="#00FF00")
-            else:
-                self.canevas_onlinetoast2.config(bg="#FFF")
-
-    def ask_connection3(self, event):
-        # Get the clicked name
-        clef = self.nom_contact3.cget('text')
-        self.cadre_discussions.config(text=clef)
-
-        # Reset message counter
-        self.canevas_msgcounter3.itemconfig(self.msg_cc3, fill="#FFF", outline="#FFF")
-        self.canevas_msgcounter3.itemconfig(self.msg_ct3, text=0)
-
-        # Create client port
-        port = self.dictionnary.get(clef)
-        self.client = Client(port)
-
-        # Try to connect to server
-        if not self.client.connected:  # If client is not connected
-            self.client.create_socket_client()
-            self.client.connect_to_server()
-
-            if self.client.connected:  # If client is connected
-                # Show green button to mean that connection is on
-                self.canevas_onlinetoast3.config(bg="#00FF00")
-            else:
-                self.canevas_onlinetoast3.config(bg="#FFF")
-
-    def ask_connection4(self, event) :
-        # Get the clicked name
-        clef = self.nom_contact4.cget('text')
-        self.cadre_discussions.config(text=clef)
-
-        # Reset message counter
-        self.canevas_msgcounter4.itemconfig(self.msg_cc4, fill="#FFF", outline="#FFF")
-        self.canevas_msgcounter4.itemconfig(self.msg_ct4, text=0)
-
-        # Create client port
-        port = self.dictionnary.get(clef)
-        self.client = Client(port)
-
-        # Try t connect to server
-        if not self.client.connected :  # If client is not connected
-            self.client.create_socket_client()
-            self.client.connect_to_server()
-
-            if self.client.connected :  # If client is connected
-                # Show green button to mean that connection is on
-                self.canevas_onlinetoast4.config(bg="#00FF00")
-            else:
-                self.canevas_onlinetoast4.config(bg="#FFF")
-
-    def layout_msg(self, chaine):
-        """Prend en paramètre une chaîne de caractères et la scinde en plisiuers lignes
-        selon sa longueur, puis retourne la chaine mise en forme."""
-        cassure = chaine.split(" ")
-        chaine = ""
-        i = 0
-        while i < len(cassure):
-            mot = " ".join(cassure[i:i + 5])
-            i += 5
-
-            chaine += mot
-            if len(cassure) > 5 and i < len(cassure):
-                chaine += "\n"
-        return chaine
-
-    # Called by another function (ask_connection)
-    def get_conversation(self, *event):
-        """Read the _sach files and show conversation bubbles."""
-
-        fichier = "ressources/" + \
-                  self.cadre_discussions.cget("text").lower() + "_sach"
-
+        # CREATE MEDIA DIRECTORY IF NOT EXISTS
         try:
-            self.toile.pack_forget()
-            self.scroll.pack_forget()
+            if sys.platform == "win32":
+                self.home = os.environ["USERPROFILE"]
+            else:
+                self.home = os.environ["HOME"]
 
-        except: # If toile was not created
-            pass
+            folders = ["Audios", "Documents", "Images", "Videos", "Voices"]
+            for i in folders:
+                path = f"{self.home}/Documents/AR Intercom/Media/{i}"
+                if not os.path.exists(path):
+                    os.makedirs(path)
+
+        except Exception as e:
+            print(f"Erreur 129 FUNC: {e}")
+
+    def login(self):
+        """Verifie if the entered username and password are the same as
+        in the database, in which case the login window is hidden and the chat window is showed."""
+
+        # CREATE AND CONNECT SERVER
+        user_code = self.u_code
+        # Set client prefix
+        Client.prefix = user_code[0].upper()
+
+        self.server = Server()
+
+        self.server.set_usercode(user_code)
+        self.server.set_port()
+        self.server.create_socket_server()
+
+        self.thread = threading.Thread(target=self.server.launch_server)
+        self.thread.start()
+
+        # CONNECT SERVER SIGNAL WHEN RECEIVING MESSAGE TO CREATE WIDGET
+        self.server.new_message.connect(lambda: self.receive("string"))
+        self.server.new_file.connect(lambda: self.receive("blob"))
+
+        # SHOW CHAT WINDOW
+        self.show_chat_window()
+
+    def ask_connection(self):
+        """Try to connect to a other client"""
+        try:
+            # GET CLICKED BUTTON
+            clicked = self.sender()
+
+            # GET NAME AND PORT OF CLICKED CLIENT NAME
+            name = clicked.text()
+            port = Users.dictionnary.get(name)
+
+            # SET NAME TO THE ACTIVE CLIENT LABEL
+            self.active_client.setText(name)
+            self.active_client.show()
+            self.delete_button.show()
+
+            # RESTORE EXISTING MESSAGES
+            self.restore_chat()
+
+            # TRY TO CONNECT
+            self.client = Client(port)
+            self.client.connect_to_server()
+
+            # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF CLIENT ONLINE
+            for wid in self.left_scroll.findChildren(QFrame):
+                for w in wid.findChildren(QFrame):
+
+                    # Reset Message counter
+                    if w.objectName() == name + "_counter":
+                        w.setText("0")
+                        w.hide()
+
+                        # Reset to normal style sheet
+                        w.parent().setStyleSheet(Clients.frame_normal)
+
+            # Show online toast if client is online
+            self.check_online(name)
+
+        except Exception as e:
+            print("197", e)
+
+    def layout_message(self, message):
+        """Split a string and return it as multi-line string."""
+
+        n = 6
+        words = message.split(" ")
+        designed_message = ""
+        i = 0
+        while i < len(words):
+            word = " ".join(words[i:i + n])
+            i += n
+
+            designed_message += word
+            if len(words) > n and i < len(words):
+                designed_message += "\n"
+
+        return designed_message
+
+
+    def update_counter(self, name):
+        """Increase the message counter badge on new message."""
+
+        for client_frame in self.left_scroll.findChildren(QFrame):
+            for widget in client_frame.findChildren(QLabel):
+
+                if widget.objectName() == name + "_counter":
+                    unread_msg = int(widget.text())
+                    unread_msg += 1
+
+                    widget.setText(f"{unread_msg}")
+
+                    try:
+                        widget.show()
+                    except Exception as e:
+                        print(f"Erreur 230 FUNC {e}")
+
+                    parent = widget.parent()
+                    parent.setStyleSheet(Clients.frame_unread_msg)
+
+
+    def restore_chat(self):
+        """Restore existing chats and create messge's bubbles for each one restored if exists."""
+
+        table = "sa" + self.active_client.text()[:2].lower() + "ch"
+
+        # REMOVE CHAT
+        try:
+            for bubble in reversed(range(self.layout_bubble.count())):
+                self.layout_bubble.itemAt(bubble).widget().deleteLater()
+        except Exception as e:  # If chat field was not created
+            print(e)
 
         finally:
-            self.chat_canvas()
             try:
-                chat = open(fichier, 'r')
-            except FileNotFoundError:
-                pass
-            else:
+                connection = sqlite3.connect("sach.db")
+                cursor = connection.cursor()
+
+                cursor.execute(f"SELECT * FROM {table}")
+
                 while 1:
-                    line = chat.readline()
-                    temps = chat.readline()
-                    if temps == "":  # If file is all read
+                    request = cursor.fetchone()
+                    if request != None:
+                        kind = request[2]   # MAY BE STRING OR MEDIA
+                        title = request[3]
+                        format = request[4]# THE FORMAT OF MESSAGE
+                        message = request[5]
+                        blob = request[6]
+                        time = request[7]   # THE SENT OR RECEIVED TIME
+                        status = int(request[8]) # CONVERT TO BOOL
+
+                    if request == None:
                         break
 
-                    elif line[0] == "R":  # If message was 'R' eceived
-                        self.last_row = self.increment_row()
-                        self.create_left_bubble()
-                        self.left_bubble.config(text=self.layout_msg(line[2:-1]))
-                        self.left_time.config(text=temps)
+                    elif request[1] == "R":     # IF THE MESSAGE HAS BEEN RECEIVED
 
-                    elif line[0] == "S":    # If message was 'S' ent
-                        self.derniere_ligne = self.increment_row()
-                        self.create_right_bubble()
-                        self.right_bubble.config(text=self.layout_msg(line[2:-1]))
-                        self.right_time.config(text=temps)
+                        # VERIFY IF IT'S A STRING OR A BLOB
+                        if kind == "string":
+                            self.create_left_bubble(kind, None, None, message, time)
 
-                chat.close()
+                        else:
+                            self.create_left_bubble(kind, title, format, blob, time)
 
-# ========================================== SEND MESSAGE FUNCTIONS ====================================================
+                    else:   # IF THE MESSAGE HAS BEEN SENT
 
-    def send_msg_bubble(self, *event):
-        """ Fonction qui crée la bulle de message envoyé et la place à la dernère position
-        dans la liste de messages envoyés et reçus. """
+                        if kind == "string":
+                            self.create_right_bubble(kind, None, None, message, time, status)
 
-        if self.cadre_discussions.cget("text") == "":
-            # Show warning
-            messagebox.showerror("Destinataire non défini",
-                                 "Veuillez spécifiez d'abord votre destinataire!")
+                        else:
+                            self.create_right_bubble(kind, title, format, blob, time, status)
+
+                # CLOSE CONNECTION
+                cursor.close()
+                connection.close()
+
+            except Exception as e:
+                print("Erreur [292FUNC]:", e)
+
+    def send_message(self, resending=None):
+        """Send the message to the active client and shows the right bubble."""
+
+        addressee = self.active_client.text()
+
+        if not addressee:
+            QMessageBox.warning(self.MainWindow, "Destinataire non défini",
+                                "Veuillez spécifiez d'abord votre destinataire!",
+                                QMessageBox.Ok)
+
+        send_time = time.strftime("%d-%m-%Y %H:%M")
+
+        if not resending:
+            message = self.entry_field.text()
+        else:
+            message = resending
+
+        # SEND MESSAGE
+        self.client.send_message("string", message)
+
+        # Check status (feature)
+        try:
+            sent = int(self.client.status)
+            self.check_online(self.active_client.text())
+        except Exception as e:
+            print(f"Erreur 310 FUNC : {e}")
+
+        # SHOW MESSAGE IN BUBBLE
+        self.create_right_bubble("string", None, None, message, send_time, sent)
+        self.entry_field.setText("")
+
+        # SAVE MESSAGE
+        client_table = "sa" + addressee[:2].lower() + "ch"
+        self.save_message(client_table, "S", "string", None, ".str", message, send_time, sent)
+
+    def check_online(self, name):
+        for wid in self.left_scroll.findChildren(QFrame):
+
+            for w in wid.findChildren(QFrame):
+
+                # Show online toast if client is online
+                if w.objectName() == name + "_toast":
+                    if self.client.online:  # If client is connected, show green online toast
+                        w.show()
+                    else:
+                        w.hide()
+
+    def resend_message(self):
+        try:
+            clicked = self.sender()
+            parent = clicked.parent()
+
+            connection = sqlite3.connect("sach.db")
+            cursor = connection.cursor()
+
+            table = "sa" + self.active_client.text()[:2].lower() + "ch"
+
+            for label in parent.findChildren(QLabel):
+                if label.objectName() == "label_":
+                    text = label.text()
+
+                    cursor.execute(f"DELETE FROM {table} WHERE str = ?", (text,))
+                    cursor.close()
+                    connection.commit()
+                    connection.close()
+
+                    self.send_message(label.text())
+
+                elif label.objectName() == "media_":
+                    title = label.text()
+                    cursor.execute(f"SELECT * FROM {table} WHERE title = ?", (title,))
+
+                    req = cursor.fetchone()
+                    kind = req[2]
+                    extension = req[4]
+
+                    cursor.execute(f"DELETE FROM {table} WHERE title = ?", (title,))
+                    cursor.close()
+
+                    connection.commit()
+                    connection.close()
+
+                    path = f"{self.home}/Documents/AR Intercom/Media/{kind.capitalize()}s/{title}{extension}"
+                    self.send_media(kind, path)
+
+            parent.deleteLater()
+
+        except Exception as e:
+            print("Erreur 380FUNC", e)
+
+    def play_voice(self):
+
+        def hhmmss(ms):
+            # s = 1000
+            # m = 60000
+            # h = 3600000
+            h, r = divmod(ms, 3600000)
+            m, r = divmod(r, 60000)
+            s, _ = divmod(r, 1000)
+            return ("%02d:%02d:%02d" % (h, m, s)) if h else ("%02d:%02d" % (m, s))
+
+        def update_duration(duration):
+            try:
+                slider.setMaximum(duration)
+
+                if duration >= 0:
+                    total_time.setText(hhmmss(duration))
+            except:
+                pass
+
+        def update_position(position):
+            try:
+                if position >= 0:
+                    elapsed_time.setText(hhmmss(position))
+
+                # Disable the events to prevent updating triggering a setPosition event (can cause stuttering).
+                slider.blockSignals(True)
+                slider.setValue(position)
+                slider.blockSignals(False)
+
+            except:
+                pass
+
+        def _state_changed(state):
+            try:
+                if state == QMediaPlayer.PlayingState:
+                    play_button.setStyleSheet(Player.pause)
+                    play_button.setToolTip("Pause")
+
+                if state == QMediaPlayer.PausedState:
+                    play_button.setStyleSheet(Player.play)
+
+                elif state == QMediaPlayer.StoppedState:
+                    self.player.setPosition(0)
+                    slider.setValue(0)
+                    play_button.setStyleSheet(Player.play)
+                    play_button.setObjectName("play_button")
+                    play_button.setToolTip("")
+            except:
+                pass
+
+        def erroralert(*args):
+            print(args)
+
+        # STOP PLAYER IF PALAYING
+        try:
+            self.player.stop()
+        except:
+            pass
+
+        #### GET WIDGETS FOR PLAY CLICKED BUTTON
+        play_button = self.sender()
+        parent = play_button.parent()
+
+        # GET TITLE LABEL
+        for widget in parent.findChildren(QLabel):
+            if widget.objectName() == "media_":
+                voice_title = widget.text()
+
+            if widget.objectName() == "elapsed_time":
+                elapsed_time = widget
+
+            if widget.objectName() == "total_time":
+                total_time = widget
+
+        # GET SLIDER
+        for widget in parent.findChildren(QSlider):
+            slider = widget
+
+        # To prevent MacOS not support .arv format
+        if sys.platform == "darwin":
+            ext = ".wav"
+        else:
+            ext = ".arv"
+
+        path = f"{self.home}/Documents/AR Intercom/Media/Voices/{voice_title}{ext}"
+
+        self.player = QMediaPlayer()
+        self.player.stateChanged.connect(_state_changed)
+
+        self.player.error.connect(erroralert)
+        self.player.setMedia(QMediaContent(QUrl.fromLocalFile(path)))
+
+        self.player.play()
+
+        self.player.durationChanged.connect(update_duration)
+        self.player.positionChanged.connect(update_position)
+
+        slider.valueChanged.connect(self.player.setPosition)
+
+
+    def save_message(self, table, exp, kind, title, format, body, time, status):
+
+        # TRY TO CONNECT TO THE DATABASE
+        try:
+            connection = sqlite3.connect("sach.db")
+            cursor = connection.cursor()
+
+            cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table} (
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                exp TEXT NOT NULL,
+                                kind TEXT NOT NULL,
+                                title TEXT, 
+                                format TEXT NOT NULL,
+                                str TEXT,
+                                byte BLOB,
+                                time TEXT,
+                                status TEXT)""")
+
+            # DEFINE DATA AND INSERT IT INTO TABLE
+            if kind == "string":
+                data = (exp, kind, None, format, body, None, time, status)
+            else:
+                data = (exp, kind, title, format, None, body, time, status)
+
+            cursor.execute(f"INSERT INTO {table} (exp, kind, title, format, str, byte, time, status)"
+                           " VALUES (?, ?, ?, ?, ?, ?, ?, ?)", data)
+
+            # SAVE CHANGES
+            connection.commit()
+
+            # CLOSE CONNECTION
+            cursor.close()
+            connection.close()
+
+        except Exception as e:
+            print("Erreur [511FUNC] : ", e)
+
+    def record_voice(self):
+
+        # DEFINE SOME FUNCTIONS
+        def time_counter():
+
+            global chrono, mins
+            secs = chrono
+            if secs > 0 and secs == 60:
+                secs = 0
+                mins += 1
+                chrono = 0
+
+            time = "%02d:%02d" % (mins, secs)
+            self.record_time.setText(time)
+            chrono += 1
+
+            # Limit show recording time to secs
+            if sys.platform == "darwin":
+                if chrono > 20:
+                    self.record_tip.deleteLater()
+                    chrono, mins = (1, 0)
+
+                    # stop timer
+                    self.rec_timer.stop()
+            else:
+                if chrono > 7:
+                    self.record_tip.deleteLater()
+                    chrono, mins = (1, 0)
+
+                    # stop timer
+                    self.rec_timer.stop()
+
+        def recorder():
+
+            # AUDIO DURATION IN SECS AND CHANNEL
+            self.frequency = 44100  # Sample rate
+            duration = 6  # Recording duration
+
+            # START RECORD
+            self.record = sounddevice.rec(int(duration * self.frequency), samplerate=self.frequency, channels=2)
+            print(f"Enregistrement en cours {duration} secondes max...")
+            sounddevice.wait()
+            self.th_rec.terminate()
+
+        def save_record():
+            """Saves the array records as file and try to send it"""
+
+            # SAVE FILE
+            directory = f"{self.home}/Documents/AR Intercom/Media/Voices/"
+
+            # Renaming file
+            self.ext = ".wav" if sys.platform == "darwin" else ".arv"
+            self.file_output_name = f"ARV-{time.strftime('%d%m%Y-%H%M-%S')}"
+            self.media_path = f"{directory}{self.file_output_name}{self.ext}"
+
+            try:
+                # Convert numpy array to arv(wav audio)
+                wavio.write(self.media_path, self.record, self.frequency, sampwidth=2)
+
+                # Send audio
+                print("Enregistrement terminé.")
+                self.send_media("voice", self.media_path)
+
+            except Exception as e:
+                print("Erreur 588FUNC: ", e)
+
+        #-------------------------------------------------------------------------------
+
+        addressee = self.active_client.text()
+        if not addressee:
+            QMessageBox.warning(self.MainWindow, "Destinataire non défini",
+                                "Veuillez spécifiez d'abord votre destinataire!",
+                                QMessageBox.Ok)
 
         else:
-            self.temps = self.get_time()  # To get the time message was sent
-            self.derniere_ligne = self.increment_row()  # To get the last row where we'll grid the bubble
-            message = self.message_saisi.get()
+            # RECORD TIME INDICATOR
+            # > WIDGET
+            self.record_widget()
 
-            # Putt messages into bubble
-            self.create_right_bubble()
-            self.right_bubble.config(text=self.layout_msg(message))
-            self.right_time.config(text=self.temps)
+            # > QTIMER
+            self.rec_timer = QTimer()
+            self.rec_timer.timeout.connect(time_counter)
 
-            # Send message
-            self.client.send_message(message)
+            self.rec_timer.start(1000)
 
-            # Empty the entry field once the message is sent
-            self.message_saisi.set("")
+            # RECORD IN THREAD TO PREVENT GUI FREEZING
+            # This thread (QThread) is to know the end of recording
+            self.th_rec = QThread()
+            self.th_rec.finished.connect(save_record)
+            self.th_rec.start()
 
-            # Save message in a text file
-            self.save_msg("S:", message, self.temps)
+            self.thr = threading.Thread(target=recorder)
+            self.thr.start()
 
-    def receive_msg_bubble(self):
-        """ Ajoute un message reçu dans le canvas de l'expeditaire."""
+    def send_media(self, kind, path_to_media):
 
-        self.time = self.get_time()  # To get the time message was sent
-        self.last_row = self.increment_row()  # To get the last row where we'll grid the bubble
+        self.client.send_message(kind, path_to_media)
 
-        # Create bubble
-        self.create_left_bubble()
-        self.left_bubble.config(text=self.layout_msg(self.msg_recu[1:]))
-        self.left_time.config(text=self.time)
+        # CHECK STATUS
+        try:
+            sent = int(self.client.status)
+            self.check_online(self.active_client.text())
+        except Exception as e:
+            print("Erreur 627 FUNC: ", e)
 
-        # Save message in a text file
-        self.save_msg("R:", self.msg_recu[1:], self.time)
+        # COLLECT MEDIA INFORMATIONS
+        client_table = f"sa{self.active_client.text()[:2].lower()}ch"
+        send_time = time.strftime("%d-%m-%Y %H:%M")
 
-    def save_msg(self, prefixe, message, time):
-        """Enregistre le message dans un fichier texte."""
-        fichier = "ressources/" +\
-                  self.cadre_discussions.cget("text").lower() + "_sach"
+        with open(path_to_media, "rb") as file:
+            content = file.read()
 
-        chat = open(fichier, "a")
-        chat.write(prefixe + message + "\n" + time + "\n")
-        chat.close()
+        file_output_name, ext = path_to_media.split("/")[-1][:-4], path_to_media.split("/")[-1][-4:]
 
-# ----------------------------------------------------------------------------------------------------------------------
-    def get_time(self):
-        """Retoourne le temps où le message a été envoyé pu reçu."""
-        temps = time.strftime("%H:%M  %d-%m-%Y")
-        return temps
+        try:
+            self.create_right_bubble(kind, file_output_name, ext, content, send_time, sent)
+            self.save_message(client_table, "S", kind, file_output_name, ext, content, send_time, sent)
+        except Exception as e:
+            print("552", e)
 
-    def increment_row(self):
-        """Retourne la dernière ligne du canvas de conversation pour y placer la bulle d'un message envoyé ou reçu."""
-        Callbacks.last_row += 1
-        return Callbacks.last_row
+    def receive(self, kind):
+        """Shows the received message in a bubble."""
 
-# =================================================== SERVER ===========================================================
+        # FORMAT MESSAGE
+        message = self.server.received_message[2:] # the first and the second characters of msg are programm indicators.
+        receive_time = time.strftime("%d-%m-%Y %H:%M")
 
-# Create server and let it listen for connections - command function
-# called by another function "connect_myself" in the log in window
+        # SHOW MESSAGE IF SENDER IS ACTIVE ELSE SAVE IT
+        active_client = self.active_client.text()
 
-    def create_server(self):
-        """Créer une instance de la classe Server, lui donne le nom de code,
-        et lui établi le port de connexion correspondant."""
+        if active_client != "" and self.server.received_message[0] == active_client[0]:
+            client_table = "sa" + active_client[:2].lower() + "ch"
 
-        global serveur
+            if kind == "string":
 
-        codeUtilisateur = self.client_id["code"]
+                # Show text message and save it
+                self.create_left_bubble("string", None, None, message, receive_time)
+                self.save_message(client_table, "R", "string", None, ".str", message, receive_time, True)
 
-        self.set_usercode(codeUtilisateur)
-        self.set_port()
+            else:
+                title = self.server.media_info["Title"]
+                extension = self.server.media_info["Extension"]
+                blob = self.server.data
 
-# =============================================== CLIENT ===============================================================
-    def msg_counter(self, sender):
-        # Show notification
-        for i, element in enumerate(self.liste):
-            if sender == element:
-                if i == 0:
-                    nombre_msg = self.canevas_msgcounter.itemcget(self.msg_ct, "text")
-                    nombre_msg = int(nombre_msg)
+                # Show media message and save it
+                self.create_left_bubble("voice", title, extension, blob, receive_time)
+                self.save_message(client_table, "R", "voice", title, extension, None, receive_time, True)
+        else:
+            self.put_inbox(self.server.received_message, receive_time)
 
-                    self.canevas_msgcounter.itemconfig(self.msg_cc, fill="#E88522", outline="#E88522")
-                    self.canevas_msgcounter.itemconfig(self.msg_ct, text=nombre_msg + 1)
+        # SHOW NOTIFICATION IN ALL CASES
+        for name in Users.ulist:
 
-                elif i == 1:
-                    nombre_msg = self.canevas_msgcounter1.itemcget(self.msg_ct1, "text")
-                    nombre_msg = int(nombre_msg)
+            if name[0] == self.server.received_message[0]:  # If the initial letters are the same
+                # Show popup -> From popup.py
+                popup = Popup(name)
 
-                    self.canevas_msgcounter1.itemconfig(self.msg_cc1, fill="#E88522", outline="#E88522")
-                    self.canevas_msgcounter1.itemconfig(self.msg_ct1, text=nombre_msg + 1)
+    def put_inbox(self, message, time):
+        for name in Users.ulist:
 
-                elif i == 2:
-                    nombre_msg = self.canevas_msgcounter2.itemcget(self.msg_ct2, "text")
-                    nombre_msg = int(nombre_msg)
+            if name[0] == message[0]:  # If the initial letters are the same
 
-                    self.canevas_msgcounter2.itemconfig(self.msg_cc2, fill="#E88522", outline="#E88522")
-                    self.canevas_msgcounter2.itemconfig(self.msg_ct2, text=nombre_msg + 1)
+                # Increase message counter
+                self.update_counter(name)
 
-                elif i == 3:
-                    nombre_msg = self.canevas_msgcounter3.itemcget(self.msg_ct3, "text")
-                    nombre_msg = int(nombre_msg)
+                # Save message
+                table = "sa" + str(name[:2]).lower() + "ch"
 
-                    self.canevas_msgcounter3.itemconfig(self.msg_cc3, fill="#E88522", outline="#E88522")
-                    self.canevas_msgcounter3.itemconfig(self.msg_ct3, text=nombre_msg + 1)
+                if message[1] == "S":
+                    # Save string
+                    self.save_message(table, "R", "string", None, ".str", message[2:], time, True)
+                else:
+                    title = self.server.media_info["Title"]
+                    extension = self.server.media_info["Extension"]
+                    blob = self.server.data
 
-                elif i == 4:
-                    nombre_msg = self.canevas_msgcounter4.itemcget(self.msg_ct4, "text")
-                    nombre_msg = int(nombre_msg)
+                    # Save media informations
+                    self.save_message(table, "R", "voice", title, extension, None, time, True)
 
-                    self.canevas_msgcounter4.itemconfig(self.msg_cc4, fill="#E88522", outline="#E88522")
-                    self.canevas_msgcounter4.itemconfig(self.msg_ct4, text=nombre_msg + 1)
+    def delete_message(self, *event):
+        active_client = self.active_client.text()
+        if active_client != "":
+            messagebox = QMessageBox.question(self.MainWindow, "Confirmer la suppression",
+                                         f"Supprimer toutes vos conversations avec <b>{active_client}</b> ?"
+                                         "</br> Cette action est irréversible.",
+                                         QMessageBox.Yes, QMessageBox.No)
 
-    def put_inbox(self):
-        """ Qand l'utilisateur reçoit un message provenant d'un client avec qui il n'est pas en communication,
-        le message est enregistré et une notification lui est montrée."""
+            if messagebox == QMessageBox.Yes:
 
-        if self.msg_recu[0] == "A":
-            # Save message
-            ffichier = "ressources/" + "alpha_sach"
+                table = "sa" + active_client[:2].lower() + "ch"
+                try:
+                    connection = sqlite3.connect("sach.db")
+                    cursor = connection.cursor()
 
-            # Show orange notification
-            self.msg_counter("Alpha")
+                    print("Suppression en cours...")
+                    cursor.execute(f"DROP TABLE IF EXISTS {table}")
+                    cursor.close()
+                    connection.close()
+                    print("Opération terminée avec succès!")
+                except Exception as e:
+                    print(e)
 
-            # show popup
-            popup("Alpha")
+                # Refresh chat field
+                self.restore_chat()
 
-        elif self.msg_recu[0] == "B" :
-            ffichier = "ressources/" + "bravo_sach"
+    def create_media_bubble(self, parent,  kind, title, format, content):
+        """Called by 'create_bubble' funstions."""
 
-            # Show orange notification
-            self.msg_counter("Bravo")
+        ## WRITE FILE IF NOT EXISTS
 
-            # show popup
-            popup("Bravo")
+        # CREATE FOLDER
+        file_folder = kind.capitalize() + "s"
+        path = f"{self.home}/Documents/AR Intercom/Media/{file_folder}/"
 
-        elif self.msg_recu[0] == "D":
-            ffichier = "ressources/" + "delta_sach"
+        try:
+            open(f"{path}{title}{format}", "r")
 
-            # Show orange notification
-            self.msg_counter("Delta")
+        except FileNotFoundError:
+            with open(f"{path}{title}{format}", "wb") as file:
+                file.write(content)
 
-            # show popup
-            popup("Delta")
+        except Exception as e:
+            print("Erreur [536FUNC]: ", e)
 
-        elif self.msg_recu[0] == "E":
-            ffichier = "ressources/" + "echo_sach"
+        # CREATE BUBBLE
+        if kind == "voice":
+            self.create_voice_bubble(parent, title)
 
-            # Show orange notification
-            self.msg_counter("Echo")
+        elif kind == "video":
+            pass
 
-            # show popup
-            popup("Echo")
+        elif kind == "audio":
+            pass
 
-        elif self.msg_recu[0] == "T":
-            ffichier = "ressources/" + "tango_sach"
+        elif kind == "image":
+            pass
 
-            # Show orange notification
-            self.msg_counter("Tango")
-
-            # show popup
-            popup("Tango")
-
-        # Save message in the correct file
-        tmps = self.get_time() # Get time
-
-        chat_file = open(ffichier, "a")
-        chat_file.write("R:" + self.msg_recu[1:] + "\n" + tmps + "\n")
-        chat_file.close()
-
-    def supprimer_msg(self, event):
-        current_text = self.cadre_discussions.cget("text")
-        if current_text != "":
-            fichier = "ressources/" + current_text.lower() + "_sach"
-            if messagebox.askyesno("Effacement des discussions",
-                                    f"Êtes-vous sûr de vouloir effacer vos conversations avec {current_text} ?"):
-
-                lecture = open(fichier, 'w')
-                lecture.close()
-
+        elif kind == "document":
+            pass
 
 # ============================================== SEE COMMAND RESULT ====================================================
 # Run the app   -------  Just for trying
-
 if __name__ == "__main__":
-    app = Callbacks()
+    app = QApplication.instance()
+    if not app:
+        app = QApplication(sys.argv)
+    run = ChatWin()
+    sys.exit(app.exec())
 
 # ===================================================== END ============================================================
