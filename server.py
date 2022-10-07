@@ -1,111 +1,170 @@
 # -*- This python file uses the following encoding : coding:utf-8 -*-
 
+import os, sys, time
 import socket
 import select
-from interface import UserInteface
 
-# Création de la classe Server
-class Serveur(UserInteface) :
+from PyQt5.QtCore import QObject, pyqtSignal
 
-    def __init__(self):
+from users import Users
 
-        self.user_code = ""
-        self.port = ""
+class Server(QObject):
+    """Class server to listen, accept connections and receive messages."""
 
-        # Creatind list of connected clients
-        self.connected = []
+    # Signals will outsent when receiving messages to
+    new_message = pyqtSignal()
+    new_file = pyqtSignal()
 
-        # list of clients that have sent messages
-        self.readlist = []
-
-    # Creation des setters
-    def set_usercode(self, p):
-        self.user_code = p
+    # Creating setters
+    def set_usercode(self, code: str):
+        """Set the user code. Must be unique in same compagny."""
+        self.user_code = code
 
     def set_port(self):
+        """Create a server listening port according to the user code."""
         self.get_user_code()
-        for x in self.dictionnary.keys():
+        for x in Users.dictionnary.keys():
             if x == self.user_code:
-                self.port = self.dictionnary[x]
+                self.port = Users.dictionnary[x]
 
-    # Création des getters
+    # Creating getters des getters
     def get_user_code(self):
+        """Returns the usercode."""
         return self.user_code
 
-    def get_port(self):
-        return self.port
-
-    # Creation du socket
+    # Creating socket
     def create_socket_server(self):
-        global connexion_principale
+        """Create a socket as server and listen waiting for new connections."""
 
-        hote = "0.0.0.0"
+        global server_connection
+        host = ""
 
-        connexion_principale = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
         try:
-            connexion_principale.bind((hote, self.port))
+            server_connection.bind((host, self.port))
+
         except OSError:
             pass
-            #messagebox.showwarning("Nom de code reservé",
-               # "Une autre personne est connecté avec votre nom de code!")
+
         else:
-            connexion_principale.listen(5)
+            server_connection.listen(5)
+            print(f"Server listening on port {self.port}.")
 
     # Accept connections and wait for messages
     def launch_server(self):
-        """ Cette fonction a pour rôle d'acceter des connexions multiples venant des clients différents
-        qui demandent probablement à se connecter,
-        ainsi que de lire les messages reçus grêce à l'appel de la fontion 'receive_message'."""
+        """Accept connection if asked and call the 'receive_message' funtion to receive message."""
 
-        while True :
-            attente, wlist, xlist = select.select([connexion_principale], [], [], 0.50)
+        # ONLINE CLIENTS LIST
+        self.connected = []
 
-            for connexion in attente:
-                connexion_avec_client, adresse = connexion.accept()  # Acceptation de la connexion pour chaque demande
-                self.connected.append(connexion_avec_client)  # Incrémentation de la liste des clients connectés
+        # MESSAGING CLIENT LIST
+        self.readlist = []
 
+        while True:
+            waiters, wlist, xlist = select.select([server_connection], [], [], 0.50)
+
+            # Accept connections
+            for connection in waiters:
+                connect_client, adress = connection.accept()
+                self.connected.append(connect_client)
+
+            # Receive message
             try:
                 self.readlist, wlist, xlist = select.select(self.connected, [], [], 0.50)
 
-            except select.error:  # Exception lévée au cas où la liste des clients connectés serait vide
+            except select.error:
+                # If 'connected' list is empty
                 pass
 
             else:
                 self.receive_message()
 
-    # Recieve message and send status
     def receive_message(self):
-        """Parcours la liste des clients à lire."""
+        """Receive message and send status report."""
+
         for client in self.readlist:
 
+            # TRY TO RECEIVE MESSAGE
             try:
-                self.msg_recu = client.recv(1024)
-                self.msg_recu = self.msg_recu.decode("utf8")
+                self.received_message = client.recv(1024)
 
             except ConnectionError:
+                # If this error occurs (probably ConnectionAbortedError) no message will be received.
                 pass
-                # If the current client is disconnected, pass and search for another
 
             else:
-                # Send status
-                server_reply = "Received"
-                server_reply = server_reply.encode("utf8")
+                # TRY TO DECODE IT
                 try:
-                    client.send(server_reply)
-                except:
+                    self.received_message = self.received_message.decode("utf8")
+
+                except UnicodeDecodeError:
+                    # If this error occurs, it means the message is a media file. It's not a problem.
                     pass
 
-                # Save mesasge and show popup
-                lf_text = self.cadre_discussions.cget("text")
+                finally:
+                    # SEND STATUS REPORT
+                    received = "1"
+                    self.confirm_reception = received.encode("utf8")
 
-                if self.msg_recu != "":
-                    if lf_text == "" or lf_text[0] != self.msg_recu[0]:
-                        self.put_inbox()    # Save message in the file
+                    try:
+                        client.send(self.confirm_reception)
+                    except:
+                        pass
 
-                    else:
-                        self.receive_msg_bubble()
+                    try:
+                        if self.received_message[1] == "S":
+                            # EMIT NEW TEXT MESSAGE SIGNAL > TO SHOW GUI BUBBLE
+                            self.new_message.emit()
 
-    def close_socket_server(self):
-        connexion_principale.close()
+                        elif self.received_message[1] == "B":
+                            # IF MESSAGE IS NOT STRING, COLLECT MEDIA INFO THEN EMIT 'NEW FILE' SIGNAL > TO SHOW  BUBBLE
 
-# ===================================================== END ============================================================
+                            spliter = self.received_message[2:].split(",")
+                            self.media_info = {"Kind": f"{spliter[0]}", "Size": f"{spliter[1]}",
+                                               "Title": f"{spliter[2]}", "Extension": f"{spliter[3]}"}
+
+                            # CHOOSE FOLDER WHERE TO SAVE FILE (BYTES) ACCORDING TO OS
+                            if sys.platform == "win32":
+                                home = os.environ["USERPROFILE"]
+                            else:
+                                home = os.environ["HOME"]
+
+                            # Building folder / path
+                            file_folder = self.media_info["Kind"].capitalize() + "s"
+                            directory = f"{home}/Documents/AR Intercom/Media/{file_folder}/"
+
+                            # Set file title
+                            if self.media_info["Kind"] == "voice":
+                                f_title = f"ARV-{time.strftime('%d%m%Y-%H%M-%S')}"
+                                self.media_info["Extension"] = ".wav" if sys.platform == "darwin" else ".arv"
+                            else:
+                                f_title = self.media_info["Title"]
+
+                            self.media_info["Title"] = f_title
+
+                            # RECEIVE AND WRITE BLOB (MEDIA CONTENT)
+                            file = open(f"{directory}{self.media_info['Title']}{self.media_info['Extension']}", "ab")
+
+                            self.data = b""
+                            while len(self.data) < int(self.media_info["Size"]):
+
+                                blob = client.recv(10240)   # Receive  10Kb/transaction
+
+                                file.write(blob)
+
+                                self.data += blob
+
+                            # When it's done close file and emit new file signal to show widget
+                            file.close()
+                            self.new_file.emit()
+
+                    except IndexError:
+                        pass
+
+                    except Exception as e:
+                        print("ERR166 SR: ", e)
+
+    def close_server(self):
+        server_connection.close()
+# ===================================================== END ============================================================# ===================================================== END ============================================================
