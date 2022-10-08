@@ -9,9 +9,7 @@ They must be connected at the same network (WiFi).
 # How to ?
 Make sure you have Python 3.9 installed on your computer 
 
-## Generate an executable app
-
+## Generate windows executable app
 1. Install requirements.txt `pip install -r requirements.txt`
-2. Run freeze.bat file
-3. The executable file must be generated __build/exe.win*/main.exe__
-
+2. Run `python setup.py build` in your terminal
+3. The executable file must be generated __build/exe.win*/Ar_Intercom.exe__
