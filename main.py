@@ -2,10 +2,10 @@
 
 import sys, sqlite3
 
-from PyQt5 import QtWidgets, QtGui, QtCore
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QFrame, QLabel
-from PyQt5.QtGui import QColor
-from PyQt5.QtCore import *
+from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QFrame, QLabel
+from PySide6.QtGui import QColor
+from PySide6.QtCore import *
 
 from splash import Ui_SplashScreen
 from functionsSL import SignIn

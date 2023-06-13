@@ -7,10 +7,10 @@ from functions import ChatWin
 from users import Users
 from styles import *
 
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QPushButton, QLineEdit, QFrame, QLabel
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import *
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QApplication, QPushButton, QLineEdit, QFrame, QLabel
+from PySide6.QtGui import QPixmap
+from PySide6.QtCore import *
 
 # CALLBACKS IN SIGN IN WINDOW
 # ---------------------------

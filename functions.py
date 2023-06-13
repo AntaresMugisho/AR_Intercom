@@ -15,10 +15,10 @@ import time, threading, os, sys, platform, sqlite3, sounddevice, wavio
 from functools import partial
 
 # External packages
-from PyQt5 import QtCore, QtGui, QtWidgets, QtMultimedia
-from PyQt5.QtWidgets import QApplication, QMessageBox, QFrame, QLabel, QPushButton, QSlider, QProgressBar
-from PyQt5.QtMultimedia import *
-from PyQt5.QtCore import *
+from PySide6 import QtCore, QtGui, QtWidgets, QtMultimedia
+from PySide6.QtWidgets import QApplication, QMessageBox, QFrame, QLabel, QPushButton, QSlider, QProgressBar
+from PySide6.QtMultimedia import *
+from PySide6.QtCore import *
 
 # ----------------------------------------------------------------------------------------------------------------------
 class LogIn(LoginWindow):

@@ -6,8 +6,8 @@ from chatwindow import Ui_ChatWindow
 import sys
 import platform
 
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import *   # import of all widgets (QApplication, QLabel ...)
+from PySide6 import QtCore, QtGui
+from PySide6.QtWidgets import *   # import of all widgets (QApplication, QLabel ...)
 
 ###################################################################################
 
