@@ -21,69 +21,10 @@ from PyQt5.QtMultimedia import *
 from styles import *
 
 #GUI FILES
-from signinwindow import Ui_SigninWindow
 from loginwindow import Ui_LoginWindow
 
 #####################################################################
 
-# SIGN IN WINDOW (from gui file)
-# -------------------------------------------------------------
-
-class SigninWindow(QWidget):
-    def __init__(self):
-        QWidget.__init__(self)
-        self.ui = Ui_SigninWindow()
-        self.ui.setupUi(self)
-
-        # REMOVE TITLE BAR
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
-        # DROP SHADOW
-        self.shadow = QGraphicsDropShadowEffect(self)
-        self.shadow.setBlurRadius(10)
-        self.shadow.setXOffset(0)
-        self.shadow.setYOffset(0)
-        self.shadow.setColor(QColor(0, 0, 0, 50))
-        # Apply shadow
-        self.setGraphicsEffect(self.shadow)
-
-        # MOVE THE WINDOW
-        self.ui.main_title.mouseMoveEvent = self.move_window
-
-        # CONNECT CHOOSE PROFILE
-        self.ui.choose_profilepicture.setToolTip("Définir une photo de profil (PRO)")
-        # self.ui.choose_profilepicture.mousePressEvent = self.chooseProfile
-
-        # CONNECT "NEXT" ADN "VALIDATE" BUTTON
-        self.ui.next.clicked.connect(self.check_data)
-        self.ui.validate.clicked.connect(self.confirm_subscription)
-
-        # HIDE "BACK" BUTTON
-        self.ui.return_button.clicked.connect(self.go_back)
-        self.ui.return_button.hide()
-
-        # INDICATE CURRENT FEATURE INDEX (0)
-        self.ui.prev_feature.hide()
-        self.ui.feature_0.setStyleSheet(Features.style_active)
-
-        # CONNECT FEATURE BUTTONS AND HIDE THEM
-        self.ui.next_feature.clicked.connect(partial(self.features, "Next"))
-        self.ui.prev_feature.clicked.connect(partial(self.features, "Previous"))
-
-        # Connect small indicators
-        self.ui.feature_0.clicked.connect(partial(self.features, 0))
-        self.ui.feature_1.clicked.connect(partial(self.features, 1))
-        self.ui.feature_2.clicked.connect(partial(self.features, 2))
-        self.ui.feature_3.clicked.connect(partial(self.features, 3))
-        self.ui.feature_4.clicked.connect(partial(self.features, 4))
-        self.ui.feature_5.clicked.connect(partial(self.features, 5))
-
-        # CONNECT "TERMINATE" BUTTON
-        self.ui.terminate.clicked.connect(self.terminate)
-
-        # SHOW SIGNIN WINDOW
-        self.show()
 
 # LOG IN WINDOW (from gui file)
 # -------------------------------------------------------------

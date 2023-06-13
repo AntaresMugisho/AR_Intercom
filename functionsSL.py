@@ -1,6 +1,5 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
-
 import sys, os, sqlite3
 
 from interface import SigninWindow
@@ -15,6 +14,7 @@ from PyQt5.QtCore import *
 
 # CALLBACKS IN SIGN IN WINDOW
 # ---------------------------
+
 
 class SignIn(SigninWindow):
     def __init__(self):
@@ -205,11 +205,8 @@ class SignIn(SigninWindow):
         self.close()
 
 
-# ============================================== SEE COMMAND RESULT ====================================================
-# Run the app   -------  Just for trying
+# RUN JUST FOR TEST
 if __name__ == "__main__":
-    app = QApplication.instance()
-    if not app:
-        app = QApplication(sys.argv)
+    app = QApplication(sys.argv)
     run = SignIn()
     sys.exit(app.exec_())
