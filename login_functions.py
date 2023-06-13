@@ -3,15 +3,13 @@
 import sys
 import threading
 import sqlite3
-from functools import partial
 
-from PyQt5.QtWidgets import QApplication, QFileDialog, QPushButton, QLineEdit
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import Qt
 
 from login_window import LoginWindow
 from users import Users
-from styles import LineEdit, ComboBox, Features
+from styles import LineEdit
 from client import Client
 from server import Server
 

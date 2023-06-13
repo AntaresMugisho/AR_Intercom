@@ -13,7 +13,7 @@ from ui.register_window import Ui_SigninWindow
 class RegisterWindow(QWidget):
 
     def __init__(self):
-        QWidget.__init__(self)
+        super().__init__()
         self.ui = Ui_SigninWindow()
         self.ui.setupUi(self)
 
