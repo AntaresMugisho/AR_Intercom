@@ -1,55 +1,18 @@
 # -*- This python file uses the following encoding : coding:utf-8 -*-
 
 # RESSOURCES FILE
-from resources import img_rc
 
 # Users list
 from users import Users
 
 import sys, os
-from functools import partial
 
-from PyQt5 import QtCore, QtGui, QtMultimedia
+from PyQt5 import QtCore, QtGui
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import *   # import of all widgets (QApplication, QLabel ...)
-from PyQt5 import *
-from PyQt5.QtGui import QColor
-from PyQt5.QtMultimedia import *
-
 
 #STYLES
 from styles import *
-
-#GUI FILES
-from loginwindow import Ui_LoginWindow
-
-#####################################################################
-
-
-# LOG IN WINDOW (from gui file)
-# -------------------------------------------------------------
-class LoginWindow(QMainWindow):
-    def __init__(self):
-        QMainWindow.__init__(self)
-        self.ui = Ui_LoginWindow()
-        self.ui.setupUi(self)
-
-        # HIDE WARNINGS
-        self.ui.name_warning.hide()
-        self.ui.psw_warning.hide()
-
-        self.ui.log_username.leaveEvent = self.check_username
-        self.ui.log_password.leaveEvent = self.check_password
-
-        self.ui.connect_log.clicked.connect(self.check_data)
-        self.ui.connect_log.keyPressEvent = self.check_data
-
-        # CHANGE ECHOMODE TO PREVIEW PASSWORD
-        self.ui.toogle_button.enterEvent = lambda event: self.ui.log_password.setEchoMode(QLineEdit.Normal)
-        self.ui.toogle_button.leaveEvent = lambda event: self.ui.log_password.setEchoMode(QLineEdit.Password)
-
-        # SHOW LOGIN WINDOW
-        #self.show()
 
 # CHAT WINDOW (Main Window)
 # -------------------------------------------------------------

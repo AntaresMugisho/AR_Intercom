@@ -20,83 +20,6 @@ from PyQt5.QtWidgets import QApplication, QMessageBox, QFrame, QLabel, QPushButt
 from PyQt5.QtMultimedia import *
 from PyQt5.QtCore import *
 
-# ----------------------------------------------------------------------------------------------------------------------
-class LogIn(LoginWindow):
-    def __init__(self):
-        LoginWindow.__init__(self)
-        self.connect_database()
-
-    def connect_database(self):
-        # CONNECT TO DATA BASE
-        try:
-            connection = sqlite3.connect("ui.db")
-            cursor = connection.cursor()
-
-            i = str(1)
-
-            cursor.execute("SELECT * FROM uidb WHERE id = ?", i)
-            request = cursor.fetchone()
-
-            cursor.close()
-            connection.close()
-
-            # CATCH INFORMATIONS
-            self.u_name = request[1]
-            self.u_code = request[2]
-            self.u_psw = request[3]
-
-        except Exception as e:
-            print(f"Error while connecting to DB: {e}")
-
-        else:
-            self.ui.welcome_log.setText(f"Salut {self.u_code} !")
-            Users.ulist.remove(self.u_code)
-
-    def check_username(self, *event):
-
-        # CHECK USER NAME
-        if not self.ui.log_username.text():
-            self.ui.log_username.setStyleSheet(LineEdit.style_error)
-            self.ui.name_warning.show()
-            self.ui.name_warning.setText("Saisir le nom d'utilisateur")
-
-        elif self.ui.log_username.text() != self.u_name:
-            self.ui.name_warning.show()
-            self.ui.name_warning.setText("Nom d'utilisateur incorrect !")
-
-        else:
-            self.ui.name_warning.hide()
-            self.ui.log_username.setStyleSheet(LineEdit.style_normal)
-
-    def check_password(self, *event):
-        # CHECK PASSWORD
-        if not self.ui.log_password.text():
-            self.ui.log_password.setStyleSheet(LineEdit.style_error)
-            self.ui.psw_warning.show()
-            self.ui.psw_warning.setText("Saisir le mot de passe")
-
-        elif self.ui.log_password.text() != self.u_psw:
-            self.ui.psw_warning.show()
-            self.ui.psw_warning.setText("Mot de passe incorrect !")
-
-        else:
-            self.ui.psw_warning.hide()
-            self.ui.log_password.setStyleSheet(LineEdit.style_normal)
-
-    def check_data(self, *event):
-        if event is True:
-            if event.key == Qt.Key_Return:
-                self.check_username()
-                self.check_password()
-        else:
-            self.check_username()
-            self.check_password()
-
-        if (self.ui.log_username.text(), self.ui.log_password.text()) == (self.u_name, self.u_psw):
-
-            self.login()
-
-
 ##################################################################################################################
 # GLOBALS
 # To count recording time
@@ -108,7 +31,7 @@ class ChatWin(LogIn, ChatWindow):
     avec l'utilisateur."""
 
     def __init__(self):
-        LogIn.__init__(self)
+        # LogIn.__init__(self)
         ChatWindow.__init__(self)
 
 
@@ -126,32 +49,8 @@ class ChatWin(LogIn, ChatWindow):
                     os.makedirs(path)
 
         except Exception as e:
-            print(f"Erreur 129 FUNC: {e}")
+            print(f"Erreur 52 FUNC: {e}")
 
-    def login(self):
-        """Verifie if the entered username and password are the same as
-        in the database, in which case the login window is hidden and the chat window is showed."""
-
-        # CREATE AND CONNECT SERVER
-        user_code = self.u_code
-        # Set client prefix
-        Client.prefix = user_code[0].upper()
-
-        self.server = Server()
-
-        self.server.set_usercode(user_code)
-        self.server.set_port()
-        self.server.create_socket_server()
-
-        self.thread = threading.Thread(target=self.server.launch_server)
-        self.thread.start()
-
-        # CONNECT SERVER SIGNAL WHEN RECEIVING MESSAGE TO CREATE WIDGET
-        self.server.new_message.connect(lambda: self.receive("string"))
-        self.server.new_file.connect(lambda: self.receive("blob"))
-
-        # SHOW CHAT WINDOW
-        self.show_chat_window()
 
     def ask_connection(self):
         """Try to connect to a other client"""
