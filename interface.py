@@ -9,12 +9,12 @@ from users import Users
 import sys, os
 from functools import partial
 
-from PySide6 import QtCore, QtGui, QtMultimedia
-from PySide6.QtCore import Qt, QTimer
-from PySide6.QtWidgets import *   # import of all widgets (QApplication, QLabel ...)
-from PySide6 import *
-from PySide6.QtGui import QColor
-from PySide6.QtMultimedia import *
+from PyQt5 import QtCore, QtGui, QtMultimedia
+from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtWidgets import *   # import of all widgets (QApplication, QLabel ...)
+from PyQt5 import *
+from PyQt5.QtGui import QColor
+from PyQt5.QtMultimedia import *
 
 
 #STYLES

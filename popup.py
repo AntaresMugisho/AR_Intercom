@@ -1,8 +1,8 @@
 # -*- This python file uses the following encoding : coding:utf-8 -*-
 
-from win32api import *
-from win32gui import *
-import win32con
+#from win32api import *
+#from win32gui import *
+#import win32con
 import sys, os
 import struct
 import time
