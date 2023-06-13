@@ -9,7 +9,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 
 from ui_splash import Ui_SplashScreen
-from functionsSL import SignIn
+from register_functions import Register
 from functions import ChatWin
 
 
@@ -121,7 +121,7 @@ class SplashScreen(QWidget):
             connection.close()
 
         except:
-            self.main = SignIn()
+            self.main = Register()
 
         else:
             self.main = ChatWin()

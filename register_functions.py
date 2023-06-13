@@ -1,24 +1,61 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
-import sys, os, sqlite3
+import sys
+import os
+import sqlite3
+from functools import partial
 
-from interface import SigninWindow
-from functions import ChatWin
-from users import Users
-from styles import *
-
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QPushButton, QLineEdit, QFrame, QLabel
+from PyQt5.QtWidgets import QApplication, QFileDialog, QPushButton, QLineEdit
+from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import *
 
-# CALLBACKS IN SIGN IN WINDOW
-# ---------------------------
+from register_window import RegisterWindow
+from users import Users
+from styles import LineEdit, ComboBox, Features
 
 
-class SignIn(SigninWindow):
+class Register(RegisterWindow):
+
     def __init__(self):
-        SigninWindow.__init__(self)
+        # Initialize register window, containing register_window property
+        RegisterWindow.__init__(self)
+
+        self.data = []
+        self.picture = None
+        self.dragPos = None
+
+        # SET MOVE EVENT ON THE WINDOW
+        self.ui.main_title.mouseMoveEvent = self.move_window
+
+        # CONNECT CHOOSE PROFILE
+        self.ui.choose_profilepicture.mousePressEvent = self.choose_profile
+
+        # CONNECT "NEXT" ADN "VALIDATE" BUTTON
+        self.ui.next.clicked.connect(self.validate)
+        self.ui.validate.clicked.connect(self.confirm_subscription)
+
+        # HIDE "BACK" BUTTON ON START
+        self.ui.return_button.clicked.connect(self.go_back)
+        self.ui.return_button.hide()
+
+        # INDICATE CURRENT FEATURE INDEX (0)
+        self.ui.prev_feature.hide()
+        self.ui.feature_0.setStyleSheet(Features.style_active)
+
+        # CONNECT FEATURE BUTTONS AND HIDE THEM
+        self.ui.next_feature.clicked.connect(partial(self.features, "Next"))
+        self.ui.prev_feature.clicked.connect(partial(self.features, "Previous"))
+
+        # Connect small indicators
+        self.ui.feature_0.clicked.connect(partial(self.features, 0))
+        self.ui.feature_1.clicked.connect(partial(self.features, 1))
+        self.ui.feature_2.clicked.connect(partial(self.features, 2))
+        self.ui.feature_3.clicked.connect(partial(self.features, 3))
+        self.ui.feature_4.clicked.connect(partial(self.features, 4))
+        self.ui.feature_5.clicked.connect(partial(self.features, 5))
+
+        # CONNECT "TERMINATE" BUTTON
+        self.ui.terminate.clicked.connect(self.terminate)
 
     def move_window(self, event):
         if event.buttons() == Qt.LeftButton:
@@ -34,28 +71,26 @@ class SignIn(SigninWindow):
             self.close()
 
     def save_data(self, data):
-        """Create a database and insert specified data inside."""
-
-        # CREATE DATA BASE
+        """
+        Create a new table and insert new registered user data inside.
+        """
         try:
             connection = sqlite3.connect("ui.db")
             cursor = connection.cursor()
 
-            print("Creating table...")
-            cursor.execute("""CREATE TABLE IF NOT EXISTS uidb (
-                            id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            name TEXT NOT NULL,
-                            code TEXT NOT NULL,
-                            psw TEXT,
-                            pic BLOB,
-                            port INTEGER NOT NULL)""")
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS uidb (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    code TEXT NOT NULL,
+                    psw TEXT,
+                    pic BLOB,
+                    port INTEGER NOT NULL)
+            """)
 
-            print("Saving data...")
             cursor.execute("INSERT INTO uidb (name, code, psw, pic, port) VALUES (?, ?, ?, ?, ?)", data)
 
             # SAVE AND CLOSE CONNEXION
-            print(f"Done.\nSigned in successfully as {data[0]}.")
-
             connection.commit()
             cursor.close()
             connection.close()
@@ -64,12 +99,12 @@ class SignIn(SigninWindow):
             print(f"Error while saving: {e}")
 
     def go_back(self):
-        index = self.ui.stackedWidget.currentIndex()
+        index = self.stackedWidget.currentIndex()
 
-        if index != 0: self.ui.stackedWidget.setCurrentIndex(index - 1)
-        if index == 1: self.ui.return_button.hide()
+        if index != 0: self.stackedWidget.setCurrentIndex(index - 1)
+        if index == 1: self.return_button.hide()
 
-    def chooseProfile(self, event):
+    def choose_profile(self, event):
         if event.button() == 1:
 
             if sys.platform == "win32":
@@ -77,7 +112,7 @@ class SignIn(SigninWindow):
             else:
                 home = os.environ["HOME"]
 
-            self.picture = QtWidgets.QFileDialog.getOpenFileName(self, "Profile picture", home, "Photos *.jpg *.PNG")
+            self.picture = QFileDialog.getOpenFileName(self, "Profile picture", home, "Photos *.jpg *.PNG")
             directory = self.picture[0]
             if directory != "":
 
@@ -88,28 +123,24 @@ class SignIn(SigninWindow):
                 with open(directory, "rb") as file:
                     self.picture = file.read()
 
-    def check_data(self):
-        """Verify if data where correctlly entered by the user in the signin window,
-                in which case they ara saved in a database."""
+    def validate(self):
+        """
+        Verify if data where correctly entered by the user in the register window,
+        in which case they ara saved in database
+        """
 
-
-        self.data = []
         server_port = ""
-
-        ############# CHECK FORMULAR ###################
 
         # CHECK LINES EDIT
         for widget in self.ui.form.findChildren(QLineEdit):
             if not widget.text():
                 widget.setStyleSheet(LineEdit.style_error)
-
             else:
                 widget.setStyleSheet(LineEdit.style_normal)
                 if widget.objectName() == "user_name":
-                    user_name = self.ui.user_name.text()
-                    self.data.append(user_name)
+                    self.data.append(self.ui.user_name.text())
 
-        # CHEK COMBO BOX
+        # CHECK COMBO BOX
         if self.ui.code.currentIndex() == 0:
             self.ui.code.setStyleSheet(ComboBox.style_error)
         else:
@@ -145,7 +176,9 @@ class SignIn(SigninWindow):
             self.ui.return_button.show()
 
     def confirm_subscription(self):
-
+        """
+        Verify if user agrees to the terms of use
+        """
         if self.ui.iaggree.isChecked():
             self.save_data(self.data)
             self.ui.stackedWidget.setCurrentIndex(2)
@@ -155,7 +188,6 @@ class SignIn(SigninWindow):
             except Exception as e:
                 print(e)
             self.ui.return_button.hide()
-
 
     def features(self, page):
         index = self.ui.what_isnew.currentIndex()
@@ -183,7 +215,7 @@ class SignIn(SigninWindow):
 
             if index == 0:
                 self.ui.prev_feature.hide()
-                if self.ui.next_feature.isHidden(): self.ui.next_feature.show()
+                if self.ui.next_feature.isHidden(): self.next_feature.show()
 
             elif index == 5:
                 self.ui.next_feature.hide()
@@ -193,20 +225,18 @@ class SignIn(SigninWindow):
                 if self.ui.next_feature.isHidden(): self.ui.next_feature.show()
                 if self.ui.prev_feature.isHidden(): self.ui.prev_feature.show()
 
-        for range, w in enumerate(self.ui.current_feature.findChildren(QPushButton)):
-            if range == index:
-                w.setStyleSheet(Features.style_active)
-
+        # Show current index
+        for i, button in enumerate(self.ui.current_feature.findChildren(QPushButton)):
+            if i == index:
+                button.setStyleSheet(Features.style_active)
             else:
-                w.setStyleSheet(Features.style_inactive)
+                button.setStyleSheet(Features.style_inactive)
 
     def terminate(self):
-        self.main = ChatWin()
+        # self.main = ChatWin()
         self.close()
 
-
-# RUN JUST FOR TEST
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    run = SignIn()
-    sys.exit(app.exec_())
+    run = Register()
+    sys.exit(app.exec())
