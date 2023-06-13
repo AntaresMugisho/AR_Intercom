@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'chatwindow.ui'
+# Form implementation generated from reading ui file 'ui_chat_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.2
 #
@@ -483,7 +483,7 @@ class Ui_ChatWindow(object):
         self.menuMenu.setObjectName("menuMenu")
         ChatWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(ChatWindow)
-        self.statusbar.setWindowTitle()
+        self.statusbar.setWindowTitle("")
         self.statusbar.setObjectName("statusbar")
         ChatWindow.setStatusBar(self.statusbar)
         self.actionAide = QtWidgets.QAction(ChatWindow)
@@ -523,4 +523,5 @@ class Ui_ChatWindow(object):
         self.menuMenu.setTitle(_translate("ChatWindow", "Menu"))
         self.actionAide.setText(_translate("ChatWindow", "Aide"))
         self.actionQuitter.setText(_translate("ChatWindow", "Quitter"))
-import user_profile_picture_rc
+
+from resources import img_rc

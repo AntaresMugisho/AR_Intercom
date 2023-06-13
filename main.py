@@ -5,17 +5,17 @@ import sqlite3
 
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtGui import QColor
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QColor
 
-from splash import Ui_SplashScreen
-
+from ui_splash import Ui_SplashScreen
 from functionsSL import SignIn
 from functions import ChatWin
 
 
 # GLOBALS
 counter = 0
+
 
 class SplashScreen(QWidget):
     """
@@ -120,7 +120,7 @@ class SplashScreen(QWidget):
             cursor.close()
             connection.close()
 
-        except :
+        except:
             self.main = SignIn()
 
         else:
