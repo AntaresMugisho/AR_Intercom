@@ -2,7 +2,7 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from ui_chat_window import Ui_ChatWindow
+from ui.chat_window import Ui_ChatWindow
 
 
 class ChatWindow(QMainWindow):

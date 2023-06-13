@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 
-from ui_splash import Ui_SplashScreen
+from ui.splash import Ui_SplashScreen
 from register_functions import Register
 from functions import ChatWin
 
@@ -43,7 +43,7 @@ class SplashScreen(QWidget):
         self.splash_screen.line.setGraphicsEffect(shadow)
 
         # PROGRESS START AT ZERO
-        self.progressValue(0)
+        self.progress_value(0)
 
         # TIMER
         self.timer = QtCore.QTimer()
@@ -59,7 +59,7 @@ class SplashScreen(QWidget):
 
         self.show()
 
-    def progressValue(self, value):
+    def progress_value(self, value):
         stylesheet = """
         QFrame{
             border-radius:132px;
@@ -88,7 +88,7 @@ class SplashScreen(QWidget):
 
         # Fix value error if > 1.000
         if value >= 100 : value = 1.000
-        self.progressValue(value)
+        self.progress_value(value)
 
         # CLOSE SPLASHSCREEN AND OPEN APP
         if counter > 100:

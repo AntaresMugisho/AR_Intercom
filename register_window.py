@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 
-from ui_register_window import Ui_SigninWindow
+from ui.register_window import Ui_SigninWindow
 
 
 class RegisterWindow(QWidget):
