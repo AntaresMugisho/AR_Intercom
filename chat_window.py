@@ -10,17 +10,17 @@ class ChatWindow(QMainWindow):
     Initialize chat window as the main window
     """
     def __init__(self):
-        QMainWindow.__init__(self)
+        super().__init__()
 
-        self.chat_window = Ui_ChatWindow()
-        self.chat_window.setupUi(self)
+        self.ui = Ui_ChatWindow()
+        self.ui.setupUi(self)
+
+        self.ui.online_toast_2.hide()
 
         # SHOW WINDOW
         self.show()
-        self.chat_window.online_toast_2.hide()
 
 
-# RUN JUST FOR TEST
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     run = ChatWindow()

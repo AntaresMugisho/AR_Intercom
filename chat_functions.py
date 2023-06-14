@@ -25,14 +25,13 @@ from PyQt5.QtCore import *
 # To count recording time
 chrono, mins = (1,0)
 
-
-class ChatWin(LogIn, ChatWindow):
+class Chat():
     """Commandes de l'interface du logiciel pour interagir
     avec l'utilisateur."""
 
     def __init__(self):
         # LogIn.__init__(self)
-        ChatWindow.__init__(self)
+        # ChatWindow.__init__(self)
 
 
         # CREATE MEDIA DIRECTORY IF NOT EXISTS
@@ -660,9 +659,7 @@ class ChatWin(LogIn, ChatWindow):
 # Run the app   -------  Just for trying
 if __name__ == "__main__":
     app = QApplication.instance()
-    if not app:
-        app = QApplication(sys.argv)
-    run = ChatWin()
+    run = Chat()
     sys.exit(app.exec())
 
 # ===================================================== END ============================================================
