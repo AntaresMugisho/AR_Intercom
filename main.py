@@ -121,10 +121,11 @@ class SplashScreen(QWidget):
             connection.close()
 
         except:
-            self.main = Register()
+            main = Register()
 
         else:
-            self.main = Login()
+            main = Login()
+
 
 if __name__ == "__main__":
     app = QApplication.instance()

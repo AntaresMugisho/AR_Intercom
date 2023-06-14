@@ -236,6 +236,7 @@ class Register(RegisterWindow):
         # self.main = ChatWin()
         self.close()
 
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     run = Register()

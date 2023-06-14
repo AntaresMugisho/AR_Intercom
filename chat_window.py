@@ -24,4 +24,4 @@ class ChatWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     run = ChatWindow()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

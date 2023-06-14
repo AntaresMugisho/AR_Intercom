@@ -1,22 +1,17 @@
-# -*- This python file uses the following encoding : coding:utf-8 -*-
+# -*- This python file uses the following encoding : utf-8 -*-
 
-# RESSOURCES FILE
+import sys
+import os
 
-# Users list
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt, QTimer
+
+from styles import *
 from users import Users
 
-import sys, os
 
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtWidgets import *   # import of all widgets (QApplication, QLabel ...)
-
-#STYLES
-from styles import *
-
-# CHAT WINDOW (Main Window)
-# -------------------------------------------------------------
-class ChatWindow(LoginWindow):
+class ChatWindow:
     def __init__(self):
 
         # MAIN WINDOW
@@ -34,7 +29,7 @@ class ChatWindow(LoginWindow):
         self.menubar()
 
         # DISPLAY THE LOGIN WINDOW
-        self.show_login_window()
+        self.display_widgets()
 
     def menubar(self):
         """# STATUS BAR
@@ -87,12 +82,7 @@ class ChatWindow(LoginWindow):
         finally:
             self.MainWindow.close()
 
-    def show_login_window(self):
-        self.MainWindow.setCentralWidget(self.ui.central_log)
-        if sys.platform == "darwin":
-            self.MainWindow.resize(690, 436)
-
-    def show_chat_window(self):
+    def display_widgets(self):
         # SHOW CHAT WINDOW
 
         # Create a layout
@@ -198,7 +188,7 @@ class ChatWindow(LoginWindow):
             self.client_name.setStyleSheet("QPushButton{color:#FFF;font-size:20px; text-align:left; padding-left:10px;"
                                            "border:none;background:none;}")
             self.client_name.setText(name)
-            self.client_name.clicked.connect(self.ask_connection)
+            #self.client_name.clicked.connect(self.ask_connection)
             self.client_name.setObjectName(f"{name}_name")
 
             # MESSAGE COUNTER
@@ -256,7 +246,7 @@ class ChatWindow(LoginWindow):
         self.delete_button.setFixedSize(31, 31)
         self.delete_button.setStyleSheet("QPushButton{image: url(:/icons/icons/24778-200.png);background:transparent;}"
                                  "QPushButton::hover{background-color:#55FFFFFF;")
-        self.delete_button.clicked.connect(self.delete_message)
+        #self.delete_button.clicked.connect(self.delete_message)
         self.delete_button.hide()
 
         tophlayout = QtWidgets.QHBoxLayout(self.active_client_bg)
@@ -662,10 +652,7 @@ class ChatWindow(LoginWindow):
         self.play_button.clicked.connect(play_state)
 
 
-# MAIN PROGRAMM
 if __name__ == "__main__":
-    app = QApplication.instance()
-    if not app:
-        app = QApplication(sys.argv)
+    app = QApplication(sys.argv)
     run = ChatWindow()
     sys.exit(app.exec())

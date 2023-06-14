@@ -31,7 +31,7 @@ class RegisterWindow(QWidget):
         # Apply shadow on register window
         self.setGraphicsEffect(self.shadow)
 
-        self.ui.choose_profilepicture.setToolTip("Définir une photo de profile (PRO)")
+        self.ui.choose_profilepicture.setToolTip("Choose profile picture (PRO)")
 
         # SHOW REGISTER WINDOW
         self.show()

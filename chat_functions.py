@@ -1,55 +1,30 @@
-# -*- This python file uses the following encoding : coding:utf-8 -*-
+# -*- This python file uses the following encoding : utf-8 -*-
 
-# ================================================ IMPORTING PACKAGES ==================================================
+import sys
+import sqlite3
+import time
+import threading
 
-# My own modules
-from server import Server
-from interface import LoginWindow, ChatWindow
-from client import Client
-#from popup import popup
+import sounddevice
+import wavio
+from PyQt5.QtWidgets import QApplication, QFrame, QLabel, QMessageBox, QSlider
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
+from PyQt5.QtCore import QUrl, QTimer, QThread
+
+from chat_window import ChatWindow
+from helpers.create_media_folders import create_media_folders
 from users import Users
 from styles import *
+from client import Client
 
-# Python Library
-import time, threading, os, sys, platform, sqlite3, sounddevice, wavio
-from functools import partial
+chrono, mins = (1, 0)
 
-# External packages
-from PyQt5 import QtCore, QtGui, QtWidgets, QtMultimedia
-from PyQt5.QtWidgets import QApplication, QMessageBox, QFrame, QLabel, QPushButton, QSlider, QProgressBar
-from PyQt5.QtMultimedia import *
-from PyQt5.QtCore import *
-
-##################################################################################################################
-# GLOBALS
-# To count recording time
-chrono, mins = (1,0)
-
-class Chat():
-    """Commandes de l'interface du logiciel pour interagir
-    avec l'utilisateur."""
-
+class Chat(ChatWindow):
     def __init__(self):
-        # LogIn.__init__(self)
-        # ChatWindow.__init__(self)
+        super().__init__()
 
-
-        # CREATE MEDIA DIRECTORY IF NOT EXISTS
-        try:
-            if sys.platform == "win32":
-                self.home = os.environ["USERPROFILE"]
-            else:
-                self.home = os.environ["HOME"]
-
-            folders = ["Audios", "Documents", "Images", "Videos", "Voices"]
-            for i in folders:
-                path = f"{self.home}/Documents/AR Intercom/Media/{i}"
-                if not os.path.exists(path):
-                    os.makedirs(path)
-
-        except Exception as e:
-            print(f"Erreur 52 FUNC: {e}")
-
+        # CREATE MEDIA FOLDERS IF NOT EXIST
+        create_media_folders()
 
     def ask_connection(self):
         """Try to connect to a other client"""
@@ -108,7 +83,6 @@ class Chat():
 
         return designed_message
 
-
     def update_counter(self, name):
         """Increase the message counter badge on new message."""
 
@@ -128,7 +102,6 @@ class Chat():
 
                     parent = widget.parent()
                     parent.setStyleSheet(Clients.frame_unread_msg)
-
 
     def restore_chat(self):
         """Restore existing chats and create messge's bubbles for each one restored if exists."""
@@ -151,19 +124,19 @@ class Chat():
 
                 while 1:
                     request = cursor.fetchone()
-                    if request != None:
-                        kind = request[2]   # MAY BE STRING OR MEDIA
+                    if request is not None:
+                        kind = request[2]  # MAY BE STRING OR MEDIA
                         title = request[3]
-                        format = request[4]# THE FORMAT OF MESSAGE
+                        format = request[4]  # THE FORMAT OF MESSAGE
                         message = request[5]
                         blob = request[6]
-                        time = request[7]   # THE SENT OR RECEIVED TIME
-                        status = int(request[8]) # CONVERT TO BOOL
+                        time = request[7]  # THE SENT OR RECEIVED TIME
+                        status = int(request[8])  # CONVERT TO BOOL
 
-                    if request == None:
+                    if request is None:
                         break
 
-                    elif request[1] == "R":     # IF THE MESSAGE HAS BEEN RECEIVED
+                    elif request[1] == "R":  # IF THE MESSAGE HAS BEEN RECEIVED
 
                         # VERIFY IF IT'S A STRING OR A BLOB
                         if kind == "string":
@@ -172,7 +145,7 @@ class Chat():
                         else:
                             self.create_left_bubble(kind, title, format, blob, time)
 
-                    else:   # IF THE MESSAGE HAS BEEN SENT
+                    else:  # IF THE MESSAGE HAS BEEN SENT
 
                         if kind == "string":
                             self.create_right_bubble(kind, None, None, message, time, status)
@@ -377,7 +350,6 @@ class Chat():
 
         slider.valueChanged.connect(self.player.setPosition)
 
-
     def save_message(self, table, exp, kind, title, format, body, time, status):
 
         # TRY TO CONNECT TO THE DATABASE
@@ -386,15 +358,15 @@ class Chat():
             cursor = connection.cursor()
 
             cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table} (
-                                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                exp TEXT NOT NULL,
-                                kind TEXT NOT NULL,
-                                title TEXT, 
-                                format TEXT NOT NULL,
-                                str TEXT,
-                                byte BLOB,
-                                time TEXT,
-                                status TEXT)""")
+                                   id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                   exp TEXT NOT NULL,
+                                   kind TEXT NOT NULL,
+                                   title TEXT, 
+                                   format TEXT NOT NULL,
+                                   str TEXT,
+                                   byte BLOB,
+                                   time TEXT,
+                                   status TEXT)""")
 
             # DEFINE DATA AND INSERT IT INTO TABLE
             if kind == "string":
@@ -481,7 +453,7 @@ class Chat():
             except Exception as e:
                 print("Erreur 588FUNC: ", e)
 
-        #-------------------------------------------------------------------------------
+        # -------------------------------------------------------------------------------
 
         addressee = self.active_client.text()
         if not addressee:
@@ -539,7 +511,8 @@ class Chat():
         """Shows the received message in a bubble."""
 
         # FORMAT MESSAGE
-        message = self.server.received_message[2:] # the first and the second characters of msg are programm indicators.
+        message = self.server.received_message[
+                  2:]  # the first and the second characters of msg are programm indicators.
         receive_time = time.strftime("%d-%m-%Y %H:%M")
 
         # SHOW MESSAGE IF SENDER IS ACTIVE ELSE SAVE IT
@@ -570,7 +543,8 @@ class Chat():
 
             if name[0] == self.server.received_message[0]:  # If the initial letters are the same
                 # Show popup -> From popup.py
-                popup = Popup(name)
+                # popup = Popup(name)
+                pass
 
     def put_inbox(self, message, time):
         for name in Users.ulist:
@@ -598,9 +572,9 @@ class Chat():
         active_client = self.active_client.text()
         if active_client != "":
             messagebox = QMessageBox.question(self.MainWindow, "Confirmer la suppression",
-                                         f"Supprimer toutes vos conversations avec <b>{active_client}</b> ?"
-                                         "</br> Cette action est irréversible.",
-                                         QMessageBox.Yes, QMessageBox.No)
+                                              f"Supprimer toutes vos conversations avec <b>{active_client}</b> ?"
+                                              "</br> Cette action est irréversible.",
+                                              QMessageBox.Yes, QMessageBox.No)
 
             if messagebox == QMessageBox.Yes:
 
@@ -620,7 +594,7 @@ class Chat():
                 # Refresh chat field
                 self.restore_chat()
 
-    def create_media_bubble(self, parent,  kind, title, format, content):
+    def create_media_bubble(self, parent, kind, title, format, content):
         """Called by 'create_bubble' funstions."""
 
         ## WRITE FILE IF NOT EXISTS
@@ -655,10 +629,9 @@ class Chat():
         elif kind == "document":
             pass
 
-# ============================================== SEE COMMAND RESULT ====================================================
-# Run the app   -------  Just for trying
+
 if __name__ == "__main__":
-    app = QApplication.instance()
+    app = QApplication(sys.argv)
     run = Chat()
     sys.exit(app.exec())
 
