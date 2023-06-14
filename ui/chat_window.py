@@ -7,6 +7,7 @@ from styles import *
 from users import Users
 
 class Ui_ChatWindow(object):
+
     def setupUi(self, ChatWindow):
         ChatWindow.resize(690, 470)
         icon = QtGui.QIcon()
@@ -26,9 +27,7 @@ class Ui_ChatWindow(object):
 
         # ACTIONS
         self.actionAide = QtWidgets.QAction("Aide")
-        self.actionAide.triggered.connect(lambda: self.help())
         self.actionQuitter = QtWidgets.QAction("Quitter")
-        self.actionQuitter.triggered.connect(lambda: self._close())
 
         # ADD ACTIONS
         self.menuMenu.addAction(self.actionAide)
@@ -56,8 +55,6 @@ class Ui_ChatWindow(object):
         # Layout widgets
         self.mainlay.addWidget(self.left_container)
         self.mainlay.addWidget(self.right_container)
-
-
 
     def left_side(self):
 
@@ -144,7 +141,6 @@ class Ui_ChatWindow(object):
             self.client_name.setStyleSheet("QPushButton{color:#FFF;font-size:20px; text-align:left; padding-left:10px;"
                                            "border:none;background:none;}")
             self.client_name.setText(name)
-            #self.client_name.clicked.connect(self.ask_connection)
             self.client_name.setObjectName(f"{name}_name")
 
             # MESSAGE COUNTER

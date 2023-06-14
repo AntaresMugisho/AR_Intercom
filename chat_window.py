@@ -17,18 +17,21 @@ class ChatWindow(QMainWindow):
         self.ui = Ui_ChatWindow()
         self.ui.setupUi(self)
 
+        # CONNECT MENU BAR SLOTS
+        self.ui.actionAide.triggered.connect(lambda: self.help())
+        self.ui.actionQuitter.triggered.connect(lambda: self._close())
+
         # SHOW WINDOW
         self.show()
 
     def help(self):
-        try:
-            if sys.platform == "win32":
-                os.startfile(f"{os.getcwd()}/resources/Help.pdf")
-            else:
-                os.system(f"open {os.getcwd()}/resources/Help.pdf")
-
-        except Exception as e:
-            print("Erreur 178INT: ", e)
+        """
+        Open the user manual pdf file
+        """
+        if sys.platform == "win32":
+            os.startfile(f"{os.getcwd()}/resources/Help.pdf")
+        else:
+            os.system(f"open {os.getcwd()}/resources/Help.pdf")
 
     def _close(self):
         try:
@@ -37,10 +40,11 @@ class ChatWindow(QMainWindow):
             self.player.stop()
 
         except Exception as e:
-            print("Erreur 184GUI: ", e)
+            print("Error while closing", e)
 
         finally:
-            self.MainWindow.close()
+            self.close()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -7,7 +7,7 @@ import threading
 
 import sounddevice
 import wavio
-from PyQt5.QtWidgets import QApplication, QFrame, QLabel, QMessageBox, QSlider
+from PyQt5.QtWidgets import QApplication, QFrame, QLabel, QMessageBox, QSlider, QPushButton
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtCore import QUrl, QTimer, QThread
 
@@ -26,8 +26,16 @@ class Chat(ChatWindow):
         # CREATE MEDIA FOLDERS IF NOT EXIST
         create_media_folders()
 
+        # CONNECT CLIENTS BUTTON
+        for frame in self.ui.left_scroll.findChildren(QFrame):
+            try:
+                client_name_btn = frame.findChildren(QPushButton)[0]
+                client_name_btn.clicked.connect(self.ask_connection)
+            except IndexError:
+                pass
+
     def ask_connection(self):
-        """Try to connect to a other client"""
+        """Try to connect to another client"""
         try:
             # GET CLICKED BUTTON
             clicked = self.sender()
@@ -37,9 +45,9 @@ class Chat(ChatWindow):
             port = Users.dictionnary.get(name)
 
             # SET NAME TO THE ACTIVE CLIENT LABEL
-            self.active_client.setText(name)
-            self.active_client.show()
-            self.delete_button.show()
+            self.ui.active_client.setText(name)
+            self.ui.active_client.show()
+            self.ui.delete_button.show()
 
             # RESTORE EXISTING MESSAGES
             self.restore_chat()
@@ -49,7 +57,7 @@ class Chat(ChatWindow):
             self.client.connect_to_server()
 
             # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF CLIENT ONLINE
-            for wid in self.left_scroll.findChildren(QFrame):
+            for wid in self.ui.left_scroll.findChildren(QFrame):
                 for w in wid.findChildren(QFrame):
 
                     # Reset Message counter
@@ -64,7 +72,7 @@ class Chat(ChatWindow):
             self.check_online(name)
 
         except Exception as e:
-            print("197", e)
+            print("Error while asking connection : ", e)
 
     def layout_message(self, message):
         """Split a string and return it as multi-line string."""
@@ -86,7 +94,7 @@ class Chat(ChatWindow):
     def update_counter(self, name):
         """Increase the message counter badge on new message."""
 
-        for client_frame in self.left_scroll.findChildren(QFrame):
+        for client_frame in self.ui.left_scroll.findChildren(QFrame):
             for widget in client_frame.findChildren(QLabel):
 
                 if widget.objectName() == name + "_counter":
@@ -106,12 +114,12 @@ class Chat(ChatWindow):
     def restore_chat(self):
         """Restore existing chats and create messge's bubbles for each one restored if exists."""
 
-        table = "sa" + self.active_client.text()[:2].lower() + "ch"
+        table = "sa" + self.ui.active_client.text()[:2].lower() + "ch"
 
         # REMOVE CHAT
         try:
-            for bubble in reversed(range(self.layout_bubble.count())):
-                self.layout_bubble.itemAt(bubble).widget().deleteLater()
+            for bubble in reversed(range(self.ui.layout_bubble.count())):
+                self.ui.layout_bubble.itemAt(bubble).widget().deleteLater()
         except Exception as e:  # If chat field was not created
             print(e)
 
@@ -163,7 +171,7 @@ class Chat(ChatWindow):
     def send_message(self, resending=None):
         """Send the message to the active client and shows the right bubble."""
 
-        addressee = self.active_client.text()
+        addressee = self.ui.active_client.text()
 
         if not addressee:
             QMessageBox.warning(self.MainWindow, "Destinataire non défini",
@@ -183,7 +191,7 @@ class Chat(ChatWindow):
         # Check status (feature)
         try:
             sent = int(self.client.status)
-            self.check_online(self.active_client.text())
+            self.check_online(self.ui.active_client.text())
         except Exception as e:
             print(f"Erreur 310 FUNC : {e}")
 
@@ -196,7 +204,7 @@ class Chat(ChatWindow):
         self.save_message(client_table, "S", "string", None, ".str", message, send_time, sent)
 
     def check_online(self, name):
-        for wid in self.left_scroll.findChildren(QFrame):
+        for wid in self.ui.left_scroll.findChildren(QFrame):
 
             for w in wid.findChildren(QFrame):
 
@@ -215,7 +223,7 @@ class Chat(ChatWindow):
             connection = sqlite3.connect("sach.db")
             cursor = connection.cursor()
 
-            table = "sa" + self.active_client.text()[:2].lower() + "ch"
+            table = "sa" + self.ui.active_client.text()[:2].lower() + "ch"
 
             for label in parent.findChildren(QLabel):
                 if label.objectName() == "label_":
@@ -455,7 +463,7 @@ class Chat(ChatWindow):
 
         # -------------------------------------------------------------------------------
 
-        addressee = self.active_client.text()
+        addressee = self.ui.active_client.text()
         if not addressee:
             QMessageBox.warning(self.MainWindow, "Destinataire non défini",
                                 "Veuillez spécifiez d'abord votre destinataire!",
@@ -488,12 +496,12 @@ class Chat(ChatWindow):
         # CHECK STATUS
         try:
             sent = int(self.client.status)
-            self.check_online(self.active_client.text())
+            self.check_online(self.ui.active_client.text())
         except Exception as e:
             print("Erreur 627 FUNC: ", e)
 
         # COLLECT MEDIA INFORMATIONS
-        client_table = f"sa{self.active_client.text()[:2].lower()}ch"
+        client_table = f"sa{self.ui.active_client.text()[:2].lower()}ch"
         send_time = time.strftime("%d-%m-%Y %H:%M")
 
         with open(path_to_media, "rb") as file:
@@ -516,7 +524,7 @@ class Chat(ChatWindow):
         receive_time = time.strftime("%d-%m-%Y %H:%M")
 
         # SHOW MESSAGE IF SENDER IS ACTIVE ELSE SAVE IT
-        active_client = self.active_client.text()
+        active_client = self.ui.active_client.text()
 
         if active_client != "" and self.server.received_message[0] == active_client[0]:
             client_table = "sa" + active_client[:2].lower() + "ch"
@@ -569,7 +577,7 @@ class Chat(ChatWindow):
                     self.save_message(table, "R", "voice", title, extension, None, time, True)
 
     def delete_message(self, *event):
-        active_client = self.active_client.text()
+        active_client = self.ui.active_client.text()
         if active_client != "":
             messagebox = QMessageBox.question(self.MainWindow, "Confirmer la suppression",
                                               f"Supprimer toutes vos conversations avec <b>{active_client}</b> ?"
