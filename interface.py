@@ -1,7 +1,6 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
 import sys
-import os
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
@@ -59,28 +58,6 @@ class ChatWindow:
 
         # ADD MENUS TO THE MENU BAR
         self.menubar.addAction(self.menuMenu.menuAction())
-
-    def help(self):
-        try:
-            if sys.platform == "win32":
-                os.startfile(f"{os.getcwd()}/resources/Help.pdf")
-            else:
-                os.system(f"open {os.getcwd()}/resources/Help.pdf")
-
-        except Exception as e:
-            print("Erreur 178INT: ", e)
-
-    def _close(self):
-        try:
-            self.client.disconnect()
-            self.server.close_server()
-            self.player.stop()
-
-        except Exception as e:
-            print("Erreur 184GUI: ", e)
-
-        finally:
-            self.MainWindow.close()
 
     def display_widgets(self):
         # SHOW CHAT WINDOW

@@ -1,6 +1,8 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
 import sys
+import os
+
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from ui.chat_window import Ui_ChatWindow
 
@@ -15,11 +17,30 @@ class ChatWindow(QMainWindow):
         self.ui = Ui_ChatWindow()
         self.ui.setupUi(self)
 
-        self.ui.online_toast_2.hide()
-
         # SHOW WINDOW
         self.show()
 
+    def help(self):
+        try:
+            if sys.platform == "win32":
+                os.startfile(f"{os.getcwd()}/resources/Help.pdf")
+            else:
+                os.system(f"open {os.getcwd()}/resources/Help.pdf")
+
+        except Exception as e:
+            print("Erreur 178INT: ", e)
+
+    def _close(self):
+        try:
+            self.client.disconnect()
+            self.server.close_server()
+            self.player.stop()
+
+        except Exception as e:
+            print("Erreur 184GUI: ", e)
+
+        finally:
+            self.MainWindow.close()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
