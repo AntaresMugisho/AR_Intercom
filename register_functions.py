@@ -5,9 +5,9 @@ import os
 import sqlite3
 from functools import partial
 
-from PyQt5.QtWidgets import QApplication, QFileDialog, QPushButton, QLineEdit
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QPixmap
+from PyQt6.QtWidgets import QApplication, QFileDialog, QPushButton, QLineEdit
+from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtGui import QPixmap
 
 from register_window import RegisterWindow
 from users import Users

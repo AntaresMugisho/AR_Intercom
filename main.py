@@ -3,10 +3,10 @@
 import sys
 import sqlite3
 
-from PySide6 import QtWidgets, QtCore
-from PySide6.QtWidgets import QApplication, QWidget
-from PySide6.QtCore import Qt
-from PySide6.QtGui import QColor
+from PyQt6 import QtWidgets, QtCore
+from PyQt6.QtWidgets import QApplication, QWidget
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QColor
 
 from ui.splash import Ui_SplashScreen
 from register_functions import Register
@@ -29,8 +29,8 @@ class SplashScreen(QWidget):
         self.setWindowTitle("AR Intercom")
 
         # REMOVE TITLE BAR
-        self.setWindowFlags(Qt.FramelessWindowHint)
-        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
 
         # SET UP SHADOW
         shadow = QtWidgets.QGraphicsDropShadowEffect(self)

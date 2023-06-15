@@ -2,7 +2,7 @@
 
 import sys
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit
 
 from ui.loginwindow import Ui_LoginWindow
 

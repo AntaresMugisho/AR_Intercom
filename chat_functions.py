@@ -7,9 +7,9 @@ import threading
 
 import sounddevice
 import wavio
-from PyQt5.QtWidgets import QApplication, QFrame, QLabel, QMessageBox, QSlider, QPushButton
-from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
-from PyQt5.QtCore import QUrl, QTimer, QThread
+from PyQt6.QtWidgets import QApplication, QFrame, QLabel, QMessageBox, QSlider, QPushButton
+from PyQt6.QtMultimedia import QMediaPlayer, QMediaContent
+from PyQt6.QtCore import QUrl, QTimer, QThread
 
 from chat_window import ChatWindow
 from helpers.create_media_folders import create_media_folders

@@ -4,8 +4,8 @@ import sys
 import threading
 import sqlite3
 
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import Qt
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import Qt
 
 from login_window import LoginWindow
 from users import Users

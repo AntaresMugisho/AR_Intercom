@@ -3,7 +3,7 @@
 import sys
 import os
 
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt6.QtWidgets import QApplication, QMainWindow
 from ui.chat_window import Ui_ChatWindow
 
 

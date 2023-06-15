@@ -2,10 +2,10 @@
 
 import sys
 
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QColor
+from PyQt6 import QtWidgets
+from PyQt6.QtWidgets import QApplication, QWidget
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QColor
 
 from ui.register_window import Ui_SigninWindow
 
@@ -18,7 +18,7 @@ class RegisterWindow(QWidget):
         self.ui.setupUi(self)
 
         # REMOVE TITLE BAR
-        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
 
         # SET UP SHADOW
