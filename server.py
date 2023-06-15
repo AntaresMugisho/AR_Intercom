@@ -1,87 +1,86 @@
 # -*- This python file uses the following encoding : coding:utf-8 -*-
 
-import os, sys, time
+import os
+import sys
+import threading
+import time
 import socket
 import select
 
 from PyQt6.QtCore import QObject, pyqtSignal
 
-from users import Users
 
-class Server(QObject):
-    """Class server to listen, accept connections and receive messages."""
-
-    # Signals will outsent when receiving messages to
+class Message(QObject):
     new_message = pyqtSignal()
     new_file = pyqtSignal()
 
-    # Creating setters
-    def set_usercode(self, code: str):
-        """Set the user code. Must be unique in same compagny."""
-        self.user_code = code
 
-    def set_port(self):
-        """Create a server listening port according to the user code."""
-        self.get_user_code()
-        for x in Users.dictionnary.keys():
-            if x == self.user_code:
-                self.port = Users.dictionnary[x]
+class Server:
+    """
+    Server to listen, accept connections and receive text messages and files from other connected devices.
+    """
+    thread = None
 
-    # Creating getters des getters
-    def get_user_code(self):
-        """Returns the usercode."""
-        return self.user_code
-
-    # Creating socket
-    def create_socket_server(self):
-        """Create a socket as server and listen waiting for new connections."""
-
-        global server_connection
-        host = ""
-
-        server_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        try:
-            server_connection.bind((host, self.port))
-
-        except OSError:
-            pass
-
-        else:
-            server_connection.listen(5)
-            print(f"Server listening on port {self.port}.")
-
-    # Accept connections and wait for messages
-    def launch_server(self):
-        """Accept connection if asked and call the 'receive_message' funtion to receive message."""
+    def __init__(self):
+        self.host = "0.0.0.0"
+        self.port = 12000
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         # ONLINE CLIENTS LIST
         self.connected = []
+        self.ips = []
 
-        # MESSAGING CLIENT LIST
-        self.readlist = []
+        # MESSAGE QUEUE LIST
+        self.queue = []
 
+    def accept_connections(self):
+        """
+        Accept all incoming connections
+        """
         while True:
-            waiters, wlist, xlist = select.select([server_connection], [], [], 0.50)
-
-            # Accept connections
-            for connection in waiters:
-                connect_client, adress = connection.accept()
-                self.connected.append(connect_client)
-
-            # Receive message
             try:
-                self.readlist, wlist, xlist = select.select(self.connected, [], [], 0.50)
+                rlist, wlist, xlist = select.select([self.sock], [], [], 0.50)
+                for connection in rlist:
 
-            except select.error:
-                # If 'connected' list is empty
-                pass
+                        client, ip_address = connection.accept()
+                        self.connected.append(client)
+                        self.ips.append(ip_address)
+            except Exception as e:
+                print("Error in server :", e)
+                break
 
-            else:
-                self.receive_message()
+    def start(self):
+        """
+        Launch server and accept incoming connections.
+        """
+        self.sock.bind((self.host, self.port))
+        self.sock.listen(5)
+        print(f"Server listening on {self.host}:{self.port}")
+
+        self.thread = threading.Thread(target=self.accept_connections)
+        self.thread.start()
+        # self.accept_connections()
+
+    def stop(self):
+        self.sock.close()
+        print("Server closed !")
+
 
     def receive_message(self):
-        """Receive message and send status report."""
+        """
+        Receive message and send status report
+        """
+
+        # Receive message
+        try:
+            rlist, wlist, xlist = select.select(self.connected, [], [], 0.50)
+
+        except select.error:
+            # If 'connected' list is empty
+            pass
+
+        else:
+            self.receive_message()
 
         for client in self.readlist:
 
@@ -165,6 +164,8 @@ class Server(QObject):
                     except Exception as e:
                         print("ERR166 SR: ", e)
 
-    def close_server(self):
-        server_connection.close()
-# ===================================================== END ============================================================# ===================================================== END ============================================================
+
+
+if __name__ == "__main__":
+    server = Server()
+    server.start()
