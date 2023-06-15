@@ -46,9 +46,9 @@ class ChatWindow:
         self.menuMenu = QtWidgets.QMenu("Menu")
 
         # ACTIONS
-        self.actionAide = QtWidgets.QAction("Aide")
+        self.actionAide = QtGui.QAction("Aide")
         self.actionAide.triggered.connect(lambda:self.help())
-        self.actionQuitter = QtWidgets.QAction("Quitter")
+        self.actionQuitter = QtGui.QAction("Quitter")
         self.actionQuitter.triggered.connect(lambda:self._close())
 
         # ADD ACTIONS

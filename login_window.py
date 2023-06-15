@@ -17,8 +17,8 @@ class LoginWindow(QMainWindow):
         self.ui.psw_warning.hide()
 
         # CHANGE ECHO MODE TO PREVIEW PASSWORD
-        self.ui.toogle_button.enterEvent = lambda event: self.ui.log_password.setEchoMode(QLineEdit.Normal)
-        self.ui.toogle_button.leaveEvent = lambda event: self.ui.log_password.setEchoMode(QLineEdit.Password)
+        self.ui.toogle_button.enterEvent = lambda event: self.ui.log_password.setEchoMode(QLineEdit.EchoMode.Normal)
+        self.ui.toogle_button.leaveEvent = lambda event: self.ui.log_password.setEchoMode(QLineEdit.EchoMode.Password)
 
         # SHOW LOGIN WINDOW
         self.show()

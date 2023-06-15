@@ -8,7 +8,7 @@ import threading
 import sounddevice
 import wavio
 from PyQt6.QtWidgets import QApplication, QFrame, QLabel, QMessageBox, QSlider, QPushButton
-from PyQt6.QtMultimedia import QMediaPlayer, QMediaContent
+from PyQt6.QtMultimedia import QMediaPlayer
 from PyQt6.QtCore import QUrl, QTimer, QThread
 
 from chat_window import ChatWindow
@@ -23,7 +23,7 @@ class Chat(ChatWindow):
     def __init__(self):
         super().__init__()
 
-        # CREATE MEDIA FOLDERS IF NOT EXIST
+        # CREATE MEDIA FOLDERS IF NOT EXISTS
         create_media_folders()
 
         # CONNECT CLIENTS BUTTON
@@ -53,8 +53,8 @@ class Chat(ChatWindow):
             self.restore_chat()
 
             # TRY TO CONNECT
-            self.client = Client(port)
-            self.client.connect_to_server()
+            #self.client = Client(port)
+            #self.client.connect_to_server()
 
             # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF CLIENT ONLINE
             for wid in self.ui.left_scroll.findChildren(QFrame):
@@ -349,7 +349,7 @@ class Chat(ChatWindow):
         self.player.stateChanged.connect(_state_changed)
 
         self.player.error.connect(erroralert)
-        self.player.setMedia(QMediaContent(QUrl.fromLocalFile(path)))
+        self.player.setMedia(QUrl.fromLocalFile(path))
 
         self.player.play()
 

@@ -12,6 +12,7 @@ from users import Users
 from styles import LineEdit
 from client import Client
 from server import Server
+from chat_functions import Chat
 
 
 class Login(LoginWindow):
@@ -107,10 +108,10 @@ class Login(LoginWindow):
 
         self.server.set_usercode(self.user_code)
         self.server.set_port()
-        self.server.create_socket_server()
+        #self.server.create_socket_server()
 
-        thread = threading.Thread(target=self.server.launch_server)
-        thread.start()
+        #thread = threading.Thread(target=self.server.launch_server)
+        #thread.start()
 
         # CONNECT SERVER SIGNAL WHEN RECEIVING MESSAGE TO CREATE WIDGET
         # self.server.new_message.connect(lambda: self.receive("string"))
@@ -118,6 +119,8 @@ class Login(LoginWindow):
 
         # SHOW CHAT WINDOW
         # self.show_chat_window()
+        chat_window = Chat()
+        self.close()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

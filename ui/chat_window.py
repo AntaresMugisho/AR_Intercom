@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
+from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtCore import Qt
 
 from styles import *
 from users import Users
@@ -11,7 +11,7 @@ class Ui_ChatWindow(object):
     def setupUi(self, ChatWindow):
         ChatWindow.resize(690, 470)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/icons/ARsoftlogo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icons/icons/ARsoftlogo.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         ChatWindow.setWindowIcon(icon)
         ChatWindow.setWindowTitle("AR Intercom")
 
@@ -26,8 +26,8 @@ class Ui_ChatWindow(object):
         self.menuMenu = QtWidgets.QMenu("Menu")
 
         # ACTIONS
-        self.actionAide = QtWidgets.QAction("Aide")
-        self.actionQuitter = QtWidgets.QAction("Quitter")
+        self.actionAide = QtGui.QAction("Aide")
+        self.actionQuitter = QtGui.QAction("Quitter")
 
         # ADD ACTIONS
         self.menuMenu.addAction(self.actionAide)
@@ -92,8 +92,8 @@ class Ui_ChatWindow(object):
         self.clients_field = QtWidgets.QScrollArea(self.left_container)
         self.clients_field.setMinimumSize(236, 100)
         self.clients_field.setWidgetResizable(True)
-        self.clients_field.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.clients_field.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.clients_field.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.clients_field.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.clients_field.setWidget(self.left_scroll)
         self.clients_field.setStyleSheet(ScrollBar.orange_style)
 
@@ -116,7 +116,7 @@ class Ui_ChatWindow(object):
             self.client_info.setMaximumSize(QtCore.QSize(236, 60))
             self.client_info.setStyleSheet(Clients.frame_normal)
             self.client_info.setLineWidth(1)
-            self.left_scroll_layout.addWidget(self.client_info, Qt.AlignCenter, Qt.AlignTop)
+            self.left_scroll_layout.addWidget(self.client_info, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
 
             # PROFILE PICTURE
             self.client_picture = QtWidgets.QLabel(self.client_info)
@@ -149,8 +149,8 @@ class Ui_ChatWindow(object):
             self.msg_counter.setStyleSheet("QLabel{border-radius:11px; font-weight:bold; text-align:right; color:#ffAa00;"
                                             "border:none; background-color: rgb(0, 0, 59);}")
             self.msg_counter.setText("0")
-            self.msg_counter.setAlignment(Qt.AlignCenter)
-            self.msg_counter.setFrameShadow(QtWidgets.QFrame.Raised)
+            self.msg_counter.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.msg_counter.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
             self.msg_counter.setObjectName(f"{name}_counter")
             self.msg_counter.hide()
 
@@ -190,7 +190,7 @@ class Ui_ChatWindow(object):
                                          "border-radius:20px; border:5px solid;border-color:rgb(0, 0, 59);"
                                          "border-bottom-color: rgb(255, 170, 0);font-size:20px; font-weight:Bold;"
                                          "image:none;}")
-        self.active_client.setAlignment(Qt.AlignCenter)
+        self.active_client.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.active_client.hide()
 
         # DELETE MESSAGES BUTTON
