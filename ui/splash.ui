@@ -246,7 +246,7 @@ border:none;</string>
   </widget>
  </widget>
  <resources>
-  <include location="resources/img.qrc"/>
+  <include location="../resources/img.qrc"/>
  </resources>
  <connections/>
 </ui>

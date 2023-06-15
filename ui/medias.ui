@@ -30,7 +30,6 @@
     <property name="font">
      <font>
       <pointsize>30</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -387,13 +386,13 @@ QSlider::sub-page:horizontal{
      <x>0</x>
      <y>0</y>
      <width>722</width>
-     <height>26</height>
+     <height>19</height>
     </rect>
    </property>
   </widget>
  </widget>
  <resources>
-  <include location="resources/img.qrc"/>
+  <include location="../resources/img.qrc"/>
  </resources>
  <connections>
   <connection>
