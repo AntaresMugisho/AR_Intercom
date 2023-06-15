@@ -27,7 +27,7 @@ class Server:
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         # ONLINE CLIENTS LIST
-        self.connected = []
+        self.clients = []
         self.ips = []
 
         # MESSAGE QUEUE LIST
@@ -41,10 +41,10 @@ class Server:
             try:
                 rlist, wlist, xlist = select.select([self.sock], [], [], 0.50)
                 for connection in rlist:
+                    client, ip_address = connection.accept()
+                    self.clients.append(client)
+                    self.ips.append(ip_address[0])
 
-                        client, ip_address = connection.accept()
-                        self.connected.append(client)
-                        self.ips.append(ip_address)
             except Exception as e:
                 print("Error in server :", e)
                 break
@@ -73,7 +73,7 @@ class Server:
 
         # Receive message
         try:
-            rlist, wlist, xlist = select.select(self.connected, [], [], 0.50)
+            rlist, wlist, xlist = select.select(self.clients, [], [], 0.50)
 
         except select.error:
             # If 'connected' list is empty
