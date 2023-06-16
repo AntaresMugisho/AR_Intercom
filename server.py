@@ -3,6 +3,11 @@
 import socket
 import select
 import threading
+import sys
+import time
+
+import utils
+from message import Message
 
 
 class Server:
@@ -16,7 +21,7 @@ class Server:
 
     def __init__(self):
         self.host = "0.0.0.0"
-        self.port = 12000
+        self.port = 1200
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def accept_connections(self):
@@ -52,7 +57,62 @@ class Server:
         self.sock.close()
         print("Server closed !")
 
+    def receive_massages(self):
+        """
+        Receive messages and send status report
+        """
+        print("Waiting for messages...")
+        while True:
+            try:
+                rlist, wlist, xlist = select.select(self.CONNECTED_CLIENTS, [], [], 0.50)
+                for client in rlist:
+                    try:
+                        message = client.recv(1024).decode()
+                        client.send("Received".encode())
+                        client_id = message.split("|")[0]
+                        message_kind = message.split("|")[1]
+                        print(message)
+
+                        if message_kind == "text":
+                            Message.text_message_received()
+                        else:
+                            file_size = message.split("|")[2]
+                            file_name = message.split("|")[3]
+                            self.download_file(client, message_kind, file_name)
+                            Message.media_message_received()
+                    except BrokenPipeError:
+                        pass
+
+                    except Exception as e:
+                        print("Error while receiving message", e)
+
+            except select.error:
+                # This error can occur if CONNECTED_CLIENTS list is empty
+                print("Empty list")
+
+    def download_file(self, client_socket, kind, file_name):
+        # SET FILE NAME IF IT IS A VOICE
+        if kind == "voice":
+            file_extension = ".arv" if sys.platform == "win32" else ".wav"
+            file_name = f"ARV-{time.strftime('%d%m%Y-%H%M-%S')}{file_extension}"
+
+        home_directory = utils.get_home_directory()
+        directory = f"{home_directory}/AR Intercom/Media/{kind.capitalize()}s"
+
+        print("Downloading file")
+        with open(f"{directory}/{file_name}", "wb") as file:
+            chunk = client_socket.recv(1024)
+            while chunk:
+                file.write(chunk)
+                try:
+                    chunk = client_socket.recv(10240)
+                except Exception as e:
+                    print("Download done.", e)
+                    client_socket.send("File Received")
+                    break
+
 
 if __name__ == "__main__":
     server = Server()
     server.start()
+    server.receive_massages()

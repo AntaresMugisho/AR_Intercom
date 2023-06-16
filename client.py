@@ -13,7 +13,7 @@ class Client:
     CLIENT_ID = socket.gethostbyname(socket.gethostname())
 
     # Port Unique for all clients
-    PORT = 12000
+    PORT = 1200
 
     def __init__(self, server_host="localhost"):
         self.host = server_host
@@ -40,7 +40,7 @@ class Client:
         try:
             self.sock.send(message)
             server_response = self.sock.recv(1024).decode()
-            server_responded = True if server_response else False
+            print(server_response)
         except Exception as e:
             print("Error while sending message: ", e)
             # Need to catch 2 exceptions,
@@ -58,7 +58,7 @@ class Client:
         """
         if kind == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
-            text_message = f"{self.CLIENT_ID}|{message}".encode()
+            text_message = f"{self.CLIENT_ID}|{kind}|{message}".encode()
             self.reliable_send(text_message)
 
         else:  # If kind in [image, document, video, audio, voice]
@@ -71,7 +71,7 @@ class Client:
             # SEND CLIENT ID AND FILE INFORMATION THEN UPLOAD FILE
             media_message = f"{self.CLIENT_ID}|{kind}|{file_size}|{file_name}".encode()
             self.reliable_send(media_message)
-            self.upload_file(path)
+            #self.upload_file(path)
 
     def disconnect(self):
         """
@@ -86,4 +86,16 @@ if __name__ == "__main__":
     if not client.connected:
         client.connect_to_server()
     if client.connected:
-        client.send_message("text", "Hello world !")
+        while True:
+            message_type = input("Message type :\n1.Text message\n2.Media message\n>>> ")
+            if message_type == "1":
+                message_type = "text"
+                message = input("Type your text message\n>>> ")
+            else:
+                media_types = ["audio", "image", "video", "document", "voice"]
+                media_type = input("1.Audio 2.Image 3.Video 4.Document 5.Voice")
+                message_type = media_types[int(media_type)-1]
+
+                message = input("Enter the file path\n>>> ")
+
+            client.send_message(message_type, message)
