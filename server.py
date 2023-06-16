@@ -36,7 +36,7 @@ class Server:
 
     def start(self):
         """
-        Launch server and accept incoming connections.
+        Launch socket server and accept incoming connections.
         """
         self.sock.bind((self.host, self.port))
         self.sock.listen(5)
@@ -46,6 +46,9 @@ class Server:
         thread.start()
 
     def stop(self):
+        """
+        Close socket server.
+        """
         self.sock.close()
         print("Server closed !")
 

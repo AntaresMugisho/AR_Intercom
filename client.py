@@ -1,106 +1,75 @@
-# -*- This python file uses the following encoding : coding:utf-8 -*-
-
-
+# -*- This python file uses the following encoding : utf-8 -*-
+import os.path
 import sys
 import socket
+import time
+
 
 class Client:
-    """Class client to connect ask connections to servers and send messages."""
+    """
+    Client to ask connection on different servers, and send them messages.
+    """
+    # CLIENT ID DEFINED BY HOST ADDRESS
+    CLIENT_ID = socket.gethostbyname(socket.gethostname())
 
-    # Class attribute to identifie usercode when sending a message
-    prefix = ""
-
-    def __init__(self, port):
-        self.port = port
-
-        # Setting the connection status at False by default
-        self.online = False
+    def __init__(self, server_host):
+        self.host = server_host
+        self.port = 12000
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def connect_to_server(self):
-        """Try to connect to a distant server to a specific port but an unknow IP's 4th bit."""
-        global sock
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        # IP Attempts (192.168.1.[unkown])
-        ips = (100, 101, 105, 106)
-        ips = reversed(ips)
-
-        for i in ips:
-            self.hote = f"192.168.1.{str(i)}"
-
-            #self.hote = "127.0.0.1" # Just for trying
+        """
+        Try to connect to a distant server.
+        """
+        while True:
+            time.sleep(5)
             try:
-                sock.connect((self.hote, self.port))
-                print(f"Connected to host {self.hote} | Port: {self.port}")
-                self.online = True  # The user will be informed by a small green widget
+                self.sock.connect((self.host, self.port))
+                print(f"Connected with host {self.host}:{self.port}")
                 break
-
-            except ConnectionError:
-                print(f"Can't connect to host {self.hote}\n")
-
-            except TimeoutError:
-                pass
-
-            except OSError:
-                pass
-
             except Exception as e:
-                print("ERR46 CL: ", e)
+                print(f"Error while trying to connect on server {self.host} : ", e)
+                self.connect_to_server()
 
-    def send_message(self, kind, body):
-        """Send message and try to receive status report."""
+    def reliable_send(self, message):
+        try:
+            self.sock.send(message)
+            server_response = self.sock.recv(1024).decode()
+            server_responded = True if server_response else False
+        except Exception as e:
+            print("Error while sending message: ", e)
+            # Need to catch 2 exceptions,
+            # One if the message was not sent
+            # Another if the server doesn't respond
+            message_sent = False
 
-        if kind == "string":
-            code = Client.prefix + "S"
+    def upload_file(self, path):
+        with open(path, "rb") as file:
+            self.sock.send(file.read())
 
-            # SEND USER IDENTIFIER AND HIS TEXT MESSAGE THEN TRY TO GET SERVER RESPONSE
-            text_message = (code + body).encode("utf8")
-            try:
-                sock.send(text_message)
+    def send_message(self, kind, message):
+        """
+        Send message and try to receive status report
+        """
+        if kind == "text_message":
+            # SEND CLIENT ID AND HIS TEXT MESSAGE
+            text_message = f"{self.CLIENT_ID}|{message}".encode()
+            self.reliable_send(text_message)
 
-            except Exception as e:
-                # If an error occured here, it means message wasn't sent
-                self.status = False
-                print("ERR62 CL: ", e)
+        elif kind == "media_message":
+            path = message
 
-            else:
-                # Else, it means message was sent and received
-                self.status = sock.recv(1024).decode("utf8")
-                print(f"Message received.")
+            # COLLECT MEDIA METADATA FIRST
+            file_size = os.path.getsize(path)
+            file_name = os.path.split(path)[1]
 
-        else:
-            code = Client.prefix + "B"
-            file_path = body
-
-            # COLLECT MEDIA INFO FIRST
-            with open(file_path, "rb") as file:
-                content = file.read()
-
-            size = str(len(content))
-            extension = f".{str(file_path).split('.')[-1]}"
-            title = str(file_path).split("/")[-1]
-            title = title[:-len(extension)]
-            media_info = f"{kind},{size},{title},{extension}"
-
-            try:
-                # SEND MEDIA INFORMATION
-                informations = (code + media_info).encode("utf8")
-                sock.send(informations)
-
-            except Exception as e:
-                # If an error occured here, it means media information message wasn't sent
-                self.status = False
-                print("ERR91 CL: ", e)
-
-            else:
-                # Else, it means media information message was sent and received, it's time to send media content
-                self.status = sock.recv(1024).decode("utf8")
-
-                # FINALLY SEND MEDIA
-                sock.sendall(content)
+            # SEND CLIENT ID AND FILE INFORMATION THEN UPLOAD FILE
+            media_message = f"{self.CLIENT_ID}|{file_size}|{file_name}".encode()
+            self.reliable_send(media_message)
+            self.upload_file(path)
 
     def disconnect(self):
-        """Close the client socket."""
-        sock.close()
-
-# NO TRYING IN THIS
+        """
+        Close the client socket.
+        """
+        self.sock.close()
