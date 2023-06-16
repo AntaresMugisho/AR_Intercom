@@ -12,9 +12,9 @@ from PyQt6.QtMultimedia import QMediaPlayer
 from PyQt6.QtCore import QUrl, QTimer, QThread
 
 from chat_window import ChatWindow
-from helpers.create_media_folders import create_media_folders
 from users import Users
 from styles import *
+import utils
 from client import Client
 
 chrono, mins = (1, 0)
@@ -24,7 +24,7 @@ class Chat(ChatWindow):
         super().__init__()
 
         # CREATE MEDIA FOLDERS IF NOT EXISTS
-        create_media_folders()
+        utils.create_media_folders()
 
         # CONNECT CLIENTS BUTTON
         for frame in self.ui.left_scroll.findChildren(QFrame):
