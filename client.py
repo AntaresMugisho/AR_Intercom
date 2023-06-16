@@ -13,7 +13,7 @@ class Client:
     CLIENT_ID = socket.gethostbyname(socket.gethostname())
 
     # Port Unique for all clients
-    PORT = 1200
+    PORT = 12000
 
     def __init__(self, server_host="localhost"):
         self.host = server_host
@@ -32,8 +32,7 @@ class Client:
                 self.connected = True
                 break
             except Exception as e:
-                print(f"Error while trying to connect on server {self.host} : ", e)
-                self.connected = False
+                print(f"Error while trying to connect on server {self.host}:{self.PORT} : ", e)
                 self.connect_to_server()
 
     def reliable_send(self, message):
@@ -49,6 +48,8 @@ class Client:
             message_sent = False
 
     def upload_file(self, path):
+        size = os.path.getsize(path)
+        print(f"Sending file {size} KB")
         with open(path, "rb") as file:
             self.sock.send(file.read())
 
@@ -71,7 +72,7 @@ class Client:
             # SEND CLIENT ID AND FILE INFORMATION THEN UPLOAD FILE
             media_message = f"{self.CLIENT_ID}|{kind}|{file_size}|{file_name}".encode()
             self.reliable_send(media_message)
-            #self.upload_file(path)
+            self.upload_file(path)
 
     def disconnect(self):
         """
@@ -81,26 +82,27 @@ class Client:
 
 
 if __name__ == "__main__":
-    host = "192.168.43.198"
     client = Client()
-    if not client.connected:
-        client.connect_to_server()
-    if client.connected:
-        while True:
-            message_type = input("Choose an option :\n1.Text message\n2.Media message\n3.Exit >>> ")
+    client.connect_to_server()
 
-            if message_type == "1":
-                message_type = "text"
-                message = input("Type your text message\n>>> ")
+    # This while loop will run only if the connection is established
+    while True:
+        message_type = input("Choose an option :\n1.Text message\n2.Media message\n3.Exit\n>>> ")
 
-            elif message_type == "2":
-                media_types = ["audio", "image", "video", "document", "voice"]
-                media_type = input("1.Audio 2.Image 3.Video 4.Document 5.Voice\n>>> ")
-                message_type = media_types[int(media_type)-1]
+        if message_type == "1":
+            message_type = "text"
+            message = input("Type your text message\n>>> ")
 
-                message = input("Enter the file path\n>>> ")
-            else:
-                client.disconnect()
-                print("See you again !")
-                break
-            client.send_message(message_type, message)
+        elif message_type == "2":
+            media_types = ["audio", "image", "video", "document", "voice"]
+            media_type = input("1.Audio 2.Image 3.Video 4.Document 5.Voice\n>>> ")
+            message_type = media_types[int(media_type)-1]
+
+            message = input("Enter the file path\n>>> ")
+        else:
+            client.disconnect()
+            print("See you again !")
+            break
+
+        # SEND MESSAGE
+        client.send_message(message_type, message)

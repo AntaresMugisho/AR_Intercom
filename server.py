@@ -21,7 +21,7 @@ class Server:
 
     def __init__(self):
         self.host = "0.0.0.0"
-        self.port = 1200
+        self.port = 12000
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def accept_connections(self):
@@ -68,7 +68,7 @@ class Server:
                 for client in rlist:
                     try:
                         message = client.recv(1024).decode()
-                        client.send("Received".encode())
+                        client.send("Text Message Received".encode())
                         client_id = message.split("|")[0]
                         message_kind = message.split("|")[1]
                         print(message)
@@ -76,9 +76,9 @@ class Server:
                         if message_kind == "text":
                             Message.text_message_received()
                         else:
-                            file_size = message.split("|")[2]
+                            file_size = int(message.split("|")[2])
                             file_name = message.split("|")[3]
-                            self.download_file(client, message_kind, file_name)
+                            self.download_file(client, message_kind, file_size, file_name)
                             Message.media_message_received()
                     except BrokenPipeError:
                         pass
@@ -90,7 +90,8 @@ class Server:
                 # This error can occur if CONNECTED_CLIENTS list is empty
                 print("Empty list")
 
-    def download_file(self, client_socket, kind, file_name):
+    @staticmethod
+    def download_file(client_socket, kind, file_size, file_name):
         # SET FILE NAME IF IT IS A VOICE
         if kind == "voice":
             file_extension = ".arv" if sys.platform == "win32" else ".wav"
@@ -99,17 +100,17 @@ class Server:
         home_directory = utils.get_home_directory()
         directory = f"{home_directory}/AR Intercom/Media/{kind.capitalize()}s"
 
-        print("Downloading file")
         with open(f"{directory}/{file_name}", "wb") as file:
-            chunk = client_socket.recv(1024)
-            while chunk:
+            downloaded = b""
+            while len(downloaded) < file_size:
+                chunk = client_socket.recv(20480)
                 file.write(chunk)
-                try:
-                    chunk = client_socket.recv(10240)
-                except Exception as e:
-                    print("Download done.", e)
-                    client_socket.send("File Received")
-                    break
+                downloaded += chunk
+                # Show progression in console mode
+                print("Downloading file...", str(round(len(downloaded) * 100 / file_size)), "%")
+
+            # ONCE DOWNLOAD IS DONE
+            client_socket.send("Media Message Received".encode())
 
 
 if __name__ == "__main__":
