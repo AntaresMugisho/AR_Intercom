@@ -87,15 +87,20 @@ if __name__ == "__main__":
         client.connect_to_server()
     if client.connected:
         while True:
-            message_type = input("Message type :\n1.Text message\n2.Media message\n>>> ")
+            message_type = input("Choose an option :\n1.Text message\n2.Media message\n3.Exit >>> ")
+
             if message_type == "1":
                 message_type = "text"
                 message = input("Type your text message\n>>> ")
-            else:
+
+            elif message_type == "2":
                 media_types = ["audio", "image", "video", "document", "voice"]
-                media_type = input("1.Audio 2.Image 3.Video 4.Document 5.Voice")
+                media_type = input("1.Audio 2.Image 3.Video 4.Document 5.Voice\n>>> ")
                 message_type = media_types[int(media_type)-1]
 
                 message = input("Enter the file path\n>>> ")
-
+            else:
+                client.disconnect()
+                print("See you again !")
+                break
             client.send_message(message_type, message)
