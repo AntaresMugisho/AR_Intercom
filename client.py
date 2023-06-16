@@ -12,10 +12,13 @@ class Client:
     # CLIENT ID DEFINED BY HOST ADDRESS
     CLIENT_ID = socket.gethostbyname(socket.gethostname())
 
-    def __init__(self, server_host):
+    # Port Unique for all clients
+    PORT = 12000
+
+    def __init__(self, server_host="localhost"):
         self.host = server_host
-        self.port = 12000
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.connected = False
 
     def connect_to_server(self):
         """
@@ -24,11 +27,13 @@ class Client:
         while True:
             time.sleep(5)
             try:
-                self.sock.connect((self.host, self.port))
-                print(f"Connected with host {self.host}:{self.port}")
+                self.sock.connect((self.host, self.PORT))
+                print(f"Connected with host {self.host}:{self.PORT}")
+                self.connected = True
                 break
             except Exception as e:
                 print(f"Error while trying to connect on server {self.host} : ", e)
+                self.connected = False
                 self.connect_to_server()
 
     def reliable_send(self, message):
@@ -51,12 +56,12 @@ class Client:
         """
         Send message and try to receive status report
         """
-        if kind == "text_message":
+        if kind == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
             text_message = f"{self.CLIENT_ID}|{message}".encode()
             self.reliable_send(text_message)
 
-        elif kind == "media_message":
+        else:  # If kind in [image, document, video, audio, voice]
             path = message
 
             # COLLECT MEDIA METADATA FIRST
@@ -64,7 +69,7 @@ class Client:
             file_name = os.path.split(path)[1]
 
             # SEND CLIENT ID AND FILE INFORMATION THEN UPLOAD FILE
-            media_message = f"{self.CLIENT_ID}|{file_size}|{file_name}".encode()
+            media_message = f"{self.CLIENT_ID}|{kind}|{file_size}|{file_name}".encode()
             self.reliable_send(media_message)
             self.upload_file(path)
 
@@ -73,3 +78,12 @@ class Client:
         Close the client socket.
         """
         self.sock.close()
+
+
+if __name__ == "__main__":
+    host = "192.168.43.198"
+    client = Client()
+    if not client.connected:
+        client.connect_to_server()
+    if client.connected:
+        client.send_message("text", "Hello world !")
