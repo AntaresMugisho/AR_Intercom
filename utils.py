@@ -3,6 +3,7 @@
 
 import sys
 import os
+import socket
 
 
 def get_home_directory():
@@ -31,3 +32,17 @@ def create_media_folders():
                 os.makedirs(path)
             except Exception as e:
                 print(f"Failed to create media files : {e}")
+
+
+def get_private_ip():
+    """
+    Returns the local IP address and netmask
+    """
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.connect(("8.8.8.8", 80))
+    ip_address = sock.getsockname()[0]
+    sock.close()
+
+    netmask = "255.255.255.0"
+
+    return ip_address, netmask

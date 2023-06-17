@@ -9,6 +9,7 @@ from PyQt6.QtCore import pyqtSlot as Slot
 
 from ui.chat_window import Ui_ChatWindow
 from styles import Clients, SendButton
+from server import Server
 
 import recorder
 
@@ -37,6 +38,9 @@ class ChatWindow(QMainWindow):
         self.ui.entry_field.returnPressed.connect(self.send_text_or_record)
         self.ui.send_button.clicked.connect(self.send_text_or_record)
 
+        # START SERVER
+        self.server = Server()
+        self.server.start()
 
         # SHOW WINDOW
         self.show()
@@ -53,6 +57,7 @@ class ChatWindow(QMainWindow):
 
     @Slot()
     def _close(self):
+        self.server.stop()
         self.close()
 
     @Slot()

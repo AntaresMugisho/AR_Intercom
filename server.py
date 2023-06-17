@@ -47,8 +47,11 @@ class Server:
         self.sock.listen(5)
         print(f"Server listening on {self.host}:{self.port}")
 
-        thread = threading.Thread(target=self.accept_connections)
-        thread.start()
+        # Wait for connections and messages
+        connections_thread = threading.Thread(target=self.accept_connections)
+        messages_thread = threading.Thread(target=self.receive_massages)
+        connections_thread.start()
+        messages_thread.start()
 
     def stop(self):
         """
