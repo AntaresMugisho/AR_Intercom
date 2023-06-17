@@ -10,8 +10,10 @@ from PyQt6.QtCore import pyqtSlot as Slot
 from ui.chat_window import Ui_ChatWindow
 from styles import Clients, SendButton
 from server import Server
+from message import Message
 
 import recorder
+import player
 
 class ChatWindow(QMainWindow):
     """
@@ -41,6 +43,10 @@ class ChatWindow(QMainWindow):
         # START SERVER
         self.server = Server()
         self.server.start()
+
+        # LISTEN FOR MESSAGE SIGNALS
+        message = Message()
+        message.textMessageReceived.connect(lambda: print("Hiiiii"))
 
         # SHOW WINDOW
         self.show()

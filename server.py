@@ -24,6 +24,9 @@ class Server:
         self.port = 12000
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+        # MESSAGE OBJECT TO EMIT SIGNALS
+        self.message_object = Message()
+
     def accept_connections(self):
         """
         Accept all incoming connections
@@ -77,12 +80,15 @@ class Server:
                         print(message)
 
                         if message_kind == "text":
-                            Message.text_message_received()
+                            # Call signal sender
+                            self.message_object.text_message_received()
                         else:
+                            # Download file
                             file_size = int(message.split("|")[2])
                             file_name = message.split("|")[3]
                             self.download_file(client, message_kind, file_size, file_name)
-                            Message.media_message_received()
+                            # Call signal sender
+                            self.message_object.media_message_received()
                     except BrokenPipeError:
                         pass
 
