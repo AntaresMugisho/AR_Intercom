@@ -2,10 +2,13 @@
 
 import sys
 import os
+import time
 
 from PyQt6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider
 from PyQt6.QtCore import pyqtSlot as Slot
+
 from ui.chat_window import Ui_ChatWindow
+from styles import Clients, SendButton
 
 
 class ChatWindow(QMainWindow):
@@ -28,8 +31,47 @@ class ChatWindow(QMainWindow):
             if user_conversation_button:
                 user_conversation_button.clicked.connect(self.show_conversations)
 
+        # CONNECT SEND BUTTON
+        self.ui.entry_field.textEdited.connect(self.change_send_style)
+        self.ui.entry_field.returnPressed.connect(self.send_text_or_record)
+        self.ui.send_button.clicked.connect(self.send_text_or_record)
+
         # SHOW WINDOW
         self.show()
+
+    @Slot()
+    def change_send_style(self):
+        """
+        Changes send button style, and disable media button so that a user can not send media message and text message
+        at a time.
+        """
+        if self.ui.entry_field.text():
+            # Change send button style
+            self.ui.send_button.setStyleSheet(SendButton.style_send)
+            # Disable media button
+            self.ui.media_button.setEnabled(False)
+
+        else:
+            self.ui.send_button.setStyleSheet(SendButton.style_record)
+            self.ui.media_button.setEnabled(True)
+
+    @Slot()
+    def send_text_or_record(self):
+        """
+        According to the send button style, send text message or record a voice
+        """
+        if self.ui.send_button.styleSheet() == SendButton.style_send:
+            text_message = self.ui.entry_field.text()
+            # self.send_message(text_message)
+            self.ui.create_right_bubble("text", None, None, text_message, time.strftime("%Y-%m-%d %H:%M"))
+            self.ui.entry_field.setText(None)
+            self.ui.send_button.setStyleSheet(SendButton.style_record)
+            self.ui.media_button.setEnabled(True)
+
+        elif self.ui.send_button.styleSheet() == SendButton.style_record:
+            self.ui.media_button.setEnabled(False)
+            # self.record_voice()
+            self.ui.create_left_bubble("text", None, None, "Hello world !", time.strftime("%Y-%m-%d %H:%M"))
 
     @Slot()
     def help(self):
@@ -82,6 +124,25 @@ class ChatWindow(QMainWindow):
 
         except Exception as e:
             print("Error while asking connection : ", e)
+
+    @Slot()
+    def send_media(self, kind, path_to_media):
+        #self.client.send_message(kind, path_to_media)
+
+        # COLLECT MEDIA INFORMATIONS
+        client_table = f"sa{self.ui.active_client.text()[:2].lower()}ch"
+        send_time = time.strftime("%d-%m-%Y %H:%M")
+
+        with open(path_to_media, "rb") as file:
+            content = file.read()
+
+        file_output_name, ext = path_to_media.split("/")[-1][:-4], path_to_media.split("/")[-1][-4:]
+
+        try:
+            self.create_right_bubble(kind, file_output_name, ext, content, send_time, sent)
+            self.save_message(client_table, "S", kind, file_output_name, ext, content, send_time, sent)
+        except Exception as e:
+            print("552", e)
 
 
 if __name__ == "__main__":

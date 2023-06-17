@@ -27,27 +27,7 @@ class Chat(ChatWindow):
         # CREATE MEDIA FOLDERS IF NOT EXISTS
         utils.create_media_folders()
 
-        # CONNECT CLIENTS BUTTON
 
-
-
-
-    def layout_message(self, message):
-        """Split a string and return it as multi-line string."""
-
-        n = 6
-        words = message.split(" ")
-        designed_message = ""
-        i = 0
-        while i < len(words):
-            word = " ".join(words[i:i + n])
-            i += n
-
-            designed_message += word
-            if len(words) > n and i < len(words):
-                designed_message += "\n"
-
-        return designed_message
 
     def update_counter(self, name):
         """Increase the message counter badge on new message."""
@@ -447,31 +427,7 @@ class Chat(ChatWindow):
             self.thr = threading.Thread(target=recorder)
             self.thr.start()
 
-    def send_media(self, kind, path_to_media):
 
-        self.client.send_message(kind, path_to_media)
-
-        # CHECK STATUS
-        try:
-            sent = int(self.client.status)
-            self.check_online(self.ui.active_client.text())
-        except Exception as e:
-            print("Erreur 627 FUNC: ", e)
-
-        # COLLECT MEDIA INFORMATIONS
-        client_table = f"sa{self.ui.active_client.text()[:2].lower()}ch"
-        send_time = time.strftime("%d-%m-%Y %H:%M")
-
-        with open(path_to_media, "rb") as file:
-            content = file.read()
-
-        file_output_name, ext = path_to_media.split("/")[-1][:-4], path_to_media.split("/")[-1][-4:]
-
-        try:
-            self.create_right_bubble(kind, file_output_name, ext, content, send_time, sent)
-            self.save_message(client_table, "S", kind, file_output_name, ext, content, send_time, sent)
-        except Exception as e:
-            print("552", e)
 
     def receive(self, kind):
         """Shows the received message in a bubble."""

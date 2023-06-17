@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtWidgets import QSizePolicy
 from PyQt6.QtCore import Qt
 
 from styles import *
 from users import Users
+
 
 class Ui_ChatWindow(object):
 
@@ -235,15 +237,6 @@ class Ui_ChatWindow(object):
     def create_typing_zone(self):
 
         # CHOOSE MEDIA BUTTON (+) #######################################################
-
-        def verify_style():
-            if self.send_button.styleSheet() == SendButton.style_send:
-                self.send_message()
-                self.send_button.setStyleSheet(SendButton.style_record)
-
-            elif self.send_button.styleSheet() == SendButton.style_record:
-                self.record_voice()
-
         def change_media_style():
             # CONTROL MEDIA BUTTON STYLE
             if self.media_button.styleSheet() == MediaButton.style_more:
@@ -253,16 +246,7 @@ class Ui_ChatWindow(object):
                 self.media_button.setStyleSheet(MediaButton.style_more)
                 self.media_bg.deleteLater()
 
-        def change_send_style():
-            if self.entry_field.text():
-                # Change send button style
-                self.send_button.setStyleSheet(SendButton.style_send)
-                # Disable media button
-                self.media_button.setEnabled(False)
 
-            else:
-                self.send_button.setStyleSheet(SendButton.style_record)
-                self.media_button.setEnabled(True)
 
         # button
         self.media_button = QtWidgets.QPushButton(self.right_container)
@@ -282,14 +266,12 @@ class Ui_ChatWindow(object):
                                        "QLineEdit:hover{border:2px solid #3385CC;}")
         self.entry_field.setFrame(True)
         self.entry_field.setPlaceholderText("Saisissez votre message ici !")
-        self.entry_field.textEdited.connect(change_send_style)
-        self.entry_field.returnPressed.connect(verify_style)
+
 
         # SEND MESSAGE BUTTON
         self.send_button = QtWidgets.QPushButton(self.right_container)
         self.send_button.setFixedSize(40, 40)
         self.send_button.setStyleSheet(SendButton.style_record)
-        self.send_button.clicked.connect(verify_style)
 
         # Layout bottom widgets
         bottomhlayout = QtWidgets.QHBoxLayout()
@@ -360,27 +342,27 @@ class Ui_ChatWindow(object):
 
         # LEFT MESSAGE FRAME
         self.l_bubble_container = QtWidgets.QWidget()
-        self.l_bubble_container.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed))
+        self.l_bubble_container.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         self.l_bubble_container.setLayout(self.left_msg_layout)
 
-        self.layout_bubble.addWidget(self.l_bubble_container, Qt.AlignCenter | Qt.AlignBottom)
+        self.layout_bubble.addWidget(self.l_bubble_container, Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignBottom)
 
         # Small left bubble
         self.l_bubble = QtWidgets.QFrame()
         self.l_bubble.setFixedSize(16, 16)
         self.l_bubble.setStyleSheet("background-color: rgb(255, 170, 0);border-radius:7px;")
-        self.left_msg_layout.addWidget(self.l_bubble, 0, 0, 1, 1, Qt.AlignTop)
+        self.left_msg_layout.addWidget(self.l_bubble, 0, 0, 1, 1, Qt.AlignmentFlag.AlignTop)
 
-        if kind == "string":
+        if kind == "text":
             # LAYOUT MESSAGE
             message = self.layout_message(content)
 
             # Left text container
             self.left_bubble = QtWidgets.QLabel()
             self.left_bubble.setMinimumWidth(110)
-            self.left_bubble.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed))
-            self.left_bubble.setTextInteractionFlags(Qt.TextSelectableByMouse | Qt.TextSelectableByKeyboard)
-            self.left_bubble.setCursor(Qt.IBeamCursor)
+            self.left_bubble.setSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+            self.left_bubble.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse | Qt.TextInteractionFlag.TextSelectableByKeyboard)
+            self.left_bubble.setCursor(Qt.CursorShape.IBeamCursor)
             self.left_bubble.setText(message)
             self.left_bubble.setStyleSheet("border-radius:13px; color: rgb(0, 0, 0);background-color: rgb(255, 170, 0);"
                                            "padding-left:10px;padding-right:10px;padding-top:5px;padding-bottom:5px;"
@@ -397,7 +379,7 @@ class Ui_ChatWindow(object):
             self.left_msg_layout.addWidget(self.left_media_parent, 0, 1, 1, 1)
 
             # Create media bubble
-            self.create_media_bubble(self.left_media_parent, kind, title, format, content)
+            #self.create_media_bubble(self.left_media_parent, kind, title, format, content)
 
         # Left time bubble
         self.left_time = QtWidgets.QLabel()
@@ -405,13 +387,13 @@ class Ui_ChatWindow(object):
         self.left_time.setText(f"<p align='center'>{time}</p>")
         self.left_time.setStyleSheet("QLabel{border-radius:8px; color:#000000; background-color:#C5C5C5;"
                                      "font-size:10px;}")
-        self.left_msg_layout.addWidget(self.left_time, 1, 1, 1, 1, Qt.AlignHCenter)
+        self.left_msg_layout.addWidget(self.left_time, 1, 1, 1, 1, Qt.AlignmentFlag.AlignHCenter)
 
         # UPDATE SCROLL BAR
-        QTimer.singleShot(10, lambda: self.scroll_to_end())
-        QTimer.singleShot(510, lambda: self.scroll_to_end())
+        QtCore.QTimer.singleShot(10, lambda: self.scroll_to_end())
+        QtCore.QTimer.singleShot(510, lambda: self.scroll_to_end())
 
-    def create_right_bubble(self, kind, title, format, content, time, status):
+    def create_right_bubble(self, kind, title, format, content, time, status=True):
 
         # GRID LAYOUT
         self.right_msg_layout = QtWidgets.QGridLayout()
@@ -421,29 +403,29 @@ class Ui_ChatWindow(object):
 
         # RIGHT MESSAGE WIDGET (BUBBLE AND TIME CONTAINER)
         self.r_bubble_container = QtWidgets.QWidget()
-        self.r_bubble_container.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed))
+        self.r_bubble_container.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         self.r_bubble_container.setLayout(self.right_msg_layout)
-        self.r_bubble_container.setLayoutDirection(Qt.RightToLeft)
+        self.r_bubble_container.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         self.r_bubble_container.setStyleSheet("background-color:99000000")
 
-        self.layout_bubble.addWidget(self.r_bubble_container, Qt.AlignCenter, Qt.AlignBottom)
+        self.layout_bubble.addWidget(self.r_bubble_container, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignBottom)
 
         # Small right bubble (design)
         self.r_bubble = QtWidgets.QFrame()
         self.r_bubble.setFixedSize(QtCore.QSize(16, 16))
         self.r_bubble.setStyleSheet("background-color:#3385CC; border-radius:8px;")
-        self.right_msg_layout.addWidget(self.r_bubble, 0, 0, 1, 1, Qt.AlignBottom)
+        self.right_msg_layout.addWidget(self.r_bubble, 0, 0, 1, 1, Qt.AlignmentFlag.AlignBottom)
 
         # CREATE TEXT MESSAGE, OR MEDIA BUBBLE
-        if kind == "string":
+        if kind == "text":
             message = self.layout_message(content)
 
             # Right text container
             self.right_bubble = QtWidgets.QLabel()
             self.right_bubble.setMinimumWidth(110)
-            self.right_bubble.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed))
-            self.right_bubble.setTextInteractionFlags(Qt.TextSelectableByMouse | Qt.TextSelectableByKeyboard)
-            self.right_bubble.setCursor(Qt.IBeamCursor)
+            self.right_bubble.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+            self.right_bubble.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse | Qt.TextInteractionFlag.TextSelectableByKeyboard)
+            self.right_bubble.setCursor(Qt.CursorShape.IBeamCursor)
             self.right_bubble.setText(message)
             self.right_bubble.setStyleSheet("QLabel{border-radius:13px;color: rgb(255, 255, 255);"
                                             "background-color: #3385CC;padding-left:10px; padding-right:10px;"
@@ -462,7 +444,7 @@ class Ui_ChatWindow(object):
             self.right_media_parent.setStyleSheet("QWidget{border-radius:15px;"
                                             "background-color: #3385CC;}")
             self.right_media_parent.setLayout(ly)
-            self.right_media_parent.setLayoutDirection(Qt.LeftToRight)
+            self.right_media_parent.setLayoutDirection(Qt.AlignmentFlag.LeftToRight)
 
             self.right_msg_layout.addWidget(self.right_media_parent, 0, 1, 1, 1)
 
@@ -475,7 +457,7 @@ class Ui_ChatWindow(object):
         self.right_time.setText(f"<p align='center'>{time}</p>")
         self.right_time.setStyleSheet("QLabel{border-radius:7px;color:#000000; background-color:#C5C5C5;"
                                       "font-size:10px;}")
-        self.right_msg_layout.addWidget(self.right_time, 1, 1, 1, 1, Qt.AlignHCenter)
+        self.right_msg_layout.addWidget(self.right_time, 1, 1, 1, 1, Qt.AlignmentFlag.AlignHCenter)
 
         # SHOW MESSAGE STATUS INDICATOR
         self.message_status = QtWidgets.QPushButton()
@@ -492,8 +474,8 @@ class Ui_ChatWindow(object):
         self.right_msg_layout.addWidget(self.message_status, 1, 1, 1, 0)
 
         # UPDATE SCROLL BAR
-        QTimer.singleShot(10, lambda: self.scroll_to_end())
-        QTimer.singleShot(510, lambda: self.scroll_to_end())
+        QtCore.QTimer.singleShot(10, lambda: self.scroll_to_end())
+        QtCore.QTimer.singleShot(510, lambda: self.scroll_to_end())
 
     def scroll_to_end(self):
         # SCROLL TO END
@@ -603,5 +585,22 @@ class Ui_ChatWindow(object):
         self.play_button.setObjectName("play_button")
         self.play_button.clicked.connect(play_state)
 
+    @staticmethod
+    def layout_message(message):
+        """Split a string and return it as multi-line string."""
+
+        n = 6
+        words = message.split(" ")
+        designed_message = ""
+        i = 0
+        while i < len(words):
+            word = " ".join(words[i:i + n])
+            i += n
+
+            designed_message += word
+            if len(words) > n and i < len(words):
+                designed_message += "\n"
+
+        return designed_message
 
 from resources import img_rc
