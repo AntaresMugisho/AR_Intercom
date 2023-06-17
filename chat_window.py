@@ -40,40 +40,6 @@ class ChatWindow(QMainWindow):
         self.show()
 
     @Slot()
-    def change_send_style(self):
-        """
-        Changes send button style, and disable media button so that a user can not send media message and text message
-        at a time.
-        """
-        if self.ui.entry_field.text():
-            # Change send button style
-            self.ui.send_button.setStyleSheet(SendButton.style_send)
-            # Disable media button
-            self.ui.media_button.setEnabled(False)
-
-        else:
-            self.ui.send_button.setStyleSheet(SendButton.style_record)
-            self.ui.media_button.setEnabled(True)
-
-    @Slot()
-    def send_text_or_record(self):
-        """
-        According to the send button style, send text message or record a voice
-        """
-        if self.ui.send_button.styleSheet() == SendButton.style_send:
-            text_message = self.ui.entry_field.text()
-            # self.send_message(text_message)
-            self.ui.create_right_bubble("text", None, None, text_message, time.strftime("%Y-%m-%d %H:%M"))
-            self.ui.entry_field.setText(None)
-            self.ui.send_button.setStyleSheet(SendButton.style_record)
-            self.ui.media_button.setEnabled(True)
-
-        elif self.ui.send_button.styleSheet() == SendButton.style_record:
-            self.ui.media_button.setEnabled(False)
-            # self.record_voice()
-            self.ui.create_left_bubble("text", None, None, "Hello world !", time.strftime("%Y-%m-%d %H:%M"))
-
-    @Slot()
     def help(self):
         """
         Open the user manual pdf file
@@ -124,6 +90,41 @@ class ChatWindow(QMainWindow):
 
         except Exception as e:
             print("Error while asking connection : ", e)
+
+    @Slot()
+    def change_send_style(self):
+        """
+        Changes send button style, and disable media button so that a user can not send media message and text message
+        at a time.
+        """
+        if self.ui.entry_field.text():
+            # Change send button style
+            self.ui.send_button.setStyleSheet(SendButton.style_send)
+            # Disable media button
+            self.ui.media_button.setEnabled(False)
+
+        else:
+            self.ui.send_button.setStyleSheet(SendButton.style_record)
+            self.ui.media_button.setEnabled(True)
+
+    @Slot()
+    def send_text_or_record(self):
+        """
+        According to the send button style, send text message or record a voice
+        """
+        if self.ui.send_button.styleSheet() == SendButton.style_send:
+            text_message = self.ui.entry_field.text()
+            # self.send_message(text_message)
+            self.ui.create_right_bubble("text", None, None, text_message, time.strftime("%Y-%m-%d %H:%M"))
+            self.ui.entry_field.setText(None)
+            self.ui.send_button.setStyleSheet(SendButton.style_record)
+            self.ui.media_button.setEnabled(True)
+
+        elif self.ui.send_button.styleSheet() == SendButton.style_record:
+            self.ui.media_button.setEnabled(False)
+            # self.record_voice()
+            self.ui.record_widget()
+            self.ui.create_left_bubble("text", None, None, "Hello world !", time.strftime("%Y-%m-%d %H:%M"))
 
     @Slot()
     def send_media(self, kind, path_to_media):

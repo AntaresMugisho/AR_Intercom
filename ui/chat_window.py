@@ -504,7 +504,7 @@ class Ui_ChatWindow(object):
         self.record_time = QtWidgets.QLabel(self.record_tip)
         self.record_time.setGeometry(QtCore.QRect(45, 5, 71, 20))
         self.record_time.setStyleSheet("QLabel{background:grey; color:white; border-radius:none;}")
-        self.record_time.setAlignment(QtCore.Qt.AlignCenter)
+        self.record_time.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.record_time.setText("00:00")
         self.record_time.show()
 
