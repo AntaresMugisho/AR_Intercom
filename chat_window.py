@@ -10,6 +10,7 @@ from PyQt6.QtCore import pyqtSlot as Slot
 from ui.chat_window import Ui_ChatWindow
 from styles import Clients, SendButton
 
+import recorder
 
 class ChatWindow(QMainWindow):
     """
@@ -35,6 +36,7 @@ class ChatWindow(QMainWindow):
         self.ui.entry_field.textEdited.connect(self.change_send_style)
         self.ui.entry_field.returnPressed.connect(self.send_text_or_record)
         self.ui.send_button.clicked.connect(self.send_text_or_record)
+
 
         # SHOW WINDOW
         self.show()
@@ -123,7 +125,11 @@ class ChatWindow(QMainWindow):
         elif self.ui.send_button.styleSheet() == SendButton.style_record:
             self.ui.media_button.setEnabled(False)
             # self.record_voice()
+            # CONNECT RECORD BUTTONS
             self.ui.record_widget()
+            self.ui.end_record.clicked.connect(recorder.start_recorder)
+            self.ui.cancel_record.clicked.connect(recorder.stop_recorder)
+
             self.ui.create_left_bubble("text", None, None, "Hello world !", time.strftime("%Y-%m-%d %H:%M"))
 
     @Slot()
