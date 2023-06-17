@@ -19,6 +19,7 @@ from client import Client
 
 chrono, mins = (1, 0)
 
+
 class Chat(ChatWindow):
     def __init__(self):
         super().__init__()
@@ -27,52 +28,9 @@ class Chat(ChatWindow):
         utils.create_media_folders()
 
         # CONNECT CLIENTS BUTTON
-        for frame in self.ui.left_scroll.findChildren(QFrame):
-            try:
-                client_name_btn = frame.findChildren(QPushButton)[0]
-                client_name_btn.clicked.connect(self.ask_connection)
-            except IndexError:
-                pass
 
-    def ask_connection(self):
-        """Try to connect to another client"""
-        try:
-            # GET CLICKED BUTTON
-            clicked = self.sender()
 
-            # GET NAME AND PORT OF CLICKED CLIENT NAME
-            name = clicked.text()
-            port = Users.dictionnary.get(name)
 
-            # SET NAME TO THE ACTIVE CLIENT LABEL
-            self.ui.active_client.setText(name)
-            self.ui.active_client.show()
-            self.ui.delete_button.show()
-
-            # RESTORE EXISTING MESSAGES
-            self.restore_chat()
-
-            # TRY TO CONNECT
-            #self.client = Client(port)
-            #self.client.connect_to_server()
-
-            # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF CLIENT ONLINE
-            for wid in self.ui.left_scroll.findChildren(QFrame):
-                for w in wid.findChildren(QFrame):
-
-                    # Reset Message counter
-                    if w.objectName() == name + "_counter":
-                        w.setText("0")
-                        w.hide()
-
-                        # Reset to normal style sheet
-                        w.parent().setStyleSheet(Clients.frame_normal)
-
-            # Show online toast if client is online
-            self.check_online(name)
-
-        except Exception as e:
-            print("Error while asking connection : ", e)
 
     def layout_message(self, message):
         """Split a string and return it as multi-line string."""

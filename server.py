@@ -103,7 +103,7 @@ class Server:
         with open(f"{directory}/{file_name}", "wb") as file:
             downloaded = b""
             while len(downloaded) < file_size:
-                chunk = client_socket.recv(20480)
+                chunk = client_socket.recv(10240)
                 file.write(chunk)
                 downloaded += chunk
                 # Show progression in console mode
