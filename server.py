@@ -21,11 +21,11 @@ class Server:
 
     def __init__(self):
         self.host = "0.0.0.0"
-        self.port = 12000
+        self.port = 12001
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         # MESSAGE OBJECT TO EMIT SIGNALS
-        self.message_object = Message()
+        self.message = Message()
 
     def accept_connections(self):
         """
@@ -73,23 +73,27 @@ class Server:
                 rlist, wlist, xlist = select.select(self.CONNECTED_CLIENTS, [], [], 0.50)
                 for client in rlist:
                     try:
-                        message = client.recv(1024).decode()
+                        packet = client.recv(1024).decode()
                         client.send("Text Message Received".encode())
-                        client_id = message.split("|")[0]
-                        message_kind = message.split("|")[1]
-                        print(message)
+                        client_id = packet.split("|")[0]
+                        message_kind = packet.split("|")[1]
+                        print(packet)
 
                         if message_kind == "text":
                             # Call signal sender
-                            self.message_object.text_message_received()
+                            message_body = packet.split("|")[2]
+                            self.message.text_message_received(message_kind, message_body)
                         else:
                             # Download file
-                            file_size = int(message.split("|")[2])
-                            file_name = message.split("|")[3]
+                            file_size = int(packet.split("|")[2])
+                            file_name = packet.split("|")[3]
                             self.download_file(client, message_kind, file_size, file_name)
                             # Call signal sender
-                            self.message_object.media_message_received()
+                            self.message.media_message_received()
                     except BrokenPipeError:
+                        pass
+
+                    except IndexError:
                         pass
 
                     except Exception as e:

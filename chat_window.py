@@ -10,10 +10,9 @@ from PyQt6.QtCore import pyqtSlot as Slot
 from ui.chat_window import Ui_ChatWindow
 from styles import Clients, SendButton
 from server import Server
-from message import Message
-
 import recorder
 import player
+
 
 class ChatWindow(QMainWindow):
     """
@@ -45,11 +44,14 @@ class ChatWindow(QMainWindow):
         self.server.start()
 
         # LISTEN FOR MESSAGE SIGNALS
-        message = Message()
-        message.textMessageReceived.connect(lambda: print("Hiiiii"))
+        self.server.message.textMessageReceived.connect(self.show_bubble)
 
         # SHOW WINDOW
         self.show()
+
+    @Slot(str, str)
+    def show_bubble(self, kind, body):
+        self.ui.create_left_bubble(kind, None, None, body, time.strftime("%Y-%m-%d %H:%M"))
 
     @Slot()
     def help(self):
@@ -140,8 +142,6 @@ class ChatWindow(QMainWindow):
             self.ui.record_widget()
             self.ui.end_record.clicked.connect(recorder.start_recorder)
             self.ui.cancel_record.clicked.connect(recorder.stop_recorder)
-
-            self.ui.create_left_bubble("text", None, None, "Hello world !", time.strftime("%Y-%m-%d %H:%M"))
 
     @Slot()
     def send_media(self, kind, path_to_media):

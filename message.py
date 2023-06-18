@@ -1,27 +1,22 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
-from PyQt6.QtCore import QObject
-from PyQt6.QtCore import pyqtSignal as Signal
+from PyQt6.QtCore import QObject, pyqtSignal
 
 
 class Message(QObject):
-    textMessageReceived = Signal(str)
-    mediaMessageReceived = Signal()
+    textMessageReceived = pyqtSignal([str, str])
+    mediaMessageReceived = pyqtSignal()
 
-    # def __init__(self):
-    #     QObject.__init__(self)
-
-    def text_message_received(self):
+    def text_message_received(self, kind, message_body):
         # EMIT NEW TEXT MESSAGE SIGNAL > TO SHOW GUI BUBBLE
-        self.textMessageReceived.emit()
-        print("Text message signal")
+        self.textMessageReceived.emit(kind, message_body)
 
-    def media_message_received(self):
+    def media_message_received(self, kind, file_name=None):
         # EMIT NEW MEDIA MESSAGE SIGNAL > TO SHOW GUI BUBBLE
-        self.mediaMessageReceived.emit()
-        print("Media message signal")
+        self.mediaMessageReceived.emit(kind, file_name)
 
 
 if __name__ == "__main__":
     message = Message()
-    print(message.textMessageReceived.emit("Hello"))
+    message.textMessageReceived.connect(lambda x, y:print(y))
+    message.textMessageReceived.emit("text", "Hello world !")

@@ -13,7 +13,7 @@ class Client:
     CLIENT_ID = socket.gethostbyname(socket.gethostname())
 
     # Port Unique for all clients
-    PORT = 12000
+    PORT = 12001
 
     def __init__(self, server_host="localhost"):
         self.host = server_host
