@@ -16,6 +16,9 @@ class Message(QObject):
         self.mediaMessageReceived.emit(kind, file_name)
 
 
+
+
+
 if __name__ == "__main__":
     message = Message()
     message.textMessageReceived.connect(lambda x, y:print(y))

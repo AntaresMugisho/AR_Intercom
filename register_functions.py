@@ -237,6 +237,7 @@ class Register(RegisterWindow):
         self.close()
 
 
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     run = Register()
