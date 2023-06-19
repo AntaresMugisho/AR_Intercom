@@ -39,8 +39,10 @@ def get_private_ip():
     Returns the local IP address
     """
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.connect(("8.8.8.8", 80))
-    ip_address = sock.getsockname()[0]
-    sock.close()
-
-    return ip_address
+    try:
+        sock.connect(("8.8.8.8", 80))
+        ip_address = sock.getsockname()[0]
+        sock.close()
+        return ip_address
+    except OSError:
+        print("Vous n'etes connecté à aucun réseau...")

@@ -102,6 +102,7 @@ class UserController:
         ]
 
         self.db.execute(statement, data)
+        self.db.connection.commit()
 
 
 if __name__ == "__main__":
@@ -115,4 +116,7 @@ if __name__ == "__main__":
     user.set_role("Security Analyst")
 
     controller = UserController()
-    controller.store(user)
+    try:
+        controller.store(user)
+    except Exception as e:
+        print(e)

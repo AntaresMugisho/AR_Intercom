@@ -11,7 +11,7 @@ class Database:
 
     def execute(self, statement, data=None):
         cursor = self.connection.cursor()
-        if data:
+        if data is not None:
             cursor.execute(statement, data)
         else:
             cursor.execute(statement)
