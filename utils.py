@@ -36,13 +36,11 @@ def create_media_folders():
 
 def get_private_ip():
     """
-    Returns the local IP address and netmask
+    Returns the local IP address
     """
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.connect(("8.8.8.8", 80))
     ip_address = sock.getsockname()[0]
     sock.close()
 
-    netmask = "255.255.255.0"
-
-    return ip_address, netmask
+    return ip_address

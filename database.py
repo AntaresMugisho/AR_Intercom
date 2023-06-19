@@ -6,12 +6,15 @@ import sqlite3
 class Database:
     connection = sqlite3.connect("user/database.db")
 
-    def __init__(self):
-        pass
+    # def __init__(self):
+    #     pass
 
-    def execute(self, statement):
+    def execute(self, statement, data=None):
         cursor = self.connection.cursor()
-        cursor.execute(statement)
+        if data:
+            cursor.execute(statement, data)
+        else:
+            cursor.execute(statement)
         cursor.close()
 
 
@@ -25,9 +28,9 @@ if __name__ == "__main__":
         user_name VARCHAR,
         user_status VARCHAR,
         password VARCHAR,
-        image_path VARCHAR,
+        image_path VARCHAR DEFAULT('user/default.png'),
         department VARCHAR,
-        role VARCHAR
+        role VARCHAR,
         created_at DATETIME,
         updated_at DATETIME,
         deleted_at DATETIME

@@ -1,6 +1,13 @@
 # -*- This python file uses the following encoding : utf-8 -*-
+import hashlib
+import platform
+from datetime import datetime
+import os
 
 from database import Database
+
+import utils
+
 
 class User:
     def __init__(self):
@@ -74,12 +81,11 @@ class UserController:
     def __init__(self):
         self.db = Database()
 
-
     def store(self, user: User):
-        statement = f"""
+        statement = """
         INSERT INTO users (
             host_address, host_name, user_name, user_status, password,
-            image_path, department, role, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            image_path, department, role, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
 
         data = [
@@ -91,14 +97,22 @@ class UserController:
             user.get_image_path(),
             user.get_department(),
             user.get_role(),
-            # created_at
+            datetime.now(),  # created_at
+            datetime.now()  # updated_at
         ]
 
+        self.db.execute(statement, data)
 
 
 if __name__ == "__main__":
     user = User()
+    user.set_host_address(utils.get_private_ip())
+    user.set_host_name(platform.node())
+    user.set_user_name(os.environ["USER"].capitalize())
     user.set_user_status("We live we love we die !")
+    user.set_password(hashlib.sha1(b"1234").hexdigest())
+    user.set_department("AR Software")
+    user.set_role("Security Analyst")
 
     controller = UserController()
     controller.store(user)
