@@ -20,7 +20,11 @@ class User:
         self.image_path = "user/default.png"
         self.department = None
         self.role = None
+        self.created_at = None
+        self.updated_at = None
+        self.deleted_at = None
 
+    # SETTERS
     def set_uuid(self, uuid):
         self.uuid = uuid
 
@@ -48,6 +52,16 @@ class User:
     def set_role(self, role):
         self.role = role
 
+    def set_created_at(self):
+        self.created_at = datetime.now()
+
+    def set_updated_at(self):
+        self.updated_at = datetime.now()
+
+    def set_deleted_at(self):
+        self.deleted_at = datetime.now()
+
+    # GETTERS
     def get_uuid(self):
         return self.uuid
 
@@ -75,6 +89,15 @@ class User:
     def get_role(self):
         return self.role
 
+    def get_created_at(self):
+        return self.created_at
+
+    def get_updated_at(self):
+        return self.updated_at
+
+    def get_deleted_at(self):
+        return self.deleted_at
+
 
 class UserController:
 
@@ -85,7 +108,8 @@ class UserController:
         statement = """
         INSERT INTO users (
             host_address, host_name, user_name, user_status, password,
-            image_path, department, role, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            image_path, department, role, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
 
         data = [
@@ -97,12 +121,11 @@ class UserController:
             user.get_image_path(),
             user.get_department(),
             user.get_role(),
-            datetime.now(),  # created_at
-            datetime.now()  # updated_at
+            user.get_created_at(),
+            user.get_updated_at()
         ]
 
         self.db.execute(statement, data)
-        self.db.connection.commit()
 
 
 if __name__ == "__main__":
@@ -114,9 +137,8 @@ if __name__ == "__main__":
     user.set_password(hashlib.sha1(b"1234").hexdigest())
     user.set_department("AR Software")
     user.set_role("Security Analyst")
+    user.set_created_at()
+    user.set_updated_at()
 
     controller = UserController()
-    try:
-        controller.store(user)
-    except Exception as e:
-        print(e)
+    controller.store(user)

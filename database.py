@@ -16,6 +16,7 @@ class Database:
         else:
             cursor.execute(statement)
         cursor.close()
+        self.connection.commit()
 
 
 if __name__ == "__main__":
