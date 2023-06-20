@@ -12,6 +12,8 @@ from styles import Clients, SendButton
 from server import Server
 import recorder
 import player
+from user import UserController
+import message
 
 
 class ChatWindow(QMainWindow):
@@ -76,7 +78,8 @@ class ChatWindow(QMainWindow):
             clicked_button = self.sender()
 
             # GET NAME AND PORT OF CLICKED CLIENT NAME
-            user_name = clicked_button.text()
+            user_name = clicked_button.objectName()
+            user_uuid = "aaab"  # clicked_button.objectName()
 
             # SET NAME TO THE ACTIVE CLIENT LABEL
             self.ui.active_client.setText(user_name)
@@ -84,6 +87,8 @@ class ChatWindow(QMainWindow):
             self.ui.delete_button.show()
 
             # RESTORE EXISTING MESSAGES
+            controller = UserController()
+            user = UserController.find(user_uuid)
             #self.restore_chat()
 
             # TRY TO CONNECT

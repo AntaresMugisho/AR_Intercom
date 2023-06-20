@@ -104,6 +104,10 @@ class UserController:
     def __init__(self):
         self.db = Database()
 
+    def find(self, id):
+        statement = f"SELECT * FROM users WHERE id = {id}"
+        return self.db.fetch(statement)
+
     def store(self, user: User):
         statement = """
         INSERT INTO users (
@@ -129,16 +133,19 @@ class UserController:
 
 
 if __name__ == "__main__":
-    user = User()
-    user.set_host_address(utils.get_private_ip())
-    user.set_host_name(platform.node())
-    user.set_user_name(os.environ["USER"].capitalize())
-    user.set_user_status("We live we love we die !")
-    user.set_password(hashlib.sha1(b"1234").hexdigest())
-    user.set_department("AR Software")
-    user.set_role("Security Analyst")
-    user.set_created_at()
-    user.set_updated_at()
+    # user = User()
+    # user.set_host_address(utils.get_private_ip())
+    # user.set_host_name(platform.node())
+    # user.set_user_name(os.environ["USER"].capitalize())
+    # user.set_user_status("We live we love we die !")
+    # user.set_password(hashlib.sha1(b"1234").hexdigest())
+    # user.set_department("AR Software")
+    # user.set_role("Security Analyst")
+    # user.set_created_at()
+    # user.set_updated_at()
 
     controller = UserController()
-    controller.store(user)
+    # controller.store(user)
+
+    user = controller.find(2)
+    print(user)

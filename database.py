@@ -18,6 +18,14 @@ class Database:
         cursor.close()
         self.connection.commit()
 
+    def fetch(self, statement):
+        cursor = self.connection.cursor()
+        cursor.execute(statement)
+        result = cursor.fetchone()
+        cursor.close()
+
+        return result
+
 
 if __name__ == "__main__":
     create_users_table = """
