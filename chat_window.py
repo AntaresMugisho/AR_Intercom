@@ -88,7 +88,7 @@ class ChatWindow(QMainWindow):
 
             # RESTORE EXISTING MESSAGES
             controller = UserController()
-            user = UserController.find(user_uuid)
+            user = UserController.find(1)
             #self.restore_chat()
 
             # TRY TO CONNECT

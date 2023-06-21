@@ -52,59 +52,57 @@ class Chat(ChatWindow):
     def restore_chat(self):
         """Restore existing chats and create messge's bubbles for each one restored if exists."""
 
-        table = "sa" + self.ui.active_client.text()[:2].lower() + "ch"
 
         # REMOVE CHAT
         try:
-            for bubble in reversed(range(self.ui.layout_bubble.count())):
-                self.ui.layout_bubble.itemAt(bubble).widget().deleteLater()
+            for index in reversed(range(self.ui.layout_bubble.count())):
+                self.ui.layout_bubble.itemAt(index).widget().deleteLater()
         except Exception as e:  # If chat field was not created
             print(e)
 
-        finally:
-            try:
-                connection = sqlite3.connect("sach.db")
-                cursor = connection.cursor()
+        try:
+            connection = sqlite3.connect("sach.db")
+            cursor = connection.cursor()
 
-                cursor.execute(f"SELECT * FROM {table}")
+            cursor.execute(f"SELECT * FROM {table}")
 
-                while 1:
-                    request = cursor.fetchone()
-                    if request is not None:
-                        kind = request[2]  # MAY BE STRING OR MEDIA
-                        title = request[3]
-                        format = request[4]  # THE FORMAT OF MESSAGE
-                        message = request[5]
-                        blob = request[6]
-                        time = request[7]  # THE SENT OR RECEIVED TIME
-                        status = int(request[8])  # CONVERT TO BOOL
+            while True:
+                request = cursor.fetchone()
+                if request is not None:
+                    kind = request[2]  # MAY BE STRING OR MEDIA
+                    title = request[3]
+                    format = request[4]  # THE FORMAT OF MESSAGE
+                    message = request[5]
+                    blob = request[6]
+                    time = request[7]  # THE SENT OR RECEIVED TIME
+                    status = int(request[8])  # CONVERT TO BOOL
 
-                    if request is None:
-                        break
+                if request is None:
+                    break
 
-                    elif request[1] == "R":  # IF THE MESSAGE HAS BEEN RECEIVED
+                elif request[1] == "R":  # IF THE MESSAGE HAS BEEN RECEIVED
 
-                        # VERIFY IF IT'S A STRING OR A BLOB
-                        if kind == "string":
-                            self.create_left_bubble(kind, None, None, message, time)
+                    # VERIFY IF IT'S A STRING OR A BLOB
+                    if kind == "string":
+                        self.create_left_bubble(kind, None, None, message, time)
 
-                        else:
-                            self.create_left_bubble(kind, title, format, blob, time)
+                    else:
+                        self.create_left_bubble(kind, title, format, blob, time)
 
-                    else:  # IF THE MESSAGE HAS BEEN SENT
+                else:  # IF THE MESSAGE HAS BEEN SENT
 
-                        if kind == "string":
-                            self.create_right_bubble(kind, None, None, message, time, status)
+                    if kind == "string":
+                        self.create_right_bubble(kind, None, None, message, time, status)
 
-                        else:
-                            self.create_right_bubble(kind, title, format, blob, time, status)
+                    else:
+                        self.create_right_bubble(kind, title, format, blob, time, status)
 
-                # CLOSE CONNECTION
-                cursor.close()
-                connection.close()
+            # CLOSE CONNECTION
+            cursor.close()
+            connection.close()
 
-            except Exception as e:
-                print("Erreur [292FUNC]:", e)
+        except Exception as e:
+            print("Erreur [292FUNC]:", e)
 
     def send_message(self, resending=None):
         """Send the message to the active client and shows the right bubble."""

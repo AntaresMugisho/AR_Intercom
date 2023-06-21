@@ -379,7 +379,7 @@ class Ui_ChatWindow(object):
             self.left_msg_layout.addWidget(self.left_media_parent, 0, 1, 1, 1)
 
             # Create media bubble
-            #self.create_media_bubble(self.left_media_parent, kind, title, format, content)
+            self.create_media_bubble(self.left_media_parent, kind, title, format, content)
 
         # Left time bubble
         self.left_time = QtWidgets.QLabel()

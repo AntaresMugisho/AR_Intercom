@@ -21,7 +21,7 @@ class Database:
     def fetch(self, statement):
         cursor = self.connection.cursor()
         cursor.execute(statement)
-        result = cursor.fetchone()
+        result = cursor.fetchall()
         cursor.close()
 
         return result
