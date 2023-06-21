@@ -29,25 +29,7 @@ class Chat(ChatWindow):
 
 
 
-    def update_counter(self, name):
-        """Increase the message counter badge on new message."""
 
-        for client_frame in self.ui.left_scroll.findChildren(QFrame):
-            for widget in client_frame.findChildren(QLabel):
-
-                if widget.objectName() == name + "_counter":
-                    unread_msg = int(widget.text())
-                    unread_msg += 1
-
-                    widget.setText(f"{unread_msg}")
-
-                    try:
-                        widget.show()
-                    except Exception as e:
-                        print(f"Erreur 230 FUNC {e}")
-
-                    parent = widget.parent()
-                    parent.setStyleSheet(Clients.frame_unread_msg)
 
     def restore_chat(self):
          # REMOVE ACTUAL VISIBLE CHAT BUBBLES
@@ -444,49 +426,6 @@ class Chat(ChatWindow):
                 # Increase message counter
                 self.update_counter(name)
 
-                # Save message
-                table = "sa" + str(name[:2]).lower() + "ch"
-
-                if message[1] == "S":
-                    # Save string
-                    self.save_message(table, "R", "string", None, ".str", message[2:], time, True)
-                else:
-                    title = self.server.media_info["Title"]
-                    extension = self.server.media_info["Extension"]
-                    blob = self.server.data
-
-                    # Save media informations
-                    self.save_message(table, "R", "voice", title, extension, None, time, True)
-
-    def delete_message(self, *event):
-        active_client = self.ui.active_client.text()
-        if active_client != "":
-            messagebox = QMessageBox.question(self.MainWindow, "Confirmer la suppression",
-                                              f"Supprimer toutes vos conversations avec <b>{active_client}</b> ?"
-                                              "</br> Cette action est irréversible.",
-                                              QMessageBox.Yes, QMessageBox.No)
-
-            if messagebox == QMessageBox.Yes:
-
-                table = "sa" + active_client[:2].lower() + "ch"
-                try:
-                    connection = sqlite3.connect("sach.db")
-                    cursor = connection.cursor()
-
-                    print("Suppression en cours...")
-                    cursor.execute(f"DROP TABLE IF EXISTS {table}")
-                    cursor.close()
-                    connection.close()
-                    print("Opération terminée avec succès!")
-                except Exception as e:
-                    print(e)
-
-                # Refresh chat field
-                self.restore_chat()
-
-    def create_media_bubble(self, parent, kind, file_path):
-        """Called by 'create_bubble' functions."""
-        pass
 
 
 if __name__ == "__main__":

@@ -111,7 +111,6 @@ class UserController:
 
     def where(self, field: str, value):
         statement = f"SELECT * FROM users WHERE {field} = '{value}'"
-        print(statement)
         return self.db.fetch(statement)[0]
 
 

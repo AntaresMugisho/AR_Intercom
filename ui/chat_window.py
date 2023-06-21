@@ -457,13 +457,13 @@ class Ui_ChatWindow(object):
             self.right_media_parent.setStyleSheet("QWidget{border-radius:15px;"
                                             "background-color: #3385CC;}")
             self.right_media_parent.setLayout(ly)
-            self.right_media_parent.setLayoutDirection(Qt.AlignmentFlag.LeftToRight)
+            self.right_media_parent.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
 
             self.right_msg_layout.addWidget(self.right_media_parent, 0, 1, 1, 1)
 
             # CREATE MEDIA BUBBLE
             if kind == "voice":
-                self.create_voice_bubble(self.right_bubble, body)
+                self.create_voice_bubble(self.right_media_parent, body)
 
             elif kind == "video":
                 pass
@@ -586,7 +586,7 @@ class Ui_ChatWindow(object):
         self.slider.setMaximum(100)
         self.slider.setProperty("value", 0)
         self.slider.setSliderPosition(0)
-        self.slider.setOrientation(QtCore.Qt.AlignmentFlag.Horizontal)
+        self.slider.setOrientation(Qt.Orientation.Horizontal)
 
         # Elapsed time
         self.elapsed_time = QtWidgets.QLabel(self.voice_bubble)
