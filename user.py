@@ -109,6 +109,12 @@ class UserController:
         result = self.db.fetch(statement)[0]
         return result
 
+    def where(self, field: str, value):
+        statement = f"SELECT * FROM users WHERE {field} = '{value}'"
+        print(statement)
+        return self.db.fetch(statement)[0]
+
+
     def store(self, user: User):
         statement = """
         INSERT INTO users (

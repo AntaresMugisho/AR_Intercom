@@ -79,7 +79,7 @@ class ChatWindow(QMainWindow):
             clicked_button = self.sender()
 
             # GET NAME AND PORT OF CLICKED CLIENT NAME
-            user_name = clicked_button.objectName()
+            user_name = clicked_button.text()
             user_uuid = "aaab"  # clicked_button.objectName()
 
             # SET NAME TO THE ACTIVE CLIENT LABEL
@@ -89,15 +89,32 @@ class ChatWindow(QMainWindow):
 
             # RESTORE EXISTING MESSAGES
             controller = UserController()
-            user = controller.find(1)
+            user = controller.where("uuid", user_uuid)
             print(user)
 
-            # mc = MessageController()
-            # for message
+            # REMOVE ACTUAL VISIBLE CHAT BUBBLES
+            try:
+                for index in reversed(range(self.ui.layout_bubble.count())):
+                    self.ui.layout_bubble.itemAt(index).widget().deleteLater()
+            except Exception as e:  # If chat field was not created or is empty
+                print(e)
 
-            # TRY TO CONNECT
-            #self.client = Client(port)
-            #self.client.connect_to_server()
+            # SHOW INTENDED CHAT BUBBLES
+            controller = MessageController()
+            for message in controller.with_user(2):
+                sender_id = message[1]
+                kind = message[3]
+                body = message[4]
+                created_at = message[5]
+                # status = message[8]
+                status = True
+
+                #  Knowing that the user with id = 1 is the owner,
+                #  messages sent from user_id 1 will be shown in the right bubble
+                if sender_id == 1:
+                    self.ui.create_right_bubble(kind, body, created_at, status)
+                else:
+                    self.ui.create_left_bubble(kind, body, created_at)
 
             # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF CLIENT ONLINE
             for frame in self.ui.left_scroll.findChildren(QFrame):
@@ -139,7 +156,7 @@ class ChatWindow(QMainWindow):
         if self.ui.send_button.styleSheet() == SendButton.style_send:
             text_message = self.ui.entry_field.text()
             # self.send_message(text_message)
-            self.ui.create_right_bubble("text", None, None, text_message, time.strftime("%Y-%m-%d %H:%M"))
+            self.ui.create_right_bubble("text", text_message, time.strftime("%Y-%m-%d %H:%M"))
             self.ui.entry_field.setText(None)
             self.ui.send_button.setStyleSheet(SendButton.style_record)
             self.ui.media_button.setEnabled(True)

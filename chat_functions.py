@@ -50,59 +50,29 @@ class Chat(ChatWindow):
                     parent.setStyleSheet(Clients.frame_unread_msg)
 
     def restore_chat(self):
-        """Restore existing chats and create messge's bubbles for each one restored if exists."""
-
-
-        # REMOVE CHAT
+         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
         try:
             for index in reversed(range(self.ui.layout_bubble.count())):
                 self.ui.layout_bubble.itemAt(index).widget().deleteLater()
-        except Exception as e:  # If chat field was not created
+        except Exception as e:  # If chat field was not created or is empty
             print(e)
 
-        try:
-            connection = sqlite3.connect("sach.db")
-            cursor = connection.cursor()
+        # SHOW INTENDED CHAT BUBBLES
+        controller = MessageController()
+        for message in controller.with_user(3):
+            sender_id = message[1]
+            kind = message[3]
+            body = message[4]
+            created_at = message[5]
+            # status = message[8]
+            status = True
 
-            cursor.execute(f"SELECT * FROM {table}")
-
-            while True:
-                request = cursor.fetchone()
-                if request is not None:
-                    kind = request[2]  # MAY BE STRING OR MEDIA
-                    title = request[3]
-                    format = request[4]  # THE FORMAT OF MESSAGE
-                    message = request[5]
-                    blob = request[6]
-                    time = request[7]  # THE SENT OR RECEIVED TIME
-                    status = int(request[8])  # CONVERT TO BOOL
-
-                if request is None:
-                    break
-
-                elif request[1] == "R":  # IF THE MESSAGE HAS BEEN RECEIVED
-
-                    # VERIFY IF IT'S A STRING OR A BLOB
-                    if kind == "string":
-                        self.create_left_bubble(kind, None, None, message, time)
-
-                    else:
-                        self.create_left_bubble(kind, title, format, blob, time)
-
-                else:  # IF THE MESSAGE HAS BEEN SENT
-
-                    if kind == "string":
-                        self.create_right_bubble(kind, None, None, message, time, status)
-
-                    else:
-                        self.create_right_bubble(kind, title, format, blob, time, status)
-
-            # CLOSE CONNECTION
-            cursor.close()
-            connection.close()
-
-        except Exception as e:
-            print("Erreur [292FUNC]:", e)
+            #  Knowing that the user with id = 1 is the owner,
+            #  messages sent from user_id 1 will be shown in the right bubble
+            if sender_id == 1:
+                self.creaate_right_bubble(kind, body, created_at, status)
+            else:
+                self.create_left_bubble(kind, body, created_at)
 
     def send_message(self, resending=None):
         """Send the message to the active client and shows the right bubble."""

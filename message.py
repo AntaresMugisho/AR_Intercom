@@ -115,4 +115,4 @@ if __name__ == "__main__":
     controller = MessageController()
     # controller.store(message)
     for message in controller.with_user(3):
-        print(message[4])
+        print(message)
