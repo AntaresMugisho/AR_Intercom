@@ -332,7 +332,7 @@ class Ui_ChatWindow(object):
 
         self.media_button.setStyleSheet(MediaButton.style_less)
 
-    def create_left_bubble(self, kind, title, format, content, time):
+    def create_left_bubble(self, kind, body, time):
 
         # GRID LAYOUT
         self.left_msg_layout = QtWidgets.QGridLayout()
@@ -355,7 +355,7 @@ class Ui_ChatWindow(object):
 
         if kind == "text":
             # LAYOUT MESSAGE
-            message = self.layout_message(content)
+            message = self.layout_message(body)
 
             # Left text container
             self.left_bubble = QtWidgets.QLabel()
@@ -378,8 +378,21 @@ class Ui_ChatWindow(object):
 
             self.left_msg_layout.addWidget(self.left_media_parent, 0, 1, 1, 1)
 
-            # Create media bubble
-            self.create_media_bubble(self.left_media_parent, kind, title, format, content)
+            # CREATE BUBBLE
+            if kind == "voice":
+                self.create_voice_bubble(self.left_media_parent, body)
+
+            elif kind == "video":
+                pass
+
+            elif kind == "audio":
+                pass
+
+            elif kind == "image":
+                pass
+
+            elif kind == "document":
+                pass
 
         # Left time bubble
         self.left_time = QtWidgets.QLabel()
@@ -390,10 +403,10 @@ class Ui_ChatWindow(object):
         self.left_msg_layout.addWidget(self.left_time, 1, 1, 1, 1, Qt.AlignmentFlag.AlignHCenter)
 
         # UPDATE SCROLL BAR
-        QtCore.QTimer.singleShot(10, lambda: self.scroll_to_end())
-        QtCore.QTimer.singleShot(510, lambda: self.scroll_to_end())
+        QtCore.QTimer.singleShot(10, self.scroll_to_end)
+        QtCore.QTimer.singleShot(510, self.scroll_to_end)
 
-    def create_right_bubble(self, kind, title, format, content, time, status=True):
+    def create_right_bubble(self, kind, body, time, status=True):
 
         # GRID LAYOUT
         self.right_msg_layout = QtWidgets.QGridLayout()
@@ -418,7 +431,7 @@ class Ui_ChatWindow(object):
 
         # CREATE TEXT MESSAGE, OR MEDIA BUBBLE
         if kind == "text":
-            message = self.layout_message(content)
+            message = self.layout_message(body)
 
             # Right text container
             self.right_bubble = QtWidgets.QLabel()
@@ -448,8 +461,21 @@ class Ui_ChatWindow(object):
 
             self.right_msg_layout.addWidget(self.right_media_parent, 0, 1, 1, 1)
 
-            # Create media bubble
-            self.create_media_bubble(self.right_media_parent, kind, title, format, content)
+            # CREATE MEDIA BUBBLE
+            if kind == "voice":
+                self.create_voice_bubble(self.right_bubble, body)
+
+            elif kind == "video":
+                pass
+
+            elif kind == "audio":
+                pass
+
+            elif kind == "image":
+                pass
+
+            elif kind == "document":
+                pass
 
         # Right time
         self.right_time = QtWidgets.QLabel()
@@ -474,8 +500,8 @@ class Ui_ChatWindow(object):
         self.right_msg_layout.addWidget(self.message_status, 1, 1, 1, 0)
 
         # UPDATE SCROLL BAR
-        QtCore.QTimer.singleShot(10, lambda: self.scroll_to_end())
-        QtCore.QTimer.singleShot(510, lambda: self.scroll_to_end())
+        QtCore.QTimer.singleShot(10, self.scroll_to_end)
+        QtCore.QTimer.singleShot(510, self.scroll_to_end)
 
     def scroll_to_end(self):
         # SCROLL TO END
@@ -518,7 +544,7 @@ class Ui_ChatWindow(object):
                                         QPushButton:hover{background:#DD0000;}""")
         self.cancel_record.show()
 
-    def create_voice_bubble(self, parent, title):
+    def create_voice_bubble(self, parent, file_name):
 
         def play_state():
             """Create attribute player if not exists and play.
@@ -549,8 +575,8 @@ class Ui_ChatWindow(object):
         self.title = QtWidgets.QLabel(self.voice_bubble)
         self.title.setGeometry(QtCore.QRect(52, 3, 241, 20))
         self.title.setStyleSheet("QLabel{background:#44FFFFFF;}")
-        self.title.setAlignment(QtCore.Qt.AlignCenter)
-        self.title.setText(title)
+        self.title.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.title.setText(file_name)
         self.title.setObjectName("media_")
 
         # Slider
@@ -560,14 +586,14 @@ class Ui_ChatWindow(object):
         self.slider.setMaximum(100)
         self.slider.setProperty("value", 0)
         self.slider.setSliderPosition(0)
-        self.slider.setOrientation(QtCore.Qt.Horizontal)
+        self.slider.setOrientation(QtCore.Qt.AlignmentFlag.Horizontal)
 
         # Elapsed time
         self.elapsed_time = QtWidgets.QLabel(self.voice_bubble)
         self.elapsed_time.setGeometry(QtCore.QRect(52, 49, 51, 16))
         self.elapsed_time.setStyleSheet("QLabel{background:#22FFFFFF; border-radius:8px;}")
         self.elapsed_time.setText("00:00")
-        self.elapsed_time.setAlignment(QtCore.Qt.AlignCenter)
+        self.elapsed_time.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.elapsed_time.setObjectName("elapsed_time")
 
         # Total time
@@ -575,7 +601,7 @@ class Ui_ChatWindow(object):
         self.total_time.setGeometry(QtCore.QRect(241, 49, 51, 16))
         self.total_time.setStyleSheet("QLabel{background:#22FFFFFF; border-radius:8px;}")
         self.total_time.setText("--:--")
-        self.total_time.setAlignment(QtCore.Qt.AlignCenter)
+        self.total_time.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.total_time.setObjectName("total_time")
 
         # Play button

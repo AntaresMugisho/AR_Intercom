@@ -106,7 +106,8 @@ class UserController:
 
     def find(self, id):
         statement = f"SELECT * FROM users WHERE id = {id}"
-        return self.db.fetch(statement)
+        result = self.db.fetch(statement)[0]
+        return result
 
     def store(self, user: User):
         statement = """
@@ -148,4 +149,4 @@ if __name__ == "__main__":
     # controller.store(user)
 
     user = controller.find(2)
-    print(user)
+    # print(user)

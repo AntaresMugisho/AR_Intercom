@@ -514,40 +514,9 @@ class Chat(ChatWindow):
                 # Refresh chat field
                 self.restore_chat()
 
-    def create_media_bubble(self, parent, kind, title, format, content):
-        """Called by 'create_bubble' funstions."""
-
-        ## WRITE FILE IF NOT EXISTS
-
-        # CREATE FOLDER
-        file_folder = kind.capitalize() + "s"
-        path = f"{self.home}/Documents/AR Intercom/Media/{file_folder}/"
-
-        try:
-            open(f"{path}{title}{format}", "r")
-
-        except FileNotFoundError:
-            with open(f"{path}{title}{format}", "wb") as file:
-                file.write(content)
-
-        except Exception as e:
-            print("Erreur [536FUNC]: ", e)
-
-        # CREATE BUBBLE
-        if kind == "voice":
-            self.create_voice_bubble(parent, title)
-
-        elif kind == "video":
-            pass
-
-        elif kind == "audio":
-            pass
-
-        elif kind == "image":
-            pass
-
-        elif kind == "document":
-            pass
+    def create_media_bubble(self, parent, kind, file_path):
+        """Called by 'create_bubble' functions."""
+        pass
 
 
 if __name__ == "__main__":

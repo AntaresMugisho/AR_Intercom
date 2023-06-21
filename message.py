@@ -79,6 +79,10 @@ class MessageController:
     def __init__(self):
         self.db = Database()
 
+    def with_user(self, user_id: int):
+        statement = f"SELECT * FROM messages WHERE sender_id = {user_id} OR receiver_id = {user_id}"
+        return self.db.fetch(statement)
+
     def store(self, message: Message):
         statement = """
         INSERT INTO messages (
@@ -101,12 +105,14 @@ class MessageController:
 if __name__ == "__main__":
     message = Message()
 
-    message.set_sender_id(2),
-    message.set_receiver_id(1),
-    message.set_kind("text"),
-    message.set_body("I'm okay thanks!"),
-    message.set_created_at()
-    message.set_updated_at()
+    # message.set_sender_id(2),
+    # message.set_receiver_id(1),
+    # message.set_kind("text"),
+    # message.set_body("I'm okay thanks!"),
+    # message.set_created_at()
+    # message.set_updated_at()
 
     controller = MessageController()
-    controller.store(message)
+    # controller.store(message)
+    for message in controller.with_user(3):
+        print(message[4])

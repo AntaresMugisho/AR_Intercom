@@ -12,7 +12,8 @@ from styles import Clients, SendButton
 from server import Server
 import recorder
 import player
-from user import UserController
+from user import UserController, User
+from message import MessageController, Message
 import message
 
 
@@ -53,7 +54,7 @@ class ChatWindow(QMainWindow):
 
     @Slot(str, str)
     def show_bubble(self, kind, body):
-        self.ui.create_left_bubble(kind, None, None, body, time.strftime("%Y-%m-%d %H:%M"))
+        self.ui.create_left_bubble(kind, body, time.strftime("%Y-%m-%d %H:%M"))
 
     @Slot()
     def help(self):
@@ -88,8 +89,11 @@ class ChatWindow(QMainWindow):
 
             # RESTORE EXISTING MESSAGES
             controller = UserController()
-            user = UserController.find(1)
-            #self.restore_chat()
+            user = controller.find(1)
+            print(user)
+
+            # mc = MessageController()
+            # for message
 
             # TRY TO CONNECT
             #self.client = Client(port)
