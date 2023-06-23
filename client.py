@@ -22,7 +22,7 @@ class Client:
 
     def connect_to_server(self):
         """
-        Try to connect to a distant server.
+        Try to connect to a distant server every 5 seconds.
         """
         while True:
             time.sleep(5)
@@ -36,6 +36,9 @@ class Client:
                 self.connect_to_server()
 
     def reliable_send(self, message):
+        """
+        Sends message using socket's 'send' function and receive feed back from the server.
+        """
         try:
             self.sock.send(message)
             server_response = self.sock.recv(1024).decode()
@@ -46,12 +49,6 @@ class Client:
             # One if the message was not sent
             # Another if the server doesn't respond
             message_sent = False
-
-    def upload_file(self, path):
-        size = os.path.getsize(path)
-        print(f"Sending file {size} KB")
-        with open(path, "rb") as file:
-            self.sock.send(file.read())
 
     def send_message(self, kind, message):
         """
@@ -73,6 +70,13 @@ class Client:
             media_message = f"{self.CLIENT_ID}|{kind}|{file_size}|{file_name}".encode()
             self.reliable_send(media_message)
             self.upload_file(path)
+
+    def upload_file(self, path):
+        """
+        Sends file to the distant server
+        """
+        with open(path, "rb") as file:
+            self.sock.send(file.read())
 
     def disconnect(self):
         """
