@@ -4,6 +4,9 @@ import sys
 import socket
 import time
 
+import utils
+from netscanner import NetscanThread
+
 
 class Client:
     """
@@ -15,10 +18,39 @@ class Client:
     # Port Unique for all clients
     PORT = 12001
 
+    # Hostnames and addresses in the network
+    hosts = {}
+
     def __init__(self, server_host="localhost"):
         self.host = server_host
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connected = False
+
+    def scan(self):
+        addresses = []
+        threads = []
+
+        my_ip = utils.get_private_ip()
+        my_ip_bytes = my_ip.split(".")
+        net_id = ".".join(my_ip_bytes[:3])
+
+        for host_id in range(2, 255):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
+            if host_id != int(my_ip_bytes[3]):
+                addresses.append(f"{net_id}.{str(host_id)}")
+
+        print(addresses)
+
+        netscanthreads = [NetscanThread(address) for address in addresses]
+        for thread in netscanthreads:
+            thread.start()
+            threads.append(thread)
+
+        for thread in threads:
+            thread.join()
+
+        for address, hostname in Client.hosts.items():
+            # if (hostname != None):
+            print(address, '=>', hostname)
 
     def connect_to_server(self):
         """
@@ -87,6 +119,7 @@ class Client:
 
 if __name__ == "__main__":
     client = Client()
+    client.scan()
     client.connect_to_server()
 
     # This while loop will run only if the connection is established
