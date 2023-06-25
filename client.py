@@ -55,20 +55,21 @@ class Client:
         """
         Send message.
         """
-        if kind == "id_request":
+        if kind == "id":
             # GET MY IDS FROM DATABASE
             user_name = "Antares"
             user_status = "We live, we love, we die"
             department = "AR Software"
             role = "Security Analyst"
-            profile_picture_path = f"/user/profile.jpg"
+            profile_picture_path = f"user/profile.jpg"
             profile_picture_size = os.path.getsize(profile_picture_path)
-            id_message = f"{self.CLIENT_ID}|{user_name}|{user_status}|{profile_picture_size}|" \
-                         f"{profile_picture_path}|{department}|{role}"
+            id_message = f"{self.CLIENT_ID}|{kind}|{user_name}|{user_status}|{department}|{role}|" \
+                         f"{profile_picture_path}|{profile_picture_size}"
 
             # SEND MY IDS
             self.reliable_send(id_message)
-            self.upload_file(profile_picture_path)
+            if profile_picture_path != "/user/default.png":
+                self.upload_file(profile_picture_path)
 
         elif kind == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE

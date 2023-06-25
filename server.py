@@ -1,5 +1,5 @@
 # -*- This python file uses the following encoding : utf-8 -*-
-
+import os.path
 import socket
 import select
 import threading
@@ -74,12 +74,27 @@ class Server:
                 for client in rlist:
                     try:
                         packet = client.recv(1024).decode()
+                        packet = packet.split("|")
                         client.send("Text Message Received".encode())
-                        client_id = packet.split("|")[0]
-                        message_kind = packet.split("|")[1]
+                        client_id = packet[0]
+                        message_kind = packet[1]
+
                         print(packet)
 
-                        if message_kind == "text":
+                        if message_kind == "id":
+                            user_name = packet[2]
+                            user_status = packet[3]
+                            department = packet[4]
+                            role = packet[5]
+                            profile_picture_path = packet[6]
+                            profile_picture_size = packet[8]
+
+                            if profile_picture_path != "/user/default.png":
+                                extension = os.path.splitext(profile_picture_path)[1]
+                                file_name = f"{client_id}_profile{extension}"
+                                self.download_file(client, message_kind, profile_picture_size, file_name)
+
+                        elif message_kind == "text":
                             # Call signal sender
                             message_body = packet.split("|")[2]
                             self.message.text_message_received(message_kind, message_body)
@@ -104,7 +119,10 @@ class Server:
                 print("Empty list")
 
     @staticmethod
-    def download_file(client_socket, kind, file_size, file_name):
+    def download_file(client_socket, kind: str, file_size: int, file_name: str):
+        """
+        Download and save file from distant client machine.
+        """
         # SET FILE NAME IF IT IS A VOICE
         if kind == "voice":
             file_extension = ".arv" if sys.platform == "win32" else ".wav"
@@ -113,6 +131,11 @@ class Server:
         home_directory = utils.get_home_directory()
         directory = f"{home_directory}/AR Intercom/Media/{kind.capitalize()}s"
 
+        # SET DIFFERENT DIRECTORY IF IT IS A PROFILE PICTURE
+        if kind == "id":
+            directory = "/user"
+
+        # DOWNLOAD FILE
         with open(f"{directory}/{file_name}", "wb") as file:
             downloaded = b""
             while len(downloaded) < file_size:
@@ -123,7 +146,7 @@ class Server:
                 print("Downloading file...", str(round(len(downloaded) * 100 / file_size)), "%")
 
             # ONCE DOWNLOAD IS DONE
-            client_socket.send("Media Message Received".encode())
+            client_socket.send("File Received".encode())
 
 
 if __name__ == "__main__":
