@@ -1,11 +1,9 @@
 # -*- This python file uses the following encoding : utf-8 -*-
-import os.path
-import sys
+import os
 import socket
 import time
 
 import utils
-from netscanner import NetscanThread
 
 
 class Client:
@@ -13,44 +11,15 @@ class Client:
     Client to ask connection on different servers, and send them messages.
     """
     # CLIENT ID DEFINED BY HOST ADDRESS
-    CLIENT_ID = socket.gethostbyname(socket.gethostname())
+    CLIENT_ID = utils.get_private_ip()
 
     # Port Unique for all clients
     PORT = 12001
-
-    # Hostnames and addresses in the network
-    hosts = {}
 
     def __init__(self, server_host="localhost"):
         self.host = server_host
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connected = False
-
-    def scan(self):
-        addresses = []
-        threads = []
-
-        my_ip = utils.get_private_ip()
-        my_ip_bytes = my_ip.split(".")
-        net_id = ".".join(my_ip_bytes[:3])
-
-        for host_id in range(2, 255):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
-            if host_id != int(my_ip_bytes[3]):
-                addresses.append(f"{net_id}.{str(host_id)}")
-
-        print(addresses)
-
-        netscanthreads = [NetscanThread(address) for address in addresses]
-        for thread in netscanthreads:
-            thread.start()
-            threads.append(thread)
-
-        for thread in threads:
-            thread.join()
-
-        for address, hostname in Client.hosts.items():
-            # if (hostname != None):
-            print(address, '=>', hostname)
 
     def connect_to_server(self):
         """
@@ -84,9 +53,24 @@ class Client:
 
     def send_message(self, kind, message):
         """
-        Send message and try to receive status report
+        Send message.
         """
-        if kind == "text":
+        if kind == "id_request":
+            # GET MY IDS FROM DATABASE
+            user_name = "Antares"
+            user_status = "We live, we love, we die"
+            department = "AR Software"
+            role = "Security Analyst"
+            profile_picture_path = f"/user/profile.jpg"
+            profile_picture_size = os.path.getsize(profile_picture_path)
+            id_message = f"{self.CLIENT_ID}|{user_name}|{user_status}|{profile_picture_size}|" \
+                         f"{profile_picture_path}|{department}|{role}"
+
+            # SEND MY IDS
+            self.reliable_send(id_message)
+            self.upload_file(profile_picture_path)
+
+        elif kind == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
             text_message = f"{self.CLIENT_ID}|{kind}|{message}".encode()
             self.reliable_send(text_message)
@@ -119,7 +103,6 @@ class Client:
 
 if __name__ == "__main__":
     client = Client()
-    client.scan()
     client.connect_to_server()
 
     # This while loop will run only if the connection is established

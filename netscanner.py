@@ -25,7 +25,6 @@ class NetscanThread(threading.Thread):
                 hostname = "Unknown"
             hosts[address] = hostname
 
-
 if __name__ == "__main__":
     addresses = []
     threads = []
