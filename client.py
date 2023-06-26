@@ -41,7 +41,7 @@ class Client:
         Sends message using socket's 'send' function and receive feed back from the server.
         """
         try:
-            self.sock.send(message)
+            self.sock.send(message.encode())
             server_response = self.sock.recv(1024).decode()
             print(server_response)
         except Exception as e:
@@ -61,7 +61,7 @@ class Client:
             user_status = "We live, we love, we die"
             department = "AR Software"
             role = "Security Analyst"
-            profile_picture_path = f"user/profile.jpg"
+            profile_picture_path = message
             profile_picture_size = os.path.getsize(profile_picture_path)
             id_message = f"{self.CLIENT_ID}|{kind}|{user_name}|{user_status}|{department}|{role}|" \
                          f"{profile_picture_path}|{profile_picture_size}"
@@ -73,7 +73,7 @@ class Client:
 
         elif kind == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
-            text_message = f"{self.CLIENT_ID}|{kind}|{message}".encode()
+            text_message = f"{self.CLIENT_ID}|{kind}|{message}"
             self.reliable_send(text_message)
 
         else:  # If kind in [image, document, video, audio, voice]
@@ -84,11 +84,11 @@ class Client:
             file_name = os.path.split(path)[1]
 
             # SEND CLIENT ID AND FILE INFORMATION THEN UPLOAD FILE
-            media_message = f"{self.CLIENT_ID}|{kind}|{file_size}|{file_name}".encode()
+            media_message = f"{self.CLIENT_ID}|{kind}|{file_size}|{file_name}"
             self.reliable_send(media_message)
             self.upload_file(path)
 
-    def upload_file(self, path):
+    def upload_file(self, path: str):
         """
         Sends file to the distant server
         """
@@ -108,9 +108,13 @@ if __name__ == "__main__":
 
     # This while loop will run only if the connection is established
     while True:
-        message_type = input("Choose an option :\n1.Text message\n2.Media message\n3.Exit\n>>> ")
+        message_type = input("Choose an option :\n0.IDs\n1.Text message\n2.Media message\n3.Exit\n>>> ")
 
-        if message_type == "1":
+        if message_type == "0":
+            message_type = "id"
+            message = "user/profile.jpg"
+
+        elif message_type == "1":
             message_type = "text"
             message = input("Type your text message\n>>> ")
 

@@ -75,11 +75,9 @@ class Server:
                     try:
                         packet = client.recv(1024).decode()
                         packet = packet.split("|")
-                        client.send("Text Message Received".encode())
+                        client.send("Message Received".encode())
                         client_id = packet[0]
                         message_kind = packet[1]
-
-                        print(packet)
 
                         if message_kind == "id":
                             user_name = packet[2]
@@ -87,29 +85,35 @@ class Server:
                             department = packet[4]
                             role = packet[5]
                             profile_picture_path = packet[6]
-                            profile_picture_size = packet[8]
+                            profile_picture_size = int(packet[8])
 
                             if profile_picture_path != "/user/default.png":
                                 extension = os.path.splitext(profile_picture_path)[1]
-                                file_name = f"{client_id}_profile{extension}"
+                                file_name = f"_profile{extension}"
+                                print(file_name)
                                 self.download_file(client, message_kind, profile_picture_size, file_name)
 
                         elif message_kind == "text":
                             # Call signal sender
-                            message_body = packet.split("|")[2]
+                            message_body = packet[2]
                             self.message.text_message_received(message_kind, message_body)
+
                         else:
                             # Download file
-                            file_size = int(packet.split("|")[2])
-                            file_name = packet.split("|")[3]
+                            file_size = int(packet[2])
+                            file_name = packet[3]
                             self.download_file(client, message_kind, file_size, file_name)
                             # Call signal sender
                             self.message.media_message_received()
+
                     except BrokenPipeError:
                         pass
 
                     except IndexError:
                         pass
+
+                    # except UnicodeError:
+                    #     pass
 
                     except Exception as e:
                         print("Error while receiving message", e)
@@ -152,4 +156,3 @@ class Server:
 if __name__ == "__main__":
     server = Server()
     server.start()
-    server.receive_massages()
