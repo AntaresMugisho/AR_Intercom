@@ -14,7 +14,7 @@ class Client:
     CLIENT_ID = utils.get_private_ip()
 
     # Port Unique for all clients
-    PORT = 12001
+    PORT = 12000
 
     def __init__(self, server_host="localhost"):
         self.host = server_host
@@ -26,7 +26,6 @@ class Client:
         Try to connect to a distant server every 5 seconds.
         """
         while True:
-            time.sleep(5)
             try:
                 self.sock.connect((self.host, self.PORT))
                 print(f"Connected with host {self.host}:{self.PORT}")
@@ -34,6 +33,7 @@ class Client:
                 break
             except Exception as e:
                 print(f"Error while trying to connect on server {self.host}:{self.PORT} : ", e)
+                time.sleep(5)
                 self.connect_to_server()
 
     def reliable_send(self, message):
@@ -63,12 +63,12 @@ class Client:
             role = "Security Analyst"
             profile_picture_path = message
             profile_picture_size = os.path.getsize(profile_picture_path)
-            id_message = f"{self.CLIENT_ID}|{kind}|{user_name}|{user_status}|{department}|{role}|" \
-                         f"{profile_picture_path}|{profile_picture_size}"
+            id_message = f"{self.CLIENT_ID}|{kind}|{profile_picture_size}|{profile_picture_path}|" \
+                         f"{user_name}|{user_status}|{department}|{role}"
 
             # SEND MY IDS
             self.reliable_send(id_message)
-            if profile_picture_path != "/user/default.png":
+            if profile_picture_path != "user/default.png":
                 self.upload_file(profile_picture_path)
 
         elif kind == "text":
@@ -76,7 +76,7 @@ class Client:
             text_message = f"{self.CLIENT_ID}|{kind}|{message}"
             self.reliable_send(text_message)
 
-        else:  # If kind in [image, document, video, audio, voice]
+        else:  # If kind in ["image", "document", "video", "audio", "voice"]
             path = message
 
             # COLLECT MEDIA METADATA FIRST

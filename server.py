@@ -21,7 +21,7 @@ class Server:
 
     def __init__(self):
         self.host = "0.0.0.0"
-        self.port = 12001
+        self.port = 12000
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         # MESSAGE OBJECT TO EMIT SIGNALS
@@ -71,6 +71,10 @@ class Server:
         while True:
             try:
                 rlist, wlist, xlist = select.select(self.CONNECTED_CLIENTS, [], [], 0.50)
+            except select.error:
+                # This error can occur if CONNECTED_CLIENTS list is empty
+                print("Empty list")
+            else:
                 for client in rlist:
                     try:
                         packet = client.recv(1024).decode()
@@ -78,19 +82,19 @@ class Server:
                         client.send("Message Received".encode())
                         client_id = packet[0]
                         message_kind = packet[1]
+                        print(packet)
 
                         if message_kind == "id":
-                            user_name = packet[2]
-                            user_status = packet[3]
-                            department = packet[4]
-                            role = packet[5]
-                            profile_picture_path = packet[6]
-                            profile_picture_size = int(packet[8])
+                            profile_picture_size = int(packet[2])
+                            profile_picture_path = packet[3]
+                            user_name = packet[4]
+                            user_status = packet[5]
+                            department = packet[6]
+                            role = packet[7]
 
-                            if profile_picture_path != "/user/default.png":
+                            if profile_picture_path != "user/default.png":
                                 extension = os.path.splitext(profile_picture_path)[1]
-                                file_name = f"_profile{extension}"
-                                print(file_name)
+                                file_name = f"{client_id}_profile{extension}"
                                 self.download_file(client, message_kind, profile_picture_size, file_name)
 
                         elif message_kind == "text":
@@ -104,7 +108,7 @@ class Server:
                             file_name = packet[3]
                             self.download_file(client, message_kind, file_size, file_name)
                             # Call signal sender
-                            self.message.media_message_received()
+                            self.message.media_message_received(message_kind)
 
                     except BrokenPipeError:
                         pass
@@ -112,15 +116,8 @@ class Server:
                     except IndexError:
                         pass
 
-                    # except UnicodeError:
-                    #     pass
-
                     except Exception as e:
                         print("Error while receiving message", e)
-
-            except select.error:
-                # This error can occur if CONNECTED_CLIENTS list is empty
-                print("Empty list")
 
     @staticmethod
     def download_file(client_socket, kind: str, file_size: int, file_name: str):
@@ -137,7 +134,7 @@ class Server:
 
         # SET DIFFERENT DIRECTORY IF IT IS A PROFILE PICTURE
         if kind == "id":
-            directory = "/user"
+            directory = "user"
 
         # DOWNLOAD FILE
         with open(f"{directory}/{file_name}", "wb") as file:
