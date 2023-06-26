@@ -124,17 +124,17 @@ class Server:
         """
         Download and save file from distant client machine.
         """
-        # SET FILE NAME IF IT IS A VOICE
-        if kind == "voice":
-            file_extension = ".arv" if sys.platform == "win32" else ".wav"
-            file_name = f"ARV-{time.strftime('%d%m%Y-%H%M-%S')}{file_extension}"
-
         home_directory = utils.get_home_directory()
         directory = f"{home_directory}/AR Intercom/Media/{kind.capitalize()}s"
 
         # SET DIFFERENT DIRECTORY IF IT IS A PROFILE PICTURE
         if kind == "id":
             directory = "user"
+
+        # SET FILE NAME IF IT IS A VOICE
+        elif kind == "voice":
+            file_extension = ".arv" if sys.platform == "win32" else ".wav"
+            file_name = f"ARV-{time.strftime('%d%m%Y-%H%M-%S')}{file_extension}"
 
         # DOWNLOAD FILE
         with open(f"{directory}/{file_name}", "wb") as file:

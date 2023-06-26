@@ -15,6 +15,8 @@ import player
 from user import UserController, User
 from message import MessageController, Message
 import message
+import utils
+from netscanner import NetscanThread
 
 
 class ChatWindow(QMainWindow):
@@ -48,6 +50,10 @@ class ChatWindow(QMainWindow):
 
         # LISTEN FOR MESSAGE SIGNALS
         self.server.message.textMessageReceived.connect(self.show_bubble)
+
+
+        # SCAN NETWORK TO FIND CONNECTED DEVICES
+        self.scan_network()
 
         # SHOW WINDOW
         self.show()
@@ -197,6 +203,32 @@ class ChatWindow(QMainWindow):
 
                 parent = widget.parent()
                 parent.setStyleSheet(Clients.frame_unread_msg)
+
+    def scan_network(self):
+        """
+        Scan network to find connected devices.
+        """
+        addresses = []
+        threads = []
+
+        my_ip = utils.get_private_ip()
+        my_ip_bytes = my_ip.split(".")
+        net_id = ".".join(my_ip_bytes[:3])
+
+        for host_id in range(2, 255):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
+            if host_id != int(my_ip_bytes[3]):
+                addresses.append(f"{net_id}.{str(host_id)}")
+
+        scan_threads = [NetscanThread(address) for address in addresses]
+        for thread in scan_threads:
+            thread.start()
+            threads.append(thread)
+
+        for thread in threads:
+            thread.join()
+
+        for address, hostname in NetscanThread.hosts.items():
+            print(address, '=>', hostname)
 
 
 if __name__ == "__main__":

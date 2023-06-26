@@ -5,9 +5,8 @@ import subprocess
 import utils
 from users import Users
 
-hosts = {}
-
 class NetscanThread(threading.Thread):
+    hosts = {}
 
     def __init__(self, address):
         threading.Thread.__init__(self)
@@ -23,7 +22,7 @@ class NetscanThread(threading.Thread):
                 hostname = socket.gethostbyaddr(address)
             except socket.herror:
                 hostname = "Unknown"
-            hosts[address] = hostname
+            NetscanThread.hosts[address] = hostname
 
 if __name__ == "__main__":
     addresses = []
@@ -34,7 +33,7 @@ if __name__ == "__main__":
     net_id = ".".join(my_ip_bytes[:3])
 
     for host_id in range(2, 255):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
-        if host_id != int(my_ip_bytes[3]):
+        if host_id == int(my_ip_bytes[3]):
             addresses.append(f"{net_id}.{str(host_id)}")
 
     netscanthreads = [NetscanThread(address) for address in addresses]
@@ -44,6 +43,8 @@ if __name__ == "__main__":
 
     for thread in threads:
         thread.join()
+
+    hosts = NetscanThread.hosts
 
     for address, hostname in hosts.items():
         # if (hostname != None):
