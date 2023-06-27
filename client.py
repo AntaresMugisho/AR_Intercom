@@ -25,16 +25,16 @@ class Client:
         """
         Try to connect to a distant server every 5 seconds.
         """
-        while True:
-            try:
-                self.sock.connect((self.host, self.PORT))
-                print(f"Connected with host {self.host}:{self.PORT}")
-                self.connected = True
-                break
-            except Exception as e:
-                print(f"Error while trying to connect on server {self.host}:{self.PORT} : ", e)
-                time.sleep(5)
-                self.connect_to_server()
+        # while True:
+        try:
+            self.sock.connect((self.host, self.PORT))
+            print(f"Connected with host {self.host}:{self.PORT}")
+            self.connected = True
+            # break
+        except Exception as e:
+            print(f"Error while trying to connect on server {self.host}:{self.PORT} : ", e)
+            # time.sleep(5)
+            # self.connect_to_server()
 
     def reliable_send(self, message):
         """
@@ -51,9 +51,9 @@ class Client:
             # Another if the server doesn't respond
             message_sent = False
 
-    def send_message(self, kind, message):
+    def send_message(self, kind: str, message: str = None):
         """
-        Send message.
+        Determines the kind of message and sends it.
         """
         if kind == "id":
             # GET MY IDS FROM DATABASE
@@ -61,7 +61,7 @@ class Client:
             user_status = "We live, we love, we die"
             department = "AR Software"
             role = "Security Analyst"
-            profile_picture_path = message
+            profile_picture_path = 'user/profile.jpg'
             profile_picture_size = os.path.getsize(profile_picture_path)
             id_message = f"{self.CLIENT_ID}|{kind}|{profile_picture_size}|{profile_picture_path}|" \
                          f"{user_name}|{user_status}|{department}|{role}"

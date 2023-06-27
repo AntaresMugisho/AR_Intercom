@@ -3,6 +3,7 @@
 import sys
 import os
 import time
+import threading
 
 from PyQt6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider
 from PyQt6.QtCore import pyqtSlot as Slot
@@ -10,6 +11,8 @@ from PyQt6.QtCore import pyqtSlot as Slot
 from ui.chat_window import Ui_ChatWindow
 from styles import Clients, SendButton
 from server import Server
+from client import Client
+
 import recorder
 import player
 from user import UserController, User
@@ -51,9 +54,19 @@ class ChatWindow(QMainWindow):
         # LISTEN FOR MESSAGE SIGNALS
         self.server.message.textMessageReceived.connect(self.show_bubble)
 
-
         # SCAN NETWORK TO FIND CONNECTED DEVICES
-        self.scan_network()
+        thread = threading.Thread(target=self.scan_network)
+        thread.start()
+
+        self.server_hosts = {}
+
+        for server_host in self.server_hosts.keys():
+            client = Client(server_host)
+            client.connect_to_server()
+            if client.connected:
+                client.send_message("id")
+            else:
+                print(client.CLIENT_ID, " not connected")
 
         # SHOW WINDOW
         self.show()
@@ -206,7 +219,7 @@ class ChatWindow(QMainWindow):
 
     def scan_network(self):
         """
-        Scan network to find connected devices.
+        Scan network to find connected devices and return it.
         """
         addresses = []
         threads = []
@@ -215,9 +228,9 @@ class ChatWindow(QMainWindow):
         my_ip_bytes = my_ip.split(".")
         net_id = ".".join(my_ip_bytes[:3])
 
-        for host_id in range(2, 255):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
-            if host_id != int(my_ip_bytes[3]):
-                addresses.append(f"{net_id}.{str(host_id)}")
+        for host_id in range(0, 256):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
+            # if host_id != int(my_ip_bytes[3]):
+            addresses.append(f"{net_id}.{str(host_id)}")
 
         scan_threads = [NetscanThread(address) for address in addresses]
         for thread in scan_threads:
@@ -227,8 +240,11 @@ class ChatWindow(QMainWindow):
         for thread in threads:
             thread.join()
 
-        for address, hostname in NetscanThread.hosts.items():
+        self.server_hosts = NetscanThread.hosts
+
+        for address, hostname in self.server_hosts.items():
             print(address, '=>', hostname)
+
 
 
 if __name__ == "__main__":
