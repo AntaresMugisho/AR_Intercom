@@ -5,7 +5,6 @@ from PyQt6.QtWidgets import QSizePolicy
 from PyQt6.QtCore import Qt
 
 from styles import *
-from users import Users
 
 
 class Ui_ChatWindow(object):
@@ -99,17 +98,17 @@ class Ui_ChatWindow(object):
         self.clients_field.setWidget(self.left_scroll)
         self.clients_field.setStyleSheet(ScrollBar.orange_style)
 
-        # CLIENTS LIST
-        self.load_client()
+
 
         # LAYOUT LEFT SIDE
         self.layleft.addWidget(self.chatlist)
         self.layleft.addWidget(self.clients_field)
        # ---------------------------------------client_frame
 
-    def load_client(self):
-        for client in Users.ulist:
-            name = client
+    def load_client(self, users: list):
+        for user in users:
+            uuid = user[1]
+            name = user[4]
 
             # FRAME FOR ONE CLIENT
             self.client_info = QtWidgets.QFrame(self.left_scroll)
@@ -135,7 +134,7 @@ class Ui_ChatWindow(object):
                                             border-radius:8px;
                                             background-color: #00ff00;}""")
             self.online_toast.hide()
-            self.online_toast.setObjectName(f"{name}_toast")
+            self.online_toast.setObjectName(f"{uuid}_toast")
 
             # NAME
             self.client_name = QtWidgets.QPushButton(self.client_info)
@@ -143,7 +142,7 @@ class Ui_ChatWindow(object):
             self.client_name.setStyleSheet("QPushButton{color:#FFF;font-size:20px; text-align:left; padding-left:10px;"
                                            "border:none;background:none;}")
             self.client_name.setText(name)
-            self.client_name.setObjectName(f"{name}_name")
+            self.client_name.setObjectName(uuid)
 
             # MESSAGE COUNTER
             self.msg_counter = QtWidgets.QLabel(self.client_info)
@@ -153,8 +152,11 @@ class Ui_ChatWindow(object):
             self.msg_counter.setText("0")
             self.msg_counter.setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.msg_counter.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-            self.msg_counter.setObjectName(f"{name}_counter")
+            self.msg_counter.setObjectName(f"{uuid}_counter")
             self.msg_counter.hide()
+
+        self.spacer = QtWidgets.QSpacerItem(1, 280, vPolicy=QSizePolicy.Policy.Minimum)
+        self.left_scroll_layout.addSpacerItem(self.spacer)
 
 ####################################################################################
 # THE LEFT SIDE IS DONE,

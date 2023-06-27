@@ -36,6 +36,12 @@ class ChatWindow(QMainWindow):
         self.ui.actionAide.triggered.connect(self.help)
         self.ui.actionQuitter.triggered.connect(self._close)
 
+        # SHOW USER'S LIST
+        users = UserController().where("id", "<>", 1)
+        print(users)
+
+        self.ui.load_client(users)
+
         # CONNECT USER'S CONVERSATION BUTTONS
         for frame in self.ui.left_scroll.findChildren(QFrame):
             user_conversation_button = frame.findChild(QPushButton)
@@ -64,6 +70,7 @@ class ChatWindow(QMainWindow):
             client = Client(server_host)
             client.connect_to_server()
             if client.connected:
+                print(client.CLIENT_ID, " connected")
                 client.send_message("id")
             else:
                 print(client.CLIENT_ID, " not connected")
@@ -97,10 +104,12 @@ class ChatWindow(QMainWindow):
 
         # GET CLICKED BUTTON
         clicked_button = self.sender()
+        user_uuid = clicked_button.objectName()
 
-        # GET NAME AND PORT OF CLICKED CLIENT NAME
-        user_name = clicked_button.text()
-        user_uuid = "aaab"  # clicked_button.objectName()
+        # GET USER FROM CLIQUED BUTTON OBJECT NAME
+        controller = UserController()
+        user = controller.where("uuid", "=", user_uuid)[0]
+        user_name = user[4]
 
         # SET NAME TO THE ACTIVE CLIENT LABEL
         self.ui.active_client.setText(user_name)
@@ -115,11 +124,8 @@ class ChatWindow(QMainWindow):
             print(e)
 
         # SHOW OLDER MESSAGES WITH THE ACTIVE USER
-        controller = UserController()
-        user = controller.where("uuid", user_uuid)
-
         controller = MessageController()
-        for message in controller.with_user(2):  # With user.get_id()
+        for message in controller.with_user(user[0]):  # With user.get_id()
             sender_id = message[1]
             kind = message[3]
             body = message[4]

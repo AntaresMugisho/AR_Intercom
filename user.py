@@ -109,9 +109,10 @@ class UserController:
         result = self.db.fetch(statement)[0]
         return result
 
-    def where(self, field: str, value):
-        statement = f"SELECT * FROM users WHERE {field} = '{value}'"
-        return self.db.fetch(statement)[0]
+    def where(self, field: str = "id", operator: str = "=", value = 1):
+        statement = f"SELECT * FROM users WHERE {field} {operator} '{value}'"
+        print(statement)
+        return self.db.fetch(statement)
 
 
     def store(self, user: User):
