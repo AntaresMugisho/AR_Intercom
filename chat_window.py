@@ -119,6 +119,8 @@ class ChatWindow(QMainWindow):
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
         try:
             for index in reversed(range(self.ui.layout_bubble.count())):
+                if index == 0:  # The widget at index 0 is a layout spacer, we don't have to delete it
+                    break
                 self.ui.layout_bubble.itemAt(index).widget().deleteLater()
         except Exception as e:  # If chat field was not visible or is empty
             print(e)
@@ -143,7 +145,7 @@ class ChatWindow(QMainWindow):
         # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
         for frame in self.ui.left_scroll.findChildren(QFrame):
             # Reset Message counter
-            if frame.objectName() == user_name + "_counter":
+            if frame.objectName() == user_uuid + "_counter":
                 frame.setText("0")
                 frame.hide()
 

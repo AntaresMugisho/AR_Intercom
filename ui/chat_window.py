@@ -105,58 +105,59 @@ class Ui_ChatWindow(object):
         self.layleft.addWidget(self.clients_field)
        # ---------------------------------------client_frame
 
-    def load_client(self, users: list):
-        for user in users:
-            uuid = user[1]
-            name = user[4]
+    def load_client(self, users: list = []):
+        if len(users) > 0:
+            for user in users:
+                uuid = user[1]
+                name = user[4]
 
-            # FRAME FOR ONE CLIENT
-            self.client_info = QtWidgets.QFrame(self.left_scroll)
-            self.client_info.setGeometry(QtCore.QRect(0, 0, 236, 60))
-            self.client_info.setMinimumSize(QtCore.QSize(236, 60))
-            self.client_info.setMaximumSize(QtCore.QSize(236, 60))
-            self.client_info.setStyleSheet(Clients.frame_normal)
-            self.client_info.setLineWidth(1)
-            self.left_scroll_layout.addWidget(self.client_info, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
+                # FRAME FOR ONE CLIENT
+                self.client_info = QtWidgets.QFrame(self.left_scroll)
+                self.client_info.setGeometry(QtCore.QRect(0, 0, 236, 60))
+                self.client_info.setMinimumSize(QtCore.QSize(236, 60))
+                self.client_info.setMaximumSize(QtCore.QSize(236, 60))
+                self.client_info.setStyleSheet(Clients.frame_normal)
+                self.client_info.setLineWidth(1)
+                self.left_scroll_layout.addWidget(self.client_info, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
 
-            # PROFILE PICTURE
-            self.client_picture = QtWidgets.QLabel(self.client_info)
-            self.client_picture.setGeometry(QtCore.QRect(3, 0, 60, 60))
-            self.client_picture.setStyleSheet("image:url(:/icons/icons/1.png); border:none;background:none;")
-            self.client_picture.setPixmap(QtGui.QPixmap(":/icons/icons/1.png"))
-            self.client_picture.setScaledContents(True)
+                # PROFILE PICTURE
+                self.client_picture = QtWidgets.QLabel(self.client_info)
+                self.client_picture.setGeometry(QtCore.QRect(3, 0, 60, 60))
+                self.client_picture.setStyleSheet("image:url(:/icons/icons/1.png); border:none;background:none;")
+                self.client_picture.setPixmap(QtGui.QPixmap(":/icons/icons/1.png"))
+                self.client_picture.setScaledContents(True)
 
-            # ONLINE TOAST
-            self.online_toast = QtWidgets.QLabel(self.client_info)
-            self.online_toast.setGeometry(QtCore.QRect(45, 11, 16, 16))
-            self.online_toast.setStyleSheet("""QLabel{
-                                            border:none;
-                                            border-radius:8px;
-                                            background-color: #00ff00;}""")
-            self.online_toast.hide()
-            self.online_toast.setObjectName(f"{uuid}_toast")
+                # ONLINE TOAST
+                self.online_toast = QtWidgets.QLabel(self.client_info)
+                self.online_toast.setGeometry(QtCore.QRect(45, 11, 16, 16))
+                self.online_toast.setStyleSheet("""QLabel{
+                                                border:none;
+                                                border-radius:8px;
+                                                background-color: #00ff00;}""")
+                self.online_toast.hide()
+                self.online_toast.setObjectName(f"{uuid}_toast")
 
-            # NAME
-            self.client_name = QtWidgets.QPushButton(self.client_info)
-            self.client_name.setGeometry(QtCore.QRect(56, 0, 175, 60))
-            self.client_name.setStyleSheet("QPushButton{color:#FFF;font-size:20px; text-align:left; padding-left:10px;"
-                                           "border:none;background:none;}")
-            self.client_name.setText(name)
-            self.client_name.setObjectName(uuid)
+                # NAME
+                self.client_name = QtWidgets.QPushButton(self.client_info)
+                self.client_name.setGeometry(QtCore.QRect(56, 0, 175, 60))
+                self.client_name.setStyleSheet("QPushButton{color:#FFF;font-size:20px; text-align:left; padding-left:10px;"
+                                               "border:none;background:none;}")
+                self.client_name.setText(name)
+                self.client_name.setObjectName(uuid)
 
-            # MESSAGE COUNTER
-            self.msg_counter = QtWidgets.QLabel(self.client_info)
-            self.msg_counter.setGeometry(QtCore.QRect(184, 18, 22, 22))
-            self.msg_counter.setStyleSheet("QLabel{border-radius:11px; font-weight:bold; text-align:right; color:#ffAa00;"
-                                            "border:none; background-color: rgb(0, 0, 59);}")
-            self.msg_counter.setText("0")
-            self.msg_counter.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.msg_counter.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-            self.msg_counter.setObjectName(f"{uuid}_counter")
-            self.msg_counter.hide()
+                # MESSAGE COUNTER
+                self.msg_counter = QtWidgets.QLabel(self.client_info)
+                self.msg_counter.setGeometry(QtCore.QRect(184, 18, 22, 22))
+                self.msg_counter.setStyleSheet("QLabel{border-radius:11px; font-weight:bold; text-align:right; color:#ffAa00;"
+                                                "border:none; background-color: rgb(0, 0, 59);}")
+                self.msg_counter.setText("0")
+                self.msg_counter.setAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.msg_counter.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+                self.msg_counter.setObjectName(f"{uuid}_counter")
+                self.msg_counter.hide()
 
-        self.spacer = QtWidgets.QSpacerItem(1, 280, vPolicy=QSizePolicy.Policy.Minimum)
-        self.left_scroll_layout.addSpacerItem(self.spacer)
+            spacer = QtWidgets.QSpacerItem(1, 280)
+            self.left_scroll_layout.addSpacerItem(spacer)
 
 ####################################################################################
 # THE LEFT SIDE IS DONE,
@@ -222,6 +223,9 @@ class Ui_ChatWindow(object):
         self.layout_bubble = QtWidgets.QVBoxLayout()
         self.layout_bubble.setSpacing(10)
         self.layout_bubble.setContentsMargins(10, 15, 15, 10)
+
+        spacer = QtWidgets.QSpacerItem(1, 260)
+        self.layout_bubble.addSpacerItem(spacer)
 
         # Widget for the scroll area object
         self.right_scroll = QtWidgets.QWidget()
@@ -406,7 +410,7 @@ class Ui_ChatWindow(object):
 
         # UPDATE SCROLL BAR
         QtCore.QTimer.singleShot(10, self.scroll_to_end)
-        QtCore.QTimer.singleShot(510, self.scroll_to_end)
+        QtCore.QTimer.singleShot(100, self.scroll_to_end)
 
     def create_right_bubble(self, kind, body, time, status=True):
 
@@ -503,7 +507,7 @@ class Ui_ChatWindow(object):
 
         # UPDATE SCROLL BAR
         QtCore.QTimer.singleShot(10, self.scroll_to_end)
-        QtCore.QTimer.singleShot(510, self.scroll_to_end)
+        QtCore.QTimer.singleShot(100, self.scroll_to_end)
 
     def scroll_to_end(self):
         # SCROLL TO END
