@@ -4,22 +4,23 @@ import socket
 import time
 
 import utils
+from user import UserController, User
 
 
 class Client:
     """
     Client to ask connection on different servers, and send them messages.
     """
-    # CLIENT ID DEFINED BY HOST ADDRESS
-    CLIENT_ID = utils.get_private_ip()
+    # OWNER SERVER IP ADDRESS
+    SERVER_IP = utils.get_private_ip()
 
     # Port Unique for all clients
     PORT = 12000
 
     def __init__(self, server_host="localhost"):
-        self.host = server_host
+        self.server_host = server_host
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.connected = False
+        self.online = False
 
     def connect_to_server(self):
         """
@@ -27,12 +28,21 @@ class Client:
         """
         # while True:
         try:
-            self.sock.connect((self.host, self.PORT))
-            print(f"Connected with host {self.host}:{self.PORT}")
-            self.connected = True
+            self.sock.connect((self.server_host, self.PORT))
+            print(f"Connected with host {self.server_host}:{self.PORT}")
+            self.online = True
+
+            # Save user in the database if not exist
+            user_exists = UserController().where("host_address", "=", self.server_host)
+            if not user_exists:
+                user = User()
+                user.set_uuid(self.server_host)
+                user.set_host_address(self.server_host)
+                user.set_user_name("Inconnu")
+                UserController().store(user)
             # break
         except Exception as e:
-            print(f"Error while trying to connect on server {self.host}:{self.PORT} : ", e)
+            print(f"Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
             # time.sleep(5)
             # self.connect_to_server()
 
@@ -63,7 +73,7 @@ class Client:
             role = "Security Analyst"
             profile_picture_path = 'user/profile.jpg'
             profile_picture_size = os.path.getsize(profile_picture_path)
-            id_message = f"{self.CLIENT_ID}|{kind}|{profile_picture_size}|{profile_picture_path}|" \
+            id_message = f"{self.SERVER_IP}|{kind}|{profile_picture_size}|{profile_picture_path}|" \
                          f"{user_name}|{user_status}|{department}|{role}"
 
             # SEND MY IDS
@@ -73,7 +83,7 @@ class Client:
 
         elif kind == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
-            text_message = f"{self.CLIENT_ID}|{kind}|{message}"
+            text_message = f"{self.SERVER_IP}|{kind}|{message}"
             self.reliable_send(text_message)
 
         else:  # If kind in ["image", "document", "video", "audio", "voice"]
@@ -84,7 +94,7 @@ class Client:
             file_name = os.path.split(path)[1]
 
             # SEND CLIENT ID AND FILE INFORMATION THEN UPLOAD FILE
-            media_message = f"{self.CLIENT_ID}|{kind}|{file_size}|{file_name}"
+            media_message = f"{self.SERVER_IP}|{kind}|{file_size}|{file_name}"
             self.reliable_send(media_message)
             self.upload_file(path)
 

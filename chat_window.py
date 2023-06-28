@@ -6,7 +6,7 @@ import time
 import threading
 
 from PyQt6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider
-from PyQt6.QtCore import pyqtSlot as Slot
+from PyQt6.QtCore import QTimer, pyqtSlot as Slot
 
 from ui.chat_window import Ui_ChatWindow
 from styles import Clients, SendButton
@@ -37,9 +37,7 @@ class ChatWindow(QMainWindow):
         self.ui.actionQuitter.triggered.connect(self._close)
 
         # SHOW USER'S LIST
-        users = UserController().where("id", "<>", 1)
-        print(users)
-
+        users = UserController().where("id", ">=", 1)
         self.ui.load_client(users)
 
         # CONNECT USER'S CONVERSATION BUTTONS
@@ -61,19 +59,14 @@ class ChatWindow(QMainWindow):
         self.server.message.textMessageReceived.connect(self.show_bubble)
 
         # SCAN NETWORK TO FIND CONNECTED DEVICES
+        self.server_hosts = {}
+        self.online_checker = QTimer()
+        self.online_checker.timeout.connect(self.check_online)
         thread = threading.Thread(target=self.scan_network)
         thread.start()
 
-        self.server_hosts = {}
-
-        for server_host in self.server_hosts.keys():
-            client = Client(server_host)
-            client.connect_to_server()
-            if client.connected:
-                print(client.CLIENT_ID, " connected")
-                client.send_message("id")
-            else:
-                print(client.CLIENT_ID, " not connected")
+        # CHECK ONLINE SERVER HOSTS EVERY 5000ms = 5secs
+        self.online_checker.start(5000)
 
         # SHOW WINDOW
         self.show()
@@ -91,10 +84,14 @@ class ChatWindow(QMainWindow):
     @Slot()
     def _close(self):
         """
-        Close all connections and exit the application
+        Close all connections, timers and exit the application
         """
-        self.server.stop()
-        self.close()
+        try:
+            self.online_checker.stop()
+            self.server.stop()
+            self.close()
+        except Exception as e:
+            print(f"Error while trying to close app: {e}")
 
     @Slot()
     def show_conversations(self):
@@ -113,6 +110,7 @@ class ChatWindow(QMainWindow):
 
         # SET NAME TO THE ACTIVE CLIENT LABEL
         self.ui.active_client.setText(user_name)
+        self.ui.active_client.setObjectName(user_uuid)
         self.ui.active_client.show()
         self.ui.delete_button.show()
 
@@ -152,8 +150,26 @@ class ChatWindow(QMainWindow):
                 # Reset to normal style sheet
                 frame.parent().setStyleSheet(Clients.frame_normal)
 
-        # Show online toast if client is online
-        #self.check_online(name)
+    def check_online(self):
+        """
+        Checks online devices and show or hide green online indicator widget.
+        """
+        for server_host in self.server_hosts.keys():
+            client = Client(server_host)
+            client.connect_to_server()
+
+            user = UserController().where("host_address", "=", server_host)
+            if user:
+                user_uuid = user[0][1]
+
+                # Show green online toast if client is online
+                for widget in self.ui.left_scroll.findChildren(QFrame):
+                    if widget.objectName() == f"{user_uuid}_toast":
+                        if client.online:
+                            widget.show()
+                        else:
+                            widget.hide()
+
 
     @Slot(str, str)
     def show_bubble(self, kind: str, body: str):
@@ -227,7 +243,7 @@ class ChatWindow(QMainWindow):
 
     def scan_network(self):
         """
-        Scan network to find connected devices and return it.
+        Scan network to find connected devices and put them in server_host dictionary.
         """
         addresses = []
         threads = []

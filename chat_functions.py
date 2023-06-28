@@ -27,35 +27,6 @@ class Chat(ChatWindow):
         # CREATE MEDIA FOLDERS IF NOT EXISTS
         utils.create_media_folders()
 
-
-
-
-
-    def restore_chat(self):
-         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
-        try:
-            for index in reversed(range(self.ui.layout_bubble.count())):
-                self.ui.layout_bubble.itemAt(index).widget().deleteLater()
-        except Exception as e:  # If chat field was not created or is empty
-            print(e)
-
-        # SHOW INTENDED CHAT BUBBLES
-        controller = MessageController()
-        for message in controller.with_user(3):
-            sender_id = message[1]
-            kind = message[3]
-            body = message[4]
-            created_at = message[5]
-            # status = message[8]
-            status = True
-
-            #  Knowing that the user with id = 1 is the owner,
-            #  messages sent from user_id 1 will be shown in the right bubble
-            if sender_id == 1:
-                self.creaate_right_bubble(kind, body, created_at, status)
-            else:
-                self.create_left_bubble(kind, body, created_at)
-
     def send_message(self, resending=None):
         """Send the message to the active client and shows the right bubble."""
 
@@ -90,18 +61,6 @@ class Chat(ChatWindow):
         # SAVE MESSAGE
         client_table = "sa" + addressee[:2].lower() + "ch"
         self.save_message(client_table, "S", "string", None, ".str", message, send_time, sent)
-
-    def check_online(self, name):
-        for wid in self.ui.left_scroll.findChildren(QFrame):
-
-            for w in wid.findChildren(QFrame):
-
-                # Show online toast if client is online
-                if w.objectName() == name + "_toast":
-                    if self.client.online:  # If client is connected, show green online toast
-                        w.show()
-                    else:
-                        w.hide()
 
     def resend_message(self):
         try:
