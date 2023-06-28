@@ -68,12 +68,12 @@ class ChatWindow(QMainWindow):
         # Scan network every 5 minutes
         self.net_scanner = QTimer()
         self.net_scanner.timeout.connect(self.scan_network)
-        self.net_scanner.start(300_000)
+        self.net_scanner.start(180_000)
 
-        # Check online devices every 15 seconds
+        # Check online servers every 15 seconds
         self.online_checker = QTimer()
         self.online_checker.timeout.connect(self.check_online)
-        self.online_checker.start(15_000)
+        self.online_checker.start(5_000)
 
         # SHOW WINDOW
         self.show()
@@ -96,6 +96,7 @@ class ChatWindow(QMainWindow):
         try:
             self.net_scanner.stop()
             self.online_checker.stop()
+            # Stop all clients instances
             self.server.stop()
         except Exception as e:
             print(f"Error while trying to close app: {e}")
@@ -112,7 +113,7 @@ class ChatWindow(QMainWindow):
         clicked_button = self.sender()
         user_uuid = clicked_button.objectName()
 
-        # GET USER FROM CLIQUED BUTTON OBJECT NAME
+        # GET USER FROM CLICKED BUTTON OBJECT NAME
         controller = UserController()
         user = controller.where("uuid", "=", user_uuid)[0]
         user_name = user[4]
@@ -258,6 +259,7 @@ class ChatWindow(QMainWindow):
         threads = []
 
         my_ip = utils.get_private_ip()
+        # Must check if ip is not 127.some.thing before continuing
         my_ip_bytes = my_ip.split(".")
         net_id = ".".join(my_ip_bytes[:3])
 

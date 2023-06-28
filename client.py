@@ -32,13 +32,18 @@ class Client:
             self.online = True
 
             # Save user in the database if not exist
-            user_exists = UserController().where("host_address", "=", self.server_host)
-            if not user_exists:
-                user = User()
-                user.set_uuid(self.server_host)
-                user.set_host_address(self.server_host)
-                user.set_user_name("Inconnu")
-                UserController().store(user)
+            # user_exists = UserController().where("host_address", "=", self.server_host)
+            # if not user_exists:
+            #     user = User()
+            #     user.set_uuid(self.server_host)
+            #     user.set_host_address(self.server_host)
+            #     user.set_user_name("Inconnu")
+            #     UserController().store(user)
+
+            # If i find the user online, just send him my IDS, he will do the same
+            print(f"Hello {self.server_host}, take my IDs")
+            self.send_message("id")
+
         except ConnectionRefusedError:
             print(f"[X] Connection refused on {self.server_host}:{self.PORT}")
 

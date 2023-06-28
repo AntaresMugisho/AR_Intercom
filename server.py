@@ -8,6 +8,7 @@ import time
 
 import utils
 from message import Message
+from user import UserController, User
 
 
 class Server:
@@ -73,7 +74,7 @@ class Server:
                 rlist, wlist, xlist = select.select(self.CONNECTED_CLIENTS, [], [], 0.50)
             except select.error:
                 # This error can occur if CONNECTED_CLIENTS list is empty
-                print("Empty list")
+                print("Empty read list")
             else:
                 for client in rlist:
                     try:
@@ -96,6 +97,19 @@ class Server:
                                 extension = os.path.splitext(profile_picture_path)[1]
                                 file_name = f"{client_id}_profile{extension}"
                                 self.download_file(client, message_kind, profile_picture_size, file_name)
+
+                            # Store or update user's information in database
+                            # user_exists = UserController().where("host_address", "=", self.server_host)
+                            # if not user_exists:
+                            user = User()
+                            user.set_uuid(profile_picture_path)
+                            user.set_user_name(user_name)
+                            user.set_host_address(client_id)
+                            user.set_host_name("windows")
+                            user.set_user_status(user_status)
+                            user.set_department(department)
+                            user.set_role(role)
+                            UserController().store(user)
 
                         elif message_kind == "text":
                             # Call signal sender

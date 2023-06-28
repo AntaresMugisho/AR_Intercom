@@ -205,42 +205,42 @@ class Chat(ChatWindow):
 
         slider.valueChanged.connect(self.player.setPosition)
 
-    def save_message(self, table, exp, kind, title, format, body, time, status):
-
-        # TRY TO CONNECT TO THE DATABASE
-        try:
-            connection = sqlite3.connect("sach.db")
-            cursor = connection.cursor()
-
-            cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table} (
-                                   id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                   exp TEXT NOT NULL,
-                                   kind TEXT NOT NULL,
-                                   title TEXT, 
-                                   format TEXT NOT NULL,
-                                   str TEXT,
-                                   byte BLOB,
-                                   time TEXT,
-                                   status TEXT)""")
-
-            # DEFINE DATA AND INSERT IT INTO TABLE
-            if kind == "string":
-                data = (exp, kind, None, format, body, None, time, status)
-            else:
-                data = (exp, kind, title, format, None, body, time, status)
-
-            cursor.execute(f"INSERT INTO {table} (exp, kind, title, format, str, byte, time, status)"
-                           " VALUES (?, ?, ?, ?, ?, ?, ?, ?)", data)
-
-            # SAVE CHANGES
-            connection.commit()
-
-            # CLOSE CONNECTION
-            cursor.close()
-            connection.close()
-
-        except Exception as e:
-            print("Erreur [511FUNC] : ", e)
+    # def save_message(self, table, exp, kind, title, format, body, time, status):
+    #
+    #     # TRY TO CONNECT TO THE DATABASE
+    #     try:
+    #         connection = sqlite3.connect("sach.db")
+    #         cursor = connection.cursor()
+    #
+    #         cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table} (
+    #                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+    #                                exp TEXT NOT NULL,
+    #                                kind TEXT NOT NULL,
+    #                                title TEXT,
+    #                                format TEXT NOT NULL,
+    #                                str TEXT,
+    #                                byte BLOB,
+    #                                time TEXT,
+    #                                status TEXT)""")
+    #
+    #         # DEFINE DATA AND INSERT IT INTO TABLE
+    #         if kind == "string":
+    #             data = (exp, kind, None, format, body, None, time, status)
+    #         else:
+    #             data = (exp, kind, title, format, None, body, time, status)
+    #
+    #         cursor.execute(f"INSERT INTO {table} (exp, kind, title, format, str, byte, time, status)"
+    #                        " VALUES (?, ?, ?, ?, ?, ?, ?, ?)", data)
+    #
+    #         # SAVE CHANGES
+    #         connection.commit()
+    #
+    #         # CLOSE CONNECTION
+    #         cursor.close()
+    #         connection.close()
+    #
+    #     except Exception as e:
+    #         print("Erreur [511FUNC] : ", e)
 
     def record_voice(self):
 

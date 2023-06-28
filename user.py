@@ -113,7 +113,6 @@ class UserController:
         statement = f"SELECT * FROM users WHERE {field} {operator} '{value}'"
         return self.db.fetch(statement)
 
-
     def store(self, user: User):
         statement = """
         INSERT INTO users (
@@ -121,6 +120,9 @@ class UserController:
             image_path, department, role, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
+
+        user.set_created_at()
+        user.set_updated_at()
 
         data = [
             user.get_host_address(),
