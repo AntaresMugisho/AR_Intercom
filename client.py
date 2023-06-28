@@ -26,10 +26,9 @@ class Client:
         """
         Try to connect to a distant server every 5 seconds.
         """
-        # while True:
         try:
             self.sock.connect((self.server_host, self.PORT))
-            print(f"Connected with host {self.server_host}:{self.PORT}")
+            print(f"[*] Connected on {self.server_host}:{self.PORT}")
             self.online = True
 
             # Save user in the database if not exist
@@ -40,11 +39,11 @@ class Client:
                 user.set_host_address(self.server_host)
                 user.set_user_name("Inconnu")
                 UserController().store(user)
-            # break
+        except ConnectionRefusedError:
+            print(f"[X] Connection refused on {self.server_host}:{self.PORT}")
+
         except Exception as e:
-            print(f"Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
-            # time.sleep(5)
-            # self.connect_to_server()
+            print(f"[X] Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
 
     def reliable_send(self, message):
         """

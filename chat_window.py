@@ -60,13 +60,20 @@ class ChatWindow(QMainWindow):
 
         # SCAN NETWORK TO FIND CONNECTED DEVICES
         self.server_hosts = {}
+
+        # Scan on startup
+        QTimer().singleShot(500, self.scan_network)
+        QTimer().singleShot(500, self.check_online)
+
+        # Scan network every 5 minutes
+        self.net_scanner = QTimer()
+        self.net_scanner.timeout.connect(self.scan_network)
+        self.net_scanner.start(300_000)
+
+        # Check online devices every 15 seconds
         self.online_checker = QTimer()
         self.online_checker.timeout.connect(self.check_online)
-        thread = threading.Thread(target=self.scan_network)
-        thread.start()
-
-        # CHECK ONLINE SERVER HOSTS EVERY 5000ms = 5secs
-        self.online_checker.start(5000)
+        self.online_checker.start(15_000)
 
         # SHOW WINDOW
         self.show()
@@ -265,10 +272,6 @@ class ChatWindow(QMainWindow):
             thread.join()
 
         self.server_hosts = NetscanThread.hosts
-
-        for address, hostname in self.server_hosts.items():
-            print(address, '=>', hostname)
-
 
 
 if __name__ == "__main__":
