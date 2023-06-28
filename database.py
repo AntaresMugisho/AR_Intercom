@@ -3,7 +3,6 @@
 import sqlite3
 
 
-
 class Database:
     __instance = None
 
@@ -18,36 +17,58 @@ class Database:
             print("Database connection already established")
             return cls.__instance
 
-    def __init__(self, fetch_class=None):
+    def __init__(self, fetch_class):
         print("[*] Successfully connected to database")
         self.connection = sqlite3.connect("user/database.db")
+        self.cursor = self.connection.cursor()
 
         self.set_fetch_mode(fetch_class)
 
     def execute(self, statement, data=None):
-        cursor = self.connection.cursor()
+        """
+        Executes a given statement
+        """
         if data is not None:
-            cursor.execute(statement, data)
+            self.cursor.execute(statement, data)
         else:
-            cursor.execute(statement)
-        cursor.close()
+            self.cursor.execute(statement)
+        self.cursor.close()
         self.connection.commit()
+        self.connection.close()
 
-    def fetch(self, statement):
-        cursor = self.connection.cursor()
-        cursor.execute(statement)
-        result = cursor.fetchall()
-        cursor.close()
+    def fetchone(self, statement):
+        """
+        Fetches one result and return it as a class object
+        """
+        self.cursor.execute(statement)
+        result = self.cursor.fetchone()
+        self.close()
 
-         = self.FETCH_CLASS
-        for query in result:
-            for i, attribute in enumerate(ob.__dict__.keys()):
-                ob.__dict__[attribute] = query[i]
+        class_object = self.FETCH_CLASS()
+        for i, attribute in enumerate(class_object.__dict__.keys()):
+            class_object.__dict__[attribute] = result[i]
 
-        return ob
+        return class_object
 
+    def fetchall(self, statement):
+        """
+        Fetches all results and return it as a list of class objects
+        """
+        self.cursor.execute(statement)
+        results = self.cursor.fetchall()
+        self.close()
 
+        class_objects = []
+        for result in results:
+            class_object = self.FETCH_CLASS()
+            for i, attribute in enumerate(class_object.__dict__.keys()):
+                class_object.__dict__[attribute] = result[i]
+            class_objects.append(class_object)
+        return class_objects
 
+    def close(self):
+        self.cursor.close()
+        self.connection.close()
 
     @classmethod
     def set_fetch_mode(cls, fetch_class: str):
@@ -89,9 +110,15 @@ if __name__ == "__main__":
     )
     """
 
-    db = Database(Message())
+    db = Database(User)
+    user = db.fetchone("SELECT * FROM users WHERE id=1")
+    print(user.get_user_name())
 
-    res = db.fetch("SELECT * FROM messages WHERE id=1")
-    print(res.get_body())
+    db = Database(Message)
+    messages = db.fetchall("SELECT * FROM messages")
+    for message in messages:
+        print(message.get_body())
+
     # db.execute(create_users_table)
     # db.execute(create_messages_table)
+
