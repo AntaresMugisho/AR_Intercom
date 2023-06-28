@@ -94,11 +94,13 @@ class ChatWindow(QMainWindow):
         Close all connections, timers and exit the application
         """
         try:
+            self.net_scanner.stop()
             self.online_checker.stop()
             self.server.stop()
-            self.close()
         except Exception as e:
             print(f"Error while trying to close app: {e}")
+        finally:
+            self.close()
 
     @Slot()
     def show_conversations(self):
