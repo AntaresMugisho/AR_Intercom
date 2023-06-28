@@ -3,11 +3,26 @@
 import sqlite3
 
 
-class Database:
-    connection = sqlite3.connect("user/database.db")
 
-    # def __init__(self):
-    #     pass
+class Database:
+    __instance = None
+
+    FETCH_CLASS = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls.__instance is None:
+            print("Connecting to database...")
+            cls.__instance = super().__new__(cls)
+            return cls.__instance
+        else:
+            print("Database connection already established")
+            return cls.__instance
+
+    def __init__(self, fetch_class=None):
+        print("[*] Successfully connected to database")
+        self.connection = sqlite3.connect("user/database.db")
+
+        self.set_fetch_mode(fetch_class)
 
     def execute(self, statement, data=None):
         cursor = self.connection.cursor()
@@ -24,10 +39,26 @@ class Database:
         result = cursor.fetchall()
         cursor.close()
 
-        return result
+         = self.FETCH_CLASS
+        for query in result:
+            for i, attribute in enumerate(ob.__dict__.keys()):
+                ob.__dict__[attribute] = query[i]
+
+        return ob
+
+
+
+
+    @classmethod
+    def set_fetch_mode(cls, fetch_class: str):
+        cls.FETCH_CLASS = fetch_class
+
 
 
 if __name__ == "__main__":
+    from user import User
+    from message import Message
+
     create_users_table = """
     CREATE TABLE IF NOT EXISTS users(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -58,6 +89,9 @@ if __name__ == "__main__":
     )
     """
 
-    db = Database()
-    db.execute(create_users_table)
-    db.execute(create_messages_table)
+    db = Database(Message())
+
+    res = db.fetch("SELECT * FROM messages WHERE id=1")
+    print(res.get_body())
+    # db.execute(create_users_table)
+    # db.execute(create_messages_table)

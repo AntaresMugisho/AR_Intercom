@@ -4,7 +4,7 @@ from datetime import datetime
 
 from PyQt6.QtCore import QObject, pyqtSignal
 
-from database import Database
+# from database import Database
 
 
 class Message(QObject):
@@ -14,6 +14,7 @@ class Message(QObject):
     def __init__(self):
         super().__init__()
 
+        self.id = None
         self.sender_id = None
         self.receiver_id = None
         self.kind = None
@@ -45,6 +46,9 @@ class Message(QObject):
         self.deleted_at = datetime.now()
 
     # GETTERS
+    def get_id(self):
+        return self.id
+
     def get_sender_id(self):
         return self.sender_id
 

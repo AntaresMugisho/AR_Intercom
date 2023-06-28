@@ -4,13 +4,14 @@ import platform
 from datetime import datetime
 import os
 
-from database import Database
+# from database import Database
 
 import utils
 
 
 class User:
     def __init__(self):
+        self.id = None
         self.uuid = None
         self.host_address = None
         self.host_name = None
@@ -62,6 +63,9 @@ class User:
         self.deleted_at = datetime.now()
 
     # GETTERS
+    def get_id(self):
+        return self.id
+
     def get_uuid(self):
         return self.uuid
 
