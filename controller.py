@@ -90,15 +90,19 @@ class Controller:
         self.set_updated_at()
 
         # Build statement
-        fields_values = []
+        sql_fields = []
+        values = []
         for field, value in self.__dict__.items():
-            if value is not None:
-                fields_values.append(f"{field} = \"{value}\"")
+            sql_fields.append(f"{field} = ?")
+            values.append(value)
 
         statement = f"""
-            UPDATE {self.__class__.table_name} SET {fields_values} WHERE {fields_values[0]} 
+            UPDATE {self.__class__.table_name} SET {sql_fields} WHERE id = {values[0]} 
         """
         statement = statement.replace("[", "").replace("]", "").replace("'", "")
 
         # Execute statement
-        self.__class__.db.execute(statement)
+        self.__class__.db.execute(statement, values)
+
+    def delete(self):
+        self.__class__.setup_db()

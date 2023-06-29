@@ -151,8 +151,9 @@ class UserController:
 
 
 if __name__ == "__main__":
-    user = User.find(3)
-    user.set_user_name("Delta")
+    user = User.find(4)
+    user.set_department("AR Boutique")
+    user.set_role("Delivery man")
 
     user.update()
 
