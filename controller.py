@@ -1,4 +1,5 @@
 # -*- This python file uses the following encoding : utf-8 -*-
+
 from database import Database
 
 
@@ -27,15 +28,6 @@ class Controller:
         cls.table_name = cls.__name__.lower() + "s"
 
     @classmethod
-    def all(cls):
-        """
-        Returns all records
-        """
-        cls.setup_db()
-        statement = f"SELECT * FROM {cls.table_name}"
-        return cls.db.fetchall(statement)
-
-    @classmethod
     def find(cls, id: int):
         """
         Returns the record with the specified id
@@ -45,12 +37,40 @@ class Controller:
         return cls.db.fetchone(statement)
 
     @classmethod
+    def all(cls):
+        """
+        Returns all records
+        """
+        cls.setup_db()
+        statement = f"SELECT * FROM {cls.table_name} WHERE deleted_at ISNULL"
+        print(statement)
+        return cls.db.fetchall(statement)
+
+    @classmethod
+    def with_deletes(cls):
+        """
+        Returns all records even those who were soft deleted
+        """
+        cls.setup_db()
+        statement = f"SELECT * FROM {cls.table_name}"
+        return cls.db.fetchall(statement)
+
+    @classmethod
+    def trashed(cls):
+        """
+        Returns all deleted records
+        """
+        cls.setup_db()
+        statement = f"SELECT * FROM {cls.table_name} WHERE deleted_at IS NOT NULL"
+        return cls.db.fetchall(statement)
+
+    @classmethod
     def where(cls, field: str, operator: str, value):
         """
         Return all records responding to the condition
         """
         cls.setup_db()
-        statement = f"SELECT * FROM {cls.table_name} WHERE {field} {operator} '{value}'"
+        statement = f"SELECT * FROM {cls.table_name} WHERE {field} {operator} '{value}' AND deleted_at ISNULL"
         return cls.db.fetchall(statement)
 
     def save(self):
@@ -83,6 +103,7 @@ class Controller:
 
         # Set object id according to the last inserted id
         self.set_id(self.__class__.db.cursor.lastrowid)
+        self.update()
 
     def update(self):
         """
@@ -97,7 +118,7 @@ class Controller:
         sql_fields = []
         values = []
         for field, value in self.__dict__.items():
-            if field != "id" and value is not None:
+            if field != "id":
                 sql_fields.append(f"{field} = ?")
                 values.append(value)
 
@@ -110,6 +131,9 @@ class Controller:
         self.__class__.db.execute(statement, values)
 
     def delete(self):
+        """
+        Permanently delete a record from database
+        """
         self.__class__.setup_db()
 
         statement = f"""
@@ -119,5 +143,15 @@ class Controller:
         self.__class__.db.execute(statement)
 
     def soft_delete(self):
+        """
+        Soft delete a record by setting a deleted_at time
+        """
         self.set_deleted_at()
+        self.update()
+
+    def restore(self):
+        """
+        Restore soft deleted record by setting deleted_at time to None
+        """
+        self.deleted_at = None
         self.update()

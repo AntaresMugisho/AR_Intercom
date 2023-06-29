@@ -157,10 +157,19 @@ if __name__ == "__main__":
 
     # Update test
     # user = User.find(282)
-    # user.set_password("1234")
+    # user.set_id(282)
     # user.update()
 
-    users = User.all()
-    for user in users:
-        print(user.get_user_name(), user.get_deleted_at())
+    #Delete test
+    # user = User.find(283)
+    # user.delete()
+
+    # Restore test
+    user = User.find(4)
+    user.restore()
+    print(user.get_deleted_at())
+
+    # users = User.with_deletes()
+    # for user in users:
+    #     print(user.get_user_name())
 
