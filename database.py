@@ -74,7 +74,6 @@ class Database:
     def set_fetch_mode(cls, fetch_class: str):
         cls.FETCH_CLASS = fetch_class
 
-
 if __name__ == "__main__":
     from user import User
     from message import Message

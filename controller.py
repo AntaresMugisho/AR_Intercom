@@ -3,27 +3,50 @@ from database import Database
 
 
 class Controller:
+    """
+    Database and Model controller !
+    """
+    db = None
+    table_name = None
+
+    @classmethod
+    def setup_db(cls):
+        cls.db = Database(cls)
+        cls.table_name = cls.__name__.lower() + "s"
+
+    @classmethod
+    def all(cls):
+        """
+        Returns all records
+        """
+        cls.setup_db()
+        statement = f"SELECT * FROM {cls.table_name}"
+        return cls.db.fetchall(statement)
 
     @classmethod
     def find(cls, id):
-        cls.db = Database(cls)
-        table_name = f"{cls.__name__.lower()}s"
-
-        statement = f"SELECT * FROM {table_name} WHERE id = {id}"
+        """
+        Returns the record with the specified id
+        """
+        cls.setup_db()
+        statement = f"SELECT * FROM {cls.table_name} WHERE id = {id}"
         return cls.db.fetchone(statement)
 
     @classmethod
     def where(cls, field: str, operator: str, value):
-        cls.db = Database(cls)
-        table_name = f"{cls.__name__.lower()}s"
-
-        statement = f"SELECT * FROM {table_name} WHERE {field} {operator} '{value}'"
+        """
+        Return all records responding to the condition
+        """
+        cls.setup_db()
+        statement = f"SELECT * FROM {cls.table_name} WHERE {field} {operator} '{value}'"
         return cls.db.fetchall(statement)
 
     @classmethod
     def store(cls, data: dict):
-        cls.db = Database(cls)
-        table_name = f"{cls.__name__.lower()}s"
+        """
+        Insert data in database
+        """
+        cls.setup_db()
 
         sql_fields = []
         vars = []
@@ -34,9 +57,14 @@ class Controller:
             values.append(value)
 
         statement = f"""
-        INSERT INTO {table_name} ({sql_fields}) VALUES {vars}  
+        INSERT INTO {cls.table_name} ({sql_fields}) VALUES {vars}  
         """
 
         print(statement)
 
         # cls.db.execute(statement, values)
+
+
+if __name__ == "__main__":
+    # controller = Controller()
+    Controller.find(1)

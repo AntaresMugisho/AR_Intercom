@@ -11,6 +11,7 @@ import utils
 
 
 class User(Controller):
+
     def __init__(self):
         self.id = None
         self.uuid = None
@@ -148,15 +149,21 @@ class UserController:
 
 
 if __name__ == "__main__":
-    user = User()
-    user.set_host_address(utils.get_private_ip())
-    user.set_host_name(platform.node())
-    user.set_user_name(os.environ["USER"].capitalize())
-    user.set_user_status("We live we love we die !")
-    user.set_password(hashlib.sha1(b"1234").hexdigest())
-    user.set_department("AR Software")
-    user.set_role("Security Analyst")
-    user.set_created_at()
-    user.set_updated_at()
+    # user = User()
+    # user.set_host_address(utils.get_private_ip())
+    # user.set_host_name(platform.node())
+    # user.set_user_name(os.environ["USER"].capitalize())
+    # user.set_user_status("We live we love we die !")
+    # user.set_password(hashlib.sha1(b"1234").hexdigest())
+    # user.set_department("AR Software")
+    # user.set_role("Security Analyst")
+    # user.set_created_at()
+    # user.set_updated_at()
 
-    user.store(user.__dict__)
+    user = User.all()
+    for u in user:
+        print(u.get_user_name())
+
+
+    # user = User.find(1)
+    # print(user)
