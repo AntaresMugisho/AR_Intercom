@@ -4,12 +4,13 @@ import platform
 from datetime import datetime
 import os
 
-# from database import Database
+from database import Database
+from controller import Controller
 
 import utils
 
 
-class User:
+class User(Controller):
     def __init__(self):
         self.id = None
         self.uuid = None
@@ -18,7 +19,7 @@ class User:
         self.user_name = None
         self.user_status = None
         self.password = None
-        self.image_path = "user/default.png"
+        self.image_path = None
         self.department = None
         self.role = None
         self.created_at = None
@@ -103,21 +104,22 @@ class User:
         return self.deleted_at
 
 
+
 class UserController:
 
     def __init__(self):
-        self.db = Database()
+        self.db = Database(User)
 
     def find(self, id):
         statement = f"SELECT * FROM users WHERE id = {id}"
-        result = self.db.fetch(statement)[0]
-        return result
+        return self.db.fetchone(statement)
 
-    def where(self, field: str = "id", operator: str = "=", value = 1):
-        statement = f"SELECT * FROM users WHERE {field} {operator} '{value}'"
-        return self.db.fetch(statement)
 
-    def store(self, user: User):
+
+    def store(self, class_object):
+
+        print(user.__dict__)
+
         statement = """
         INSERT INTO users (
             host_address, host_name, user_name, user_status, password,
@@ -138,26 +140,23 @@ class UserController:
             user.get_department(),
             user.get_role(),
             user.get_created_at(),
-            user.get_updated_at()
+            user.get_updated_at(),
+            user.get_deleted_at()
         ]
 
-        self.db.execute(statement, data)
+        # self.db.execute(statement, data)
 
 
 if __name__ == "__main__":
-    # user = User()
-    # user.set_host_address(utils.get_private_ip())
-    # user.set_host_name(platform.node())
-    # user.set_user_name(os.environ["USER"].capitalize())
-    # user.set_user_status("We live we love we die !")
-    # user.set_password(hashlib.sha1(b"1234").hexdigest())
-    # user.set_department("AR Software")
-    # user.set_role("Security Analyst")
-    # user.set_created_at()
-    # user.set_updated_at()
+    user = User()
+    user.set_host_address(utils.get_private_ip())
+    user.set_host_name(platform.node())
+    user.set_user_name(os.environ["USER"].capitalize())
+    user.set_user_status("We live we love we die !")
+    user.set_password(hashlib.sha1(b"1234").hexdigest())
+    user.set_department("AR Software")
+    user.set_role("Security Analyst")
+    user.set_created_at()
+    user.set_updated_at()
 
-    controller = UserController()
-    # controller.store(user)
-
-    user = controller.find(2)
-    # print(user)
+    user.store(user.__dict__)

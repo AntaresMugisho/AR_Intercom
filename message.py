@@ -4,15 +4,14 @@ from datetime import datetime
 
 from PyQt6.QtCore import QObject, pyqtSignal
 
-# from database import Database
+from controller import Controller
 
-
-class Message(QObject):
+class Message(QObject, Controller):
     textMessageReceived = pyqtSignal([str, str])
     mediaMessageReceived = pyqtSignal()
 
     def __init__(self):
-        super().__init__()
+        QObject.__init__(self)
 
         self.id = None
         self.sender_id = None
@@ -116,7 +115,7 @@ if __name__ == "__main__":
     # message.set_created_at()
     # message.set_updated_at()
 
-    controller = MessageController()
-    # controller.store(message)
-    for message in controller.with_user(3):
-        print(message)
+    # controller = MessageController()
+    # # controller.store(message)
+    # for message in controller.with_user(3):
+    #     print(message)

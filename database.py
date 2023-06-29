@@ -75,7 +75,6 @@ class Database:
         cls.FETCH_CLASS = fetch_class
 
 
-
 if __name__ == "__main__":
     from user import User
     from message import Message
