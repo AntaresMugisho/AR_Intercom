@@ -110,9 +110,9 @@ class Ui_ChatWindow(object):
         Load users conversation list from users who are registered in database
         """
         for user in users:
-            uuid = user[1]
-            name = user[4]
-            profile_picture_path = user[7]
+            uuid = user.get_uuid()
+            name = user.get_user_name()
+            profile_picture_path = user.get_image_path()
 
             # FRAME FOR ONE CLIENT
             self.client_info = QtWidgets.QFrame(self.left_scroll)

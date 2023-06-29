@@ -15,9 +15,9 @@ from client import Client
 
 import recorder
 import player
-from user import UserController, User
-from message import MessageController, Message
-import message
+from user import User
+from message import Message
+
 import utils
 from netscanner import NetscanThread
 
@@ -37,7 +37,7 @@ class ChatWindow(QMainWindow):
         self.ui.actionQuitter.triggered.connect(self._close)
 
         # SHOW USER'S LIST
-        users = UserController().where("id", ">=", 1)
+        users = User.where("id", ">=", 1)
         self.ui.load_client(users)
 
         # CONNECT USER'S CONVERSATION BUTTONS
@@ -73,7 +73,7 @@ class ChatWindow(QMainWindow):
         # Check online servers every 15 seconds
         self.online_checker = QTimer()
         self.online_checker.timeout.connect(self.check_online)
-        self.online_checker.start(5_000)
+        self.online_checker.start(15_000)
 
         # SHOW WINDOW
         self.show()
@@ -114,9 +114,8 @@ class ChatWindow(QMainWindow):
         user_uuid = clicked_button.objectName()
 
         # GET USER FROM CLICKED BUTTON OBJECT NAME
-        controller = UserController()
-        user = controller.where("uuid", "=", user_uuid)[0]
-        user_name = user[4]
+        user = User.where("uuid", "=", user_uuid)[0]
+        user_name = user.get_user_name()
 
         # SET NAME TO THE ACTIVE CLIENT LABEL
         self.ui.active_client.setText(user_name)
@@ -134,12 +133,12 @@ class ChatWindow(QMainWindow):
             print(e)
 
         # SHOW OLDER MESSAGES WITH THE ACTIVE USER
-        controller = MessageController()
-        for message in controller.with_user(user[0]):  # With user.get_id()
-            sender_id = message[1]
-            kind = message[3]
-            body = message[4]
-            created_at = message[5]
+        messages = user.messages()
+        for message in messages:
+            sender_id = message.get_sender_id()
+            kind = message.get_kind()
+            body = message.get_body()
+            created_at = message.get_created_at().format("Y")
             # status = message[8]
             status = True
 
@@ -168,9 +167,9 @@ class ChatWindow(QMainWindow):
             client = Client(server_host)
             client.connect_to_server()
 
-            user = UserController().where("host_address", "=", server_host)
+            user = User.where("host_address", "=", server_host)
             if user:
-                user_uuid = user[0][1]
+                user_uuid = user[0].get_uuid()
 
                 # Show green online toast if client is online
                 for widget in self.ui.left_scroll.findChildren(QFrame):

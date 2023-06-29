@@ -4,7 +4,7 @@ import socket
 import time
 
 import utils
-from user import UserController, User
+from user import User
 
 
 class Client:
@@ -32,13 +32,12 @@ class Client:
             self.online = True
 
             # Save user in the database if not exist
-            # user_exists = UserController().where("host_address", "=", self.server_host)
+            # user_exists = User.where("host_address", "=", self.server_host)
             # if not user_exists:
             #     user = User()
-            #     user.set_uuid(self.server_host)
             #     user.set_host_address(self.server_host)
             #     user.set_user_name("Inconnu")
-            #     UserController().store(user)
+            #     User.save()
 
             # If i find the user online, just send him my IDS, he will do the same
             print(f"Hello {self.server_host}, take my IDs")

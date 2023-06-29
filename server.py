@@ -8,7 +8,7 @@ import time
 
 import utils
 from message import Message
-from user import UserController, User
+from user import User
 
 
 class Server:
@@ -99,17 +99,23 @@ class Server:
                                 self.download_file(client, message_kind, profile_picture_size, file_name)
 
                             # Store or update user's information in database
-                            # user_exists = UserController().where("host_address", "=", self.server_host)
-                            # if not user_exists:
-                            user = User()
-                            user.set_uuid(profile_picture_path)
-                            user.set_user_name(user_name)
-                            user.set_host_address(client_id)
-                            user.set_host_name("windows")
-                            user.set_user_status(user_status)
-                            user.set_department(department)
-                            user.set_role(role)
-                            UserController().store(user)
+                            # user_exists = User.where("host_address", "=", client_id)
+                            # if user_exists:
+                            #     user = user_exists[0]
+                            # else:
+                            #     user = User()
+                            #
+                            # user.set_user_name(user_name)
+                            # user.set_host_address(client_id)
+                            # user.set_host_name("windows")
+                            # user.set_user_status(user_status)
+                            # user.set_department(department)
+                            # user.set_role(role)
+                            #
+                            # if user_exists:
+                            #     user.update()
+                            # else:
+                            #     user.save()
 
                         elif message_kind == "text":
                             # Call signal sender

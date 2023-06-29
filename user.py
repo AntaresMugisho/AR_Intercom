@@ -1,13 +1,10 @@
 # -*- This python file uses the following encoding : utf-8 -*-
+
 import hashlib
-import platform
 from datetime import datetime
-import os
 
-from database import Database
 from controller import Controller
-
-import utils
+from message import Message
 
 
 class User(Controller):
@@ -107,9 +104,16 @@ class User(Controller):
     def get_deleted_at(self):
         return self.deleted_at
 
+    # Relationships
+    def messages(self):
+        Message.setup_db()
+        statement = f"SELECT * FROM {Message.table_name} WHERE sender_id = {self.get_id()} OR receiver_id = {self.get_id()}"
+        return Message.db.fetchall(statement)
+
 
 if __name__ == "__main__":
-    users = User.with_deletes()
-    for user in users:
-        print(user.get_user_name())
+    user = User.find(2)
+    messages = user.messages()
+    for m in messages:
+        print(m.get_body())
 

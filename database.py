@@ -18,7 +18,6 @@ class Database:
             return cls.__instance
 
     def __init__(self, fetch_class):
-        print("[*] Successfully connected to database")
         self.connection = sqlite3.connect("user/database.db")
         self.cursor = self.connection.cursor()
 
