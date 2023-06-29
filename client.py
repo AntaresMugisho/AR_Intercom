@@ -41,7 +41,7 @@ class Client:
 
             # If i find the user online, just send him my IDS, he will do the same
             print(f"Hello {self.server_host}, take my IDs")
-            self.send_message("id")
+            # self.send_message("id")
 
         except ConnectionRefusedError:
             print(f"[X] Connection refused on {self.server_host}:{self.PORT}")
