@@ -86,7 +86,8 @@ class User(Controller):
         return self.user_status
 
     def get_password(self):
-        return self.password
+        password_hash = hashlib.sha1(self.password.encode()).hexdigest()
+        return password_hash
 
     def get_image_path(self):
         return self.image_path
@@ -107,69 +108,8 @@ class User(Controller):
         return self.deleted_at
 
 
-
-class UserController:
-
-    def __init__(self):
-        self.db = Database(User)
-
-    def find(self, id):
-        statement = f"SELECT * FROM users WHERE id = {id}"
-        return self.db.fetchone(statement)
-
-
-
-    def store(self, class_object):
-
-        print(user.__dict__)
-
-        statement = """
-        INSERT INTO users (
-            host_address, host_name, user_name, user_status, password,
-            image_path, department, role, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """
-
-        user.set_created_at()
-        user.set_updated_at()
-
-        data = [
-            user.get_host_address(),
-            user.get_host_name(),
-            user.get_user_name(),
-            user.get_user_status(),
-            user.get_password(),
-            user.get_image_path(),
-            user.get_department(),
-            user.get_role(),
-            user.get_created_at(),
-            user.get_updated_at(),
-            user.get_deleted_at()
-        ]
-
-        # self.db.execute(statement, data)
-
-
 if __name__ == "__main__":
-    # Save test
-    # user = User()
-    # user.save()
-
-    # Update test
-    # user = User.find(282)
-    # user.set_id(282)
-    # user.update()
-
-    #Delete test
-    # user = User.find(283)
-    # user.delete()
-
-    # Restore test
-    user = User.find(4)
-    user.restore()
-    print(user.get_deleted_at())
-
-    # users = User.with_deletes()
-    # for user in users:
-    #     print(user.get_user_name())
+    users = User.with_deletes()
+    for user in users:
+        print(user.get_user_name())
 
