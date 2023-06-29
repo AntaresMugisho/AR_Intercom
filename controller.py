@@ -67,12 +67,13 @@ class Controller:
         vars = []
         values = []
         for field, value in self.__dict__.items():
-            sql_fields.append(field)
-            vars.append("?")
-            values.append(value)
+            if value is not None:
+                sql_fields.append(field)
+                vars.append("?")
+                values.append(value)
 
         statement = f"""
-            INSERT INTO {self.__class__.table_name} ({sql_fields}) VALUES {vars}  
+            INSERT INTO {self.__class__.table_name} ({sql_fields}) VALUES ({vars})  
         """
 
         statement = statement.replace("[", "").replace("]", "").replace("'", "")
@@ -96,11 +97,12 @@ class Controller:
         sql_fields = []
         values = []
         for field, value in self.__dict__.items():
-            sql_fields.append(f"{field} = ?")
-            values.append(value)
+            if field != "id" and value is not None:
+                sql_fields.append(f"{field} = ?")
+                values.append(value)
 
         statement = f"""
-            UPDATE {self.__class__.table_name} SET {sql_fields} WHERE id = {values[0]} 
+            UPDATE {self.__class__.table_name} SET {sql_fields} WHERE id = {self.get_id()} 
         """
         statement = statement.replace("[", "").replace("]", "").replace("'", "")
 

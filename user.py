@@ -45,8 +45,8 @@ class User(Controller):
     def set_user_status(self, user_status):
         self.user_status = user_status
 
-    def set_password(self, password):
-        self.password = password
+    def set_password(self, password: str):
+        self.password = hashlib.sha1(password.encode()).hexdigest()
 
     def set_image_path(self, path):
         self.image_path = path
@@ -151,7 +151,16 @@ class UserController:
 
 
 if __name__ == "__main__":
+    # Save test
+    # user = User()
+    # user.save()
+
+    # Update test
+    # user = User.find(282)
+    # user.set_password("1234")
+    # user.update()
+
     users = User.all()
     for user in users:
-        print(user.get_user_name())
+        print(user.get_user_name(), user.get_deleted_at())
 
