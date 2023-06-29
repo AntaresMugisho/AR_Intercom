@@ -36,6 +36,8 @@ class Database:
         self.connection.commit()
         self.connection.close()
 
+        # print(self.cursor.lastrowid)
+
     def fetchone(self, statement):
         """
         Fetches one result and return it as a class object

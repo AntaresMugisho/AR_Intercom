@@ -28,7 +28,9 @@ class User(Controller):
         self.deleted_at = None
 
     # SETTERS
-    def set_uuid(self, uuid):
+    def set_id(self, id: int):
+        self.id = id
+        uuid = hashlib.sha1(str(id).encode()).hexdigest()
         self.uuid = uuid
 
     def set_host_address(self, host_address):
@@ -149,21 +151,16 @@ class UserController:
 
 
 if __name__ == "__main__":
-    # user = User()
-    # user.set_host_address(utils.get_private_ip())
-    # user.set_host_name(platform.node())
-    # user.set_user_name(os.environ["USER"].capitalize())
-    # user.set_user_status("We live we love we die !")
-    # user.set_password(hashlib.sha1(b"1234").hexdigest())
-    # user.set_department("AR Software")
-    # user.set_role("Security Analyst")
-    # user.set_created_at()
-    # user.set_updated_at()
+    user = User()
+    user.set_host_address(utils.get_private_ip())
+    user.set_host_name(platform.node())
+    user.set_user_name(os.environ["USER"].capitalize())
+    user.set_user_status("We live we love we die !")
+    user.set_password(hashlib.sha1(b"1234").hexdigest())
+    user.set_department("AR Boutique")
+    user.set_role("Security Analyst")
+    user.set_created_at()
+    user.set_updated_at()
 
-    user = User.all()
-    for u in user:
-        print(u.get_user_name())
-
-
-    # user = User.find(1)
-    # print(user)
+    User.save(user)
+    print("User id: ",  user.get_id(), "\nUser uuid: ", user.get_uuid())
