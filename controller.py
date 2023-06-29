@@ -18,6 +18,9 @@ class Controller:
     def set_updated_at(self):
         pass
 
+    def set_deleted_at(self):
+        pass
+
     @classmethod
     def setup_db(cls):
         cls.db = Database(cls)
@@ -106,3 +109,13 @@ class Controller:
 
     def delete(self):
         self.__class__.setup_db()
+
+        statement = f"""
+            DELETE FROM {self.__class__.table_name} WHERE id = {self.get_id()}
+        """
+
+        self.__class__.db.execute(statement)
+
+    def soft_delete(self):
+        self.set_deleted_at()
+        self.update()
