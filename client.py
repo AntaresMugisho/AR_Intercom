@@ -28,26 +28,26 @@ class Client:
         """
         try:
             self.sock.connect((self.server_host, self.PORT))
-            print(f"[*] Connected on {self.server_host}:{self.PORT}")
+            print(f"[+] Connected on {self.server_host}:{self.PORT}")
             self.online = True
 
             # Save user in the database if not exist
-            user_exists = User.where("host_address", "=", self.server_host)
-            if not user_exists:
-                user = User()
-                user.set_host_address(self.server_host)
-                user.set_user_name(f"<{self.server_host}>")
-                user.save()
+            # user_exists = User.where("host_address", "=", self.server_host)
+            # if not user_exists:
+            #     user = User()
+            #     user.set_host_address(self.server_host)
+            #     user.set_user_name(f"<{self.server_host}>")
+            #     user.save()
 
             # If I find the user online, just send him my IDS, he will do the same
             # print(f"Hello {self.server_host}, take my IDs")
             # self.send_message("id")
 
         except ConnectionRefusedError:
-            print(f"[X] Connection refused on {self.server_host}:{self.PORT}")
+            print(f"[-] Connection refused on {self.server_host}:{self.PORT}")
 
         except Exception as e:
-            print(f"[X] Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
+            print(f"[-] Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
 
     def reliable_send(self, message):
         """

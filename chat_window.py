@@ -62,18 +62,13 @@ class ChatWindow(QMainWindow):
         self.server_hosts = {}
 
         # Scan on startup
-        QTimer().singleShot(500, self.scan_network)
-        QTimer().singleShot(500, self.check_online)
+        t1 = threading.Thread(target=self.scan_network)
+        t1.start()
 
-        # Scan network every 5 minutes
+        # Scan network every 5 minutes to refresh active servers
         self.net_scanner = QTimer()
         self.net_scanner.timeout.connect(self.scan_network)
-        self.net_scanner.start(180_000)
-
-        # Check online servers every 15 seconds
-        self.online_checker = QTimer()
-        self.online_checker.timeout.connect(self.check_online)
-        self.online_checker.start(15_000)
+        self.net_scanner.start(25_000)
 
         # SHOW WINDOW
         self.show()
@@ -95,7 +90,7 @@ class ChatWindow(QMainWindow):
         """
         try:
             self.net_scanner.stop()
-            self.online_checker.stop()
+            # self.online_checker.stop()
             # Stop all clients instances
             self.server.stop()
         except Exception as e:
@@ -159,25 +154,24 @@ class ChatWindow(QMainWindow):
                 # Reset to normal style sheet
                 frame.parent().setStyleSheet(Clients.frame_normal)
 
-    def check_online(self):
+    def check_online(self, server_host: str):
         """
         Checks online devices and show or hide green online indicator widget.
         """
-        for server_host in self.server_hosts.keys():
-            client = Client(server_host)
-            client.connect_to_server()
+        client = Client(server_host)
+        client.connect_to_server()
 
-            user = User.where("host_address", "=", server_host)
-            if user:
-                user_uuid = user[0].get_uuid()
+        user = User.where("host_address", "=", server_host)
+        if user:
+            user_uuid = user[0].get_uuid()
 
-                # Show green online toast if client is online
-                for widget in self.ui.left_scroll.findChildren(QFrame):
-                    if widget.objectName() == f"{user_uuid}_toast":
-                        if client.online:
-                            widget.show()
-                        else:
-                            widget.hide()
+            # Show green online toast if client is online
+            for widget in self.ui.left_scroll.findChildren(QFrame):
+                if widget.objectName() == f"{user_uuid}_toast":
+                    if client.online:
+                        widget.show()
+                    else:
+                        widget.hide()
 
 
     @Slot(str, str)
@@ -258,23 +252,34 @@ class ChatWindow(QMainWindow):
         threads = []
 
         my_ip = utils.get_private_ip()
-        # Must check if ip is not 127.some.thing before continuing
-        my_ip_bytes = my_ip.split(".")
-        net_id = ".".join(my_ip_bytes[:3])
+        if my_ip.startswith("127.0"):
+            print("Veuillez vous connecter à un réseau Wi-Fi !")
+        else:
+            my_ip_bytes = my_ip.split(".")
+            net_id = ".".join(my_ip_bytes[:3])
 
-        for host_id in range(0, 256):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
-            # if host_id != int(my_ip_bytes[3]):
-            addresses.append(f"{net_id}.{str(host_id)}")
+            for host_id in range(0, 256):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
+                # if host_id != int(my_ip_bytes[3]):
+                addresses.append(f"{net_id}.{str(host_id)}")
 
-        scan_threads = [NetscanThread(address) for address in addresses]
-        for thread in scan_threads:
-            thread.start()
-            threads.append(thread)
+            scan_threads = [NetscanThread(address) for address in addresses]
+            for thread in scan_threads:
+                thread.start()
+                threads.append(thread)
 
-        for thread in threads:
-            thread.join()
+            for i, thread in enumerate(threads):
+                thread.join()
 
-        self.server_hosts = NetscanThread.hosts
+            self.server_hosts = NetscanThread.hosts
+
+            # Check online hosts after network scan
+            online_checkers = []
+            for server_host in self.server_hosts.keys():
+                thread = threading.Thread(target=self.check_online, args=(server_host,))
+                online_checkers.append(thread)
+
+            for thread in online_checkers:
+                thread.start()
 
 
 if __name__ == "__main__":
