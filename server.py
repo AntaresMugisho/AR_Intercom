@@ -25,9 +25,6 @@ class Server:
         self.port = 12000
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        # MESSAGE OBJECT TO EMIT SIGNALS
-        self.message = Message()
-
     def accept_connections(self):
         """
         Accept all incoming connections
@@ -79,13 +76,50 @@ class Server:
                 for client in rlist:
                     try:
                         packet = client.recv(1024).decode()
-                        packet = packet.split("|")
                         client.send("Message Received".encode())
+
+                    except BrokenPipeError:
+                        pass
+
+                    except IndexError:
+                        pass
+
+                    except Exception as e:
+                        print("Error while receiving message", e)
+
+                    else:
+                        packet = packet.split("|")
                         client_id = packet[0]
                         message_kind = packet[1]
                         print(packet)
 
-                        if message_kind == "id":
+                        message = Message()
+                        sender = User.where("host_address", "=", client_id)[0]
+                        sender_id = sender.get_id()
+
+                        message.set_sender_id(sender_id)
+                        message.set_receiver_id(1)
+                        message.set_kind(message_kind)
+
+                        if message_kind == "text":
+                            # Call signal sender
+                            message_body = packet[2]
+
+                            message.set_body(message_body)
+                            message.received()
+
+                        elif message_kind in ["audio", "video", "image", "document", "voice"]:
+                            # Download file
+                            file_size = int(packet[2])
+                            file_name = packet[3]
+                            path = self.download_file(client, message_kind, file_size, file_name)
+
+                            message.set_body(path)
+
+                            # Call signal sender
+                            message.received()
+
+                        elif message_kind == "id":
                             profile_picture_size = int(packet[2])
                             profile_picture_path = packet[3]
                             user_name = packet[4]
@@ -117,28 +151,6 @@ class Server:
                             # else:
                             #     user.save()
 
-                        elif message_kind == "text":
-                            # Call signal sender
-                            message_body = packet[2]
-                            self.message.text_message_received(message_kind, message_body)
-
-                        else:
-                            # Download file
-                            file_size = int(packet[2])
-                            file_name = packet[3]
-                            self.download_file(client, message_kind, file_size, file_name)
-                            # Call signal sender
-                            self.message.media_message_received(message_kind)
-
-                    except BrokenPipeError:
-                        pass
-
-                    except IndexError:
-                        pass
-
-                    except Exception as e:
-                        print("Error while receiving message", e)
-
     @staticmethod
     def download_file(client_socket, kind: str, file_size: int, file_name: str):
         """
@@ -168,6 +180,9 @@ class Server:
 
             # ONCE DOWNLOAD IS DONE
             client_socket.send("File Received".encode())
+
+        # Return the path where the file was stored so that we can save it in database
+        return f"{directory}/{file_name}"
 
 
 if __name__ == "__main__":

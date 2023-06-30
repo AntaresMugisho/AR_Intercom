@@ -70,10 +70,8 @@ class Message(QObject, Controller):
     def get_deleted_at(self):
         return self.deleted_at
 
-    def text_message_received(self, kind, message_body):
+    def received(self):
+        self.save()
         # EMIT NEW TEXT MESSAGE SIGNAL > TO SHOW GUI BUBBLE
-        self.textMessageReceived.emit(kind, message_body)
+        # self.textMessageReceived.emit(kind, message_body)
 
-    def media_message_received(self, kind, file_name=None):
-        # EMIT NEW MEDIA MESSAGE SIGNAL > TO SHOW GUI BUBBLE
-        self.mediaMessageReceived.emit(kind, file_name)
