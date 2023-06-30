@@ -8,7 +8,7 @@ from controller import Controller
 
 
 class Message(QObject, Controller):
-    textMessageReceived = pyqtSignal([str, str])
+    messageReceived = pyqtSignal([str, str])
     mediaMessageReceived = pyqtSignal()
 
     def __init__(self):
@@ -22,6 +22,7 @@ class Message(QObject, Controller):
         self.created_at = None
         self.updated_at = None
         self.deleted_at = None
+        self.received = False
 
     # SETTERS
     def set_sender_id(self, sender_id):
@@ -35,6 +36,9 @@ class Message(QObject, Controller):
 
     def set_body(self, body):
         self.body = body
+
+    def set_status(self, status: bool):
+        self.received = status
 
     def set_created_at(self):
         self.created_at = datetime.now()
@@ -70,8 +74,8 @@ class Message(QObject, Controller):
     def get_deleted_at(self):
         return self.deleted_at
 
-    def received(self):
+    def message_received(self):
         self.save()
         # EMIT NEW TEXT MESSAGE SIGNAL > TO SHOW GUI BUBBLE
-        # self.textMessageReceived.emit(kind, message_body)
+        # self.messageReceived.emit(kind, message_body)
 

@@ -24,6 +24,7 @@ class Server:
         self.host = "0.0.0.0"
         self.port = 12000
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.message_listener = Message()
 
     def accept_connections(self):
         """
@@ -78,6 +79,11 @@ class Server:
                         packet = client.recv(1024).decode()
                         client.send("Message Received".encode())
 
+                        packet = packet.split("|")
+                        client_id = packet[0]
+                        message_kind = packet[1]
+                        print(packet)
+
                     except BrokenPipeError:
                         pass
 
@@ -88,15 +94,10 @@ class Server:
                         print("Error while receiving message", e)
 
                     else:
-                        packet = packet.split("|")
-                        client_id = packet[0]
-                        message_kind = packet[1]
-                        print(packet)
-
-                        message = Message()
                         sender = User.where("host_address", "=", client_id)[0]
                         sender_id = sender.get_id()
 
+                        message = Message()
                         message.set_sender_id(sender_id)
                         message.set_receiver_id(1)
                         message.set_kind(message_kind)
@@ -106,7 +107,7 @@ class Server:
                             message_body = packet[2]
 
                             message.set_body(message_body)
-                            message.received()
+                            message.message_received()
 
                         elif message_kind in ["audio", "video", "image", "document", "voice"]:
                             # Download file
@@ -117,7 +118,7 @@ class Server:
                             message.set_body(path)
 
                             # Call signal sender
-                            message.received()
+                            message.message_received()
 
                         elif message_kind == "id":
                             profile_picture_size = int(packet[2])

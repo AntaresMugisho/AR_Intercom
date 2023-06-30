@@ -17,7 +17,6 @@ import recorder
 import player
 from user import User
 from message import Message
-
 import utils
 from netscanner import NetscanThread
 
@@ -56,7 +55,7 @@ class ChatWindow(QMainWindow):
         self.server.start()
 
         # LISTEN FOR MESSAGE SIGNALS
-        self.server.message.textMessageReceived.connect(self.show_bubble)
+        self.server.message_listener.messageReceived.connect(self.show_bubble)
 
         # SCAN NETWORK TO FIND CONNECTED DEVICES
         self.server_hosts = {}

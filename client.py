@@ -5,7 +5,7 @@ import time
 
 import utils
 from user import User
-
+from message import Message
 
 class Client:
     """
@@ -17,20 +17,28 @@ class Client:
     # Port Unique for all clients
     PORT = 12000
 
-    def __init__(self, server_host="localhost"):
+    def __init__(self, server_host="127.0.0.1"):
         self.server_host = server_host
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.online = False
 
     def connect_to_server(self):
         """
-        Try to connect to a distant server every 5 seconds.
+        Try to connect to a distant server
         """
         try:
             self.sock.connect((self.server_host, self.PORT))
             print(f"[+] Connected on {self.server_host}:{self.PORT}")
             self.online = True
 
+        except ConnectionRefusedError:
+            print(f"[-] Connection refused on {self.server_host}:{self.PORT}")
+
+        except Exception as e:
+            print(f"[-] Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
+
+        else:
+            pass
             # Save user in the database if not exist
             # user_exists = User.where("host_address", "=", self.server_host)
             # if not user_exists:
@@ -43,54 +51,46 @@ class Client:
             # print(f"Hello {self.server_host}, take my IDs")
             # self.send_message("id")
 
-        except ConnectionRefusedError:
-            print(f"[-] Connection refused on {self.server_host}:{self.PORT}")
-
-        except Exception as e:
-            print(f"[-] Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
-
-    def reliable_send(self, message):
+    def reliable_send(self, packet):
         """
         Sends message using socket's 'send' function and receive feed back from the server.
         """
         try:
-            self.sock.send(message.encode())
+            self.sock.send(packet.encode())
             server_response = self.sock.recv(1024).decode()
+            packet_received = True
             print(server_response)
         except Exception as e:
             print("Error while sending message: ", e)
             # Need to catch 2 exceptions,
             # One if the message was not sent
-            # Another if the server doesn't respond
-            message_sent = False
+            # Another if the message was sent but the server didn't respond
+            packet_received = False
 
-    def send_message(self, kind: str, message: str = None):
+        return packet_received
+
+    def send_message(self, kind: str, body: str = None):
         """
         Determines the kind of message and sends it.
         """
-        if kind == "id":
-            # GET MY IDS FROM DATABASE
-            user_name = "Antares"
-            user_status = "We live, we love, we die"
-            department = "AR Software"
-            role = "Security Analyst"
-            profile_picture_path = 'user/profile.jpg'
-            profile_picture_size = os.path.getsize(profile_picture_path)
-            id_message = f"{self.SERVER_IP}|{kind}|{profile_picture_size}|{profile_picture_path}|" \
-                         f"{user_name}|{user_status}|{department}|{role}"
+        receiver = User.where("host_address", "=", self.server_host)[0]
+        receiver_id = receiver.get_id()
 
-            # SEND MY IDS
-            self.reliable_send(id_message)
-            if profile_picture_path != "user/default.png":
-                self.upload_file(profile_picture_path)
+        message = Message()
+        message.set_sender_id(1)
+        message.set_receiver_id(receiver_id)
+        message.set_kind(kind)
+        message.set_body(body)
 
-        elif kind == "text":
+        if kind == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
-            text_message = f"{self.SERVER_IP}|{kind}|{message}"
-            self.reliable_send(text_message)
+            text_message = f"{self.SERVER_IP}|{kind}|{body}"
+            packet_received = self.reliable_send(text_message)
+
+            message.set_status(packet_received)
 
         else:  # If kind in ["image", "document", "video", "audio", "voice"]
-            path = message
+            path = body
 
             # COLLECT MEDIA METADATA FIRST
             file_size = os.path.getsize(path)
@@ -99,14 +99,42 @@ class Client:
             # SEND CLIENT ID AND FILE INFORMATION THEN UPLOAD FILE
             media_message = f"{self.SERVER_IP}|{kind}|{file_size}|{file_name}"
             self.reliable_send(media_message)
-            self.upload_file(path)
+            file_sent = self.upload_file(path)
+
+            message.set_status(file_sent)
+
+        message.save()
+
+        # if kind == "id":
+        #     # GET MY IDS FROM DATABASE
+        #     user_name = "Antares"
+        #     user_status = "We live, we love, we die"
+        #     department = "AR Software"
+        #     role = "Security Analyst"
+        #     profile_picture_path = 'user/profile.jpg'
+        #     profile_picture_size = os.path.getsize(profile_picture_path)
+        #     id_message = f"{self.SERVER_IP}|{kind}|{profile_picture_size}|{profile_picture_path}|" \
+        #                  f"{user_name}|{user_status}|{department}|{role}"
+        #
+        #     # SEND MY IDS
+        #     self.reliable_send(id_message)
+        #     if profile_picture_path != "user/default.png":
+        #         self.upload_file(profile_picture_path)
 
     def upload_file(self, path: str):
         """
-        Sends file to the distant server
+        Sends file to the distant server and returns delivery status
         """
         with open(path, "rb") as file:
             self.sock.send(file.read())
+            try:
+                self.sock.recv(1024)
+                file_sent = True
+            except Exception as e:
+                file_sent = False
+                print("Error while sending file: ", e)
+
+            return file_sent
 
     def disconnect(self):
         """
