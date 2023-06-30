@@ -15,7 +15,7 @@ class Client:
     SERVER_IP = utils.get_private_ip()
 
     # Port Unique for all clients
-    PORT = 12001
+    PORT = 12000
 
     def __init__(self, server_host="127.0.0.1"):
         self.server_host = server_host
@@ -80,7 +80,7 @@ class Client:
         receiver_id = receiver.get_id()
 
         message = Message()
-        message.set_sender_id(1)
+        message.set_sender_id(3)
         message.set_receiver_id(receiver_id)
         message.set_kind(kind)
         message.set_body(body)

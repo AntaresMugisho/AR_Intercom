@@ -22,7 +22,7 @@ class Server:
 
     def __init__(self):
         self.host = "0.0.0.0"
-        self.port = 12001
+        self.port = 12000
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.message_listener = Message()
 
@@ -107,7 +107,9 @@ class Server:
                             message_body = packet[2]
 
                             message.set_body(message_body)
-                            message.message_received()
+                            # Save message and emit signal so that it can be displayed in the GUI
+                            message.save()
+                            self.message_listener.messageReceived.emit(message.get_id())
 
                         elif message_kind in ["audio", "video", "image", "document", "voice"]:
                             # Download file
@@ -117,8 +119,9 @@ class Server:
 
                             message.set_body(path)
 
-                            # Call signal sender
-                            message.message_received()
+                            # Save message and emit signal so that it can be displayed in the GUI
+                            message.save()
+                            self.message_listener.messageReceived.emit(message.get_id())
 
                         elif message_kind == "id":
                             profile_picture_size = int(packet[2])

@@ -172,12 +172,27 @@ class ChatWindow(QMainWindow):
                         widget.hide()
 
 
-    @Slot(str, str)
-    def show_bubble(self, kind: str, body: str):
+    @Slot(int)
+    def show_bubble(self, id: int):
         """
         Shows incoming message bubble and
         """
-        self.ui.create_left_bubble(kind, body, time.strftime("%Y-%m-%d %H:%M"))
+        message = Message.find(id)
+        kind = message.get_kind()
+        body = message.get_body()
+        created_at = message.get_created_at()
+
+        if self.ui.active_client.objectName():
+            user = User.where("uuid", "=", self.ui.active_client.objectName())[0]
+            if user.get_id() == message.get_sender_id():
+                self.ui.create_left_bubble(kind, body, created_at)
+
+            else:
+                user = User.find(message.get_sender_id())
+                self.update_unread_message_counter(user.get_uuid())
+        else:
+            user = User.find(message.get_sender_id())
+            self.update_unread_message_counter(user.get_uuid())
 
     @Slot()
     def change_send_style(self):

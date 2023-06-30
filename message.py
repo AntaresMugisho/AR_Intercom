@@ -8,8 +8,8 @@ from controller import Controller
 
 
 class Message(QObject, Controller):
-    messageReceived = pyqtSignal([str, str])
-    mediaMessageReceived = pyqtSignal()
+    messageReceived = pyqtSignal(int)
+    # mediaMessageReceived = pyqtSignal()
 
     def __init__(self):
         QObject.__init__(self)
@@ -79,6 +79,5 @@ class Message(QObject, Controller):
 
     def message_received(self):
         self.save()
-        # EMIT NEW TEXT MESSAGE SIGNAL > TO SHOW GUI BUBBLE
-        # self.messageReceived.emit(kind, message_body)
-
+        # EMIT NEW MESSAGE SIGNAL > TO SHOW GUI BUBBLE
+        self.messageReceived.emit(self.get_id())
