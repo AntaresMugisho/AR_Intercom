@@ -22,7 +22,7 @@ class Message(QObject, Controller):
         self.created_at = None
         self.updated_at = None
         self.deleted_at = None
-        self.received = False
+        self.received = True
 
     # SETTERS
     def set_sender_id(self, sender_id):
@@ -73,6 +73,9 @@ class Message(QObject, Controller):
 
     def get_deleted_at(self):
         return self.deleted_at
+
+    def get_status(self):
+        return self.received
 
     def message_received(self):
         self.save()

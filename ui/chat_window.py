@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os.path
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QSizePolicy
@@ -384,8 +385,7 @@ class Ui_ChatWindow(object):
             self.left_media_parent = QtWidgets.QWidget()
             self.left_media_parent.setFixedSize(304, 73)
             self.left_media_parent.setStyleSheet("QWidget{border-radius:15px;"
-                                                  "background-color: rgb(255, 170, 0);}")
-
+                                                 "background-color: rgb(255, 170, 0);}")
             self.left_msg_layout.addWidget(self.left_media_parent, 0, 1, 1, 1)
 
             # CREATE BUBBLE
@@ -416,7 +416,7 @@ class Ui_ChatWindow(object):
         QtCore.QTimer.singleShot(10, self.scroll_to_end)
         QtCore.QTimer.singleShot(100, self.scroll_to_end)
 
-    def create_right_bubble(self, kind, body, time, status=True):
+    def create_right_bubble(self, kind, body, time, status):
 
         # GRID LAYOUT
         self.right_msg_layout = QtWidgets.QGridLayout()
@@ -505,7 +505,7 @@ class Ui_ChatWindow(object):
         else:
             self.message_status.setStyleSheet(MessageStatus.style_not_sent)
             self.message_status.setToolTip("Cliquez pour renvoyer le message")
-            self.message_status.clicked.connect(self.resend_message)
+            # self.message_status.clicked.connect(self.resend_message)
 
         self.right_msg_layout.addWidget(self.message_status, 1, 1, 1, 0)
 
@@ -554,11 +554,12 @@ class Ui_ChatWindow(object):
                                         QPushButton:hover{background:#DD0000;}""")
         self.cancel_record.show()
 
-    def create_voice_bubble(self, parent, file_name):
+    def create_voice_bubble(self, parent, path: str):
+        file_name = os.path.split(path)[1]
 
         def play_state():
             """Create attribute player if not exists and play.
-                Else, pause or play Media or start playing an other media according to the sender
+                Else, pause or play Media or start playing another media according to the sender
                 object name"""
 
             sender = self.sender()
@@ -587,7 +588,7 @@ class Ui_ChatWindow(object):
         self.title.setStyleSheet("QLabel{background:#44FFFFFF;}")
         self.title.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.title.setText(file_name)
-        self.title.setObjectName("media_")
+        self.title.setObjectName(f"{path}")
 
         # Slider
         self.slider = QtWidgets.QSlider(self.voice_bubble)
@@ -619,7 +620,7 @@ class Ui_ChatWindow(object):
         self.play_button.setGeometry(QtCore.QRect(7, 12, 41, 41))
         self.play_button.setStyleSheet(Player.play)
         self.play_button.setObjectName("play_button")
-        self.play_button.clicked.connect(play_state)
+        # self.play_button.clicked.connect(play_state)
 
     @staticmethod
     def layout_message(message):

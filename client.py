@@ -15,12 +15,13 @@ class Client:
     SERVER_IP = utils.get_private_ip()
 
     # Port Unique for all clients
-    PORT = 12000
+    PORT = 12001
 
     def __init__(self, server_host="127.0.0.1"):
         self.server_host = server_host
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.online = False
+        self.message_delivered = False
 
     def connect_to_server(self):
         """
@@ -58,21 +59,23 @@ class Client:
         try:
             self.sock.send(packet.encode())
             server_response = self.sock.recv(1024).decode()
-            packet_received = True
+            self.message_delivered = True
             print(server_response)
         except Exception as e:
             print("Error while sending message: ", e)
             # Need to catch 2 exceptions,
             # One if the message was not sent
             # Another if the message was sent but the server didn't respond
-            packet_received = False
+            self.message_delivered = False
 
-        return packet_received
+        self.message_delivered
 
     def send_message(self, kind: str, body: str = None):
         """
         Determines the kind of message and sends it.
         """
+        self.connect_to_server()
+
         receiver = User.where("host_address", "=", self.server_host)[0]
         receiver_id = receiver.get_id()
 
@@ -85,9 +88,9 @@ class Client:
         if kind == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
             text_message = f"{self.SERVER_IP}|{kind}|{body}"
-            packet_received = self.reliable_send(text_message)
+            self.reliable_send(text_message)
 
-            message.set_status(packet_received)
+            message.set_status(self.message_delivered)
 
         else:  # If kind in ["image", "document", "video", "audio", "voice"]
             path = body
@@ -99,10 +102,11 @@ class Client:
             # SEND CLIENT ID AND FILE INFORMATION THEN UPLOAD FILE
             media_message = f"{self.SERVER_IP}|{kind}|{file_size}|{file_name}"
             self.reliable_send(media_message)
-            file_sent = self.upload_file(path)
+            self.upload_file(path)
 
-            message.set_status(file_sent)
+            message.set_status(self.message_delivered)
 
+        print(message.get_status())
         message.save()
 
         # if kind == "id":
@@ -129,12 +133,12 @@ class Client:
             self.sock.send(file.read())
             try:
                 self.sock.recv(1024)
-                file_sent = True
+                self.message_delivered = True
             except Exception as e:
-                file_sent = False
+                self.message_delivered = False
                 print("Error while sending file: ", e)
 
-            return file_sent
+        return self.message_delivered
 
     def disconnect(self):
         """

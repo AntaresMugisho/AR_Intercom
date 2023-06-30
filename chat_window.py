@@ -67,7 +67,7 @@ class ChatWindow(QMainWindow):
         # Scan network every 5 minutes to refresh active servers
         self.net_scanner = QTimer()
         self.net_scanner.timeout.connect(self.scan_network)
-        self.net_scanner.start(25_000)
+        # self.net_scanner.start(25_000)
 
         # SHOW WINDOW
         self.show()
@@ -132,9 +132,8 @@ class ChatWindow(QMainWindow):
             sender_id = message.get_sender_id()
             kind = message.get_kind()
             body = message.get_body()
-            created_at = message.get_created_at().format("Y")
-            # status = message[8]
-            status = True
+            created_at = message.get_created_at()
+            status = message.get_status()
 
             #  Knowing that the user with id == 1 is the owner,
             #  messages sent from user_id 1 will be shown in the right bubble
@@ -203,8 +202,17 @@ class ChatWindow(QMainWindow):
         """
         if self.ui.send_button.styleSheet() == SendButton.style_send:
             text_message = self.ui.entry_field.text()
-            # self.send_message(text_message)
-            self.ui.create_right_bubble("text", text_message, time.strftime("%Y-%m-%d %H:%M"))
+
+            # Send message
+            receiver = User.where("uuid", "=", self.ui.active_client.objectName())[0]
+            client = Client(receiver.get_host_address())
+            client.connect_to_server()
+            client.send_message("text", text_message)
+
+            # Show bubble
+            self.ui.create_right_bubble("text", text_message, time.strftime("%Y-%m-%d %H:%M"), client.message_delivered)
+
+            # Reset some ui states
             self.ui.entry_field.setText(None)
             self.ui.send_button.setStyleSheet(SendButton.style_record)
             self.ui.media_button.setEnabled(True)
@@ -216,6 +224,7 @@ class ChatWindow(QMainWindow):
             self.ui.record_widget()
             self.ui.end_record.clicked.connect(recorder.start_recorder)
             self.ui.cancel_record.clicked.connect(recorder.stop_recorder)
+
 
     @Slot()
     def send_media(self, kind: str, path_to_media: str):
