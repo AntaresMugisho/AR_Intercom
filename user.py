@@ -83,8 +83,7 @@ class User(Controller):
         return self.user_status
 
     def get_password(self):
-        password_hash = hashlib.sha1(self.password.encode()).hexdigest()
-        return password_hash
+        return self.password
 
     def get_image_path(self):
         return self.image_path
