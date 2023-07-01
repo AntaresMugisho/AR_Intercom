@@ -45,15 +45,19 @@ class Server:
         """
         Launch socket server and accept incoming connections.
         """
-        self.sock.bind((self.host, self.port))
-        self.sock.listen(5)
-        print(f"Server listening on {self.host}:{self.port}")
+        try:
+            self.sock.bind((self.host, self.port))
+        except OSError as e:
+            print("[-] ", e)
+        else:
+            self.sock.listen(5)
+            print(f"Server listening on {self.host}:{self.port}")
 
-        # Wait for connections and messages
-        connections_thread = threading.Thread(target=self.accept_connections)
-        messages_thread = threading.Thread(target=self.receive_massages)
-        connections_thread.start()
-        messages_thread.start()
+            # Wait for connections and messages
+            connections_thread = threading.Thread(target=self.accept_connections)
+            messages_thread = threading.Thread(target=self.receive_massages)
+            connections_thread.start()
+            messages_thread.start()
 
     def stop(self):
         """

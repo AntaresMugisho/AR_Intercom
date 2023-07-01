@@ -9,8 +9,10 @@ from PyQt6.QtWidgets import QApplication, QFileDialog, QPushButton, QLineEdit
 from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtGui import QPixmap
 
+import utils
 from register_window import RegisterWindow
-from users import Users
+from user import User
+from login_window import LoginWindow
 from styles import LineEdit, ComboBox, Features
 
 
@@ -18,13 +20,13 @@ class Register(RegisterWindow):
 
     def __init__(self):
         # Initialize register window, containing register_window property
-        RegisterWindow.__init__(self)
+        super().__init__()
 
-        self.data = []
-        self.picture = None
-        self.dragPos = None
+        # Initialize a new user
+        self.user = User()
 
         # SET MOVE EVENT ON THE WINDOW
+        self.dragPos = None
         self.ui.main_title.mouseMoveEvent = self.move_window
 
         # CONNECT CHOOSE PROFILE
@@ -58,16 +60,18 @@ class Register(RegisterWindow):
         self.ui.terminate.clicked.connect(self.terminate)
 
     def move_window(self, event):
-        if event.buttons() == Qt.LeftButton:
-            self.move(self.pos() + event.globalPos() - self.dragPos)
-            self.dragPos = event.globalPos()
+        print(event.globalPosition())
+        print(self.dragPos)
+        if event.buttons() == Qt.MouseButton.LeftButton:
+            self.move(self.pos() + event.globalPosition() - self.dragPos)
+            self.dragPos = event.globalPosition()
             event.accept()
 
     def mousePressEvent(self, event):
-        self.dragPos = event.globalPos()
+        self.dragPos = event.globalPosition()
 
     def keyPressEvent(self, event):
-        if event.key() == 16777216:     # esc key
+        if event.key() == Qt.Key.Key_Escape:
             self.close()
 
     def save_data(self, data):
@@ -105,31 +109,21 @@ class Register(RegisterWindow):
         if index == 1: self.return_button.hide()
 
     def choose_profile(self, event):
-        if event.button() == 1:
+        if event.buttons() == Qt.MouseButton.LeftButton:
+            home = utils.get_home_directory()
+            picture = QFileDialog.getOpenFileName(self, "Profile picture", home, "Photos *.jpg *.PNG")
+            directory = picture[0]
 
-            if sys.platform == "win32":
-                home = os.environ["USERPROFILE"]
-            else:
-                home = os.environ["HOME"]
-
-            self.picture = QFileDialog.getOpenFileName(self, "Profile picture", home, "Photos *.jpg *.PNG")
-            directory = self.picture[0]
-            if directory != "":
-
-                # SET ICON TO LABEL
+            if directory:
+                # Show image on the label
                 self.ui.choose_profilepicture.setPixmap(QPixmap(directory))
-
-                # CATCH BINARY
-                with open(directory, "rb") as file:
-                    self.picture = file.read()
+                self.user.set_image_path(directory)
 
     def validate(self):
         """
         Verify if data where correctly entered by the user in the register window,
         in which case they ara saved in database
         """
-
-        server_port = ""
 
         # CHECK LINES EDIT
         for widget in self.ui.form.findChildren(QLineEdit):
@@ -138,49 +132,32 @@ class Register(RegisterWindow):
             else:
                 widget.setStyleSheet(LineEdit.style_normal)
                 if widget.objectName() == "user_name":
-                    self.data.append(self.ui.user_name.text())
+                    self.user.set_user_name(self.ui.user_name.text())
 
         # CHECK COMBO BOX
         if self.ui.code.currentIndex() == 0:
             self.ui.code.setStyleSheet(ComboBox.style_error)
         else:
             self.ui.code.setStyleSheet(ComboBox.style_normal)
-            user_code = self.ui.code.currentText()
-            self.data.append(user_code)
-            server_port = Users.dictionnary.get(user_code)
 
         # CHECK IDENTICAL PASSWORDS
         if self.ui.passcode2.text() != self.ui.passcode.text():
             self.ui.passcode2.setStyleSheet(LineEdit.style_error)
         else:
             self.ui.passcode2.setStyleSheet(LineEdit.style_normal)
-            passcode = self.ui.passcode2.text()
-            self.data.append(passcode)
+            self.user.set_password(self.ui.passcode.text())
 
-        # CHECK PROFILE PICTURE
-        try:
-            if self.picture:
-                if type(self.picture) == bytes:
-                    self.data.append(self.picture)
-                else:
-                    self.data.append(None)
-        except AttributeError:
-            self.data.append(None)
-
-        # ASSIGN PORT
-        self.data.append(server_port)
-
-        # IF ALL DATA IS COLLECTED, GO TO THE NEXT PAGE
-        if len(self.data) == 5:
+        # IF NECESSARY DATA IS COLLECTED, GO TO THE NEXT PAGE
+        if self.user.get_user_name() and self.user.get_password():
             self.ui.stackedWidget.setCurrentIndex(1)
             self.ui.return_button.show()
 
     def confirm_subscription(self):
         """
-        Verify if user agrees to the terms of use
+        Verify if user agrees to the terms of use then save him in database
         """
         if self.ui.iaggree.isChecked():
-            self.save_data(self.data)
+            self.user.save()
             self.ui.stackedWidget.setCurrentIndex(2)
             try:
                 QTimer.singleShot(2900, lambda: self.ui.prev_feature.setStyleSheet(Features.prev))
@@ -215,11 +192,13 @@ class Register(RegisterWindow):
 
             if index == 0:
                 self.ui.prev_feature.hide()
-                if self.ui.next_feature.isHidden(): self.next_feature.show()
+                if self.ui.next_feature.isHidden():
+                    self.ui.next_feature.show()
 
             elif index == 5:
                 self.ui.next_feature.hide()
-                if self.ui.prev_feature.isHidden(): self.ui.prev_feature.show()
+                if self.ui.prev_feature.isHidden():
+                    self.ui.prev_feature.show()
 
             else:
                 if self.ui.next_feature.isHidden(): self.ui.next_feature.show()
@@ -233,7 +212,7 @@ class Register(RegisterWindow):
                 button.setStyleSheet(Features.style_inactive)
 
     def terminate(self):
-        # self.main = ChatWin()
+        LoginWindow()
         self.close()
 
 

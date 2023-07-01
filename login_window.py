@@ -7,12 +7,15 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit
 from PyQt6.QtCore import Qt, pyqtSlot as Slot
 
 from ui.loginwindow import Ui_LoginWindow
-from user import User
 from styles import LineEdit
+from user import User
 from chat_window import ChatWindow
 
 
 class LoginWindow(QMainWindow):
+    """
+    Manage authentication's functions
+    """
     def __init__(self):
         super().__init__()
         self.ui = Ui_LoginWindow()
@@ -42,6 +45,9 @@ class LoginWindow(QMainWindow):
         self.show()
 
     def check_username(self):
+        """
+        Check if the username is authentic
+        """
         if not self.ui.log_username.text():
             self.ui.log_username.setStyleSheet(LineEdit.style_error)
             self.ui.name_warning.show()
@@ -56,6 +62,9 @@ class LoginWindow(QMainWindow):
             self.ui.log_username.setStyleSheet(LineEdit.style_normal)
 
     def check_password(self):
+        """
+        CHeck if the password is authentic
+        """
         ui_password = self.ui.log_password.text()
         self.ui_password = hashlib.sha1(ui_password.encode()).hexdigest()
 
@@ -74,13 +83,19 @@ class LoginWindow(QMainWindow):
 
     @Slot(bool)
     def auth(self, event):
-        if event is not True or event.key == Qt.Key.Key_Return:
+        """
+        Verifies user credentials and allow access to the chat window if the user is authenticated
+        """
+        if event is not True or event.key() == Qt.Key.Key_Return:
             self.check_username()
             self.check_password()
 
         if (self.ui.log_username.text(), self.ui_password) == (self.user_name, self.password):
-            chat_window = ChatWindow()
-            # self.close()
+            # show chat window
+            ChatWindow()
+
+            # Close login window
+            self.close()
 
 
 if __name__ == "__main__":

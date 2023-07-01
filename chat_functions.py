@@ -12,10 +12,8 @@ from PyQt6.QtMultimedia import QMediaPlayer
 from PyQt6.QtCore import QUrl, QTimer, QThread
 
 from chat_window import ChatWindow
-from users import Users
 from styles import *
-import utils
-from client import Client
+
 
 chrono, mins = (1, 0)
 

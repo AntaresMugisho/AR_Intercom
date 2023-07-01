@@ -19,7 +19,7 @@ class RegisterWindow(QWidget):
 
         # REMOVE TITLE BAR
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
-        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
 
         # SET UP SHADOW
         self.shadow = QtWidgets.QGraphicsDropShadowEffect(self)
