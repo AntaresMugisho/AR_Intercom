@@ -6,7 +6,7 @@ from functools import partial
 from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QApplication, QWidget, QFileDialog, QPushButton, QLineEdit
 from PyQt6.QtGui import QColor, QPixmap
-from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtCore import Qt, QTimer, QPoint
 
 from ui.register_window import Ui_SigninWindow
 from styles import LineEdit, ComboBox, Features
@@ -16,6 +16,9 @@ import utils
 
 
 class RegisterWindow(QWidget):
+    """
+    Register a new user on first app launch
+    """
 
     def __init__(self):
         super().__init__()
@@ -79,7 +82,7 @@ class RegisterWindow(QWidget):
 
     def move_window(self, event):
         if event.buttons() == Qt.MouseButton.LeftButton:
-            self.move(self.pos() + event.globalPosition() - self.dragPos)
+            self.move(self.pos() + event.globalPosition().toPoint() - self.dragPos.toPoint())
             self.dragPos = event.globalPosition()
             event.accept()
 
@@ -91,10 +94,10 @@ class RegisterWindow(QWidget):
             self.close()
 
     def go_back(self):
-        index = self.stackedWidget.currentIndex()
+        index = self.ui.stackedWidget.currentIndex()
 
-        if index != 0: self.stackedWidget.setCurrentIndex(index - 1)
-        if index == 1: self.return_button.hide()
+        if index != 0: self.ui.stackedWidget.setCurrentIndex(index - 1)
+        if index == 1: self.ui.return_button.hide()
 
     def choose_profile(self, event):
         if event.buttons() == Qt.MouseButton.LeftButton:
@@ -202,7 +205,6 @@ class RegisterWindow(QWidget):
     def terminate(self):
         LoginWindow()
         self.close()
-
 
 
 if __name__ == "__main__":
