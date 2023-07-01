@@ -10,7 +10,8 @@ from PyQt6.QtGui import QColor
 
 from ui.splash import Ui_SplashScreen
 from register_functions import Register
-from login_functions import Login
+from login_window import LoginWindow
+import utils
 
 
 # GLOBALS
@@ -56,6 +57,9 @@ class SplashScreen(QWidget):
         QtCore.QTimer.singleShot(3500, lambda: self.splash_screen.loading.setText("Preparing Server"))
         QtCore.QTimer.singleShot(4050, lambda: self.splash_screen.loading.setText("Loading User Interface"))
         QtCore.QTimer.singleShot(4500, lambda: self.splash_screen.loading.setText("Launching"))
+
+        # CREATE MEDIA FOLDERS IF NOT EXISTS
+        utils.create_media_folders()
 
         self.show()
 
@@ -121,10 +125,11 @@ class SplashScreen(QWidget):
             connection.close()
 
         except:
-            main = Register()
+            pass
+            # main = Register()
 
-        else:
-            main = Login()
+        finally:
+            main = LoginWindow()
 
 
 if __name__ == "__main__":

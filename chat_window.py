@@ -5,7 +5,7 @@ import os
 import time
 import threading
 
-from PyQt6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider
+from PyQt6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider, QMessageBox
 from PyQt6.QtCore import QTimer, pyqtSlot as Slot
 
 from ui.chat_window import Ui_ChatWindow
@@ -215,30 +215,35 @@ class ChatWindow(QMainWindow):
         """
         According to the send button style, send text message or record a voice
         """
-        if self.ui.send_button.styleSheet() == SendButton.style_send:
-            text_message = self.ui.entry_field.text()
+        if not self.ui.active_client.text():
+            QMessageBox.warning(self, "Destinataire non défini",
+                                "Veuillez spécifiez d'abord votre destinataire!",
+                                QMessageBox.StandardButton.Ok)
+        else:
+            if self.ui.send_button.styleSheet() == SendButton.style_send:
+                text_message = self.ui.entry_field.text()
 
-            # Send message
-            receiver = User.where("uuid", "=", self.ui.active_client.objectName())[0]
-            client = Client(receiver.get_host_address())
-            client.connect_to_server()
-            client.send_message("text", text_message)
+                # Send message
+                receiver = User.where("uuid", "=", self.ui.active_client.objectName())[0]
+                client = Client(receiver.get_host_address())
+                client.connect_to_server()
+                client.send_message("text", text_message)
 
-            # Show bubble
-            self.ui.create_right_bubble("text", text_message, time.strftime("%d-%m-%Y %H:%M"), client.message_delivered)
+                # Show bubble
+                self.ui.create_right_bubble("text", text_message, time.strftime("%d-%m-%Y %H:%M"), client.message_delivered)
 
-            # Reset some ui states
-            self.ui.entry_field.setText(None)
-            self.ui.send_button.setStyleSheet(SendButton.style_record)
-            self.ui.media_button.setEnabled(True)
+                # Reset some ui states
+                self.ui.entry_field.setText(None)
+                self.ui.send_button.setStyleSheet(SendButton.style_record)
+                self.ui.media_button.setEnabled(True)
 
-        elif self.ui.send_button.styleSheet() == SendButton.style_record:
-            self.ui.media_button.setEnabled(False)
-            # self.record_voice()
-            # CONNECT RECORD BUTTONS
-            self.ui.record_widget()
-            self.ui.end_record.clicked.connect(recorder.start_recorder)
-            self.ui.cancel_record.clicked.connect(recorder.stop_recorder)
+            elif self.ui.send_button.styleSheet() == SendButton.style_record:
+                self.ui.media_button.setEnabled(False)
+                # self.record_voice()
+                # CONNECT RECORD BUTTONS
+                self.ui.record_widget()
+                self.ui.end_record.clicked.connect(recorder.start_recorder)
+                self.ui.cancel_record.clicked.connect(recorder.stop_recorder)
 
 
     @Slot()

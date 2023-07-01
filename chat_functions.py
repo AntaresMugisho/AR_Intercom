@@ -24,44 +24,6 @@ class Chat(ChatWindow):
     def __init__(self):
         super().__init__()
 
-        # CREATE MEDIA FOLDERS IF NOT EXISTS
-        utils.create_media_folders()
-
-    def send_message(self, resending=None):
-        """Send the message to the active client and shows the right bubble."""
-
-        addressee = self.ui.active_client.text()
-
-        if not addressee:
-            QMessageBox.warning(self.MainWindow, "Destinataire non défini",
-                                "Veuillez spécifiez d'abord votre destinataire!",
-                                QMessageBox.Ok)
-
-        send_time = time.strftime("%d-%m-%Y %H:%M")
-
-        if not resending:
-            message = self.entry_field.text()
-        else:
-            message = resending
-
-        # SEND MESSAGE
-        self.client.send_message("string", message)
-
-        # Check status (feature)
-        try:
-            sent = int(self.client.status)
-            self.check_online(self.ui.active_client.text())
-        except Exception as e:
-            print(f"Erreur 310 FUNC : {e}")
-
-        # SHOW MESSAGE IN BUBBLE
-        self.create_right_bubble("string", None, None, message, send_time, sent)
-        self.entry_field.setText("")
-
-        # SAVE MESSAGE
-        client_table = "sa" + addressee[:2].lower() + "ch"
-        self.save_message(client_table, "S", "string", None, ".str", message, send_time, sent)
-
     def resend_message(self):
         try:
             clicked = self.sender()
@@ -335,56 +297,6 @@ class Chat(ChatWindow):
 
             self.thr = threading.Thread(target=recorder)
             self.thr.start()
-
-
-
-    def receive(self, kind):
-        """Shows the received message in a bubble."""
-
-        # FORMAT MESSAGE
-        message = self.server.received_message[
-                  2:]  # the first and the second characters of msg are programm indicators.
-        receive_time = time.strftime("%d-%m-%Y %H:%M")
-
-        # SHOW MESSAGE IF SENDER IS ACTIVE ELSE SAVE IT
-        active_client = self.ui.active_client.text()
-
-        if active_client != "" and self.server.received_message[0] == active_client[0]:
-            client_table = "sa" + active_client[:2].lower() + "ch"
-
-            if kind == "string":
-
-                # Show text message and save it
-                self.create_left_bubble("string", None, None, message, receive_time)
-                self.save_message(client_table, "R", "string", None, ".str", message, receive_time, True)
-
-            else:
-                title = self.server.media_info["Title"]
-                extension = self.server.media_info["Extension"]
-                blob = self.server.data
-
-                # Show media message and save it
-                self.create_left_bubble("voice", title, extension, blob, receive_time)
-                self.save_message(client_table, "R", "voice", title, extension, None, receive_time, True)
-        else:
-            self.put_inbox(self.server.received_message, receive_time)
-
-        # SHOW NOTIFICATION IN ALL CASES
-        for name in Users.ulist:
-
-            if name[0] == self.server.received_message[0]:  # If the initial letters are the same
-                # Show popup -> From popup.py
-                # popup = Popup(name)
-                pass
-
-    def put_inbox(self, message, time):
-        for name in Users.ulist:
-
-            if name[0] == message[0]:  # If the initial letters are the same
-
-                # Increase message counter
-                self.update_counter(name)
-
 
 
 if __name__ == "__main__":
