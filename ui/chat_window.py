@@ -366,15 +366,16 @@ class Ui_ChatWindow(object):
 
         if kind == "text":
             # LAYOUT MESSAGE
-            message = self.layout_message(body)
 
             # Left text container
             self.left_bubble = QtWidgets.QLabel()
-            self.left_bubble.setMinimumWidth(110)
-            self.left_bubble.setSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-            self.left_bubble.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse | Qt.TextInteractionFlag.TextSelectableByKeyboard)
+            self.left_bubble.setMaximumWidth(304)
+            self.left_bubble.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+            self.left_bubble.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse |
+                                                     Qt.TextInteractionFlag.TextSelectableByKeyboard)
             self.left_bubble.setCursor(Qt.CursorShape.IBeamCursor)
-            self.left_bubble.setText(message)
+            self.left_bubble.setText(body)
+            self.left_bubble.setWordWrap(True)
             self.left_bubble.setStyleSheet("border-radius:13px; color: rgb(0, 0, 0);background-color: rgb(255, 170, 0);"
                                            "padding-left:10px;padding-right:10px;padding-top:5px;padding-bottom:5px;"
                                            "font-size:16px;")
@@ -406,7 +407,7 @@ class Ui_ChatWindow(object):
 
         # Left time bubble
         self.left_time = QtWidgets.QLabel()
-        self.left_time.setFixedSize(90, 16)
+        self.left_time.setFixedSize(96, 16)
         self.left_time.setText(f"<p align='center'>{time}</p>")
         self.left_time.setStyleSheet("QLabel{border-radius:8px; color:#000000; background-color:#C5C5C5;"
                                      "font-size:10px;}")
@@ -441,18 +442,17 @@ class Ui_ChatWindow(object):
 
         # CREATE TEXT MESSAGE, OR MEDIA BUBBLE
         if kind == "text":
-            message = self.layout_message(body)
-
             # Right text container
             self.right_bubble = QtWidgets.QLabel()
-            self.right_bubble.setMinimumWidth(110)
-            self.right_bubble.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-            self.right_bubble.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse | Qt.TextInteractionFlag.TextSelectableByKeyboard)
+            self.right_bubble.setMaximumWidth(304)
+            self.right_bubble.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+            self.right_bubble.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse |
+                                                      Qt.TextInteractionFlag.TextSelectableByKeyboard)
             self.right_bubble.setCursor(Qt.CursorShape.IBeamCursor)
-            self.right_bubble.setText(message)
-            self.right_bubble.setStyleSheet("QLabel{border-radius:13px;color: rgb(255, 255, 255);"
-                                            "background-color: #3385CC;padding-left:10px; padding-right:10px;"
-                                            "padding-top:5px;padding-bottom:5px;font-size:16px;}")
+            self.right_bubble.setText(body)
+            self.right_bubble.setWordWrap(True)
+            self.right_bubble.setStyleSheet("QLabel{border-radius:15px;color: rgb(255, 255, 255);"
+                                            "background-color: #3385CC;padding:10px;font-size:16px;}")
             self.right_bubble.setObjectName("label_")
             self.right_msg_layout.addWidget(self.right_bubble, 0, 1, 1, 1)
 
@@ -489,9 +489,9 @@ class Ui_ChatWindow(object):
 
         # Right time
         self.right_time = QtWidgets.QLabel()
-        self.right_time.setFixedSize(90, 16)
+        self.right_time.setFixedSize(96, 16)
         self.right_time.setText(f"<p align='center'>{time}</p>")
-        self.right_time.setStyleSheet("QLabel{border-radius:7px;color:#000000; background-color:#C5C5C5;"
+        self.right_time.setStyleSheet("QLabel{border-radius:8px;color:#000000; background-color:#C5C5C5;"
                                       "font-size:10px;}")
         self.right_msg_layout.addWidget(self.right_time, 1, 1, 1, 1, Qt.AlignmentFlag.AlignHCenter)
 
@@ -621,23 +621,5 @@ class Ui_ChatWindow(object):
         self.play_button.setStyleSheet(Player.play)
         self.play_button.setObjectName("play_button")
         # self.play_button.clicked.connect(play_state)
-
-    @staticmethod
-    def layout_message(message):
-        """Split a string and return it as multi-line string."""
-
-        n = 6
-        words = message.split(" ")
-        designed_message = ""
-        i = 0
-        while i < len(words):
-            word = " ".join(words[i:i + n])
-            i += n
-
-            designed_message += word
-            if len(words) > n and i < len(words):
-                designed_message += "\n"
-
-        return designed_message
 
 from resources import img_rc

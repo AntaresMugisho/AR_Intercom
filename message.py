@@ -10,6 +10,7 @@ from controller import Controller
 class Message(QObject, Controller):
     messageReceived = pyqtSignal(int)
     # mediaMessageReceived = pyqtSignal()
+    time_format = "%d-%m-%Y %H:%M"
 
     def __init__(self):
         QObject.__init__(self)
@@ -66,18 +67,19 @@ class Message(QObject, Controller):
         return self.body
 
     def get_created_at(self):
-        return self.created_at
+        return datetime.fromisoformat(self.created_at).strftime(self.time_format)
 
     def get_updated_at(self):
-        return self.updated_at
+        return datetime.fromisoformat(self.updated_at).strftime(self.time_format)
 
     def get_deleted_at(self):
-        return self.deleted_at
+        return datetime.fromisoformat(self.deleted_at).strftime(self.time_format)
 
     def get_status(self):
         return self.received
 
-    def message_received(self):
-        self.save()
-        # EMIT NEW MESSAGE SIGNAL > TO SHOW GUI BUBBLE
-        self.messageReceived.emit(self.get_id())
+
+if __name__ == "__main__":
+    message = Message.find(61)
+
+    print(message.get_created_at())

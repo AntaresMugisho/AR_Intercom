@@ -225,7 +225,7 @@ class ChatWindow(QMainWindow):
             client.send_message("text", text_message)
 
             # Show bubble
-            self.ui.create_right_bubble("text", text_message, time.strftime("%Y-%m-%d %H:%M"), client.message_delivered)
+            self.ui.create_right_bubble("text", text_message, time.strftime("%d-%m-%Y %H:%M"), client.message_delivered)
 
             # Reset some ui states
             self.ui.entry_field.setText(None)

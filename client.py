@@ -80,7 +80,7 @@ class Client:
         receiver_id = receiver.get_id()
 
         message = Message()
-        message.set_sender_id(3)
+        message.set_sender_id(1)
         message.set_receiver_id(receiver_id)
         message.set_kind(kind)
         message.set_body(body)
