@@ -1214,6 +1214,13 @@ QPushButton:hover{
      <height>41</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Kirvy</family>
+     <pointsize>-1</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true">color: rgb(51, 153, 204);
 background-color: rgb(255, 255, 255);

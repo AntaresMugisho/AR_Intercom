@@ -1,5 +1,7 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
+import os
+import shutil
 import sys
 from functools import partial
 
@@ -101,14 +103,15 @@ class RegisterWindow(QWidget):
 
     def choose_profile(self, event):
         if event.buttons() == Qt.MouseButton.LeftButton:
-            home = utils.get_home_directory()
-            picture = QFileDialog.getOpenFileName(self, "Profile picture", home, "Photos *.jpg *.PNG")
-            directory = picture[0]
+            home_directory = utils.get_home_directory()
+            picture_dialogue = QFileDialog.getOpenFileName(self, "Profile picture", home_directory, "Photos *.jpg *.PNG")
+            path = picture_dialogue[0]
 
-            if directory:
+            if path:
                 # Show image on the label
-                self.ui.choose_profilepicture.setPixmap(QPixmap(directory))
-                self.user.set_image_path(directory)
+                rounded_pixmap = utils.create_rounded_image(path, self.ui.choose_profilepicture.height())
+                self.ui.choose_profilepicture.setPixmap(rounded_pixmap)
+                self.user.set_image_path(path)
 
     def validate(self):
         """
@@ -145,16 +148,22 @@ class RegisterWindow(QWidget):
 
     def confirm_subscription(self):
         """
-        Verify if user agrees to the terms of use then save him in database
+        Verify if user agrees to the terms of use then save his information in database
         """
         if self.ui.iaggree.isChecked():
-            self.user.save()
-            self.ui.stackedWidget.setCurrentIndex(2)
             try:
-                QTimer.singleShot(2900, lambda: self.ui.prev_feature.setStyleSheet(Features.prev))
-                QTimer.singleShot(3000, lambda: self.ui.next_feature.setStyleSheet(Features.next))
-            except Exception as e:
-                print(e)
+                user_profile_path = f"user/owner_profile{os.path.splitext(self.user.get_image_path())[1]}"
+                shutil.copyfile(self.user.get_image_path(), user_profile_path)
+                self.user.set_image_path(user_profile_path)
+            except TypeError:
+                pass
+
+            self.user.save()
+
+            self.ui.stackedWidget.setCurrentIndex(2)
+            QTimer.singleShot(2900, lambda: self.ui.prev_feature.setStyleSheet(Features.prev))
+            QTimer.singleShot(3000, lambda: self.ui.next_feature.setStyleSheet(Features.next))
+
             self.ui.return_button.hide()
 
     def features(self, page):

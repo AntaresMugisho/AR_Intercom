@@ -3,7 +3,7 @@ import threading
 import subprocess
 
 import utils
-from users import Users
+
 
 class NetscanThread(threading.Thread):
     hosts = {}

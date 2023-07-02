@@ -5,6 +5,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QSizePolicy
 from PyQt6.QtCore import Qt
 
+import utils
 from styles import *
 
 
@@ -82,7 +83,7 @@ class Ui_ChatWindow(object):
         # SCROLL REGION
         # Layout
         self.left_scroll_layout = QtWidgets.QVBoxLayout()
-        self.left_scroll_layout.setSpacing(2)
+        self.left_scroll_layout.setSpacing(4)
         self.left_scroll_layout.setContentsMargins(0, 0, 0, 0)
 
         # Scroll widget
@@ -127,7 +128,8 @@ class Ui_ChatWindow(object):
             # PROFILE PICTURE
             self.client_picture = QtWidgets.QLabel(self.client_info)
             self.client_picture.setGeometry(QtCore.QRect(3, 0, 60, 60))
-            self.client_picture.setPixmap(QtGui.QPixmap(profile_picture_path))
+            rounded_pixmap = utils.create_rounded_image(profile_picture_path, self.client_picture.width())
+            self.client_picture.setPixmap(rounded_pixmap)
             self.client_picture.setScaledContents(True)
             self.client_picture.setStyleSheet("border-radius:30px;border:none;")
 

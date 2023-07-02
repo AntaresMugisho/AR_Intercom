@@ -5,6 +5,9 @@ import sys
 import os
 import socket
 
+from PyQt6.QtGui import QPixmap, QPainter, QPainterPath
+from PyQt6.QtCore import Qt
+
 
 def get_home_directory():
     """"
@@ -34,6 +37,24 @@ def create_media_folders():
                 print(f"Failed to create media files : {e}")
 
 
+def create_rounded_image(image_path, size):
+    pixmap = QPixmap(image_path).scaled(size, size, Qt.AspectRatioMode.KeepAspectRatioByExpanding,
+                                        Qt.TransformationMode.SmoothTransformation)
+    rounded_pixmap = QPixmap(size, size)
+    rounded_pixmap.fill(Qt.GlobalColor.transparent)
+
+    painter = QPainter(rounded_pixmap)
+    painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+    painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
+
+    path = QPainterPath()
+    path.addRoundedRect(0, 0, size, size, size/2, size/2)
+    painter.setClipPath(path)
+    painter.drawPixmap(0, 0, pixmap)
+
+    return rounded_pixmap
+
+
 def get_private_ip():
     """
     Returns the local IP address
@@ -47,3 +68,4 @@ def get_private_ip():
     except OSError:
         print("Vous n'etes connecté à aucun réseau...")
         return "127.0.0.1"
+
