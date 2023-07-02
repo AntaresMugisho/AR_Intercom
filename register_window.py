@@ -96,12 +96,18 @@ class RegisterWindow(QWidget):
             self.close()
 
     def go_back(self):
+        """
+        Return to the previous stacked widget page
+        """
         index = self.ui.stackedWidget.currentIndex()
 
         if index != 0: self.ui.stackedWidget.setCurrentIndex(index - 1)
         if index == 1: self.ui.return_button.hide()
 
     def choose_profile(self, event):
+        """
+        Select a profile picture in a file dialog
+        """
         if event.buttons() == Qt.MouseButton.LeftButton:
             home_directory = utils.get_home_directory()
             picture_dialogue = QFileDialog.getOpenFileName(self, "Profile picture", home_directory, "Photos *.jpg *.PNG")
@@ -167,6 +173,9 @@ class RegisterWindow(QWidget):
             self.ui.return_button.hide()
 
     def features(self, page):
+        """
+        Navigate through feature pictures after registration
+        """
         index = self.ui.what_isnew.currentIndex()
 
         if page == "Next":
@@ -212,7 +221,13 @@ class RegisterWindow(QWidget):
                 button.setStyleSheet(Features.style_inactive)
 
     def terminate(self):
+        """
+        Ends subscription process and go to log in window
+        """
+        # Show login window
         LoginWindow()
+
+        # Close registration window
         self.close()
 
 

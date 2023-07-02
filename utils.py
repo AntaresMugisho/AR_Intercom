@@ -1,6 +1,5 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
-
 import sys
 import os
 import socket
@@ -71,4 +70,3 @@ def get_private_ip():
     except OSError:
         print("Vous n'etes connecté à aucun réseau...")
         return "127.0.0.1"
-

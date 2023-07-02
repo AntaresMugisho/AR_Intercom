@@ -37,7 +37,7 @@ else:
     path = sys.path
 
     # Icon path
-    icone = "resources\ARsoftlogo.ico"
+    icone = "resources/ARsoftlogo.ico"
 
     # To able translations
     # includefiles = []
@@ -56,6 +56,7 @@ else:
           version="2.1",
           description="AR Intercom - Secured business chat application",
           author="Antares",
-          executables=[Executable(script="main.py", base="Win32GUI", target_name="AR Intercom", icon=icone)]
+          author_email="antaresmugisho@gmail.com",
+          executables=[Executable(script="main.py", target_name="AR Intercom", icon=icone)]
           )
 # ===================================================== END ============================================================

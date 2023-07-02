@@ -6,6 +6,9 @@ import utils
 
 
 class NetscanThread(threading.Thread):
+    """
+    Thread to regularly scan the network by pinging addresses
+    """
     hosts = {}
 
     def __init__(self, address):
@@ -16,6 +19,9 @@ class NetscanThread(threading.Thread):
         self.lookup(self.address)
 
     def lookup(self, address):
+        """
+        Ping the given address and try to get more data if the address is alive
+        """
         reply = subprocess.call(["ping", "-c", "1", address], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         if reply == 0:
             try:

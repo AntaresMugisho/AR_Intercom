@@ -1,11 +1,12 @@
 # -*- This python file uses the following encoding : utf-8 -*-
+
 import os
 import socket
-import time
 
 import utils
 from user import User
 from message import Message
+
 
 class Client:
     """

@@ -100,12 +100,16 @@ if __name__ == "__main__":
         sender_id INTEGER,
         receiver_id INTEGER,
         kind VARCHAR,
-        body VARCHAR,
+        body TEXT,
+        received BOOLEAN,
         created_at DATETIME,
         updated_at DATETIME,
         deleted_at DATETIME
     )
     """
+
+    # db.execute(create_users_table)
+    # db.execute(create_messages_table)
 
     db = Database(User)
     user = db.fetchone("SELECT * FROM users WHERE id=1")
@@ -115,7 +119,3 @@ if __name__ == "__main__":
     messages = db.fetchall("SELECT * FROM messages")
     for message in messages:
         print(message.get_body())
-
-    # db.execute(create_users_table)
-    # db.execute(create_messages_table)
-

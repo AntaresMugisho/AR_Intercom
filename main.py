@@ -55,17 +55,21 @@ class SplashScreen(QWidget):
 
         # CHANGE LOADING LABEL TEXT
         QtCore.QTimer.singleShot(1400, lambda: self.splash_screen.loading.setText("Checking Network"))
-        QtCore.QTimer.singleShot(2500, lambda: self.splash_screen.loading.setText("Locating Database"))
-        QtCore.QTimer.singleShot(3500, lambda: self.splash_screen.loading.setText("Preparing Server"))
+        QtCore.QTimer.singleShot(2500, lambda: self.splash_screen.loading.setText("Starting Databases"))
+        QtCore.QTimer.singleShot(3500, lambda: self.splash_screen.loading.setText("Starting Server"))
         QtCore.QTimer.singleShot(4050, lambda: self.splash_screen.loading.setText("Loading User Interface"))
-        QtCore.QTimer.singleShot(4500, lambda: self.splash_screen.loading.setText("Launching"))
+        QtCore.QTimer.singleShot(4500, lambda: self.splash_screen.loading.setText("Launching..."))
 
         # CREATE MEDIA FOLDERS IF NOT EXISTS
         utils.create_media_folders()
 
+        # SHOW SPLASH SCREEN
         self.show()
 
     def progress_value(self, value):
+        """
+        Update the stylesheet according to the progress value
+        """
         stylesheet = """
         QFrame{
             border-radius:132px;
@@ -87,6 +91,9 @@ class SplashScreen(QWidget):
         self.splash_screen.circular_progress.setStyleSheet(stylesheet)
 
     def progress(self):
+        """
+        Controls the progress value and initialize main window after loading is done
+        """
         global counter
         value = counter
 
@@ -108,8 +115,8 @@ class SplashScreen(QWidget):
             if not User.find(1):
                 RegisterWindow()
             else:
-                LoginWindow()
-                # ChatWindow()
+                # LoginWindow()
+                ChatWindow()
 
         # INCREASE COUNTER
         counter += 0.2

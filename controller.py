@@ -24,13 +24,16 @@ class Controller:
 
     @classmethod
     def setup_db(cls):
+        """
+        Define class variable values according to the Subclass
+        """
         cls.db = Database(cls)
         cls.table_name = cls.__name__.lower() + "s"
 
     @classmethod
     def find(cls, id: int):
         """
-        Returns the record with the specified id
+        Returns a record find in the database with the specified id
         """
         cls.setup_db()
         statement = f"SELECT * FROM {cls.table_name} WHERE id = {id}"

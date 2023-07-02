@@ -8,6 +8,11 @@ from controller import Controller
 
 
 class Message(QObject, Controller):
+    """
+    Message model class representing a message as stored in database.
+    This class contains also some signals that the server can emit on new incoming message
+    to show GUI bubble
+    """
     messageReceived = pyqtSignal(int)
     # mediaMessageReceived = pyqtSignal()
     time_format = "%d-%m-%Y %H:%M"
@@ -77,9 +82,3 @@ class Message(QObject, Controller):
 
     def get_status(self):
         return self.received
-
-
-if __name__ == "__main__":
-    message = Message.find(61)
-
-    print(message.get_created_at())
