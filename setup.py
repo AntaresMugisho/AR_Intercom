@@ -1,6 +1,7 @@
 # -*- This python file uses the following encoding : coding:utf-8 -*-
 
-import sys, os
+import sys
+import os
 
 #  MAC OS SETUP
 if sys.platform == "darwin":
@@ -14,7 +15,7 @@ if sys.platform == "darwin":
     APP = ['main.py']
     DATA_FILES = ['resources/Arlogo.icns']
     OPTIONS = {
-        'iconfile': 'resources/Arlogo.icns',
+        'iconfile': 'resources/ARsoftlogo.icns',
         'argv_emulation': True,
         'packages': ['sounddevice']
     }
@@ -52,7 +53,7 @@ else:
         options["include_msvcr"] = True
 
     setup(name="AR Intercom",
-          version="2.0",
+          version="2.1",
           description="AR Intercom - Secured business chat application",
           author="Antares",
           executables=[Executable(script="main.py", base="Win32GUI", target_name="AR Intercom", icon=icone)]

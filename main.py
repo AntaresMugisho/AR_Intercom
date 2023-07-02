@@ -1,5 +1,5 @@
 # -*- This python file uses the following encoding : utf-8 -*-
-
+import random
 import sys
 import sqlite3
 
@@ -9,8 +9,10 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor
 
 from ui.splash import Ui_SplashScreen
-from register_functions import Register
+from register_window import RegisterWindow
 from login_window import LoginWindow
+from chat_window import ChatWindow
+from user import User
 import utils
 
 
@@ -102,34 +104,15 @@ class SplashScreen(QWidget):
             # CLOSE SPLASH SCREEN
             self.close()
 
-            # SHOW SIGN IN WINDOW OR LOGIN WINDOW
-            self.connect_database()
+            # SHOW REGISTER IN WINDOW OR LOGIN WINDOW
+            if not User.find(1):
+                RegisterWindow()
+            else:
+                LoginWindow()
+                # ChatWindow()
 
         # INCREASE COUNTER
         counter += 0.2
-
-    def connect_database(self):
-        """
-        Check if the user exists in database (has already created an account),
-        if not, show registration form, else show login form.
-        """
-        # CONNECT TO DATA BASE
-        try:
-            connection = sqlite3.connect("ui.db")
-            cursor = connection.cursor()
-
-            i = str(1)
-            cursor.execute("SELECT * FROM uidb WHERE id = ?", i)
-
-            cursor.close()
-            connection.close()
-
-        except:
-            pass
-            # main = Register()
-
-        finally:
-            main = LoginWindow()
 
 
 if __name__ == "__main__":

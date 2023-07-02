@@ -23,47 +23,16 @@ class Chat(ChatWindow):
         super().__init__()
 
     def resend_message(self):
-        try:
-            clicked = self.sender()
-            parent = clicked.parent()
 
-            connection = sqlite3.connect("sach.db")
-            cursor = connection.cursor()
+        clicked = self.sender()
+        parent = clicked.parent()
 
-            table = "sa" + self.ui.active_client.text()[:2].lower() + "ch"
+        for label in parent.findChildren(QLabel):
+            if label.objectName() == "label_":
+                text = label.text()
 
-            for label in parent.findChildren(QLabel):
-                if label.objectName() == "label_":
-                    text = label.text()
+        parent.deleteLater()
 
-                    cursor.execute(f"DELETE FROM {table} WHERE str = ?", (text,))
-                    cursor.close()
-                    connection.commit()
-                    connection.close()
-
-                    self.send_message(label.text())
-
-                elif label.objectName() == "media_":
-                    title = label.text()
-                    cursor.execute(f"SELECT * FROM {table} WHERE title = ?", (title,))
-
-                    req = cursor.fetchone()
-                    kind = req[2]
-                    extension = req[4]
-
-                    cursor.execute(f"DELETE FROM {table} WHERE title = ?", (title,))
-                    cursor.close()
-
-                    connection.commit()
-                    connection.close()
-
-                    path = f"{self.home}/Documents/AR Intercom/Media/{kind.capitalize()}s/{title}{extension}"
-                    self.send_media(kind, path)
-
-            parent.deleteLater()
-
-        except Exception as e:
-            print("Erreur 380FUNC", e)
 
     def play_voice(self):
 

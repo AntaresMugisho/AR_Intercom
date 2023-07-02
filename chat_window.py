@@ -23,11 +23,10 @@ from netscanner import NetscanThread
 
 class ChatWindow(QMainWindow):
     """
-    Initialize chat window as the main window
+    Initialize chat window to show conversations and start chatting
     """
     def __init__(self):
         super().__init__()
-
         self.ui = Ui_ChatWindow()
         self.ui.setupUi(self)
 
@@ -36,7 +35,7 @@ class ChatWindow(QMainWindow):
         self.ui.actionQuitter.triggered.connect(self._close)
 
         # SHOW USER'S LIST
-        users = User.where("id", ">=", 1)
+        users = User.where("id", ">", 1)
         self.ui.load_client(users)
 
         # CONNECT USER'S CONVERSATION BUTTONS
@@ -67,9 +66,9 @@ class ChatWindow(QMainWindow):
         # Scan network every 5 minutes to refresh active servers
         self.net_scanner = QTimer()
         self.net_scanner.timeout.connect(self.scan_network)
-        # self.net_scanner.start(25_000)
+        # self.net_scanner.start(300_000)
 
-        # SHOW WINDOW
+        # SHOW CHAT WINDOW
         self.show()
 
     @Slot()
@@ -89,7 +88,6 @@ class ChatWindow(QMainWindow):
         """
         try:
             self.net_scanner.stop()
-            # self.online_checker.stop()
             # Stop all clients instances
             self.server.stop()
         except Exception as e:
@@ -171,7 +169,6 @@ class ChatWindow(QMainWindow):
                     else:
                         widget.hide()
 
-
     @Slot(int)
     def show_bubble(self, id: int):
         """
@@ -244,7 +241,6 @@ class ChatWindow(QMainWindow):
                 self.ui.record_widget()
                 self.ui.end_record.clicked.connect(recorder.start_recorder)
                 self.ui.cancel_record.clicked.connect(recorder.stop_recorder)
-
 
     @Slot()
     def send_media(self, kind: str, path_to_media: str):

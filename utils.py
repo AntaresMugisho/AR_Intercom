@@ -38,6 +38,9 @@ def create_media_folders():
 
 
 def create_rounded_image(image_path, size):
+    """
+    Create a rounded pixmap from an image with the specified size
+    """
     pixmap = QPixmap(image_path).scaled(size, size, Qt.AspectRatioMode.KeepAspectRatioByExpanding,
                                         Qt.TransformationMode.SmoothTransformation)
     rounded_pixmap = QPixmap(size, size)
