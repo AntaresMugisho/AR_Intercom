@@ -2,8 +2,8 @@
 import os.path
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtWidgets import QSizePolicy
-from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QSizePolicy, QLabel
+from PyQt6.QtCore import Qt, pyqtSignal as Slot
 
 from message import Message
 import utils
@@ -501,14 +501,14 @@ class Ui_ChatWindow(object):
         # SHOW MESSAGE STATUS INDICATOR
         self.message_status = QtWidgets.QPushButton()
         self.message_status.setFixedSize(16, 16)
-        self.message_status.setObjectName(f"status_{message.get_id()}")
 
         if message.get_status():
             self.message_status.setStyleSheet(MessageStatus.style_sent)
+            self.message_status.setObjectName(f"success_{message.get_id()}")
         else:
             self.message_status.setStyleSheet(MessageStatus.style_not_sent)
             self.message_status.setToolTip("Cliquez pour renvoyer le message")
-            # self.message_status.clicked.connect(self.resend_message)
+            self.message_status.setObjectName(f"error_{message.get_id()}")
 
         self.right_msg_layout.addWidget(self.message_status, 1, 1, 1, 0)
 

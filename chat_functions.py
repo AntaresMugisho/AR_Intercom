@@ -21,16 +21,6 @@ class Chat(ChatWindow):
     def __init__(self):
         super().__init__()
 
-    def resend_message(self):
-
-        clicked = self.sender()
-        parent = clicked.parent()
-
-        for label in parent.findChildren(QLabel):
-            if label.objectName() == "label_":
-                text = label.text()
-
-        parent.deleteLater()
 
 
     def play_voice(self):

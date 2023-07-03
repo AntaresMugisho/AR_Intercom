@@ -79,8 +79,9 @@ class Client:
         if message.get_kind() == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
             text_message = f"{self.SERVER_IP}|{message.get_kind()}|{message.get_body()}"
-            self.reliable_send(text_message)
-            message.set_status(self.message_delivered)
+            # self.reliable_send(text_message)
+            # message.set_status(self.message_delivered)
+            message.set_status(True)
 
         else:  # If kind in ["image", "document", "video", "audio", "voice"]
             path = message.get_body()

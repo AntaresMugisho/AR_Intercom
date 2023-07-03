@@ -100,7 +100,6 @@ class ChatWindow(QMainWindow):
         """
         Shows conversation bubbles with a specified user
         """
-
         # GET CLICKED BUTTON
         clicked_button = self.sender()
         user_uuid = clicked_button.objectName()
@@ -124,7 +123,7 @@ class ChatWindow(QMainWindow):
         except Exception as e:  # If chat field was not visible or is empty
             print(e)
 
-        # SHOW OLDER MESSAGES WITH THE ACTIVE USER
+        # SHOW OLDER MESSAGES WITH THE ACTIVE USER IN NEW BUBBLES
         messages = user.messages()
         for message in messages:
             sender_id = message.get_sender_id()
@@ -133,6 +132,8 @@ class ChatWindow(QMainWindow):
             #  messages sent from user_id 1 will be shown in the right bubble
             if sender_id == 1:
                 self.ui.create_right_bubble(message)
+                if self.ui.message_status.objectName().startswith("error"):
+                    self.ui.message_status.clicked.connect(self.resend_message)
             else:
                 self.ui.create_left_bubble(message)
 
@@ -253,6 +254,27 @@ class ChatWindow(QMainWindow):
         # self.client.send_message(message)
         self.ui.create_right_bubble(message)
 
+    def resend_message(self):
+        """
+        Resend a message that failed
+        """
+        clicked_button = self.sender()
+
+        # Find message and user by id from the object name of clicked button
+        message_id = clicked_button.objectName().split("_")[1]
+        message = Message.find(int(message_id))
+        receiver = User.find(message.get_receiver_id())
+
+        # Send message
+        client = Client(receiver.get_host_address())
+        client.send_message(message)
+
+        # Update in database
+        message.update()
+
+        # Delete old bubble and create a new one
+        clicked_button.parent().deleteLater()
+        self.ui.create_right_bubble(message)
 
     def scan_network(self):
         """
@@ -309,6 +331,7 @@ class ChatWindow(QMainWindow):
                         widget.show()
                     else:
                         widget.hide()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
