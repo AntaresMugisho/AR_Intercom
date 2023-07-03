@@ -69,46 +69,34 @@ class Client:
             # Another if the message was sent but the server didn't respond
             self.message_delivered = False
 
-        self.message_delivered
 
-    def send_message(self, kind: str, body: str = None):
+    def send_message(self, message: Message):
         """
         Determines the kind of message and sends it.
         """
         self.connect_to_server()
 
-        receiver = User.where("host_address", "=", self.server_host)[0]
-        receiver_id = receiver.get_id()
-
-        message = Message()
-        message.set_sender_id(1)
-        message.set_receiver_id(receiver_id)
-        message.set_kind(kind)
-        message.set_body(body)
-
-        if kind == "text":
+        if message.get_kind() == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
-            text_message = f"{self.SERVER_IP}|{kind}|{body}"
+            text_message = f"{self.SERVER_IP}|{message.get_kind()}|{message.get_body()}"
             self.reliable_send(text_message)
-
             message.set_status(self.message_delivered)
 
         else:  # If kind in ["image", "document", "video", "audio", "voice"]
-            path = body
+            path = message.get_body()
 
             # COLLECT MEDIA METADATA FIRST
             file_size = os.path.getsize(path)
             file_name = os.path.split(path)[1]
 
             # SEND CLIENT ID AND FILE INFORMATION THEN UPLOAD FILE
-            media_message = f"{self.SERVER_IP}|{kind}|{file_size}|{file_name}"
+            media_message = f"{self.SERVER_IP}|{message.get_kind()}|{file_size}|{file_name}"
             self.reliable_send(media_message)
             self.upload_file(path)
 
             message.set_status(self.message_delivered)
 
-        print(message.get_status())
-        message.save()
+        return message
 
         # if kind == "id":
         #     # GET MY IDS FROM DATABASE

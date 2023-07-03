@@ -54,7 +54,7 @@ class ChatWindow(QMainWindow):
         self.server.start()
 
         # LISTEN FOR MESSAGE SIGNALS
-        self.server.message_listener.messageReceived.connect(self.show_bubble)
+        self.server.message_listener.messageReceived.connect(self.show_incoming_message)
 
         # SCAN NETWORK TO FIND CONNECTED DEVICES
         self.server_hosts = {}
@@ -128,17 +128,13 @@ class ChatWindow(QMainWindow):
         messages = user.messages()
         for message in messages:
             sender_id = message.get_sender_id()
-            kind = message.get_kind()
-            body = message.get_body()
-            created_at = message.get_created_at()
-            status = message.get_status()
 
             #  Knowing that the user with id == 1 is the owner,
             #  messages sent from user_id 1 will be shown in the right bubble
             if sender_id == 1:
-                self.ui.create_right_bubble(kind, body, created_at, status)
+                self.ui.create_right_bubble(message)
             else:
-                self.ui.create_left_bubble(kind, body, created_at)
+                self.ui.create_left_bubble(message)
 
         # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
         for frame in self.ui.left_scroll.findChildren(QFrame):
@@ -150,39 +146,17 @@ class ChatWindow(QMainWindow):
                 # Reset to normal style sheet
                 frame.parent().setStyleSheet(Clients.frame_normal)
 
-    def check_online(self, server_host: str):
-        """
-        Checks online devices and show or hide green online indicator widget.
-        """
-        client = Client(server_host)
-        client.connect_to_server()
-
-        user = User.where("host_address", "=", server_host)
-        if user:
-            user_uuid = user[0].get_uuid()
-
-            # Show green online toast if client is online
-            for widget in self.ui.left_scroll.findChildren(QFrame):
-                if widget.objectName() == f"{user_uuid}_toast":
-                    if client.online:
-                        widget.show()
-                    else:
-                        widget.hide()
-
     @Slot(int)
-    def show_bubble(self, id: int):
+    def show_incoming_message(self, id: int):
         """
-        Shows incoming message bubble and
+        Shows incoming message bubble or increase new message counter
         """
         message = Message.find(id)
-        kind = message.get_kind()
-        body = message.get_body()
-        created_at = message.get_created_at()
 
         if self.ui.active_client.objectName():
             user = User.where("uuid", "=", self.ui.active_client.objectName())[0]
             if user.get_id() == message.get_sender_id():
-                self.ui.create_left_bubble(kind, body, created_at)
+                self.ui.create_left_bubble(message)
 
             else:
                 user = User.find(message.get_sender_id())
@@ -190,6 +164,24 @@ class ChatWindow(QMainWindow):
         else:
             user = User.find(message.get_sender_id())
             self.update_unread_message_counter(user.get_uuid())
+
+    def update_unread_message_counter(self, uuid: str):
+        """
+        Increase the unread message counter badge on new message.
+        """
+        for widget in self.ui.left_scroll.findChildren(QFrame):
+            if widget.objectName() == uuid + "_counter":
+                unread_msg = int(widget.text())
+                unread_msg += 1
+                widget.setText(f"{unread_msg}")
+
+                try:
+                    widget.show()
+                except Exception as e:
+                    print(f"Error while trying to show counter widget {e}")
+
+                parent = widget.parent()
+                parent.setStyleSheet(Clients.frame_unread_msg)
 
     @Slot()
     def change_send_style(self):
@@ -220,14 +212,24 @@ class ChatWindow(QMainWindow):
             if self.ui.send_button.styleSheet() == SendButton.style_send:
                 text_message = self.ui.entry_field.text()
 
-                # Send message
                 receiver = User.where("uuid", "=", self.ui.active_client.objectName())[0]
+                receiver_id = receiver.get_id()
+
+                message = Message()
+                message.set_sender_id(1)
+                message.set_receiver_id(receiver_id)
+                message.set_kind("text")
+                message.set_body(text_message)
+
+                # Send message and get it back with the status repost modified
                 client = Client(receiver.get_host_address())
-                client.connect_to_server()
-                client.send_message("text", text_message)
+                message = client.send_message(message)
+
+                # Save message in database
+                message.save()
 
                 # Show bubble
-                self.ui.create_right_bubble("text", text_message, time.strftime("%d-%m-%Y %H:%M"), client.message_delivered)
+                self.ui.create_right_bubble(message)
 
                 # Reset some ui states
                 self.ui.entry_field.setText(None)
@@ -237,36 +239,20 @@ class ChatWindow(QMainWindow):
             elif self.ui.send_button.styleSheet() == SendButton.style_record:
                 self.ui.media_button.setEnabled(False)
                 # self.record_voice()
+                # self.send_media(recorded_voice)
                 # CONNECT RECORD BUTTONS
                 self.ui.record_widget()
                 self.ui.end_record.clicked.connect(recorder.start_recorder)
                 self.ui.cancel_record.clicked.connect(recorder.stop_recorder)
 
     @Slot()
-    def send_media(self, kind: str, path_to_media: str):
+    def send_media(self, message: Message):
         """
         Sends the media message and shows bubble
         """
-        # self.client.send_message(kind, path_to_media)
-        self.ui.create_right_bubble(kind, path_to_media)
+        # self.client.send_message(message)
+        self.ui.create_right_bubble(message)
 
-    def update_unread_message_counter(self, uuid: str):
-        """
-        Increase the unread message counter badge on new message.
-        """
-        for widget in self.ui.left_scroll.findChildren(QFrame):
-            if widget.objectName() == uuid + "_counter":
-                unread_msg = int(widget.text())
-                unread_msg += 1
-                widget.setText(f"{unread_msg}")
-
-                try:
-                    widget.show()
-                except Exception as e:
-                    print(f"Error while trying to show counter widget {e}")
-
-                parent = widget.parent()
-                parent.setStyleSheet(Clients.frame_unread_msg)
 
     def scan_network(self):
         """
@@ -305,6 +291,24 @@ class ChatWindow(QMainWindow):
             for thread in online_checkers:
                 thread.start()
 
+    def check_online(self, server_host: str):
+        """
+        Checks online devices and show or hide green online indicator widget.
+        """
+        client = Client(server_host)
+        client.connect_to_server()
+
+        user = User.where("host_address", "=", server_host)
+        if user:
+            user_uuid = user[0].get_uuid()
+
+            # Show green online toast if client is online
+            for widget in self.ui.left_scroll.findChildren(QFrame):
+                if widget.objectName() == f"{user_uuid}_toast":
+                    if client.online:
+                        widget.show()
+                    else:
+                        widget.hide()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

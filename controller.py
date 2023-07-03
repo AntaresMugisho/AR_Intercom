@@ -37,7 +37,7 @@ class Controller:
         """
         cls.setup_db()
         statement = f"SELECT * FROM {cls.table_name} WHERE id = {id}"
-        return cls.db.fetchone(statement)
+        return cls.db._fetchone(statement)
 
     @classmethod
     def all(cls):
@@ -74,7 +74,7 @@ class Controller:
         """
         cls.setup_db()
         statement = f"SELECT * FROM {cls.table_name} WHERE {field} {operator} '{value}' AND deleted_at ISNULL"
-        return cls.db.fetchall(statement)
+        return cls.db._fetchall(statement)
 
     def save(self):
         """
@@ -102,7 +102,7 @@ class Controller:
         statement = statement.replace("[", "").replace("]", "").replace("'", "")
 
         # Execute statement
-        self.__class__.db.execute(statement, values)
+        self.__class__.db._execute(statement, values)
 
         # Set object id according to the last inserted id
         self.set_id(self.__class__.db.cursor.lastrowid)
@@ -131,7 +131,7 @@ class Controller:
         statement = statement.replace("[", "").replace("]", "").replace("'", "")
 
         # Execute statement
-        self.__class__.db.execute(statement, values)
+        self.__class__.db._execute(statement, values)
 
     def delete(self):
         """
@@ -143,7 +143,7 @@ class Controller:
             DELETE FROM {self.__class__.table_name} WHERE id = {self.get_id()}
         """
 
-        self.__class__.db.execute(statement)
+        self.__class__.db._execute(statement)
 
     def soft_delete(self):
         """

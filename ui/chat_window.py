@@ -5,6 +5,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QSizePolicy
 from PyQt6.QtCore import Qt
 
+from message import Message
 import utils
 from styles import *
 
@@ -345,7 +346,7 @@ class Ui_ChatWindow(object):
 
         self.media_button.setStyleSheet(MediaButton.style_less)
 
-    def create_left_bubble(self, kind, body, time):
+    def create_left_bubble(self, message: Message):
 
         # GRID LAYOUT
         self.left_msg_layout = QtWidgets.QGridLayout()
@@ -366,7 +367,7 @@ class Ui_ChatWindow(object):
         self.l_bubble.setStyleSheet("background-color: rgb(255, 170, 0);border-radius:7px;")
         self.left_msg_layout.addWidget(self.l_bubble, 0, 0, 1, 1, Qt.AlignmentFlag.AlignTop)
 
-        if kind == "text":
+        if message.get_kind() == "text":
             # LAYOUT MESSAGE
 
             # Left text container
@@ -376,7 +377,7 @@ class Ui_ChatWindow(object):
             self.left_bubble.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse |
                                                      Qt.TextInteractionFlag.TextSelectableByKeyboard)
             self.left_bubble.setCursor(Qt.CursorShape.IBeamCursor)
-            self.left_bubble.setText(body)
+            self.left_bubble.setText(message.get_body())
             self.left_bubble.setWordWrap(True)
             self.left_bubble.setStyleSheet("border-radius:13px; color: rgb(0, 0, 0);background-color: rgb(255, 170, 0);"
                                            "padding-left:10px;padding-right:10px;padding-top:5px;padding-bottom:5px;"
@@ -392,25 +393,25 @@ class Ui_ChatWindow(object):
             self.left_msg_layout.addWidget(self.left_media_parent, 0, 1, 1, 1)
 
             # CREATE BUBBLE
-            if kind == "voice":
-                self.create_voice_bubble(self.left_media_parent, body)
+            if message.get_kind() == "voice":
+                self.create_voice_bubble(self.left_media_parent, message.get_body())
 
-            elif kind == "video":
+            elif message.get_kind() == "video":
                 pass
 
-            elif kind == "audio":
+            elif message.get_kind() == "audio":
                 pass
 
-            elif kind == "image":
+            elif message.get_kind() == "image":
                 pass
 
-            elif kind == "document":
+            elif message.get_kind() == "document":
                 pass
 
         # Left time bubble
         self.left_time = QtWidgets.QLabel()
         self.left_time.setFixedSize(96, 16)
-        self.left_time.setText(f"<p align='center'>{time}</p>")
+        self.left_time.setText(f"<p align='center'>{message.get_created_at()}</p>")
         self.left_time.setStyleSheet("QLabel{border-radius:8px; color:#000000; background-color:#C5C5C5;"
                                      "font-size:10px;}")
         self.left_msg_layout.addWidget(self.left_time, 1, 1, 1, 1, Qt.AlignmentFlag.AlignHCenter)
@@ -419,7 +420,7 @@ class Ui_ChatWindow(object):
         QtCore.QTimer.singleShot(10, self.scroll_to_end)
         QtCore.QTimer.singleShot(100, self.scroll_to_end)
 
-    def create_right_bubble(self, kind, body, time, status):
+    def create_right_bubble(self, message: Message):
 
         # GRID LAYOUT
         self.right_msg_layout = QtWidgets.QGridLayout()
@@ -443,7 +444,7 @@ class Ui_ChatWindow(object):
         self.right_msg_layout.addWidget(self.r_bubble, 0, 0, 1, 1, Qt.AlignmentFlag.AlignBottom)
 
         # CREATE TEXT MESSAGE, OR MEDIA BUBBLE
-        if kind == "text":
+        if message.get_kind() == "text":
             # Right text container
             self.right_bubble = QtWidgets.QLabel()
             self.right_bubble.setMaximumWidth(304)
@@ -451,11 +452,11 @@ class Ui_ChatWindow(object):
             self.right_bubble.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse |
                                                       Qt.TextInteractionFlag.TextSelectableByKeyboard)
             self.right_bubble.setCursor(Qt.CursorShape.IBeamCursor)
-            self.right_bubble.setText(body)
+            self.right_bubble.setText(message.get_body())
             self.right_bubble.setWordWrap(True)
             self.right_bubble.setStyleSheet("QLabel{border-radius:15px;color: rgb(255, 255, 255);"
                                             "background-color: #3385CC;padding:10px;font-size:16px;}")
-            self.right_bubble.setObjectName("label_")
+            self.right_bubble.setObjectName(f"body_{message.get_id()}")
             self.right_msg_layout.addWidget(self.right_bubble, 0, 1, 1, 1)
 
         else:
@@ -474,25 +475,25 @@ class Ui_ChatWindow(object):
             self.right_msg_layout.addWidget(self.right_media_parent, 0, 1, 1, 1)
 
             # CREATE MEDIA BUBBLE
-            if kind == "voice":
-                self.create_voice_bubble(self.right_media_parent, body)
+            if message.get_kind() == "voice":
+                self.create_voice_bubble(self.right_media_parent, message.get_body())
 
-            elif kind == "video":
+            elif message.get_kind() == "video":
                 pass
 
-            elif kind == "audio":
+            elif message.get_kind() == "audio":
                 pass
 
-            elif kind == "image":
+            elif message.get_kind() == "image":
                 pass
 
-            elif kind == "document":
+            elif message.get_kind() == "document":
                 pass
 
         # Right time
         self.right_time = QtWidgets.QLabel()
         self.right_time.setFixedSize(96, 16)
-        self.right_time.setText(f"<p align='center'>{time}</p>")
+        self.right_time.setText(f"<p align='center'>{message.get_created_at()}</p>")
         self.right_time.setStyleSheet("QLabel{border-radius:8px;color:#000000; background-color:#C5C5C5;"
                                       "font-size:10px;}")
         self.right_msg_layout.addWidget(self.right_time, 1, 1, 1, 1, Qt.AlignmentFlag.AlignHCenter)
@@ -500,9 +501,9 @@ class Ui_ChatWindow(object):
         # SHOW MESSAGE STATUS INDICATOR
         self.message_status = QtWidgets.QPushButton()
         self.message_status.setFixedSize(16, 16)
-        self.message_status.setObjectName("buton_")
+        self.message_status.setObjectName(f"status_{message.get_id()}")
 
-        if status:
+        if message.get_status():
             self.message_status.setStyleSheet(MessageStatus.style_sent)
         else:
             self.message_status.setStyleSheet(MessageStatus.style_not_sent)

@@ -112,7 +112,7 @@ class User(Controller):
         """
         Message.setup_db()
         statement = f"SELECT * FROM {Message.table_name} WHERE sender_id = {self.get_id()} OR receiver_id = {self.get_id()}"
-        return Message.db.fetchall(statement)
+        return Message.db._fetchall(statement)
 
 
 if __name__ == "__main__":

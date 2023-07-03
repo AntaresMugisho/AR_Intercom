@@ -72,13 +72,19 @@ class Message(QObject, Controller):
         return self.body
 
     def get_created_at(self):
-        return datetime.fromisoformat(self.created_at).strftime(self.time_format)
+        if type(self.created_at) is str:
+            return datetime.fromisoformat(self.created_at).strftime(self.time_format)
+        return self.created_at
 
     def get_updated_at(self):
-        return datetime.fromisoformat(self.updated_at).strftime(self.time_format)
+        if type(self.updated_at) is str:
+            return datetime.fromisoformat(self.updated_at).strftime(self.time_format)
+        return self.updated_at
 
     def get_deleted_at(self):
-        return datetime.fromisoformat(self.deleted_at).strftime(self.time_format)
+        if type(self.deleted_at) is str:
+            return datetime.fromisoformat(self.deleted_at).strftime(self.time_format)
+        return self.deleted_at
 
     def get_status(self):
         return self.received

@@ -15,13 +15,14 @@ class Database:
         else:
             return cls.__instance
 
+
     def __init__(self, fetch_class):
         self.connection = sqlite3.connect("user/database.db")
         self.cursor = self.connection.cursor()
 
         self.set_fetch_mode(fetch_class)
 
-    def execute(self, statement, data=None):
+    def _execute(self, statement, data=None):
         """
         Executes a given statement
         """
@@ -29,19 +30,16 @@ class Database:
             self.cursor.execute(statement, data)
         else:
             self.cursor.execute(statement)
-        self.cursor.close()
         self.connection.commit()
-        self.connection.close()
+        self._close()
 
-        # print(self.cursor.lastrowid)
-
-    def fetchone(self, statement):
+    def _fetchone(self, statement):
         """
         Fetches one result and return it as a class object
         """
         self.cursor.execute(statement)
         result = self.cursor.fetchone()
-        self.close()
+        self._close()
 
         class_object = self.FETCH_CLASS()
         for i, attribute in enumerate(class_object.__dict__.keys()):
@@ -49,13 +47,13 @@ class Database:
 
         return class_object
 
-    def fetchall(self, statement):
+    def _fetchall(self, statement):
         """
         Fetches all results and return it as a list of class objects
         """
         self.cursor.execute(statement)
         results = self.cursor.fetchall()
-        self.close()
+        self._close()
 
         class_objects = []
         for result in results:
@@ -65,13 +63,14 @@ class Database:
             class_objects.append(class_object)
         return class_objects
 
-    def close(self):
+    def _close(self):
         self.cursor.close()
         self.connection.close()
 
     @classmethod
     def set_fetch_mode(cls, fetch_class: str):
         cls.FETCH_CLASS = fetch_class
+
 
 if __name__ == "__main__":
     from user import User
@@ -112,7 +111,7 @@ if __name__ == "__main__":
     # db.execute(create_messages_table)
 
     db = Database(User)
-    user = db.fetchone("SELECT * FROM users WHERE id=1")
+    user = db._fetchone("SELECT * FROM users WHERE id=1")
     print(user.get_user_name())
 
     db = Database(Message)
