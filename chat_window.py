@@ -35,7 +35,7 @@ class ChatWindow(QMainWindow):
         self.ui.actionQuitter.triggered.connect(self._close)
 
         # SHOW USER'S LIST
-        users = User.where("id", ">", 1)
+        users = User.where("id", ">=", 1)
         self.ui.load_client(users)
 
         # CONNECT USER'S CONVERSATION BUTTONS
@@ -67,6 +67,7 @@ class ChatWindow(QMainWindow):
         self.net_scanner = QTimer()
         self.net_scanner.timeout.connect(self.scan_network)
         # self.net_scanner.start(300_000)
+        self.net_scanner.start(10_000)
 
         # SHOW CHAT WINDOW
         self.show()
@@ -312,19 +313,20 @@ class ChatWindow(QMainWindow):
 
             for thread in online_checkers:
                 thread.start()
+                thread.join()
 
     def check_online(self, server_host: str):
         """
         Checks online devices and show or hide green online indicator widget.
         """
         client = Client(server_host)
-        client.connect_to_server()
+        threading.Thread(target=client.connect_to_server).start()
+        # client.connect_to_server()
 
+        # Show green online toast if client is online
         user = User.where("host_address", "=", server_host)
         if user:
             user_uuid = user[0].get_uuid()
-
-            # Show green online toast if client is online
             for widget in self.ui.left_scroll.findChildren(QFrame):
                 if widget.objectName() == f"{user_uuid}_toast":
                     if client.online:

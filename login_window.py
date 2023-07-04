@@ -90,12 +90,12 @@ class LoginWindow(QMainWindow):
             self.check_username()
             self.check_password()
 
-        if not (self.ui.log_username.text(), self.ui_password) == (self.user_name, self.password):
+        if (self.ui.log_username.text(), self.ui_password) == (self.user_name, self.password):
             # show chat window
-            ChatWindow()
+            run = ChatWindow()
 
             # Close login window
-            self.close()
+            # self.close()
 
 
 if __name__ == "__main__":

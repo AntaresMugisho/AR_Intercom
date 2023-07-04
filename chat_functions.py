@@ -25,54 +25,51 @@ class Chat(ChatWindow):
 
     def play_voice(self):
 
-        def hhmmss(ms):
-            # s = 1000
-            # m = 60000
-            # h = 3600000
-            h, r = divmod(ms, 3600000)
-            m, r = divmod(r, 60000)
+        def hhmmss(ms: int):
+            """
+            Converts millisecond time in hour, minute and seconds
+            """
+            h, r = divmod(ms, 3_600_000)
+            m, r = divmod(r, 60_000)
             s, _ = divmod(r, 1000)
             return ("%02d:%02d:%02d" % (h, m, s)) if h else ("%02d:%02d" % (m, s))
 
         def update_duration(duration):
-            try:
-                slider.setMaximum(duration)
+            slider.setMaximum(duration)
+            if duration >= 0:
+                total_time.setText(hhmmss(duration))
 
-                if duration >= 0:
-                    total_time.setText(hhmmss(duration))
-            except:
-                pass
 
         def update_position(position):
-            try:
-                if position >= 0:
-                    elapsed_time.setText(hhmmss(position))
+            """
+            Update playing media position by moving the slider
+            """
+            if position >= 0:
+                elapsed_time.setText(hhmmss(position))
 
-                # Disable the events to prevent updating triggering a setPosition event (can cause stuttering).
-                slider.blockSignals(True)
-                slider.setValue(position)
-                slider.blockSignals(False)
+            # Disable the events to prevent updating triggering a setPosition event (can cause stuttering).
+            slider.blockSignals(True)
+            slider.setValue(position)
+            slider.blockSignals(False)
 
-            except:
-                pass
 
         def _state_changed(state):
-            try:
-                if state == QMediaPlayer.PlayingState:
-                    play_button.setStyleSheet(Player.pause)
-                    play_button.setToolTip("Pause")
+            """
+            Perform some actions according to the playing state
+            """
+            if state == QMediaPlayer.PlayingState:
+                play_button.setStyleSheet(Player.pause)
+                play_button.setToolTip("Pause")
 
-                if state == QMediaPlayer.PausedState:
-                    play_button.setStyleSheet(Player.play)
+            if state == QMediaPlayer.PausedState:
+                play_button.setStyleSheet(Player.play)
 
-                elif state == QMediaPlayer.StoppedState:
-                    self.player.setPosition(0)
-                    slider.setValue(0)
-                    play_button.setStyleSheet(Player.play)
-                    play_button.setObjectName("play_button")
-                    play_button.setToolTip("")
-            except:
-                pass
+            elif state == QMediaPlayer.StoppedState:
+                self.player.setPosition(0)
+                slider.setValue(0)
+                play_button.setStyleSheet(Player.play)
+                play_button.setObjectName("play_button")
+                play_button.setToolTip("")
 
         def erroralert(*args):
             print(args)

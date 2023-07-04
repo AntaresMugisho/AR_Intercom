@@ -29,9 +29,11 @@ class Client:
         Try to connect to a distant server
         """
         try:
+            self.sock.settimeout(1)
             self.sock.connect((self.server_host, self.PORT))
             print(f"[+] Connected on {self.server_host}:{self.PORT}")
             self.online = True
+            self.sock.settimeout(None)
 
         except ConnectionRefusedError:
             print(f"[-] Connection refused on {self.server_host}:{self.PORT}")
@@ -79,9 +81,8 @@ class Client:
         if message.get_kind() == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
             text_message = f"{self.SERVER_IP}|{message.get_kind()}|{message.get_body()}"
-            # self.reliable_send(text_message)
-            # message.set_status(self.message_delivered)
-            message.set_status(True)
+            self.reliable_send(text_message)
+            message.set_status(self.message_delivered)
 
         else:  # If kind in ["image", "document", "video", "audio", "voice"]
             path = message.get_body()
@@ -120,8 +121,8 @@ class Client:
         Sends file to the distant server and returns delivery status
         """
         with open(path, "rb") as file:
-            self.sock.send(file.read())
             try:
+                self.sock.send(file.read())
                 self.sock.recv(1024)
                 self.message_delivered = True
             except Exception as e:
