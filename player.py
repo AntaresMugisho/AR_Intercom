@@ -13,11 +13,9 @@ class Player:
         self.player.setAudioOutput(self.audio_output)
 
         self.player.errorChanged.connect(lambda: print(self.player.error()))
-        # self.player.positionChanged.connect(lambda: print(self.player.position()))
-        self.player.playbackStateChanged.connect(lambda: print(self.player.playbackState()))
 
-    def play(self):
-        path = "music.mp3"
+    def play(self, path="music.mp3"):
+        # path = "music.mp3"
         self.player.setSource(QUrl.fromLocalFile(path))
         self.player.play()
         # self.player.hasAudioChanged()
@@ -27,3 +25,6 @@ class Player:
             self.player.pause()
         elif self.player.playbackState() == QMediaPlayer.PlaybackState.PausedState:
             self.player.play()
+
+    def stop(self):
+        self.player.stop()

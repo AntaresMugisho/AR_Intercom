@@ -1,6 +1,7 @@
 
 
 import sys
+from functools import partial
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput, QAudioDevice
 from PySide6.QtCore import QUrl
@@ -23,7 +24,7 @@ class Window(QWidget):
         self.setLayout(vlayout)
 
         play_btn = QPushButton("Play audio")
-        play_btn.clicked.connect(player.play)
+        play_btn.clicked.connect(partial(player.play))
 
         pause_btn = QPushButton("Pause audio")
         pause_btn.clicked.connect(player.pause)
