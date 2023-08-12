@@ -8,7 +8,7 @@ from PySide6.QtCore import QUrl
 
 import player
 import recorder
-from recorder import *
+from recorder import Recorder
 from player import Player
 
 
@@ -19,6 +19,7 @@ class Window(QWidget):
         self.setWindowTitle("Hello world")
 
         player = Player()
+        recorder = Recorder()
 
         vlayout = QVBoxLayout()
         self.setLayout(vlayout)
@@ -30,14 +31,18 @@ class Window(QWidget):
         pause_btn.clicked.connect(player.pause)
 
         start_record_btn = QPushButton("Start record")
-        start_record_btn.clicked.connect(recorder.start_recorder)
+        start_record_btn.clicked.connect(recorder.start)
+
+        pause_record_btn = QPushButton("Pause record")
+        pause_record_btn.clicked.connect(recorder.pause)
 
         stop_record_btn = QPushButton("Stop record")
-        stop_record_btn.clicked.connect(recorder.stop_recorder)
+        stop_record_btn.clicked.connect(recorder.stop)
 
         vlayout.addWidget(play_btn)
         vlayout.addWidget(pause_btn)
         vlayout.addWidget(start_record_btn)
+        vlayout.addWidget(pause_record_btn)
         vlayout.addWidget(stop_record_btn)
 
 

@@ -8,44 +8,43 @@ from PySide6.QtCore import QUrl
 import utils
 
 
-def start_recorder():
-    global recorder
+class Recorder:
 
-    #home_directory = utils.get_home_directory()
-    file_name = f"ARV-{time.strftime('%d%m%Y-%H%M-%S')}"
-    #path = f"{home_directory}/AR Intercom/Media/Voices/{file_name}"
-    path = f"{file_name}.mp3"
-
-    audio_input = QAudioInput()
-
-    recorder = QMediaRecorder()
-    recorder.setQuality(QMediaRecorder.Quality.HighQuality)
-    recorder.setOutputLocation(QUrl.fromLocalFile(path))
-
-    session = QMediaCaptureSession()
-    session.setAudioInput(audio_input)
-    session.setRecorder(recorder)
-
-    recorder.record()
-    #print(recorder.error())
-    recorder.errorChanged.connect(lambda: print(recorder.error()))
-    recorder.durationChanged.connect(lambda: print(recorder.duration()))
-    #print("Recording...")
+    def __init__(self):
 
 
 
-def pause_recorder():
-    recorder.pause()
-    print("Recording paused.")
+        # Audio output device
+        self.audio_input = QAudioInput()
 
+        # Audio recorder setup
+        self.recorder = QMediaRecorder()
+        self.recorder.setQuality(QMediaRecorder.Quality.HighQuality)
 
-def stop_recorder():
-    recorder.stop()
-    print("Recording done.")
+        # Capture session setup
+        self.session = QMediaCaptureSession()
+        self.session.setAudioInput(self.audio_input)
+        self.session.setRecorder(self.recorder)
 
+        self.recorder.errorChanged.connect(lambda: print(self.recorder.error()))
+        self.recorder.errorOccurred.connect(lambda : print(self.recorder.error()))
+        self.recorder.recorderStateChanged.connect(lambda: print(self.recorder.recorderState()))
 
-# class Recorder(QMediaRecorder):
-#     def __init__(self):
-#         super().__init__()
+    def start(self):
+        print("Recording...")
+        home_directory = utils.get_home_directory()
+        file_name = f"ARV-{time.strftime('%d%m%Y-%H%M-%S')}"
+        # path = f"{home_directory}/AR Intercom/Media/Voices/{file_name}"
+        path = f"{file_name}.mp3"
 
+        self.recorder.setOutputLocation(QUrl.fromLocalFile(path))
+        self.recorder.record()
+        print(self.recorder.actualLocation())
 
+    def pause(self):
+        print("Recording paused.")
+        self.recorder.pause()
+
+    def stop(self):
+        print("Recording done.")
+        self.recorder.stop()
