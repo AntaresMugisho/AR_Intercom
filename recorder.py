@@ -2,19 +2,19 @@
 
 import time
 
-from PyQt6.QtMultimedia import QMediaCaptureSession, QAudioInput, QMediaRecorder
-from PyQt6.QtCore import QUrl
+from PySide6.QtMultimedia import QMediaCaptureSession, QAudioInput, QMediaRecorder
+from PySide6.QtCore import QUrl
 
 import utils
 
 
 def start_recorder():
     global recorder
-    home_directory = utils.get_home_directory()
-    home_directory = "tests"
+
+    #home_directory = utils.get_home_directory()
     file_name = f"ARV-{time.strftime('%d%m%Y-%H%M-%S')}"
-    path = f"{home_directory}/AR Intercom/Media/Voices/{file_name}"
-    path = f"tests/{file_name}"
+    #path = f"{home_directory}/AR Intercom/Media/Voices/{file_name}"
+    path = f"{file_name}.mp3"
 
     audio_input = QAudioInput()
 
@@ -25,15 +25,13 @@ def start_recorder():
     session = QMediaCaptureSession()
     session.setAudioInput(audio_input)
     session.setRecorder(recorder)
-    print(recorder.outputLocation())
-    try:
-        recorder.record()
-        print(recorder.error())
-        recorder.errorChanged.connect(lambda: print(recorder.error()))
-        recorder.durationChanged.connect(lambda: print(recorder.duration()))
-        print("Recording...")
-    except Exception as e:
-        print(e)
+
+    recorder.record()
+    #print(recorder.error())
+    recorder.errorChanged.connect(lambda: print(recorder.error()))
+    recorder.durationChanged.connect(lambda: print(recorder.duration()))
+    #print("Recording...")
+
 
 
 def pause_recorder():
