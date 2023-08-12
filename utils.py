@@ -28,7 +28,7 @@ def create_media_folders():
     folders = ["Audios", "Documents", "Images", "Videos", "Voices"]
 
     for folder in folders:
-        path = f"{home_directory}/AR Intercom/Media/{folder}"
+        path = f"{home_directory}/AR_Intercom/Media/{folder}"
         if not os.path.exists(path):
             try:
                 os.makedirs(path)
