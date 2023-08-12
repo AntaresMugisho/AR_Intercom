@@ -23,6 +23,7 @@ class Player:
         # self.player.hasAudioChanged()
 
     def pause(self):
-        print(self.player.playbackState())
-        # if self.player.playbackState() == PlaybackState.PlayingState
-        # self.player.pause()
+        if self.player.playbackState() == QMediaPlayer.PlaybackState.PlayingState:
+            self.player.pause()
+        elif self.player.playbackState() == QMediaPlayer.PlaybackState.PausedState:
+            self.player.play()
