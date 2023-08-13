@@ -5,6 +5,7 @@ import os
 import time
 import threading
 
+import PySide6
 from PySide6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider, QMessageBox
 from PySide6.QtCore import QTimer, Slot
 
@@ -21,6 +22,9 @@ from netscanner import NetscanThread
 from recorder import Recorder
 import utils
 
+
+# Global variables for recorder time counter
+seconds = minutes = 0
 
 class ChatWindow(QMainWindow):
     """
@@ -52,10 +56,10 @@ class ChatWindow(QMainWindow):
 
         # START SERVER
         self.server = Server()
-        self.server.start()
+        # self.server.start()
 
         # LISTEN FOR MESSAGE SIGNALS
-        self.server.message_listener.messageReceived.connect(self.show_incoming_message)
+        # self.server.message_listener.messageReceived.connect(self.show_incoming_message)
 
         # SCAN NETWORK TO FIND CONNECTED DEVICES
         self.server_hosts = {}
@@ -69,6 +73,13 @@ class ChatWindow(QMainWindow):
         #self.net_scanner.timeout.connect(self.scan_network)
         # self.net_scanner.start(300_000)
         #self.net_scanner.start(10_000)
+
+        # CREATE RECORDER INSTANCE AND ASSOCIATED TIME COUNTER
+        self.recorder = Recorder()
+        self.record_timer = QTimer()
+        self.record_timer.timeout.connect(self.time_counter)
+
+        self.recorder.stateChanged.connect(self.recorder._state_changed)
 
         # SHOW CHAT WINDOW
         self.show()
@@ -232,18 +243,31 @@ class ChatWindow(QMainWindow):
             # RECORD VOICE MESSAGE
             elif self.ui.send_button.styleSheet() == SendButton.style_record:
                 self.ui.media_button.setEnabled(False)
+                self.record_voice()
 
-                recorder = Recorder()
-                recorder.start()
-
-                # self.send_media(recorded_voice)
-                # CONNECT RECORD BUTTONS
-                self.ui.record_widget()
-                self.ui.end_record.clicked.connect(recorder.stop)
-                self.ui.cancel_record.clicked.connect(recorder.cancel)
 
     def record_voice(self):
-        recorder = Recorder()
+        # SHOW RECORD WIDGET INDICATOR AND CONNECT ACTION BUTTONS
+        self.ui.show_record_widget()
+        self.ui.end_record.clicked.connect(self.recorder.stop)
+        self.ui.cancel_record.clicked.connect(self.recorder.cancel)
+
+        self.recorder.start()
+        self.record_timer.start(1000)
+
+        # self.send_media(recorded_voice)
+
+    def time_counter(self):
+        global seconds, minutes
+        seconds += 1
+
+        if seconds == 10:
+            minutes += 1
+            seconds = 0
+
+        time_counter = "%02d:%02d" % (minutes, seconds)
+        self.ui.record_time.setText(time_counter)
+        print(time_counter)
 
     @Slot()
     def send_media(self, message: Message):

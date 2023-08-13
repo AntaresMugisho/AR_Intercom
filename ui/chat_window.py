@@ -521,7 +521,7 @@ class Ui_ChatWindow(object):
         self.scroll_bar = self.chat_field.verticalScrollBar()
         self.scroll_bar.setValue(self.scroll_bar.maximum())
 
-    def record_widget(self):
+    def show_record_widget(self):
         # Frame
         self.record_tip = QtWidgets.QFrame(self.right_container)
         self.record_tip.setFixedSize(161, 31)
