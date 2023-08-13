@@ -81,6 +81,7 @@ class ChatWindow(QMainWindow):
         self.record_timer.timeout.connect(self.time_counter)
 
         self.recorder.recorderStateChanged.connect(self.recorder_state_changed)
+        self.recorder.recordConfirmed.connect(self.send_media)
 
         # SHOW CHAT WINDOW
         self.show()
@@ -246,6 +247,52 @@ class ChatWindow(QMainWindow):
                 self.ui.media_button.setEnabled(False)
                 self.record_voice()
 
+    @Slot(str, str)
+    def send_media(self, kind: str, path: str):
+        """
+        Sends the media message and shows bubble
+        """
+        receiver = User.where("uuid", "=", self.ui.active_client.objectName())[0]
+        receiver_id = receiver.get_id()
+
+        message = Message()
+        message.set_sender_id(1)
+        message.set_receiver_id(receiver_id)
+        message.set_kind(kind)
+        message.set_body(path)
+
+        # Send message and get it back with the status report modified
+        client = Client(receiver.get_host_address())
+        message = client.send_message(message)
+
+        # Save media message in database
+        message.save()
+
+        # Show bubble
+        self.ui.create_right_bubble(message)
+
+    def resend_message(self):
+        """
+        Resend a message that failed
+        """
+        clicked_button = self.sender()
+
+        # Find message and user by id from the object name of clicked button
+        message_id = clicked_button.objectName().split("_")[1]
+        message = Message.find(int(message_id))
+        receiver = User.find(message.get_receiver_id())
+
+        # Send message
+        client = Client(receiver.get_host_address())
+        client.send_message(message)
+
+        # Update in database
+        message.update()
+
+        # Delete old bubble and create a new one
+        clicked_button.parent().deleteLater()
+        self.ui.create_right_bubble(message)
+
 # RECORDER --------------------------------------------------------------------------
 
     def record_voice(self):
@@ -259,8 +306,6 @@ class ChatWindow(QMainWindow):
 
         self.recorder._record()
         self.record_timer.start(1000)
-
-        # self.send_media(recorded_voice)
 
     def time_counter(self):
         """
@@ -289,38 +334,6 @@ class ChatWindow(QMainWindow):
             seconds = minutes = 0
 
         # May change the stylesheet of Play/Pause button on a next feature
-
-
-
-    @Slot()
-    def send_media(self, message: Message):
-        """
-        Sends the media message and shows bubble
-        """
-        # self.client.send_message(message)
-        self.ui.create_right_bubble(message)
-
-    def resend_message(self):
-        """
-        Resend a message that failed
-        """
-        clicked_button = self.sender()
-
-        # Find message and user by id from the object name of clicked button
-        message_id = clicked_button.objectName().split("_")[1]
-        message = Message.find(int(message_id))
-        receiver = User.find(message.get_receiver_id())
-
-        # Send message
-        client = Client(receiver.get_host_address())
-        client.send_message(message)
-
-        # Update in database
-        message.update()
-
-        # Delete old bubble and create a new one
-        clicked_button.parent().deleteLater()
-        self.ui.create_right_bubble(message)
 
     def scan_network(self):
         """
