@@ -8,6 +8,7 @@ import threading
 import PySide6
 from PySide6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider, QMessageBox
 from PySide6.QtCore import QTimer, Slot
+from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
 
 from ui.chat_window import Ui_ChatWindow
 from styles import Clients, SendButton
@@ -79,7 +80,7 @@ class ChatWindow(QMainWindow):
         self.record_timer = QTimer()
         self.record_timer.timeout.connect(self.time_counter)
 
-        self.recorder.stateChanged.connect(self.recorder._state_changed)
+        self.recorder.recorder.recorderStateChanged.connect(self.recorder_state_changed)
 
         # SHOW CHAT WINDOW
         self.show()
@@ -245,6 +246,7 @@ class ChatWindow(QMainWindow):
                 self.ui.media_button.setEnabled(False)
                 self.record_voice()
 
+# RECORDER --------------------------------------------------------------------------
 
     def record_voice(self):
         # SHOW RECORD WIDGET INDICATOR AND CONNECT ACTION BUTTONS
@@ -268,6 +270,13 @@ class ChatWindow(QMainWindow):
         time_counter = "%02d:%02d" % (minutes, seconds)
         self.ui.record_time.setText(time_counter)
         print(time_counter)
+
+    def recorder_state_changed(self):
+        # print(self.recorder.recorder.recorderState())
+        if self.recorder.recorder.recorderState() == QMediaRecorder.StoppedState:
+            self.record_timer.stop()
+            self.ui.record_tip.deleteLater()
+
 
     @Slot()
     def send_media(self, message: Message):
