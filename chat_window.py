@@ -7,11 +7,11 @@ import threading
 from functools import partial
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider, QMessageBox
-from PySide6.QtCore import QTimer, Slot
+from PySide6.QtCore import QObject, QTimer, Slot
 from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
 
 from ui.chat_window import Ui_ChatWindow
-from styles import Clients, SendButton, Player as PalyerStyle
+from styles import Clients, SendButton, Player as PlayerStyle
 from server import Server
 from client import Client
 
@@ -88,7 +88,17 @@ class ChatWindow(QMainWindow):
         self.player = Player()
         self.ui.playButtonPressed.connect(self.play)
 
+        self.play_button: QPushButton = QPushButton()
+        self.slider: QSlider = QSlider()
+        self.total_time: QLabel = QLabel()
+        self.elapsed_time: QLabel = QLabel()
 
+        # self.player.sourceChanged.connect(self.player_state_changed)
+        self.player.durationChanged.connect(partial(self.update_duration, self.slider, self.total_time))
+        self.player.positionChanged.connect(partial(self.update_position, self.slider, self.elapsed_time))
+        self.player.playbackStateChanged.connect(partial(self.player_state_changed, self.play_button))
+
+        self.slider.valueChanged.connect(self.player.setPosition)
 
         # SHOW CHAT WINDOW
         self.show()
@@ -357,36 +367,34 @@ class ChatWindow(QMainWindow):
         """
         Play/Pause Media
         """
+        self.play_button = play_button
         # GET PATH, ELAPSED AND TOTAL TIME LABELS
-        parent = play_button.parent()
+        parent = self.play_button.parent()
         for label in parent.findChildren(QLabel):
             if label.objectName().startswith("path"):
                 path = label.objectName().split("|")[1]
 
             elif label.objectName() == "elapsed_time":
-                elapsed_time = label
+                self.elapsed_time = label
 
             elif label.objectName() == "total_time":
-                total_time = label
+                self.total_time = label
 
         # GET SLIDER
         for widget in parent.findChildren(QSlider):
-            slider = widget
+            self.slider = widget
 
-        print(f"{path}\n{elapsed_time}\n{total_time}")
+        print(f"{path}\n{self.elapsed_time}\n{self.total_time}\n{self.slider}")
+        print("\n")
 
-        if play_button.objectName() == "init":
-            self.player._play(path)
-            play_button.setObjectName("playing")
-            # self.player._play("D:\Coding\Python\AR_Intercom\\tests\music.mp3")
-            total_time.setText(ChatWindow.hhmmss(self.player.duration()))
-            slider.setMaximum(self.player.duration())
-            slider.valueChanged.connect(self.player.setPosition)
+        if self.play_button.objectName() == "init":
+            self.play_button.setObjectName("playing")
+            self.play_button.setStyleSheet(PlayerStyle.pause)
+            # self.player._play(path)
+            self.player._play("D:\Coding\Python\AR_Intercom\\tests\music.mp3")
 
-            # self.player.sourceChanged.connect(self.player_state_changed)
-            self.player.playbackStateChanged.connect(partial(self.player_state_changed, play_button))
-            self.player.durationChanged.connect(partial(self.update_duration, slider, total_time))
-            self.player.positionChanged.connect(partial(self.update_position, slider, elapsed_time))
+            self.total_time.setText(ChatWindow.hhmmss(self.player.duration()))
+            self.slider.setMaximum(self.player.duration())
 
         else:
             self.player._pause()
@@ -433,16 +441,16 @@ class ChatWindow(QMainWindow):
         """
         if state == QMediaPlayer.PlaybackState.PlayingState:
             play_button.setObjectName("playing")
-            play_button.setStyleSheet(PalyerStyle.pause)
+            play_button.setStyleSheet(PlayerStyle.pause)
             play_button.setToolTip("Pause")
 
         if state == QMediaPlayer.PlaybackState.PausedState:
-            play_button.setStyleSheet(PalyerStyle.play)
+            play_button.setStyleSheet(PlayerStyle.play)
 
         elif state == QMediaPlayer.PlaybackState.StoppedState:
             self.player.setPosition(0)
             # slider.setValue(0)
-            play_button.setStyleSheet(PalyerStyle.play)
+            play_button.setStyleSheet(PlayerStyle.play)
             play_button.setObjectName("init")
             play_button.setToolTip(None)
 
