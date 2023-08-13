@@ -18,6 +18,11 @@ class Player(QMediaPlayer):
         self.errorOccurred.connect(lambda: print(self.error()))
 
     def _play(self, path="music.mp3"):
+        try:
+            self.stop()
+        except Exception as e:
+            print("Can't stop player: ", e)
+
         self.setSource(QUrl.fromLocalFile(path))
         self.play()
 

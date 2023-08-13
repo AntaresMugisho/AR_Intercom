@@ -11,7 +11,7 @@ from PySide6.QtCore import QTimer, Slot
 from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
 
 from ui.chat_window import Ui_ChatWindow
-from styles import Clients, SendButton
+from styles import Clients, SendButton, Player as PalyerStyle
 from server import Server
 from client import Client
 
@@ -124,6 +124,12 @@ class ChatWindow(QMainWindow):
         """
         Shows conversation bubbles with a specified user
         """
+        # TRY TO STOP MEDIA PLAYER
+        try:
+            self.player._stop()
+        except Exception as e:
+            print("Error while trying to stop player: ", e)
+
         # GET CLICKED BUTTON
         clicked_button = self.sender()
         user_uuid = clicked_button.objectName()
@@ -346,13 +352,13 @@ class ChatWindow(QMainWindow):
 
 # MEDIA PLAYER ----------------------------------------------------------------------
 
-
     @Slot(object)
-    def play(self, play_button: object):
-        print(self.player)
+    def play(self, play_button: QPushButton):
+        """
+        Play/Pause Media
+        """
         # GET PATH, ELAPSED AND TOTAL TIME LABELS
         parent = play_button.parent()
-
         for label in parent.findChildren(QLabel):
             if label.objectName().startswith("path"):
                 path = label.objectName().split("|")[1]
@@ -367,14 +373,24 @@ class ChatWindow(QMainWindow):
         for widget in parent.findChildren(QSlider):
             slider = widget
 
-        self.player._play(path)
-        # self.player._play("D:\Coding\Python\AR_Intercom\\tests\music.mp3")
-        total_time.setText(ChatWindow.hhmmss(self.player.duration()))
-        slider.setMaximum(self.player.duration())
-        slider.valueChanged.connect(self.player.setPosition)
+        print(f"{path}\n{elapsed_time}\n{total_time}")
 
-        self.player.durationChanged.connect(partial(self.update_duration, slider, total_time))
-        self.player.positionChanged.connect(partial(self.update_position, slider, elapsed_time))
+        if play_button.objectName() == "init":
+            self.player._play(path)
+            play_button.setObjectName("playing")
+            # self.player._play("D:\Coding\Python\AR_Intercom\\tests\music.mp3")
+            total_time.setText(ChatWindow.hhmmss(self.player.duration()))
+            slider.setMaximum(self.player.duration())
+            slider.valueChanged.connect(self.player.setPosition)
+
+            # self.player.sourceChanged.connect(self.player_state_changed)
+            self.player.playbackStateChanged.connect(partial(self.player_state_changed, play_button))
+            self.player.durationChanged.connect(partial(self.update_duration, slider, total_time))
+            self.player.positionChanged.connect(partial(self.update_position, slider, elapsed_time))
+
+        else:
+            self.player._pause()
+
 
     @staticmethod
     def hhmmss(milliseconds: int):
@@ -388,16 +404,20 @@ class ChatWindow(QMainWindow):
 
     @staticmethod
     def update_duration(slider: object, total_time: object, duration: int):
-
+        """
+        Update player duration on GUI
+        """
         # Update slider maximum value
         slider.setMaximum(duration)
 
         # Show total time on label
         total_time.setText(ChatWindow.hhmmss(duration))
 
-
     @staticmethod
     def update_position(slider: object, elapsed_time: object, position: int):
+        """
+        Update player position on GUI
+        """
         # Update time on GUI label
         elapsed_time.setText(ChatWindow.hhmmss(position))
 
@@ -407,7 +427,24 @@ class ChatWindow(QMainWindow):
         slider.setValue(position)
         slider.blockSignals(False)
 
+    def player_state_changed(self, play_button: QPushButton, state: object):
+        """
+        Perform some actions according to the playing state
+        """
+        if state == QMediaPlayer.PlaybackState.PlayingState:
+            play_button.setObjectName("playing")
+            play_button.setStyleSheet(PalyerStyle.pause)
+            play_button.setToolTip("Pause")
 
+        if state == QMediaPlayer.PlaybackState.PausedState:
+            play_button.setStyleSheet(PalyerStyle.play)
+
+        elif state == QMediaPlayer.PlaybackState.StoppedState:
+            self.player.setPosition(0)
+            # slider.setValue(0)
+            play_button.setStyleSheet(PalyerStyle.play)
+            play_button.setObjectName("init")
+            play_button.setToolTip(None)
 
 # NETWORKING  ----------------------------------------------------------------------
 
