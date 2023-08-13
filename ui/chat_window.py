@@ -580,8 +580,8 @@ class Ui_ChatWindow(QObject):
         self.slider.setGeometry(QtCore.QRect(52, 30, 241, 12))
         self.slider.setStyleSheet(Slider.slider)
         self.slider.setMaximum(100)
-        self.slider.setProperty("value", 0)
-        self.slider.setSliderPosition(0)
+        self.slider.setValue(0)
+        # self.slider.setSliderPosition(0)
         self.slider.setOrientation(Qt.Orientation.Horizontal)
 
         # Elapsed time

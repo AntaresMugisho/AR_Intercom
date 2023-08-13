@@ -349,6 +349,7 @@ class ChatWindow(QMainWindow):
 
     @Slot(object)
     def play(self, play_button: object):
+        print(self.player)
         # GET PATH, ELAPSED AND TOTAL TIME LABELS
         parent = play_button.parent()
 
@@ -367,10 +368,13 @@ class ChatWindow(QMainWindow):
             slider = widget
 
         self.player._play(path)
-        self.player.durationChanged.connect(self.update_duration)
-        self.player.positionChanged.connect(partial(self.update_position, slider))
-        print(self.player.duration())
-        print(self.player.position())
+        # self.player._play("D:\Coding\Python\AR_Intercom\\tests\music.mp3")
+        total_time.setText(ChatWindow.hhmmss(self.player.duration()))
+        slider.setMaximum(self.player.duration())
+        slider.valueChanged.connect(self.player.setPosition)
+
+        self.player.durationChanged.connect(partial(self.update_duration, slider, total_time))
+        self.player.positionChanged.connect(partial(self.update_position, slider, elapsed_time))
 
     @staticmethod
     def hhmmss(milliseconds: int):
@@ -383,12 +387,27 @@ class ChatWindow(QMainWindow):
         return ("%02d:%02d:%02d" % (h, m, s)) if h else ("%02d:%02d" % (m, s))
 
     @staticmethod
-    def update_duration(duration):
-        print(f"Duration: {duration}")
+    def update_duration(slider: object, total_time: object, duration: int):
+
+        # Update slider maximum value
+        slider.setMaximum(duration)
+
+        # Show total time on label
+        total_time.setText(ChatWindow.hhmmss(duration))
+
 
     @staticmethod
-    def update_position(position, slider: object):
-        pass
+    def update_position(slider: object, elapsed_time: object, position: int):
+        # Update time on GUI label
+        elapsed_time.setText(ChatWindow.hhmmss(position))
+
+        # Disable slider signals to prevent updating triggering a
+        # setPosition event (can cause stuttering).
+        slider.blockSignals(True)
+        slider.setValue(position)
+        slider.blockSignals(False)
+
+
 
 # NETWORKING  ----------------------------------------------------------------------
 

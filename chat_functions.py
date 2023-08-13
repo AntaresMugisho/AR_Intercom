@@ -26,25 +26,6 @@ class Chat(ChatWindow):
     def play_voice(self):
 
 
-        def update_duration(duration):
-            slider.setMaximum(duration)
-            if duration >= 0:
-                total_time.setText(hhmmss(duration))
-
-
-        def update_position(position):
-            """
-            Update playing media position by moving the slider
-            """
-            if position >= 0:
-                elapsed_time.setText(hhmmss(position))
-
-            # Disable the events to prevent updating triggering a setPosition event (can cause stuttering).
-            slider.blockSignals(True)
-            slider.setValue(position)
-            slider.blockSignals(False)
-
-
         def _state_changed(state):
             """
             Perform some actions according to the playing state
@@ -62,11 +43,6 @@ class Chat(ChatWindow):
                 play_button.setStyleSheet(Player.play)
                 play_button.setObjectName("play_button")
                 play_button.setToolTip("")
-
-        def erroralert(*args):
-            print(args)
-
-
 
         # To prevent MacOS not support .arv format
         if sys.platform == "darwin":
