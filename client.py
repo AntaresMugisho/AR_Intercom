@@ -68,7 +68,7 @@ class Client:
             print("Error while sending message: ", e)
             # Need to catch 2 exceptions,
             # One if the message was not sent
-            # Another if the message was sent but the server didn't respond
+            # Another if the message was sent but the server didn't send feedback
             self.message_delivered = False
 
 

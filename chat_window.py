@@ -13,12 +13,13 @@ from styles import Clients, SendButton
 from server import Server
 from client import Client
 
-import recorder
-import player
+
 from user import User
 from message import Message
-import utils
 from netscanner import NetscanThread
+
+from recorder import Recorder
+import utils
 
 
 class ChatWindow(QMainWindow):
@@ -60,14 +61,14 @@ class ChatWindow(QMainWindow):
         self.server_hosts = {}
 
         # Scan on startup
-        t1 = threading.Thread(target=self.scan_network)
-        t1.start()
+        #t1 = threading.Thread(target=self.scan_network)
+        #t1.start()
 
         # Scan network every 5 minutes to refresh active servers
-        self.net_scanner = QTimer()
-        self.net_scanner.timeout.connect(self.scan_network)
+        #self.net_scanner = QTimer()
+        #self.net_scanner.timeout.connect(self.scan_network)
         # self.net_scanner.start(300_000)
-        self.net_scanner.start(10_000)
+        #self.net_scanner.start(10_000)
 
         # SHOW CHAT WINDOW
         self.show()
@@ -105,7 +106,7 @@ class ChatWindow(QMainWindow):
         clicked_button = self.sender()
         user_uuid = clicked_button.objectName()
 
-        # GET USER FROM CLICKED BUTTON OBJECT NAME
+        # GET USER FROM CLICKED BUTTON'S OBJECT NAME
         user = User.where("uuid", "=", user_uuid)[0]
         user_name = user.get_user_name()
 
@@ -117,10 +118,10 @@ class ChatWindow(QMainWindow):
 
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
         try:
-            for index in reversed(range(self.ui.layout_bubble.count())):
-                if index == 0:  # The widget at index 0 is a layout spacer, we don't have to delete it
-                    break
+            for index in reversed(range(1, self.ui.layout_bubble.count())):
                 self.ui.layout_bubble.itemAt(index).widget().deleteLater()
+                # The widget at index 0 is a layout spacer, we don't need to delete it
+                # That's why we end with index 1
         except Exception as e:  # If chat field was not visible or is empty
             print(e)
 
@@ -154,36 +155,25 @@ class ChatWindow(QMainWindow):
         Shows incoming message bubble or increase new message counter
         """
         message = Message.find(id)
+        user = User.find(message.get_sender_id())
 
-        if self.ui.active_client.objectName():
-            user = User.where("uuid", "=", self.ui.active_client.objectName())[0]
-            if user.get_id() == message.get_sender_id():
-                self.ui.create_left_bubble(message)
-
-            else:
-                user = User.find(message.get_sender_id())
-                self.update_unread_message_counter(user.get_uuid())
+        if self.ui.active_client.objectName() and self.ui.active_client.objectName() == user.get_uuid():
+            self.ui.create_left_bubble(message)
         else:
-            user = User.find(message.get_sender_id())
-            self.update_unread_message_counter(user.get_uuid())
+            # Increase the unread message counter badge
+            for widget in self.ui.left_scroll.findChildren(QFrame):
+                if widget.objectName() == f"{user.get_uuid()}_counter":
+                    unread_msg = int(widget.text())
+                    unread_msg += 1
+                    widget.setText(f"{unread_msg}")
 
-    def update_unread_message_counter(self, uuid: str):
-        """
-        Increase the unread message counter badge on new message.
-        """
-        for widget in self.ui.left_scroll.findChildren(QFrame):
-            if widget.objectName() == uuid + "_counter":
-                unread_msg = int(widget.text())
-                unread_msg += 1
-                widget.setText(f"{unread_msg}")
+                    try:
+                        widget.show()
+                    except Exception as e:
+                        print(f"Error while trying to show counter widget {e}")
 
-                try:
-                    widget.show()
-                except Exception as e:
-                    print(f"Error while trying to show counter widget {e}")
-
-                parent = widget.parent()
-                parent.setStyleSheet(Clients.frame_unread_msg)
+                    parent = widget.parent()
+                    parent.setStyleSheet(Clients.frame_unread_msg)
 
     @Slot()
     def change_send_style(self):
@@ -211,11 +201,12 @@ class ChatWindow(QMainWindow):
                                 "Veuillez spécifiez d'abord votre destinataire!",
                                 QMessageBox.StandardButton.Ok)
         else:
+            # SEND TEXT MESSAGE
             if self.ui.send_button.styleSheet() == SendButton.style_send:
-                text_message = self.ui.entry_field.text()
-
                 receiver = User.where("uuid", "=", self.ui.active_client.objectName())[0]
                 receiver_id = receiver.get_id()
+
+                text_message = self.ui.entry_field.text()
 
                 message = Message()
                 message.set_sender_id(1)
@@ -223,11 +214,11 @@ class ChatWindow(QMainWindow):
                 message.set_kind("text")
                 message.set_body(text_message)
 
-                # Send message and get it back with the status repost modified
+                # Send message and get it back with the status report modified
                 client = Client(receiver.get_host_address())
                 message = client.send_message(message)
 
-                # Save message in database
+                # Save text message in database
                 message.save()
 
                 # Show bubble
@@ -238,14 +229,21 @@ class ChatWindow(QMainWindow):
                 self.ui.send_button.setStyleSheet(SendButton.style_record)
                 self.ui.media_button.setEnabled(True)
 
+            # RECORD VOICE MESSAGE
             elif self.ui.send_button.styleSheet() == SendButton.style_record:
                 self.ui.media_button.setEnabled(False)
-                # self.record_voice()
+
+                recorder = Recorder()
+                recorder.start()
+
                 # self.send_media(recorded_voice)
                 # CONNECT RECORD BUTTONS
                 self.ui.record_widget()
-                self.ui.end_record.clicked.connect(recorder.start_recorder)
-                self.ui.cancel_record.clicked.connect(recorder.stop_recorder)
+                self.ui.end_record.clicked.connect(recorder.stop)
+                self.ui.cancel_record.clicked.connect(recorder.cancel)
+
+    def record_voice(self):
+        recorder = Recorder()
 
     @Slot()
     def send_media(self, message: Message):

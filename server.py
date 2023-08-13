@@ -76,7 +76,7 @@ class Server:
                 rlist, wlist, xlist = select.select(self.CONNECTED_CLIENTS, [], [], 0.50)
             except select.error:
                 # This error can occur if CONNECTED_CLIENTS list is empty
-                print("Empty read list")
+                pass
             else:
                 for client in rlist:
                     try:

@@ -1,9 +1,9 @@
 # -*- This python file uses the following encoding : utf-8 -*-
-import os.path
+import os
 import time
 
 from PySide6.QtMultimedia import QMediaCaptureSession, QAudioInput, QMediaRecorder
-from PySide6.QtCore import QUrl
+from PySide6.QtCore import QUrl, QFile
 
 import utils
 
@@ -34,13 +34,8 @@ class Recorder:
         file_name = f"ARV-{time.strftime('%d%m%Y-%H%M-%S')}"
         path = f"{home_directory}/AR_Intercom/Media/Voices/{file_name}"
 
-        print(os.path.join(path))
-        # path = f"{file_name}"
-
         self.recorder.setOutputLocation(QUrl.fromLocalFile(path))
         self.recorder.record()
-        print(self.recorder.actualLocation())
-
 
     def pause(self):
         if self.recorder.recorderState() == QMediaRecorder.RecordingState:
@@ -53,3 +48,11 @@ class Recorder:
     def stop(self):
         print("Recording done.")
         self.recorder.stop()
+
+    def cancel(self):
+        self.recorder.stop()
+        file = QFile(self.recorder.actualLocation().path()[1:])
+
+        print(file.exists())
+        file.remove()
+        print(file.exists())
