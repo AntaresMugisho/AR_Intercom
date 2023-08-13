@@ -3,14 +3,16 @@ import os.path
 
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtWidgets import QSizePolicy, QLabel
-from PySide6.QtCore import Qt, Slot
+from PySide6.QtCore import QObject, Qt, Signal, Slot
 
 from message import Message
 import utils
 from styles import *
 
 
-class Ui_ChatWindow(object):
+class Ui_ChatWindow(QObject):
+
+    playButtonPressed = Signal(object)
 
     def setupUi(self, ChatWindow):
         ChatWindow.resize(690, 470)
@@ -558,27 +560,7 @@ class Ui_ChatWindow(object):
         self.cancel_record.show()
 
     def create_voice_bubble(self, parent, path: str):
-        file_name = os.path.split(path)[1]
-
-        def play_state():
-            """Create attribute player if not exists and play.
-                Else, pause or play Media or start playing another media according to the sender
-                object name"""
-
-            sender = self.sender()
-            try:
-                if sender.objectName() == "np":
-                    if sender.styleSheet() == Player.pause:
-                        self.player.pause()
-
-                    else:
-                        self.player.play()
-                else:
-                    sender.setObjectName("np")
-                    self.play_voice()
-
-            except AttributeError:
-                self.play_voice()
+        file_name = os.path.splitext(os.path.split(path)[1])[0] + ".arv"
 
         # Frame
         self.voice_bubble = QtWidgets.QFrame(parent)
@@ -591,7 +573,7 @@ class Ui_ChatWindow(object):
         self.title.setStyleSheet("QLabel{background:#44FFFFFF;}")
         self.title.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.title.setText(file_name)
-        self.title.setObjectName(f"{path}")
+        self.title.setObjectName(f"path|{path}")
 
         # Slider
         self.slider = QtWidgets.QSlider(self.voice_bubble)
@@ -623,6 +605,10 @@ class Ui_ChatWindow(object):
         self.play_button.setGeometry(QtCore.QRect(7, 12, 41, 41))
         self.play_button.setStyleSheet(Player.play)
         self.play_button.setObjectName("play_button")
-        # self.play_button.clicked.connect(play_state)
+        self.play_button.clicked.connect(self.play)
+
+    def play(self):
+        button = self.sender()
+        self.playButtonPressed.emit(button)
 
 from resources import img_rc

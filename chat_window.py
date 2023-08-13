@@ -4,8 +4,8 @@ import sys
 import os
 import time
 import threading
+from functools import partial
 
-import PySide6
 from PySide6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider, QMessageBox
 from PySide6.QtCore import QTimer, Slot
 from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
@@ -15,12 +15,13 @@ from styles import Clients, SendButton
 from server import Server
 from client import Client
 
-
 from user import User
 from message import Message
-from netscanner import NetscanThread
 
 from recorder import Recorder
+from player import Player
+
+from netscanner import NetscanThread
 import utils
 
 
@@ -83,6 +84,12 @@ class ChatWindow(QMainWindow):
         self.recorder.recorderStateChanged.connect(self.recorder_state_changed)
         self.recorder.recordConfirmed.connect(self.send_media)
 
+        # PLAYER SETUP
+        self.player = Player()
+        self.ui.playButtonPressed.connect(self.play)
+
+
+
         # SHOW CHAT WINDOW
         self.show()
 
@@ -109,6 +116,8 @@ class ChatWindow(QMainWindow):
             print(f"Error while trying to close app: {e}")
         finally:
             self.close()
+
+# MESSAGES AND CONVERSATIONS -------------------------------------------------------
 
     @Slot()
     def show_conversations(self):
@@ -293,7 +302,7 @@ class ChatWindow(QMainWindow):
         clicked_button.parent().deleteLater()
         self.ui.create_right_bubble(message)
 
-# RECORDER --------------------------------------------------------------------------
+# MEDIA RECORDER -----------------------------------------------------------------
 
     def record_voice(self):
         """
@@ -334,6 +343,54 @@ class ChatWindow(QMainWindow):
             seconds = minutes = 0
 
         # May change the stylesheet of Play/Pause button on a next feature
+
+# MEDIA PLAYER ----------------------------------------------------------------------
+
+
+    @Slot(object)
+    def play(self, play_button: object):
+        # GET PATH, ELAPSED AND TOTAL TIME LABELS
+        parent = play_button.parent()
+
+        for label in parent.findChildren(QLabel):
+            if label.objectName().startswith("path"):
+                path = label.objectName().split("|")[1]
+
+            elif label.objectName() == "elapsed_time":
+                elapsed_time = label
+
+            elif label.objectName() == "total_time":
+                total_time = label
+
+        # GET SLIDER
+        for widget in parent.findChildren(QSlider):
+            slider = widget
+
+        self.player._play(path)
+        self.player.durationChanged.connect(self.update_duration)
+        self.player.positionChanged.connect(partial(self.update_position, slider))
+        print(self.player.duration())
+        print(self.player.position())
+
+    @staticmethod
+    def hhmmss(milliseconds: int):
+        """
+        Converts millisecond time in hour, minute and seconds
+        """
+        h, r = divmod(milliseconds, 3_600_000)
+        m, r = divmod(r, 60_000)
+        s, _ = divmod(r, 1000)
+        return ("%02d:%02d:%02d" % (h, m, s)) if h else ("%02d:%02d" % (m, s))
+
+    @staticmethod
+    def update_duration(duration):
+        print(f"Duration: {duration}")
+
+    @staticmethod
+    def update_position(position, slider: object):
+        pass
+
+# NETWORKING  ----------------------------------------------------------------------
 
     def scan_network(self):
         """

@@ -25,14 +25,6 @@ class Chat(ChatWindow):
 
     def play_voice(self):
 
-        def hhmmss(ms: int):
-            """
-            Converts millisecond time in hour, minute and seconds
-            """
-            h, r = divmod(ms, 3_600_000)
-            m, r = divmod(r, 60_000)
-            s, _ = divmod(r, 1000)
-            return ("%02d:%02d:%02d" % (h, m, s)) if h else ("%02d:%02d" % (m, s))
 
         def update_duration(duration):
             slider.setMaximum(duration)
@@ -74,30 +66,7 @@ class Chat(ChatWindow):
         def erroralert(*args):
             print(args)
 
-        # STOP PLAYER IF PALAYING
-        try:
-            self.player.stop()
-        except:
-            pass
 
-        #### GET WIDGETS FOR PLAY CLICKED BUTTON
-        play_button = self.sender()
-        parent = play_button.parent()
-
-        # GET TITLE LABEL
-        for widget in parent.findChildren(QLabel):
-            if widget.objectName() == "media_":
-                voice_title = widget.text()
-
-            if widget.objectName() == "elapsed_time":
-                elapsed_time = widget
-
-            if widget.objectName() == "total_time":
-                total_time = widget
-
-        # GET SLIDER
-        for widget in parent.findChildren(QSlider):
-            slider = widget
 
         # To prevent MacOS not support .arv format
         if sys.platform == "darwin":
@@ -111,12 +80,7 @@ class Chat(ChatWindow):
         self.player.stateChanged.connect(_state_changed)
 
         self.player.error.connect(erroralert)
-        self.player.setMedia(QUrl.fromLocalFile(path))
 
-        self.player.play()
-
-        self.player.durationChanged.connect(update_duration)
-        self.player.positionChanged.connect(update_position)
 
         slider.valueChanged.connect(self.player.setPosition)
 
