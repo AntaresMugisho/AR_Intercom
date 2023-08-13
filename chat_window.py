@@ -5,8 +5,8 @@ import os
 import time
 import threading
 
-from PyQt6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider, QMessageBox
-from PyQt6.QtCore import QTimer, pyqtSlot as Slot
+from PySide6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider, QMessageBox
+from PySide6.QtCore import QTimer, Slot
 
 from ui.chat_window import Ui_ChatWindow
 from styles import Clients, SendButton

@@ -4,8 +4,8 @@ import sys
 import os
 import socket
 
-from PyQt6.QtGui import QPixmap, QPainter, QPainterPath
-from PyQt6.QtCore import Qt
+from PySide6.QtGui import QPixmap, QPainter, QPainterPath
+from PySide6.QtCore import Qt
 
 
 def get_home_directory():

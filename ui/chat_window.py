@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import os.path
 
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtWidgets import QSizePolicy, QLabel
-from PyQt6.QtCore import Qt, pyqtSignal as Slot
+from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6.QtWidgets import QSizePolicy, QLabel
+from PySide6.QtCore import Qt, Slot
 
 from message import Message
 import utils
@@ -163,7 +163,7 @@ class Ui_ChatWindow(object):
             self.msg_counter.setObjectName(f"{uuid}_counter")
             self.msg_counter.hide()
 
-        spacer = QtWidgets.QSpacerItem(1, 240, vPolicy=QSizePolicy.Policy.Preferred)
+        spacer = QtWidgets.QSpacerItem(1, 240, vData=QSizePolicy.Policy.Preferred)
         self.left_scroll_layout.addSpacerItem(spacer)
 
 ####################################################################################
@@ -231,7 +231,7 @@ class Ui_ChatWindow(object):
         self.layout_bubble.setSpacing(10)
         self.layout_bubble.setContentsMargins(10, 15, 15, 10)
 
-        spacer = QtWidgets.QSpacerItem(1, 260, vPolicy=QSizePolicy.Policy.Preferred)
+        spacer = QtWidgets.QSpacerItem(1, 260, vData=QSizePolicy.Policy.Preferred)
         self.layout_bubble.addSpacerItem(spacer)
 
 
