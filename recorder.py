@@ -8,50 +8,50 @@ from PySide6.QtCore import QUrl, QFile
 import utils
 
 
-class Recorder:
+class Recorder(QMediaRecorder):
 
     def __init__(self):
+        super().__init__()
 
         # Audio output device
         self.audio_input = QAudioInput()
 
         # Audio recorder setup
-        self.recorder = QMediaRecorder()
-        self.recorder.setQuality(QMediaRecorder.Quality.HighQuality)
+        self.setQuality(QMediaRecorder.Quality.HighQuality)
 
         # Capture session setup
         self.session = QMediaCaptureSession()
         self.session.setAudioInput(self.audio_input)
-        self.session.setRecorder(self.recorder)
+        self.session.setRecorder(self)
 
-        self.recorder.errorChanged.connect(lambda: print(self.recorder.error()))
-        self.recorder.errorOccurred.connect(lambda: print(self.recorder.error()))
-        self.recorder.recorderStateChanged.connect(lambda: print(self.recorder.recorderState()))
+        self.errorChanged.connect(lambda: print(self.error()))
+        self.errorOccurred.connect(lambda: print(self.error()))
+        self.recorderStateChanged.connect(lambda: print(self.recorderState()))
 
-    def start(self):
+    def _record(self):
         print("Recording...")
         home_directory = utils.get_home_directory()
         file_name = f"ARV-{time.strftime('%d%m%Y-%H%M-%S')}"
         path = f"{home_directory}/AR_Intercom/Media/Voices/{file_name}"
 
-        self.recorder.setOutputLocation(QUrl.fromLocalFile(path))
-        self.recorder.record()
+        self.setOutputLocation(QUrl.fromLocalFile(path))
+        self.record()
 
-    def pause(self):
-        if self.recorder.recorderState() == QMediaRecorder.RecordingState:
+    def _pause(self):
+        if self.recorderState() == QMediaRecorder.RecordingState:
             print("Recording paused.")
-            self.recorder.pause()
-        elif self.recorder.recorderState() == QMediaRecorder.PausedState:
+            self.pause()
+        elif self.recorderState() == QMediaRecorder.PausedState:
             print("Continuing recorder")
-            self.recorder.record()
+            self.record()
 
-    def stop(self):
+    def _stop(self):
         print("Recording done.")
-        self.recorder.stop()
+        self.stop()
 
     def cancel(self):
-        self.recorder.stop()
-        file = QFile(self.recorder.actualLocation().path()[1:])
+        self.stop()
+        file = QFile(self.actualLocation().path()[1:])
 
         print(file.exists())
         file.remove()

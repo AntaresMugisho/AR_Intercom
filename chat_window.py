@@ -80,7 +80,7 @@ class ChatWindow(QMainWindow):
         self.record_timer = QTimer()
         self.record_timer.timeout.connect(self.time_counter)
 
-        self.recorder.recorder.recorderStateChanged.connect(self.recorder_state_changed)
+        self.recorder.recorderStateChanged.connect(self.recorder_state_changed)
 
         # SHOW CHAT WINDOW
         self.show()
@@ -251,10 +251,10 @@ class ChatWindow(QMainWindow):
     def record_voice(self):
         # SHOW RECORD WIDGET INDICATOR AND CONNECT ACTION BUTTONS
         self.ui.show_record_widget()
-        self.ui.end_record.clicked.connect(self.recorder.stop)
+        self.ui.end_record.clicked.connect(self.recorder._stop)
         self.ui.cancel_record.clicked.connect(self.recorder.cancel)
 
-        self.recorder.start()
+        self.recorder._record()
         self.record_timer.start(1000)
 
         # self.send_media(recorded_voice)
@@ -272,10 +272,16 @@ class ChatWindow(QMainWindow):
         print(time_counter)
 
     def recorder_state_changed(self):
-        # print(self.recorder.recorder.recorderState())
-        if self.recorder.recorder.recorderState() == QMediaRecorder.StoppedState:
+        """
+        Perform some actions according to the recording state
+        """
+
+        if self.recorder.recorderState() == QMediaRecorder.StoppedState:
             self.record_timer.stop()
             self.ui.record_tip.deleteLater()
+
+        # May change the stylesheet of Play/Pause button on a next feature
+
 
 
     @Slot()
