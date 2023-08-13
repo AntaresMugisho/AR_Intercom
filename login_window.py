@@ -3,13 +3,13 @@
 import sys
 import hashlib
 
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit
-from PyQt6.QtCore import Qt, pyqtSlot as Slot
+from PySide6.QtWidgets import QApplication, QMainWindow, QLineEdit
+from PySide6.QtCore import Qt, Slot
 
 from ui.loginwindow import Ui_LoginWindow
+from chat_window import ChatWindow
 from styles import LineEdit
 from user import User
-from chat_window import ChatWindow
 
 
 class LoginWindow(QMainWindow):
