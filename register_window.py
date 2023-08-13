@@ -5,10 +5,10 @@ import shutil
 import sys
 from functools import partial
 
-from PyQt6 import QtWidgets
-from PyQt6.QtWidgets import QApplication, QWidget, QFileDialog, QPushButton, QLineEdit
-from PyQt6.QtGui import QColor, QPixmap
-from PyQt6.QtCore import Qt, QTimer, QPoint
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QApplication, QWidget, QFileDialog, QPushButton, QLineEdit
+from PySide6.QtGui import QColor, QPixmap
+from PySide6.QtCore import Qt, QTimer, QPoint
 
 from ui.register_window import Ui_SigninWindow
 from styles import LineEdit, ComboBox, Features
