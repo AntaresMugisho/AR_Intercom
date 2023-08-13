@@ -249,6 +249,9 @@ class ChatWindow(QMainWindow):
 # RECORDER --------------------------------------------------------------------------
 
     def record_voice(self):
+        """
+        Starts recording voice message
+        """
         # SHOW RECORD WIDGET INDICATOR AND CONNECT ACTION BUTTONS
         self.ui.show_record_widget()
         self.ui.end_record.clicked.connect(self.recorder._stop)
@@ -260,9 +263,12 @@ class ChatWindow(QMainWindow):
         # self.send_media(recorded_voice)
 
     def time_counter(self):
+        """
+        Show recording time
+        """
         global seconds, minutes
-        seconds += 1
 
+        seconds += 1
         if seconds == 10:
             minutes += 1
             seconds = 0
@@ -275,10 +281,12 @@ class ChatWindow(QMainWindow):
         """
         Perform some actions according to the recording state
         """
+        global seconds, minutes
 
         if self.recorder.recorderState() == QMediaRecorder.StoppedState:
             self.record_timer.stop()
             self.ui.record_tip.deleteLater()
+            seconds = minutes = 0
 
         # May change the stylesheet of Play/Pause button on a next feature
 

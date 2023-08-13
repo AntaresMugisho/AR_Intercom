@@ -24,7 +24,6 @@ class Recorder(QMediaRecorder):
         self.session.setAudioInput(self.audio_input)
         self.session.setRecorder(self)
 
-        self.errorChanged.connect(lambda: print(self.error()))
         self.errorOccurred.connect(lambda: print(self.error()))
         self.recorderStateChanged.connect(lambda: print(self.recorderState()))
 
@@ -50,6 +49,7 @@ class Recorder(QMediaRecorder):
         self.stop()
 
     def cancel(self):
+        print("Recording cancelled by user")
         self.stop()
         file = QFile(self.actualLocation().path()[1:])
 
