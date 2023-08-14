@@ -110,8 +110,12 @@ class User(Controller):
         """
         Return all messages belonging to a distant user(client) with the actual user(server)
         """
+
         Message.setup_db()
-        statement = f"SELECT * FROM {Message.table_name} WHERE sender_id = {self.get_id()} OR receiver_id = {self.get_id()}"
+        statement = f"""
+            SELECT * FROM {Message.table_name} 
+            WHERE (sender_id = {self.get_id()} OR receiver_id = {self.get_id()})
+        """
         return Message.db._fetchall(statement)
 
 

@@ -67,15 +67,6 @@ class Controller:
         statement = f"SELECT * FROM {cls.table_name} WHERE deleted_at IS NOT NULL"
         return cls.db.fetchall(statement)
 
-    @classmethod
-    def where(cls, field: str, operator: str, value):
-        """
-        Return all records responding to the condition
-        """
-        cls.setup_db()
-        statement = f"SELECT * FROM {cls.table_name} WHERE {field} {operator} '{value}' AND deleted_at ISNULL"
-        return cls.db._fetchall(statement)
-
     def save(self):
         """
         Insert data in database
@@ -107,6 +98,24 @@ class Controller:
         # Set object id according to the last inserted id
         self.set_id(self.__class__.db.cursor.lastrowid)
         self.update()
+
+    @classmethod
+    def where(cls, field: str, operator: str, value):
+        """
+        Return all records responding to the condition
+        """
+        cls.setup_db()
+        statement = f"SELECT * FROM {cls.table_name} WHERE {field} {operator} '{value}' AND deleted_at ISNULL"
+        return cls.db._fetchall(statement)\
+
+    @classmethod
+    def first_where(cls, field: str, operator: str, value):
+        """
+        Return the first record responding to the condition
+        """
+        cls.setup_db()
+        statement = f"SELECT * FROM {cls.table_name} WHERE {field} {operator} '{value}' AND deleted_at ISNULL"
+        return cls.db._fetchone(statement)
 
     def update(self):
         """

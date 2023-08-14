@@ -169,8 +169,11 @@ class ChatWindow(QMainWindow):
         message_counter.setText("0")
         message_counter.hide()
 
-        # Reset to normal style sheet
+        # Reset to normal style sheet (important in case of unread messages)
         message_counter.parent().setStyleSheet(Clients.frame_normal)
+
+        # Connect delete messages button
+        self.ui.delete_button.released.connect(self.delete_messages)
 
     @Slot(int)
     def show_incoming_message(self, id: int):
@@ -302,9 +305,16 @@ class ChatWindow(QMainWindow):
         self.ui.create_right_bubble(message)
 
     def delete_messages(self):
-        user = User.where("uuid", "=", self.ui.active_client.objectName())
+        user = User.first_where("uuid", "=", self.ui.active_client.objectName())
         messages = user.messages()
-        print(messages)
+
+        print("Deleting conversation of you with", user.get_user_name())
+        for index in reversed(range(1, self.ui.layout_bubble.count())):
+            self.ui.layout_bubble.itemAt(index).widget().deleteLater()
+
+        for message in messages:
+            message.delete()
+
 
     # MEDIA RECORDER -----------------------------------------------------------------
 
