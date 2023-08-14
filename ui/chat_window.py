@@ -604,7 +604,7 @@ class Ui_ChatWindow(QObject):
         self.play_button = QtWidgets.QPushButton(self.voice_bubble)
         self.play_button.setGeometry(QtCore.QRect(7, 12, 41, 41))
         self.play_button.setStyleSheet(Player.play)
-        # self.play_button.setObjectName("init")
+        # self.play_button.setObjectName("stopped")
         self.play_button.clicked.connect(self.play)
 
     def play(self):

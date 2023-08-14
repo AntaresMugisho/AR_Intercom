@@ -15,16 +15,11 @@ class Player(QMediaPlayer):
         # Media player setup
         self.setAudioOutput(self.audio_output)
 
-        # self.errorOccurred.connect(lambda: print(self.error()))
-        # self.sourceChanged.connect(lambda source: self.stop)
+        self.errorOccurred.connect(lambda: print(self.error()))
 
     def _play(self, path="music.mp3"):
-        # self.stop()
         self.setSource(QUrl.fromLocalFile(path))
-        print(self.source())
-
         self.play()
-        # self.blockSignals(False)
 
     def _pause(self):
         if self.playbackState() == QMediaPlayer.PlaybackState.PlayingState:

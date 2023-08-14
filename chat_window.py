@@ -123,10 +123,7 @@ class ChatWindow(QMainWindow):
         Shows conversation bubbles with a specified user
         """
         # TRY TO STOP MEDIA PLAYER
-        try:
-            self.player._stop()
-        except Exception as e:
-            print("Error while trying to stop player: ", e)
+        self.player.stop()
 
         # GET CLICKED BUTTON
         clicked_button = self.sender()
@@ -355,29 +352,34 @@ class ChatWindow(QMainWindow):
         """
         Play/Pause Media
         """
+        # IF PLAYER IS IN PLAYING STATE, THE PAUSE
+        if play_button.objectName() == "playing":
+            self.player._pause()
+            
+        else:
+            # Try to stop an eventual playing player
+            self.player.stop()
 
-        # GET PATH, ELAPSED AND TOTAL TIME LABELS
-        parent = play_button.parent()
+            # GET PATH, ELAPSED AND TOTAL TIME LABELS
+            parent = play_button.parent()
+            title_label, elapsed_time, total_time = parent.findChildren(QLabel)
+            slider = parent.findChild(QSlider)
 
-        title_label, elapsed_time, total_time = parent.findChildren(QLabel)
-        slider = parent.findChild(QSlider)
+            path = title_label.objectName().split("|")[1]
+            self.player = Player()
+            self.player._play(path)
 
-        path = title_label.objectName().split("|")[1]
-        self.player._play(path)
+            # Show GUI indications of playing state
+            play_button.setStyleSheet(PlayerStyle.pause)
+            play_button.setObjectName("playing")
+            slider.setMaximum(self.player.duration())
+            total_time.setText(ChatWindow.hhmmss(self.player.duration()))
 
-        # Show GUI indications of playing state
-        play_button.setStyleSheet(PlayerStyle.pause)
-        play_button.setObjectName("playing")
-
-        total_time.setText(ChatWindow.hhmmss(self.player.duration()))
-        slider.setMaximum(self.player.duration())
-        slider.valueChanged.connect(self.player.setPosition)
-
-        self.player.durationChanged.connect(partial(self.update_duration, slider, total_time))
-        self.player.positionChanged.connect(partial(self.update_position, slider, elapsed_time))
-        self.player.playbackStateChanged.connect(partial(self.player_state_changed, play_button))
-
-        # self.player._play("D:\Coding\Python\AR_Intercom\\tests\music.mp3")
+            # Connect signals
+            slider.valueChanged.connect(self.player.setPosition)
+            self.player.durationChanged.connect(partial(self.update_duration, slider, total_time))
+            self.player.positionChanged.connect(partial(self.update_position, slider, elapsed_time))
+            self.player.playbackStateChanged.connect(partial(self.player_state_changed, play_button, slider, elapsed_time))
 
     @staticmethod
     def hhmmss(milliseconds: int):
@@ -414,7 +416,7 @@ class ChatWindow(QMainWindow):
         slider.setValue(position)
         slider.blockSignals(False)
 
-    def player_state_changed(self, play_button: QPushButton, state: object):
+    def player_state_changed(self, play_button: QPushButton, slider: QSlider, elapsed_time: QLabel, state: object):
         """
         Perform some actions according to the playing state
         """
