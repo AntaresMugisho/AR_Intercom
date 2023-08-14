@@ -88,18 +88,6 @@ class ChatWindow(QMainWindow):
         self.player = Player()
         self.ui.playButtonPressed.connect(self.play)
 
-        self.play_button: QPushButton = QPushButton()
-        self.slider: QSlider = QSlider()
-        self.total_time: QLabel = QLabel()
-        self.elapsed_time: QLabel = QLabel()
-
-        # self.player.sourceChanged.connect(self.player_state_changed)
-        self.player.durationChanged.connect(partial(self.update_duration, self.slider, self.total_time))
-        self.player.positionChanged.connect(partial(self.update_position, self.slider, self.elapsed_time))
-        self.player.playbackStateChanged.connect(partial(self.player_state_changed, self.play_button))
-
-        self.slider.valueChanged.connect(self.player.setPosition)
-
         # SHOW CHAT WINDOW
         self.show()
 
@@ -127,7 +115,7 @@ class ChatWindow(QMainWindow):
         finally:
             self.close()
 
-# MESSAGES AND CONVERSATIONS -------------------------------------------------------
+    # MESSAGES AND CONVERSATIONS -------------------------------------------------------
 
     @Slot()
     def show_conversations(self):
@@ -318,7 +306,7 @@ class ChatWindow(QMainWindow):
         clicked_button.parent().deleteLater()
         self.ui.create_right_bubble(message)
 
-# MEDIA RECORDER -----------------------------------------------------------------
+    # MEDIA RECORDER -----------------------------------------------------------------
 
     def record_voice(self):
         """
@@ -339,7 +327,7 @@ class ChatWindow(QMainWindow):
         global seconds, minutes
 
         seconds += 1
-        if seconds == 10:
+        if seconds == 60:
             minutes += 1
             seconds = 0
 
@@ -360,45 +348,36 @@ class ChatWindow(QMainWindow):
 
         # May change the stylesheet of Play/Pause button on a next feature
 
-# MEDIA PLAYER ----------------------------------------------------------------------
+    # MEDIA PLAYER ----------------------------------------------------------------------
 
     @Slot(object)
     def play(self, play_button: QPushButton):
         """
         Play/Pause Media
         """
-        self.play_button = play_button
+
         # GET PATH, ELAPSED AND TOTAL TIME LABELS
-        parent = self.play_button.parent()
-        for label in parent.findChildren(QLabel):
-            if label.objectName().startswith("path"):
-                path = label.objectName().split("|")[1]
+        parent = play_button.parent()
 
-            elif label.objectName() == "elapsed_time":
-                self.elapsed_time = label
+        title_label, elapsed_time, total_time = parent.findChildren(QLabel)
+        slider = parent.findChild(QSlider)
 
-            elif label.objectName() == "total_time":
-                self.total_time = label
+        path = title_label.objectName().split("|")[1]
+        self.player._play(path)
 
-        # GET SLIDER
-        for widget in parent.findChildren(QSlider):
-            self.slider = widget
+        # Show GUI indications of playing state
+        play_button.setStyleSheet(PlayerStyle.pause)
+        play_button.setObjectName("playing")
 
-        print(f"{path}\n{self.elapsed_time}\n{self.total_time}\n{self.slider}")
-        print("\n")
+        total_time.setText(ChatWindow.hhmmss(self.player.duration()))
+        slider.setMaximum(self.player.duration())
+        slider.valueChanged.connect(self.player.setPosition)
 
-        if self.play_button.objectName() == "init":
-            self.play_button.setObjectName("playing")
-            self.play_button.setStyleSheet(PlayerStyle.pause)
-            # self.player._play(path)
-            self.player._play("D:\Coding\Python\AR_Intercom\\tests\music.mp3")
+        self.player.durationChanged.connect(partial(self.update_duration, slider, total_time))
+        self.player.positionChanged.connect(partial(self.update_position, slider, elapsed_time))
+        self.player.playbackStateChanged.connect(partial(self.player_state_changed, play_button))
 
-            self.total_time.setText(ChatWindow.hhmmss(self.player.duration()))
-            self.slider.setMaximum(self.player.duration())
-
-        else:
-            self.player._pause()
-
+        # self.player._play("D:\Coding\Python\AR_Intercom\\tests\music.mp3")
 
     @staticmethod
     def hhmmss(milliseconds: int):
@@ -449,12 +428,11 @@ class ChatWindow(QMainWindow):
 
         elif state == QMediaPlayer.PlaybackState.StoppedState:
             self.player.setPosition(0)
-            # slider.setValue(0)
             play_button.setStyleSheet(PlayerStyle.play)
-            play_button.setObjectName("init")
+            play_button.setObjectName(None)
             play_button.setToolTip(None)
 
-# NETWORKING  ----------------------------------------------------------------------
+    # NETWORKING  ----------------------------------------------------------------------
 
     def scan_network(self):
         """
