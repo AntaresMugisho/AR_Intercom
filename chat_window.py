@@ -165,14 +165,12 @@ class ChatWindow(QMainWindow):
                 self.ui.create_left_bubble(message)
 
         # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
-        for frame in self.ui.left_scroll.findChildren(QFrame):
-            # Reset Message counter
-            if frame.objectName() == user_uuid + "_counter":
-                frame.setText("0")
-                frame.hide()
+        message_counter = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_counter")
+        message_counter.setText("0")
+        message_counter.hide()
 
-                # Reset to normal style sheet
-                frame.parent().setStyleSheet(Clients.frame_normal)
+        # Reset to normal style sheet
+        message_counter.parent().setStyleSheet(Clients.frame_normal)
 
     @Slot(int)
     def show_incoming_message(self, id: int):
@@ -186,19 +184,17 @@ class ChatWindow(QMainWindow):
             self.ui.create_left_bubble(message)
         else:
             # Increase the unread message counter badge
-            for widget in self.ui.left_scroll.findChildren(QFrame):
-                if widget.objectName() == f"{user.get_uuid()}_counter":
-                    unread_msg = int(widget.text())
-                    unread_msg += 1
-                    widget.setText(f"{unread_msg}")
+            message_counter = self.ui.left_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
+            unread_msg = int(message_counter.text())
+            unread_msg += 1
+            message_counter.setText(f"{unread_msg}")
 
-                    try:
-                        widget.show()
-                    except Exception as e:
-                        print(f"Error while trying to show counter widget {e}")
+            try:
+                message_counter.show()
+            except Exception as e:
+                print(f"Error while trying to show counter widget {e}")
 
-                    parent = widget.parent()
-                    parent.setStyleSheet(Clients.frame_unread_msg)
+            message_counter.parent().setStyleSheet(Clients.frame_unread_msg)
 
     @Slot()
     def change_send_style(self):
@@ -304,6 +300,11 @@ class ChatWindow(QMainWindow):
         # Delete old bubble and create a new one
         clicked_button.parent().deleteLater()
         self.ui.create_right_bubble(message)
+
+    def delete_messages(self):
+        user = User.where("uuid", "=", self.ui.active_client.objectName())
+        messages = user.messages()
+        print(messages)
 
     # MEDIA RECORDER -----------------------------------------------------------------
 
