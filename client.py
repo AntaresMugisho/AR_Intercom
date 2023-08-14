@@ -44,7 +44,7 @@ class Client:
         else:
             pass
             # Save user in the database if not exist
-            # user_exists = User.where("host_address", "=", self.server_host)
+            # user_exists = User.first_where("host_address", "=", self.server_host)
             # if not user_exists:
             #     user = User()
             #     user.set_host_address(self.server_host)

@@ -98,7 +98,7 @@ class Server:
                         print("Error while receiving message", e)
 
                     else:
-                        sender = User.where("host_address", "=", client_id)[0]
+                        sender = User.first_where("host_address", "=", client_id)
                         sender_id = sender.get_id()
 
                         message = Message()
@@ -141,7 +141,7 @@ class Server:
                                 self.download_file(client, message_kind, profile_picture_size, file_name)
 
                             # Store or update user's information in database
-                            # user_exists = User.where("host_address", "=", client_id)
+                            # user_exists = User.first_where("host_address", "=", client_id)
                             # if user_exists:
                             #     user = user_exists[0]
                             # else:

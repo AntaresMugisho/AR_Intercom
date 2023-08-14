@@ -132,7 +132,7 @@ class ChatWindow(QMainWindow):
         user_uuid = clicked_button.objectName()
 
         # GET USER FROM CLICKED BUTTON'S OBJECT NAME
-        user = User.where("uuid", "=", user_uuid)[0]
+        user = User.first_where("uuid", "=", user_uuid)
         user_name = user.get_user_name()
 
         # SET NAME TO THE ACTIVE CLIENT LABEL
@@ -227,7 +227,7 @@ class ChatWindow(QMainWindow):
         else:
             # SEND TEXT MESSAGE
             if self.ui.send_button.styleSheet() == SendButton.style_send:
-                receiver = User.where("uuid", "=", self.ui.active_client.objectName())[0]
+                receiver = User.first_where("uuid", "=", self.ui.active_client.objectName())
                 receiver_id = receiver.get_id()
 
                 text_message = self.ui.entry_field.text()
@@ -263,7 +263,7 @@ class ChatWindow(QMainWindow):
         """
         Sends the media message and shows bubble
         """
-        receiver = User.where("uuid", "=", self.ui.active_client.objectName())[0]
+        receiver = User.first_where("uuid", "=", self.ui.active_client.objectName())
         receiver_id = receiver.get_id()
 
         message = Message()
@@ -500,9 +500,9 @@ class ChatWindow(QMainWindow):
         # client.connect_to_server()
 
         # Show green online toast if client is online
-        user = User.where("host_address", "=", server_host)
+        user = User.first_where("host_address", "=", server_host)
         if user:
-            user_uuid = user[0].get_uuid()
+            user_uuid = user.get_uuid()
             for widget in self.ui.left_scroll.findChildren(QFrame):
                 if widget.objectName() == f"{user_uuid}_toast":
                     if client.online:
