@@ -1,7 +1,7 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
-from PySide6.QtCore import QUrl
+from PySide6.QtCore import QUrl, Signal, QObject
 
 
 class Player(QMediaPlayer):
@@ -15,7 +15,7 @@ class Player(QMediaPlayer):
         # Media player setup
         self.setAudioOutput(self.audio_output)
 
-        self.errorOccurred.connect(lambda: print(self.error()))
+        self.errorOccurred.connect(lambda error: print(error))
 
     def _play(self, path="music.mp3"):
         self.setSource(QUrl.fromLocalFile(path))
@@ -26,6 +26,3 @@ class Player(QMediaPlayer):
             self.pause()
         elif self.playbackState() == QMediaPlayer.PlaybackState.PausedState:
             self.play()
-
-    def _stop(self):
-        self.stop()

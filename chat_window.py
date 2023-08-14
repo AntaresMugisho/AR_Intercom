@@ -86,6 +86,8 @@ class ChatWindow(QMainWindow):
 
         # PLAYER SETUP
         self.player = Player()
+        self.player.errorOccurred.connect(lambda: print("error"))
+
         self.ui.playButtonPressed.connect(self.play)
 
         # SHOW CHAT WINDOW
@@ -342,6 +344,7 @@ class ChatWindow(QMainWindow):
             self.record_timer.stop()
             self.ui.record_tip.deleteLater()
             seconds = minutes = 0
+            self.ui.media_button.setEnabled(True)
 
         # May change the stylesheet of Play/Pause button on a next feature
 
@@ -379,7 +382,7 @@ class ChatWindow(QMainWindow):
             slider.valueChanged.connect(self.player.setPosition)
             self.player.durationChanged.connect(partial(self.update_duration, slider, total_time))
             self.player.positionChanged.connect(partial(self.update_position, slider, elapsed_time))
-            self.player.playbackStateChanged.connect(partial(self.player_state_changed, play_button, slider, elapsed_time))
+            self.player.playbackStateChanged.connect(partial(self.player_state_changed, play_button))
 
     @staticmethod
     def hhmmss(milliseconds: int):
@@ -411,19 +414,17 @@ class ChatWindow(QMainWindow):
         elapsed_time.setText(ChatWindow.hhmmss(position))
 
         # Disable slider signals to prevent updating triggering a
-        # setPosition event (can cause stuttering).
+        # setPosition signal (can cause stuttering).
         slider.blockSignals(True)
         slider.setValue(position)
         slider.blockSignals(False)
 
-    def player_state_changed(self, play_button: QPushButton, slider: QSlider, elapsed_time: QLabel, state: object):
+    def player_state_changed(self, play_button: QPushButton, state: object):
         """
         Perform some actions according to the playing state
         """
         if state == QMediaPlayer.PlaybackState.PlayingState:
-            play_button.setObjectName("playing")
             play_button.setStyleSheet(PlayerStyle.pause)
-            play_button.setToolTip("Pause")
 
         if state == QMediaPlayer.PlaybackState.PausedState:
             play_button.setStyleSheet(PlayerStyle.play)
@@ -432,7 +433,12 @@ class ChatWindow(QMainWindow):
             self.player.setPosition(0)
             play_button.setStyleSheet(PlayerStyle.play)
             play_button.setObjectName(None)
-            play_button.setToolTip(None)
+
+    def player_error(self, error):
+        print("Yo")
+        if error == QMediaPlayer.Error.ResourceError:
+            print("Player resource error")
+            self.player.stop()
 
     # NETWORKING  ----------------------------------------------------------------------
 
