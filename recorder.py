@@ -3,7 +3,7 @@ import os
 import time
 
 from PySide6.QtMultimedia import QMediaCaptureSession, QAudioInput, QMediaRecorder
-from PySide6.QtCore import QUrl, QFile, Signal
+from PySide6.QtCore import QUrl, QFile, Signal, QDir
 
 import utils
 
@@ -67,9 +67,4 @@ class Recorder(QMediaRecorder):
         """
         print("Recording cancelled by user")
         self.stop()
-        file = QFile(self.actualLocation().path()[1:])
-
-        print(file.exists())
-        file.remove()
-        print(file.exists())
 
