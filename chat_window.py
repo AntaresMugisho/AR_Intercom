@@ -58,10 +58,10 @@ class ChatWindow(QMainWindow):
 
         # START SERVER
         self.server = Server()
-        # self.server.start()
+        self.server.start()
 
         # LISTEN FOR MESSAGE SIGNALS
-        # self.server.message_listener.messageReceived.connect(self.show_incoming_message)
+        self.server.message_listener.messageReceived.connect(self.show_incoming_message)
 
         # SCAN NETWORK TO FIND CONNECTED DEVICES
         self.server_hosts = {}
@@ -313,6 +313,12 @@ class ChatWindow(QMainWindow):
             self.ui.layout_bubble.itemAt(index).widget().deleteLater()
 
         for message in messages:
+            if message.get_kind() != "text":
+                try:
+                    os.remove(message.get_body())
+                except Exception as e:
+                    print("Error while trying to delete file: ", e)
+
             message.delete()
 
 

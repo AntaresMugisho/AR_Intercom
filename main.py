@@ -1,4 +1,5 @@
 # -*- This python file uses the following encoding : utf-8 -*-
+
 import random
 import sys
 import sqlite3
@@ -115,8 +116,8 @@ class SplashScreen(QWidget):
             if not User.find(1):
                 RegisterWindow()
             else:
-                LoginWindow()
-                # run = ChatWindow()
+                # LoginWindow()
+                run = ChatWindow()
 
         # INCREASE COUNTER
         counter += 0.2
