@@ -2,7 +2,6 @@ import socket
 import threading
 import subprocess
 
-# from PySide6.QtCore import QThread
 import utils
 
 

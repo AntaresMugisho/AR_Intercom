@@ -4,18 +4,23 @@ import random
 import sys
 import sqlite3
 
-from PyQt6 import QtWidgets, QtCore
-from PyQt6.QtWidgets import QApplication, QWidget
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QColor
+from PySide6 import QtWidgets, QtCore
+from PySide6.QtWidgets import QApplication, QWidget
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QColor
 
 from ui.splash import Ui_SplashScreen
 from register_window import RegisterWindow
 from login_window import LoginWindow
-from chat_window import ChatWindow
 from user import User
 import utils
 
+try:
+    from ctypes import windll # Exists on windows only
+    app_id = "com.artrevolutionlabel.software.arintercom.v2"
+    windll.shell32.setCurrentProcessExplicitAppUserModelID(app_id)
+except ImportError:
+    pass
 
 # GLOBALS
 counter = 0
@@ -116,8 +121,7 @@ class SplashScreen(QWidget):
             if not User.find(1):
                 RegisterWindow()
             else:
-                # LoginWindow()
-                run = ChatWindow()
+                LoginWindow()
 
         # INCREASE COUNTER
         counter += 0.2

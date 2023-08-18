@@ -21,12 +21,13 @@ a = Analysis(
 )
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
+
 exe = EXE(
     pyz,
     a.scripts,
     [],
     exclude_binaries=True,
-    name='main',
+    name='Intercom',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -37,6 +38,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon="resources/ARsoftlogo.ico"
 )
 coll = COLLECT(
     exe,

@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from PyQt6.QtCore import QObject, pyqtSignal
+from PySide6.QtCore import QObject, Signal
 
 from controller import Controller
 
@@ -13,7 +13,7 @@ class Message(QObject, Controller):
     This class contains also some signals that the server can emit on new incoming message
     to show GUI bubble
     """
-    messageReceived = pyqtSignal(int)
+    messageReceived = Signal(int)
     # mediaMessageReceived = pyqtSignal()
     time_format = "%d-%m-%Y %H:%M"
 

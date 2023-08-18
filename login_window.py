@@ -95,7 +95,7 @@ class LoginWindow(QMainWindow):
             run = ChatWindow()
 
             # Close login window
-            # self.close()
+            self.close()
 
 
 if __name__ == "__main__":
