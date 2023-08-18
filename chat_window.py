@@ -13,7 +13,7 @@ from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
 from ui.chat_window import Ui_ChatWindow
 from styles import Clients, SendButton, Player as PlayerStyle
 from server import Server
-from server_thread import SereverThread
+from client_thread import ClientThread
 from client import Client
 
 from user import User
@@ -24,6 +24,7 @@ from player import Player
 
 from netscanner import NetscanThread
 import utils
+
 
 
 # Global variables for recorder time counter
@@ -60,11 +61,6 @@ class ChatWindow(QMainWindow):
         # START SERVER
         self.server = Server()
         self.server.start()
-
-        ## Using server with thread
-        self.st = SereverThread()
-        self.st.my_signal.connect(lambda result: print(result))
-        self.st.start()
 
         # LISTEN FOR MESSAGE SIGNALS
         self.server.message_listener.messageReceived.connect(self.show_incoming_message)
