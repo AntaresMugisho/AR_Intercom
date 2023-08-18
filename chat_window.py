@@ -69,14 +69,12 @@ class ChatWindow(QMainWindow):
         self.server_hosts = {}
 
         # Scan on startup
-        #t1 = threading.Thread(target=self.scan_network)
-        #t1.start()
+        QTimer().singleShot(1000, self.scan_network)
 
         # Scan network every 5 minutes to refresh active servers
-        #self.net_scanner = QTimer()
-        #self.net_scanner.timeout.connect(self.scan_network)
-        # self.net_scanner.start(300_000)
-        #self.net_scanner.start(10_000)
+        self.net_scanner = QTimer()
+        self.net_scanner.timeout.connect(self.scan_network)
+        self.net_scanner.start(300_000)
 
         # CREATE RECORDER INSTANCE AND ASSOCIATED TIME COUNTER
         self.recorder = Recorder()
@@ -470,7 +468,7 @@ class ChatWindow(QMainWindow):
 
         my_ip = utils.get_private_ip()
         if my_ip.startswith("127.0"):
-            print("Veuillez vous connecter à un réseau Wi-Fi !")
+            print("Aucun réseau détecté.\nVeuillez vous connecter à un réseau Wi-Fi !")
         else:
             my_ip_bytes = my_ip.split(".")
             net_id = ".".join(my_ip_bytes[:3])
@@ -478,13 +476,14 @@ class ChatWindow(QMainWindow):
             for host_id in range(0, 256):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
                 # if host_id != int(my_ip_bytes[3]):
                 addresses.append(f"{net_id}.{str(host_id)}")
+                print(f"{net_id}.{str(host_id)}")
 
             scan_threads = [NetscanThread(address) for address in addresses]
             for thread in scan_threads:
                 thread.start()
                 threads.append(thread)
 
-            for i, thread in enumerate(threads):
+            for thread in threads:
                 thread.join()
 
             self.server_hosts = NetscanThread.hosts
