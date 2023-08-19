@@ -12,6 +12,7 @@ from PySide6.QtGui import QColor
 from ui.splash import Ui_SplashScreen
 from register_window import RegisterWindow
 from login_window import LoginWindow
+from chat_window import ChatWindow
 from user import User
 import utils
 
@@ -121,10 +122,11 @@ class SplashScreen(QWidget):
             if not User.find(1):
                 RegisterWindow()
             else:
-                LoginWindow()
+                # LoginWindow()
+                win = ChatWindow()
 
         # INCREASE COUNTER
-        counter += 0.2
+        counter += 0.8
 
 
 if __name__ == "__main__":

@@ -22,7 +22,7 @@ class Server:
 
     def __init__(self):
         self.host = "0.0.0.0"
-        self.port = 12000
+        self.port = 12003
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.message_listener = Message()
 

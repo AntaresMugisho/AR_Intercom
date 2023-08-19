@@ -21,11 +21,9 @@ class Ui_ChatWindow(QObject):
         ChatWindow.setWindowIcon(icon)
         ChatWindow.setWindowTitle("AR Intercom")
 
-        # SET THE MENU BAR
         # MENU BAR
         self.menubar = QtWidgets.QMenuBar()
         self.menubar.setGeometry(QtCore.QRect(0, 0, 663, 26))
-        # self.menubar.setStyleSheet("background:rgba(24, 53, 72, 250); color:white;")
         ChatWindow.setMenuBar(self.menubar)
 
         # 1 MENU 'MENU'
@@ -110,10 +108,12 @@ class Ui_ChatWindow(QObject):
         self.layleft.addWidget(self.clients_field)
        # ---------------------------------------client_frame
 
-    def load_client(self, users: list = []):
+    def load_client(self, users=None):
         """
         Load users conversation list from users who are registered in database
         """
+        if users is None:
+            users = []
         for user in users:
             uuid = user.get_uuid()
             name = user.get_user_name()

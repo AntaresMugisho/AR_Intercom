@@ -2,7 +2,6 @@
 
 import sys
 import os
-import time
 import threading
 from functools import partial
 
@@ -13,7 +12,6 @@ from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
 from ui.chat_window import Ui_ChatWindow
 from styles import Clients, SendButton, Player as PlayerStyle
 from server import Server
-from client_thread import ClientThread
 from client import Client
 
 from user import User
@@ -26,7 +24,6 @@ from netscanner import NetscanThread
 import utils
 
 
-
 # Global variables for recorder time counter
 seconds = minutes = 0
 
@@ -35,13 +32,13 @@ class ChatWindow(QMainWindow):
     Initialize chat window to show conversations and start chatting
     """
     def __init__(self):
-        super().__init__()
+        QMainWindow.__init__(self)
         self.ui = Ui_ChatWindow()
         self.ui.setupUi(self)
 
         # CONNECT MENU BAR SLOTS
         self.ui.actionAide.triggered.connect(self.help)
-        self.ui.actionQuitter.triggered.connect(self._close)
+        # self.ui.actionQuitter.triggered.connect(self._close)
 
         # SHOW USER'S LIST
         users = User.where("id", ">=", 1)
@@ -92,6 +89,9 @@ class ChatWindow(QMainWindow):
 
         # SHOW CHAT WINDOW
         self.show()
+        #
+        print("----------------------")
+        print(QApplication.instance())
 
     @Slot()
     def help(self):
@@ -115,7 +115,8 @@ class ChatWindow(QMainWindow):
         except Exception as e:
             print(f"Error while trying to close app: {e}")
         finally:
-            self.close()
+            pass
+            # self.close()
 
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
 
