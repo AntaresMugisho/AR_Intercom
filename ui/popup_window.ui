@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Popup_win</class>
- <widget class="QWidget" name="Popup_win">
+ <class>NotificationWidget</class>
+ <widget class="QWidget" name="NotificationWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

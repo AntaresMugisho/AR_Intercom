@@ -18,7 +18,7 @@ import utils
 try:
     from ctypes import windll # Exists on windows only
     app_id = "com.artrevolutionlabel.software.arintercom.v2"
-    windll.shell32.setCurrentProcessExplicitAppUserModelID(app_id)
+    windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
 except ImportError:
     pass
 
