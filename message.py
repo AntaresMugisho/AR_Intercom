@@ -7,7 +7,7 @@ from PySide6.QtCore import QObject, Signal
 from controller import Controller
 
 
-class Message(QObject, Controller):
+class Message(Controller, QObject):
     """
     Message model class representing a message as stored in database.
     This class contains also some signals that the server can emit on new incoming message
@@ -19,7 +19,6 @@ class Message(QObject, Controller):
 
     def __init__(self):
         QObject.__init__(self)
-
         self.id = None
         self.sender_id = None
         self.receiver_id = None
@@ -88,3 +87,10 @@ class Message(QObject, Controller):
 
     def get_status(self):
         return self.received
+
+
+if __name__ == "__main__":
+    message = Message()
+    message.messageReceived.connect(lambda i: print(i))
+    message.messageReceived.emit(12)
+    print(message.__dict__)

@@ -18,24 +18,28 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QLineEdit,
     QMainWindow, QMenu, QMenuBar, QPushButton,
-    QSizePolicy, QStackedWidget, QWidget)
+    QSizePolicy, QStackedWidget, QVBoxLayout, QWidget)
 from resources import img_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(692, 459)
+        MainWindow.resize(690, 470)
+        MainWindow.setMinimumSize(QSize(690, 470))
         MainWindow.setStyleSheet(u"")
         self.actionAide = QAction(MainWindow)
         self.actionAide.setObjectName(u"actionAide")
-        self.actionQuiter = QAction(MainWindow)
-        self.actionQuiter.setObjectName(u"actionQuiter")
+        self.actionQuitter = QAction(MainWindow)
+        self.actionQuitter.setObjectName(u"actionQuitter")
         self.central_log = QWidget(MainWindow)
         self.central_log.setObjectName(u"central_log")
+        self.verticalLayout = QVBoxLayout(self.central_log)
+        self.verticalLayout.setSpacing(0)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.stackedWidget = QStackedWidget(self.central_log)
         self.stackedWidget.setObjectName(u"stackedWidget")
-        self.stackedWidget.setGeometry(QRect(0, 0, 701, 581))
         self.page = QWidget()
         self.page.setObjectName(u"page")
         self.welcome_log = QLabel(self.page)
@@ -334,10 +338,13 @@ class Ui_MainWindow(object):
         self.page_2 = QWidget()
         self.page_2.setObjectName(u"page_2")
         self.stackedWidget.addWidget(self.page_2)
+
+        self.verticalLayout.addWidget(self.stackedWidget)
+
         MainWindow.setCentralWidget(self.central_log)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 692, 22))
+        self.menubar.setGeometry(QRect(0, 0, 690, 22))
         self.menuMenu = QMenu(self.menubar)
         self.menuMenu.setObjectName(u"menuMenu")
         MainWindow.setMenuBar(self.menubar)
@@ -345,7 +352,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuMenu.menuAction())
         self.menuMenu.addAction(self.actionAide)
         self.menuMenu.addSeparator()
-        self.menuMenu.addAction(self.actionQuiter)
+        self.menuMenu.addAction(self.actionQuitter)
 
         self.retranslateUi(MainWindow)
         self.log_password.returnPressed.connect(self.connect_log.click)
@@ -357,9 +364,9 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Connexion - AR Intercom", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"AR Intercom - Connexion", None))
         self.actionAide.setText(QCoreApplication.translate("MainWindow", u"Aide", None))
-        self.actionQuiter.setText(QCoreApplication.translate("MainWindow", u"Quitter", None))
+        self.actionQuitter.setText(QCoreApplication.translate("MainWindow", u"Quitter", None))
         self.welcome_log.setText(QCoreApplication.translate("MainWindow", u"Bienvenue  !", None))
         self.logo_log.setText("")
         self.name_warning.setText(QCoreApplication.translate("MainWindow", u"Empty username", None))

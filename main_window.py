@@ -1,5 +1,6 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 import sys
+import os
 import hashlib
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QLineEdit
@@ -18,6 +19,14 @@ class MainWindow(QMainWindow):
         QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        self.chat_window = ChatWindow()
+
+        # CONNECT MENU BAR SLOTS
+        self.ui.actionAide.triggered.connect(self.help)
+        self.ui.actionQuitter.triggered.connect(self.close_)
+
+        # LOGIN WINDOW ---------
 
         # HIDE WARNINGS
         self.ui.name_warning.hide()
@@ -41,6 +50,32 @@ class MainWindow(QMainWindow):
 
         self.show()
 
+    @Slot()
+    def help(self):
+        """
+        Open the user manual pdf file
+        """
+        if sys.platform == "win32":
+            os.startfile(f"{os.getcwd()}/resources/Help.pdf")
+        else:
+            os.system(f"open {os.getcwd()}/resources/Help.pdf")
+
+    @Slot()
+    def close_(self):
+        """
+        Close all connections, timers and exit the application
+        """
+        try:
+            self.net_scanner.stop()
+            # Stop all clients instances
+            self.server.stop()
+        except Exception as e:
+            print(f"Error while trying to close app: {e}")
+        finally:
+            pass
+            # self.close()
+
+    @Slot()
     def check_username(self):
         """
         Check if the username is authentic
@@ -58,6 +93,7 @@ class MainWindow(QMainWindow):
             self.ui.name_warning.hide()
             self.ui.log_username.setStyleSheet(LineEdit.style_normal)
 
+    @Slot()
     def check_password(self):
         """
         CHeck if the password is authentic
@@ -90,16 +126,11 @@ class MainWindow(QMainWindow):
 
         if (self.ui.log_username.text(), self.ui_password) != (self.user_name, self.password):
             # show chat window
-            # self.ui.stackedWidget.setCurrentWidget()
             print("Authenticated")
-            chat_window = ChatWindow()
-            self.ui.stackedWidget.setCurrentIndex(1)
-            self.ui.stackedWidget.addWidget(chat_window.ui.central_chat)
-            print(self.ui.stackedWidget.currentWidget())
-            self.ui.stackedWidget.setCurrentWidget(chat_window.ui.central_chat)
-            # Close login window
-            # self.close()
-            # run = ChatWindow()
+            # chat_window = ChatWindow()
+            self.ui.stackedWidget.addWidget(self.chat_window.ui.central_chat)
+            self.ui.stackedWidget.setCurrentWidget(self.chat_window.ui.central_chat)
+
 
 
 if __name__ == "__main__":

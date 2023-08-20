@@ -36,10 +36,6 @@ class ChatWindow(QWidget):
         self.ui = Ui_ChatWindow()
         self.ui.setupUi(self)
 
-        # CONNECT MENU BAR SLOTS
-        self.ui.actionAide.triggered.connect(self.help)
-        # self.ui.actionQuitter.triggered.connect(self._close)
-
         # SHOW USER'S LIST
         users = User.where("id", ">=", 1)
         self.ui.load_client(users)
@@ -86,37 +82,6 @@ class ChatWindow(QWidget):
         self.player.errorOccurred.connect(lambda error: print(error))
 
         self.ui.playButtonPressed.connect(self.play)
-
-        # SHOW CHAT WINDOW
-        # self.show()
-
-        print("----------------------")
-        print(QApplication.instance())
-
-    @Slot()
-    def help(self):
-        """
-        Open the user manual pdf file
-        """
-        if sys.platform == "win32":
-            os.startfile(f"{os.getcwd()}/resources/Help.pdf")
-        else:
-            os.system(f"open {os.getcwd()}/resources/Help.pdf")
-
-    @Slot()
-    def _close(self):
-        """
-        Close all connections, timers and exit the application
-        """
-        try:
-            self.net_scanner.stop()
-            # Stop all clients instances
-            self.server.stop()
-        except Exception as e:
-            print(f"Error while trying to close app: {e}")
-        finally:
-            pass
-            # self.close()
 
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
 
@@ -244,6 +209,7 @@ class ChatWindow(QWidget):
                 message = client.send_message(message)
 
                 # Save text message in database
+                print(message.__dict__)
                 message.save()
 
                 # Show bubble
@@ -283,6 +249,7 @@ class ChatWindow(QWidget):
         # Show bubble
         self.ui.create_right_bubble(message)
 
+    @Slot()
     def resend_message(self):
         """
         Resend a message that failed
@@ -305,6 +272,7 @@ class ChatWindow(QWidget):
         clicked_button.parent().deleteLater()
         self.ui.create_right_bubble(message)
 
+    @Slot()
     def delete_messages(self):
         user = User.first_where("uuid", "=", self.ui.active_client.objectName())
         messages = user.messages()
@@ -322,9 +290,9 @@ class ChatWindow(QWidget):
 
             message.delete()
 
-
     # MEDIA RECORDER -----------------------------------------------------------------
 
+    # @Slot()
     def record_voice(self):
         """
         Starts recording voice message
