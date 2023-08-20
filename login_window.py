@@ -3,16 +3,16 @@
 import sys
 import hashlib
 
-from PySide6.QtWidgets import QApplication, QMainWindow, QLineEdit
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QLineEdit
 from PySide6.QtCore import Qt, Slot
 
 from ui.loginwindow import Ui_LoginWindow
-from chat_window import ChatWindow
+# from chat_window import ChatWindow
 from styles import LineEdit
 from user import User
 
 
-class LoginWindow(QMainWindow):
+class LoginWindow(QWidget):
     """
     Manage authentication's functions
     """
@@ -42,7 +42,8 @@ class LoginWindow(QMainWindow):
         self.ui.connect_log.keyPressEvent = self.auth
 
         # SHOW LOGIN WINDOW
-        self.show()
+        # self.show()
+        # run = ChatWindow()
 
     def check_username(self):
         """
@@ -86,18 +87,18 @@ class LoginWindow(QMainWindow):
         """
         Verifies user credentials and allow access to the chat window if the user is authenticated
         """
+
         if event is not True or event.key() == Qt.Key.Key_Return:
             self.check_username()
             self.check_password()
 
-        chat = ChatWindow()
 
-        # if (self.ui.log_username.text(), self.ui_password) != (self.user_name, self.password):
+        if (self.ui.log_username.text(), self.ui_password) != (self.user_name, self.password):
             # show chat window
-            # chat = ChatWindow()
-
+            print("Authenticated")
             # Close login window
             # self.close()
+            # run = ChatWindow()
 
 
 if __name__ == "__main__":

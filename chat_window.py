@@ -2,6 +2,7 @@
 
 import sys
 import os
+import time
 import threading
 from functools import partial
 
@@ -23,6 +24,8 @@ from player import Player
 from netscanner import NetscanThread
 import utils
 
+from login_window import LoginWindow
+
 
 # Global variables for recorder time counter
 seconds = minutes = 0
@@ -36,60 +39,63 @@ class ChatWindow(QMainWindow):
         self.ui = Ui_ChatWindow()
         self.ui.setupUi(self)
 
-        # CONNECT MENU BAR SLOTS
-        self.ui.actionAide.triggered.connect(self.help)
-        # self.ui.actionQuitter.triggered.connect(self._close)
+        login = LoginWindow()
 
-        # SHOW USER'S LIST
-        users = User.where("id", ">=", 1)
-        self.ui.load_client(users)
-
-        # CONNECT USER'S CONVERSATION BUTTONS
-        for frame in self.ui.left_scroll.findChildren(QFrame):
-            user_conversation_button = frame.findChild(QPushButton)
-            if user_conversation_button:
-                user_conversation_button.clicked.connect(self.show_conversations)
-
-        # CONNECT SEND BUTTON
-        self.ui.entry_field.textEdited.connect(self.change_send_style)
-        self.ui.entry_field.returnPressed.connect(self.send_text_or_record)
-        self.ui.send_button.clicked.connect(self.send_text_or_record)
-
-        # START SERVER
-        self.server = Server()
-        self.server.start()
-
-        # LISTEN FOR MESSAGE SIGNALS
-        self.server.message_listener.messageReceived.connect(self.show_incoming_message)
-
-        # SCAN NETWORK TO FIND CONNECTED DEVICES
-        self.server_hosts = {}
-
-        # Scan on startup
-        QTimer().singleShot(1000, self.scan_network)
-
-        # Scan network every 5 minutes to refresh active servers
-        self.net_scanner = QTimer()
-        self.net_scanner.timeout.connect(self.scan_network)
-        self.net_scanner.start(300_000)
-
-        # CREATE RECORDER INSTANCE AND ASSOCIATED TIME COUNTER
-        self.recorder = Recorder()
-        self.record_timer = QTimer()
-        self.record_timer.timeout.connect(self.time_counter)
-
-        self.recorder.recorderStateChanged.connect(self.recorder_state_changed)
-        self.recorder.recordConfirmed.connect(self.send_media)
-
-        # PLAYER SETUP
-        self.player = Player()
-        self.player.errorOccurred.connect(lambda: print("error"))
-
-        self.ui.playButtonPressed.connect(self.play)
+        #
+        # # CONNECT MENU BAR SLOTS
+        # self.ui.actionAide.triggered.connect(self.help)
+        # # self.ui.actionQuitter.triggered.connect(self._close)
+        #
+        # # SHOW USER'S LIST
+        # users = User.where("id", ">=", 1)
+        # self.ui.load_client(users)
+        #
+        # # CONNECT USER'S CONVERSATION BUTTONS
+        # for frame in self.ui.left_scroll.findChildren(QFrame):
+        #     user_conversation_button = frame.findChild(QPushButton)
+        #     if user_conversation_button:
+        #         user_conversation_button.clicked.connect(self.show_conversations)
+        #
+        # # CONNECT SEND BUTTON
+        # self.ui.entry_field.textEdited.connect(self.change_send_style)
+        # self.ui.entry_field.returnPressed.connect(self.send_text_or_record)
+        # self.ui.send_button.clicked.connect(self.send_text_or_record)
+        #
+        # # START SERVER
+        # self.server = Server()
+        # self.server.start()
+        #
+        # # LISTEN FOR MESSAGE SIGNALS
+        # self.server.message_listener.messageReceived.connect(self.show_incoming_message)
+        #
+        # # SCAN NETWORK TO FIND CONNECTED DEVICES
+        # self.server_hosts = {}
+        #
+        # # Scan on startup
+        # QTimer().singleShot(1000, self.scan_network)
+        #
+        # # Scan network every 5 minutes to refresh active servers
+        # self.net_scanner = QTimer()
+        # self.net_scanner.timeout.connect(self.scan_network)
+        # self.net_scanner.start(300_000)
+        #
+        # # CREATE RECORDER INSTANCE AND ASSOCIATED TIME COUNTER
+        # self.recorder = Recorder()
+        # self.record_timer = QTimer()
+        # self.record_timer.timeout.connect(self.time_counter)
+        #
+        # self.recorder.recorderStateChanged.connect(self.recorder_state_changed)
+        # self.recorder.recordConfirmed.connect(self.send_media)
+        #
+        # # PLAYER SETUP
+        # self.player = Player()
+        # self.player.errorOccurred.connect(lambda error: print(error))
+        #
+        # self.ui.playButtonPressed.connect(self.play)
 
         # SHOW CHAT WINDOW
         self.show()
-        #
+
         print("----------------------")
         print(QApplication.instance())
 

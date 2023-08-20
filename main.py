@@ -118,12 +118,15 @@ class SplashScreen(QWidget):
             # CLOSE SPLASH SCREEN
             self.close()
 
-            # SHOW REGISTER IN WINDOW OR LOGIN WINDOW
+            # SHOW REGISTER WINDOW OR LOGIN WINDOW
             if not User.find(1):
                 RegisterWindow()
             else:
                 # LoginWindow()
-                win = ChatWindow()
+                try:
+                    win = ChatWindow()
+                except Exception as e:
+                    print(e)
 
         # INCREASE COUNTER
         counter += 0.8

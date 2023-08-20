@@ -15,13 +15,15 @@ class Ui_ChatWindow(QObject):
     playButtonPressed = Signal(object)
 
     def setupUi(self, ChatWindow):
+        if not ChatWindow.objectName():
+            ChatWindow.setObjectName(u"ChatWindow")
         ChatWindow.resize(690, 470)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icons/ARsoftlogo.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         ChatWindow.setWindowIcon(icon)
         ChatWindow.setWindowTitle("AR Intercom")
 
-        # MENU BAR
+        # SET THE MENU BAR
         self.menubar = QtWidgets.QMenuBar()
         self.menubar.setGeometry(QtCore.QRect(0, 0, 663, 26))
         ChatWindow.setMenuBar(self.menubar)
@@ -108,12 +110,10 @@ class Ui_ChatWindow(QObject):
         self.layleft.addWidget(self.clients_field)
        # ---------------------------------------client_frame
 
-    def load_client(self, users=None):
+    def load_client(self, users: list = []):
         """
         Load users conversation list from users who are registered in database
         """
-        if users is None:
-            users = []
         for user in users:
             uuid = user.get_uuid()
             name = user.get_user_name()
