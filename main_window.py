@@ -9,6 +9,7 @@ from ui.main_window import Ui_MainWindow
 from styles import LineEdit
 from user import User
 
+from chat_window import ChatWindow
 
 
 class MainWindow(QMainWindow):
@@ -91,6 +92,11 @@ class MainWindow(QMainWindow):
             # show chat window
             # self.ui.stackedWidget.setCurrentWidget()
             print("Authenticated")
+            chat_window = ChatWindow()
+            self.ui.stackedWidget.setCurrentIndex(1)
+            self.ui.stackedWidget.addWidget(chat_window.ui.central_chat)
+            print(self.ui.stackedWidget.currentWidget())
+            self.ui.stackedWidget.setCurrentWidget(chat_window.ui.central_chat)
             # Close login window
             # self.close()
             # run = ChatWindow()

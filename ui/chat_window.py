@@ -26,7 +26,7 @@ class Ui_ChatWindow(QObject):
         # SET THE MENU BAR
         self.menubar = QtWidgets.QMenuBar()
         self.menubar.setGeometry(QtCore.QRect(0, 0, 663, 26))
-        ChatWindow.setMenuBar(self.menubar)
+        # ChatWindow.setMenuBar(self.menubar)
 
         # 1 MENU 'MENU'
         self.menuMenu = QtWidgets.QMenu("Menu")
@@ -52,7 +52,7 @@ class Ui_ChatWindow(QObject):
         # Create and set the central widget
         self.central_chat = QtWidgets.QWidget(ChatWindow)
         self.central_chat.setLayout(self.mainlay)
-        ChatWindow.setCentralWidget(self.central_chat)
+        # ChatWindow.setCentralWidget(self.central_chat)
 
         # Create widgets
         self.left_side()

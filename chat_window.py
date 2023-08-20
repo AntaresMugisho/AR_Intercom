@@ -27,12 +27,12 @@ import utils
 # Global variables for recorder time counter
 seconds = minutes = 0
 
-class ChatWindow(QMainWindow):
+class ChatWindow(QWidget):
     """
     Initialize chat window to show conversations and start chatting
     """
     def __init__(self):
-        QMainWindow.__init__(self)
+        QWidget.__init__(self)
         self.ui = Ui_ChatWindow()
         self.ui.setupUi(self)
 
@@ -88,7 +88,7 @@ class ChatWindow(QMainWindow):
         self.ui.playButtonPressed.connect(self.play)
 
         # SHOW CHAT WINDOW
-        self.show()
+        # self.show()
 
         print("----------------------")
         print(QApplication.instance())
@@ -521,5 +521,6 @@ class ChatWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    run = ChatWindow()
+    chat_window = ChatWindow()
+    chat_window.show()
     sys.exit(app.exec())
