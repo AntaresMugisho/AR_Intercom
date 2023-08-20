@@ -17,9 +17,9 @@ class LoginWindow(QWidget):
     Manage authentication's functions
     """
     def __init__(self):
-        super().__init__()
-        self.ui = Ui_LoginWindow()
-        self.ui.setupUi(self)
+        # super().__init__()
+        # self.ui = Ui_LoginWindow()
+        # self.ui.setupUi(self)
 
         # HIDE WARNINGS
         self.ui.name_warning.hide()
