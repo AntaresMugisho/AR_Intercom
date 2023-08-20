@@ -21,17 +21,17 @@ from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QLineEdit,
     QSizePolicy, QStackedWidget, QWidget)
 from resources import img_rc
 
-class Ui_LoginWindow(object):
-    def setupUi(self, LoginWindow):
-        if not LoginWindow.objectName():
-            LoginWindow.setObjectName(u"LoginWindow")
-        LoginWindow.resize(692, 459)
-        LoginWindow.setStyleSheet(u"")
-        self.actionAide = QAction(LoginWindow)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        if not MainWindow.objectName():
+            MainWindow.setObjectName(u"MainWindow")
+        MainWindow.resize(692, 459)
+        MainWindow.setStyleSheet(u"")
+        self.actionAide = QAction(MainWindow)
         self.actionAide.setObjectName(u"actionAide")
-        self.actionQuiter = QAction(LoginWindow)
+        self.actionQuiter = QAction(MainWindow)
         self.actionQuiter.setObjectName(u"actionQuiter")
-        self.central_log = QWidget(LoginWindow)
+        self.central_log = QWidget(MainWindow)
         self.central_log.setObjectName(u"central_log")
         self.stackedWidget = QStackedWidget(self.central_log)
         self.stackedWidget.setObjectName(u"stackedWidget")
@@ -334,35 +334,35 @@ class Ui_LoginWindow(object):
         self.page_2 = QWidget()
         self.page_2.setObjectName(u"page_2")
         self.stackedWidget.addWidget(self.page_2)
-        LoginWindow.setCentralWidget(self.central_log)
-        self.menubar = QMenuBar(LoginWindow)
+        MainWindow.setCentralWidget(self.central_log)
+        self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 692, 22))
         self.menuMenu = QMenu(self.menubar)
         self.menuMenu.setObjectName(u"menuMenu")
-        LoginWindow.setMenuBar(self.menubar)
+        MainWindow.setMenuBar(self.menubar)
 
         self.menubar.addAction(self.menuMenu.menuAction())
         self.menuMenu.addAction(self.actionAide)
         self.menuMenu.addSeparator()
         self.menuMenu.addAction(self.actionQuiter)
 
-        self.retranslateUi(LoginWindow)
+        self.retranslateUi(MainWindow)
         self.log_password.returnPressed.connect(self.connect_log.click)
 
         self.stackedWidget.setCurrentIndex(0)
 
 
-        QMetaObject.connectSlotsByName(LoginWindow)
+        QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
-    def retranslateUi(self, LoginWindow):
-        LoginWindow.setWindowTitle(QCoreApplication.translate("LoginWindow", u"Connexion - AR Intercom", None))
-        self.actionAide.setText(QCoreApplication.translate("LoginWindow", u"Aide", None))
-        self.actionQuiter.setText(QCoreApplication.translate("LoginWindow", u"Quitter", None))
-        self.welcome_log.setText(QCoreApplication.translate("LoginWindow", u"Bienvenue  !", None))
+    def retranslateUi(self, MainWindow):
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Connexion - AR Intercom", None))
+        self.actionAide.setText(QCoreApplication.translate("MainWindow", u"Aide", None))
+        self.actionQuiter.setText(QCoreApplication.translate("MainWindow", u"Quitter", None))
+        self.welcome_log.setText(QCoreApplication.translate("MainWindow", u"Bienvenue  !", None))
         self.logo_log.setText("")
-        self.name_warning.setText(QCoreApplication.translate("LoginWindow", u"Empty username", None))
+        self.name_warning.setText(QCoreApplication.translate("MainWindow", u"Empty username", None))
         self.logo_20.setText("")
         self.logo_10.setText("")
         self.logo_4.setText("")
@@ -390,17 +390,17 @@ class Ui_LoginWindow(object):
         self.logo_5.setText("")
         self.logo_29.setText("")
         self.logo_30.setText("")
-        self.label.setText(QCoreApplication.translate("LoginWindow", u"CreativeMind", None))
-        self.connect_log.setText(QCoreApplication.translate("LoginWindow", u"Connexion", None))
-        self.connect_now.setText(QCoreApplication.translate("LoginWindow", u"Entrez vos identifiants pour vous connecter ", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"CreativeMind", None))
+        self.connect_log.setText(QCoreApplication.translate("MainWindow", u"Connexion", None))
+        self.connect_now.setText(QCoreApplication.translate("MainWindow", u"Entrez vos identifiants pour vous connecter ", None))
         self.log_password.setText("")
-        self.log_password.setPlaceholderText(QCoreApplication.translate("LoginWindow", u"Mot de passe", None))
+        self.log_password.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Mot de passe", None))
         self.multi_logo_background.setText("")
         self.toogle_button.setText("")
-        self.main_title_log.setText(QCoreApplication.translate("LoginWindow", u"Art Revolution Intercom", None))
-        self.log_username.setPlaceholderText(QCoreApplication.translate("LoginWindow", u"Nom d'utilisateur", None))
-        self.psw_warning.setText(QCoreApplication.translate("LoginWindow", u"Wrong username", None))
+        self.main_title_log.setText(QCoreApplication.translate("MainWindow", u"Art Revolution Intercom", None))
+        self.log_username.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nom d'utilisateur", None))
+        self.psw_warning.setText(QCoreApplication.translate("MainWindow", u"Wrong username", None))
         self.logo_31.setText("")
-        self.menuMenu.setTitle(QCoreApplication.translate("LoginWindow", u"Menu", None))
+        self.menuMenu.setTitle(QCoreApplication.translate("MainWindow", u"Menu", None))
     # retranslateUi
 
