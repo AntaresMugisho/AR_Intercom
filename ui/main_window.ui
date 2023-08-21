@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>AR Intercom</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resources/img.qrc">
+    <normaloff>:/icons/icons/ARsoftlogo.png</normaloff>:/icons/icons/ARsoftlogo.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
@@ -41,6 +45,9 @@
     </property>
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
       <widget class="QWidget" name="page"/>
       <widget class="QWidget" name="page_2"/>
      </widget>

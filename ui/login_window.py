@@ -25,6 +25,11 @@ class Ui_LoginWindow(object):
         if not LoginWindow.objectName():
             LoginWindow.setObjectName(u"LoginWindow")
         LoginWindow.resize(690, 437)
+        LoginWindow.setMinimumSize(QSize(690, 437))
+        LoginWindow.setMaximumSize(QSize(690, 437))
+        icon = QIcon()
+        icon.addFile(u":/icons/icons/ARsoftlogo.png", QSize(), QIcon.Normal, QIcon.Off)
+        LoginWindow.setWindowIcon(icon)
         self.log_password = QLineEdit(LoginWindow)
         self.log_password.setObjectName(u"log_password")
         self.log_password.setGeometry(QRect(370, 245, 250, 40))
@@ -326,7 +331,7 @@ class Ui_LoginWindow(object):
     # setupUi
 
     def retranslateUi(self, LoginWindow):
-        LoginWindow.setWindowTitle(QCoreApplication.translate("LoginWindow", u"Form", None))
+        LoginWindow.setWindowTitle(QCoreApplication.translate("LoginWindow", u"AR Intercom - Connexion", None))
         self.log_password.setText("")
         self.log_password.setPlaceholderText(QCoreApplication.translate("LoginWindow", u"Mot de passe", None))
         self.welcome_log.setText(QCoreApplication.translate("LoginWindow", u"Bienvenue  !", None))

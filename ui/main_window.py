@@ -27,6 +27,9 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(690, 470)
         MainWindow.setMinimumSize(QSize(690, 470))
+        icon = QIcon()
+        icon.addFile(u":/icons/icons/ARsoftlogo.png", QSize(), QIcon.Normal, QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"")
         self.actionAide = QAction(MainWindow)
         self.actionAide.setObjectName(u"actionAide")
@@ -63,6 +66,9 @@ class Ui_MainWindow(object):
         self.menuMenu.addAction(self.actionQuitter)
 
         self.retranslateUi(MainWindow)
+
+        self.stackedWidget.setCurrentIndex(0)
+
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
