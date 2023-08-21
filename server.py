@@ -6,25 +6,30 @@ import threading
 import sys
 import time
 
+from PySide6.QtCore import QObject, Signal
+
 import utils
 from message import Message
 from user import User
 
 
-class Server:
+class Server(QObject):
     """
     Server to listen, accept connections and receive text messages and files from other connected devices.
     """
+    messageReceived = Signal(int)
 
     # ONLINE CLIENTS LIST
     CONNECTED_CLIENTS = []
     CONNECTED_CLIENTS_IPS = []
 
+
     def __init__(self):
+        QObject.__init__(self)
         self.host = "0.0.0.0"
         self.port = 12001
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.message_listener = Message()
+        # self.message_listener = Message()
 
     def accept_connections(self):
         """
@@ -113,7 +118,7 @@ class Server:
                             message.set_body(message_body)
                             # Save message and emit signal so that it can be displayed in the GUI
                             message.save()
-                            self.message_listener.messageReceived.emit(message.get_id())
+                            self.messageReceived.emit(message.get_id())
 
                         elif message_kind in ["audio", "video", "image", "document", "voice"]:
                             # Download file
@@ -125,7 +130,7 @@ class Server:
 
                             # Save message and emit signal so that it can be displayed in the GUI
                             message.save()
-                            self.message_listener.messageReceived.emit(message.get_id())
+                            self.messageReceived.emit(message.get_id())
 
                         elif message_kind == "id":
                             profile_picture_size = int(packet[2])

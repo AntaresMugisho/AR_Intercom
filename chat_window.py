@@ -56,7 +56,7 @@ class ChatWindow(QWidget):
         self.server.start()
 
         # LISTEN FOR MESSAGE SIGNALS
-        self.server.message_listener.messageReceived.connect(self.show_incoming_message)
+        self.server.messageReceived.connect(self.show_incoming_message)
 
         # SCAN NETWORK TO FIND CONNECTED DEVICES
         self.server_hosts = {}

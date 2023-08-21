@@ -7,18 +7,15 @@ from PySide6.QtCore import QObject, Signal
 from controller import Controller
 
 
-class Message(Controller, QObject):
+class Message(Controller):
     """
     Message model class representing a message as stored in database.
     This class contains also some signals that the server can emit on new incoming message
     to show GUI bubble
     """
-    messageReceived = Signal(int)
-    # mediaMessageReceived = pyqtSignal()
     time_format = "%d-%m-%Y %H:%M"
 
     def __init__(self):
-        QObject.__init__(self)
         self.id = None
         self.sender_id = None
         self.receiver_id = None
@@ -91,6 +88,4 @@ class Message(Controller, QObject):
 
 if __name__ == "__main__":
     message = Message()
-    message.messageReceived.connect(lambda i: print(i))
-    message.messageReceived.emit(12)
     print(message.__dict__)
