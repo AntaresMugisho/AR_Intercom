@@ -445,7 +445,6 @@ class ChatWindow(QWidget):
             for host_id in range(0, 256):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
                 # if host_id != int(my_ip_bytes[3]):
                 addresses.append(f"{net_id}.{str(host_id)}")
-                print(f"{net_id}.{str(host_id)}")
 
             scan_threads = [NetscanThread(address) for address in addresses]
             for thread in scan_threads:

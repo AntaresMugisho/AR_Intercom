@@ -93,11 +93,10 @@ class SplashScreen(QWidget):
             self.close()
 
             # SHOW REGISTER WINDOW OR LOGIN WINDOW
-            if User.find(1):
+            if not User.find(1):
                 RegisterWindow()
             else:
                 MainWindow()
-                # main_window.show()
 
         # INCREASE COUNTER
         counter += 0.9
@@ -128,9 +127,9 @@ class SplashScreen(QWidget):
 
 
 if __name__ == "__main__":
-    # app = QApplication.instance()
-    # if not app:
-    app = QApplication(sys.argv)
+    app = QApplication.instance()
+    if not app:
+        app = QApplication(sys.argv)
 
-    run = SplashScreen()
+    run = MainWindow()
     sys.exit(app.exec())

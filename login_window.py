@@ -91,8 +91,7 @@ class LoginWindow(QWidget, QObject):
             self.check_username()
             self.check_password()
 
-
-        if (self.ui.log_username.text(), self.ui_password) != (self.user_name, self.password):
+        if (self.ui.log_username.text(), self.ui_password) == (self.user_name, self.password):
             self.authenticated.emit()
 
 
