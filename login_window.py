@@ -4,22 +4,25 @@ import sys
 import hashlib
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QLineEdit
-from PySide6.QtCore import Qt, Slot
+from PySide6.QtCore import QObject, Qt, Signal, Slot
 
-from ui.loginwindow import Ui_LoginWindow
+from ui.login_window import Ui_LoginWindow
 # from chat_window import ChatWindow
 from styles import LineEdit
 from user import User
 
 
-class LoginWindow(QWidget):
+class LoginWindow(QWidget, QObject):
     """
     Manage authentication's functions
     """
+
+    authenticated = Signal()
+
     def __init__(self):
-        # super().__init__()
-        # self.ui = Ui_LoginWindow()
-        # self.ui.setupUi(self)
+        QWidget.__init__(self)
+        self.ui = Ui_LoginWindow()
+        self.ui.setupUi(self)
 
         # HIDE WARNINGS
         self.ui.name_warning.hide()
@@ -40,10 +43,6 @@ class LoginWindow(QWidget):
         # CONNECT UI BUTTONS TO SLOTS
         self.ui.connect_log.clicked.connect(self.auth)
         self.ui.connect_log.keyPressEvent = self.auth
-
-        # SHOW LOGIN WINDOW
-        # self.show()
-        # run = ChatWindow()
 
     def check_username(self):
         """
@@ -94,14 +93,13 @@ class LoginWindow(QWidget):
 
 
         if (self.ui.log_username.text(), self.ui_password) != (self.user_name, self.password):
-            # show chat window
-            print("Authenticated")
-            # Close login window
-            # self.close()
-            # run = ChatWindow()
+            self.authenticated.emit()
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    run = LoginWindow()
+    app = QApplication.instance()
+    if not app:
+        app = QApplication(sys.argv)
+    login_window = LoginWindow()
+    login_window.show()
     sys.exit(app.exec())

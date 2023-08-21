@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'loginwindow.ui'
+## Form generated from reading UI file 'login_window.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.5.1
 ##
@@ -16,36 +16,18 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QLineEdit,
-    QMainWindow, QMenuBar, QPushButton, QSizePolicy,
-    QStatusBar, QWidget)
+    QPushButton, QSizePolicy, QWidget)
+
 from resources import img_rc
 
 class Ui_LoginWindow(object):
     def setupUi(self, LoginWindow):
         if not LoginWindow.objectName():
             LoginWindow.setObjectName(u"LoginWindow")
-        LoginWindow.resize(690, 470)
-        LoginWindow.setStyleSheet(u"")
-        self.central_log = QWidget(LoginWindow)
-        self.central_log.setObjectName(u"central_log")
-        self.log_username = QLineEdit(self.central_log)
-        self.log_username.setObjectName(u"log_username")
-        self.log_username.setGeometry(QRect(371, 160, 250, 40))
-        self.log_username.setStyleSheet(u"QLineEdit{\n"
-"	border:2px solid; \n"
-"	border-radius:20px;\n"
-"	font-size:18px;\n"
-"	padding-left:15px;\n"
-"	padding-right:15px; \n"
-"	border-color:#FFF; \n"
-"	background-color:#FFFFFF;}\n"
-"\n"
-"QLineEdit:hover,  QLineEdit:focus{\n"
-"	border-color: rgba(57, 146, 240, 180); \n"
-"}")
-        self.log_password = QLineEdit(self.central_log)
+        LoginWindow.resize(690, 437)
+        self.log_password = QLineEdit(LoginWindow)
         self.log_password.setObjectName(u"log_password")
-        self.log_password.setGeometry(QRect(371, 239, 250, 40))
+        self.log_password.setGeometry(QRect(370, 245, 250, 40))
         self.log_password.setStyleSheet(u"QLineEdit{\n"
 "	border:2px solid; \n"
 "	border-radius:20px;\n"
@@ -59,22 +41,52 @@ class Ui_LoginWindow(object):
 "	border-color: rgba(57, 146, 240, 180); \n"
 "}")
         self.log_password.setEchoMode(QLineEdit.Password)
-        self.toogle_button = QPushButton(self.central_log)
-        self.toogle_button.setObjectName(u"toogle_button")
-        self.toogle_button.setGeometry(QRect(578, 248, 24, 24))
-        self.toogle_button.setFocusPolicy(Qt.NoFocus)
-        self.toogle_button.setStyleSheet(u"QPushButton{\n"
-"	        image: url(:/cils/cils/cil_vision.png);\n"
-"            background:none;\n"
-"            border:none;}\n"
+        self.welcome_log = QLabel(LoginWindow)
+        self.welcome_log.setObjectName(u"welcome_log")
+        self.welcome_log.setGeometry(QRect(291, 42, 401, 41))
+        self.welcome_log.setMinimumSize(QSize(0, 41))
+        self.welcome_log.setMaximumSize(QSize(16777215, 41))
+        self.welcome_log.setStyleSheet(u"background-color: rgb(11, 11, 106);\n"
+"color: rgb(255, 255, 255);font-size:16px; font-weight:bold; font-family:Roboto ;")
+        self.welcome_log.setAlignment(Qt.AlignCenter)
+        self.multi_logo_background = QLabel(LoginWindow)
+        self.multi_logo_background.setObjectName(u"multi_logo_background")
+        self.multi_logo_background.setGeometry(QRect(288, 85, 401, 351))
+        self.multi_logo_background.setStyleSheet(u"background-color: rgba(57, 146, 240, 5);\n"
+"background-image: url(:/icons/icons/multilogo.png);")
+        self.psw_warning = QLabel(LoginWindow)
+        self.psw_warning.setObjectName(u"psw_warning")
+        self.psw_warning.setGeometry(QRect(390, 289, 151, 16))
+        self.psw_warning.setStyleSheet(u"color:red;\n"
+"font-size:12px;")
+        self.logo_log = QLabel(LoginWindow)
+        self.logo_log.setObjectName(u"logo_log")
+        self.logo_log.setGeometry(QRect(0, 0, 291, 83))
+        self.logo_log.setMinimumSize(QSize(291, 83))
+        self.logo_log.setMaximumSize(QSize(291, 83))
+        self.logo_log.setStyleSheet(u"border-left:4px solid;\n"
+"border-left-color: rgb(255, 170, 0);\n"
+"background-color: rgb(11, 11, 106);\n"
+"image: url(:/icons/icons/ARsoftlogo.png);\n"
+"")
+        self.log_username = QLineEdit(LoginWindow)
+        self.log_username.setObjectName(u"log_username")
+        self.log_username.setGeometry(QRect(370, 166, 250, 40))
+        self.log_username.setStyleSheet(u"QLineEdit{\n"
+"	border:2px solid; \n"
+"	border-radius:20px;\n"
+"	font-size:18px;\n"
+"	padding-left:15px;\n"
+"	padding-right:15px; \n"
+"	border-color:#FFF; \n"
+"	background-color:#FFFFFF;}\n"
 "\n"
-"QPushButton:hover{\n"
-"            image: url(:/cils/cils/cil_low_vision.png);\n"
-"            background:none;\n"
-"            border:none;}")
-        self.connect_log = QPushButton(self.central_log)
+"QLineEdit:hover,  QLineEdit:focus{\n"
+"	border-color: rgba(57, 146, 240, 180); \n"
+"}")
+        self.connect_log = QPushButton(LoginWindow)
         self.connect_log.setObjectName(u"connect_log")
-        self.connect_log.setGeometry(QRect(407, 337, 171, 41))
+        self.connect_log.setGeometry(QRect(406, 343, 171, 41))
         self.connect_log.setStyleSheet(u"QPushButton{\n"
 "	border:2px solid rgba(57, 146, 240, 250);\n"
 "	border-radius:20px; \n"
@@ -90,41 +102,19 @@ class Ui_LoginWindow(object):
 "	background-color: rgba(57, 146, 240, 250);\n"
 "	color:#FFFFFF;\n"
 "}")
-        self.welcome_log = QLabel(self.central_log)
-        self.welcome_log.setObjectName(u"welcome_log")
-        self.welcome_log.setGeometry(QRect(291, 42, 401, 41))
-        self.welcome_log.setStyleSheet(u"background-color: rgb(11, 11, 106);\n"
-"color: rgb(255, 255, 255);font-size:16px; font-weight:bold; font-family:Roboto ;")
-        self.welcome_log.setAlignment(Qt.AlignHCenter|Qt.AlignTop)
-        self.connect_now = QLabel(self.central_log)
-        self.connect_now.setObjectName(u"connect_now")
-        self.connect_now.setGeometry(QRect(337, 70, 301, 21))
-        self.connect_now.setStyleSheet(u"color: rgb(0, 0, 0);\n"
-";font-size:14px; font-family:Roboto ;\n"
-"background-color: rgb(255, 170, 0);\n"
-"border-radius:10px;")
-        self.connect_now.setAlignment(Qt.AlignCenter)
-        self.logo_log = QLabel(self.central_log)
-        self.logo_log.setObjectName(u"logo_log")
-        self.logo_log.setGeometry(QRect(0, 0, 291, 83))
-        self.logo_log.setStyleSheet(u"border-left:4px solid;\n"
-"border-left-color: rgb(255, 170, 0);\n"
-"background-color: rgb(11, 11, 106);\n"
-"image: url(:/icons/icons/ARsoftlogo.png);\n"
-"")
-        self.main_title_log = QLabel(self.central_log)
+        self.main_title_log = QLabel(LoginWindow)
         self.main_title_log.setObjectName(u"main_title_log")
-        self.main_title_log.setGeometry(QRect(292, 0, 401, 41))
+        self.main_title_log.setGeometry(QRect(291, 0, 401, 41))
+        self.main_title_log.setMinimumSize(QSize(0, 41))
+        self.main_title_log.setMaximumSize(QSize(16777215, 41))
         self.main_title_log.setStyleSheet(u"color: rgb(0, 0, 0);background-color: rgb(255, 255, 255);font-size:20px; font-weight:bold; font-family: Kirvy ,Roboto ;")
         self.main_title_log.setAlignment(Qt.AlignCenter)
-        self.multi_logo_background = QLabel(self.central_log)
-        self.multi_logo_background.setObjectName(u"multi_logo_background")
-        self.multi_logo_background.setGeometry(QRect(290, 79, 401, 341))
-        self.multi_logo_background.setStyleSheet(u"background-color: rgba(57, 146, 240, 5);\n"
-"background-image: url(:/icons/icons/multilogo.png);")
-        self.multicolor = QFrame(self.central_log)
+        self.multicolor = QFrame(LoginWindow)
         self.multicolor.setObjectName(u"multicolor")
-        self.multicolor.setGeometry(QRect(0, 85, 291, 351))
+        self.multicolor.setGeometry(QRect(0, 86, 291, 351))
+        self.multicolor.setMinimumSize(QSize(291, 351))
+        self.multicolor.setMaximumSize(QSize(291, 351))
+        self.multicolor.setStyleSheet(u"")
         self.multicolor.setFrameShape(QFrame.StyledPanel)
         self.multicolor.setFrameShadow(QFrame.Raised)
         self.logo_20 = QLabel(self.multicolor)
@@ -249,62 +239,103 @@ class Ui_LoginWindow(object):
         self.logo_30.setGeometry(QRect(50, 320, 201, 31))
         self.logo_30.setStyleSheet(u"\n"
 "background-color: rgba(239, 88, 63, 170);")
-        self.label = QLabel(self.central_log)
+        self.label = QLabel(self.multicolor)
         self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(630, 420, 51, 16))
+        self.label.setGeometry(QRect(6, 330, 81, 16))
         self.label.setStyleSheet(u"QLabel{\n"
 "	color:#C5C5C5;	\n"
 "}")
-        self.name_warning = QLabel(self.central_log)
+        self.logo_30.raise_()
+        self.logo_20.raise_()
+        self.logo_10.raise_()
+        self.logo_4.raise_()
+        self.logo_12.raise_()
+        self.logo_19.raise_()
+        self.logo_13.raise_()
+        self.logo_6.raise_()
+        self.logo_8.raise_()
+        self.logo_27.raise_()
+        self.logo_25.raise_()
+        self.logo_28.raise_()
+        self.logo_24.raise_()
+        self.logo_16.raise_()
+        self.logo_7.raise_()
+        self.logo_14.raise_()
+        self.logo_23.raise_()
+        self.logo_22.raise_()
+        self.logo_17.raise_()
+        self.logo_9.raise_()
+        self.logo_18.raise_()
+        self.logo_26.raise_()
+        self.logo_21.raise_()
+        self.logo_15.raise_()
+        self.logo_11.raise_()
+        self.logo_5.raise_()
+        self.logo_29.raise_()
+        self.label.raise_()
+        self.connect_now = QLabel(LoginWindow)
+        self.connect_now.setObjectName(u"connect_now")
+        self.connect_now.setGeometry(QRect(336, 78, 331, 21))
+        self.connect_now.setMinimumSize(QSize(301, 21))
+        self.connect_now.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+"font-size:12px; font-family:Roboto ;\n"
+"background-color: rgb(255, 170, 0);\n"
+"border-radius:10px;")
+        self.connect_now.setAlignment(Qt.AlignCenter)
+        self.logo_31 = QLabel(LoginWindow)
+        self.logo_31.setObjectName(u"logo_31")
+        self.logo_31.setGeometry(QRect(1, 396, 16, 41))
+        self.logo_31.setStyleSheet(u"background-color: rgba(246, 168, 202, 100);")
+        self.name_warning = QLabel(LoginWindow)
         self.name_warning.setObjectName(u"name_warning")
-        self.name_warning.setGeometry(QRect(391, 201, 151, 16))
+        self.name_warning.setGeometry(QRect(390, 207, 151, 16))
         self.name_warning.setStyleSheet(u"color:red;\n"
 "font-size:12px;")
-        self.psw_warning = QLabel(self.central_log)
-        self.psw_warning.setObjectName(u"psw_warning")
-        self.psw_warning.setGeometry(QRect(391, 283, 151, 16))
-        self.psw_warning.setStyleSheet(u"color:red;\n"
-"font-size:12px;")
-        # LoginWindow.setCentralWidget(self.central_log)
+        self.toogle_button = QPushButton(LoginWindow)
+        self.toogle_button.setObjectName(u"toogle_button")
+        self.toogle_button.setGeometry(QRect(577, 254, 24, 24))
+        self.toogle_button.setFocusPolicy(Qt.NoFocus)
+        self.toogle_button.setStyleSheet(u"QPushButton{\n"
+"	        image: url(:/cils/cils/cil_vision.png);\n"
+"            background:none;\n"
+"            border:none;}\n"
+"\n"
+"QPushButton:hover{\n"
+"            image: url(:/cils/cils/cil_low_vision.png);\n"
+"            background:none;\n"
+"            border:none;}")
         self.multi_logo_background.raise_()
-        self.log_username.raise_()
         self.log_password.raise_()
-        self.toogle_button.raise_()
-        self.connect_log.raise_()
         self.welcome_log.raise_()
-        self.connect_now.raise_()
+        self.psw_warning.raise_()
         self.logo_log.raise_()
+        self.log_username.raise_()
+        self.connect_log.raise_()
         self.main_title_log.raise_()
         self.multicolor.raise_()
-        self.label.raise_()
+        self.connect_now.raise_()
+        self.logo_31.raise_()
         self.name_warning.raise_()
-        self.psw_warning.raise_()
-        self.menubar = QMenuBar(LoginWindow)
-        self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 690, 19))
-        # LoginWindow.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(LoginWindow)
-        self.statusbar.setObjectName(u"statusbar")
-        # LoginWindow.setStatusBar(self.statusbar)
+        self.toogle_button.raise_()
+        QWidget.setTabOrder(self.log_username, self.log_password)
+        QWidget.setTabOrder(self.log_password, self.connect_log)
 
         self.retranslateUi(LoginWindow)
-        self.log_password.returnPressed.connect(self.connect_log.click)
 
         QMetaObject.connectSlotsByName(LoginWindow)
     # setupUi
 
     def retranslateUi(self, LoginWindow):
-        LoginWindow.setWindowTitle(QCoreApplication.translate("LoginWindow", u"Connexion - AR Intercom", None))
-        self.log_username.setPlaceholderText(QCoreApplication.translate("LoginWindow", u"Nom d'utilisateur", None))
+        LoginWindow.setWindowTitle(QCoreApplication.translate("LoginWindow", u"Form", None))
         self.log_password.setText("")
         self.log_password.setPlaceholderText(QCoreApplication.translate("LoginWindow", u"Mot de passe", None))
-        self.toogle_button.setText("")
-        self.connect_log.setText(QCoreApplication.translate("LoginWindow", u"Connexion", None))
         self.welcome_log.setText(QCoreApplication.translate("LoginWindow", u"Bienvenue  !", None))
-        self.connect_now.setText(QCoreApplication.translate("LoginWindow", u"Connectez-vous maintenant.", None))
-        self.logo_log.setText("")
-        self.main_title_log.setText(QCoreApplication.translate("LoginWindow", u"Art Revolution Intercom", None))
         self.multi_logo_background.setText("")
+        self.psw_warning.setText(QCoreApplication.translate("LoginWindow", u"Wrong username", None))
+        self.logo_log.setText("")
+        self.log_username.setPlaceholderText(QCoreApplication.translate("LoginWindow", u"Nom d'utilisateur", None))
+        self.connect_log.setText(QCoreApplication.translate("LoginWindow", u"Connexion", None))
+        self.main_title_log.setText(QCoreApplication.translate("LoginWindow", u"Art Revolution Intercom", None))
         self.logo_20.setText("")
         self.logo_10.setText("")
         self.logo_4.setText("")
@@ -332,8 +363,10 @@ class Ui_LoginWindow(object):
         self.logo_5.setText("")
         self.logo_29.setText("")
         self.logo_30.setText("")
-        self.label.setText(QCoreApplication.translate("LoginWindow", u"Kivringo", None))
+        self.label.setText(QCoreApplication.translate("LoginWindow", u"CreativeMind", None))
+        self.connect_now.setText(QCoreApplication.translate("LoginWindow", u"Entrez vos identifiants pour vous connecter ", None))
+        self.logo_31.setText("")
         self.name_warning.setText(QCoreApplication.translate("LoginWindow", u"Empty username", None))
-        self.psw_warning.setText(QCoreApplication.translate("LoginWindow", u"Wrong username", None))
+        self.toogle_button.setText("")
     # retranslateUi
 

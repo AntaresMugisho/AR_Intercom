@@ -7,10 +7,10 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QLineEdit
 from PySide6.QtCore import Qt, Slot
 
 from ui.main_window import Ui_MainWindow
+from login_window import LoginWindow
+from chat_window import ChatWindow
 from styles import LineEdit
 from user import User
-
-from chat_window import ChatWindow
 
 
 class MainWindow(QMainWindow):
@@ -20,34 +20,23 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.chat_window = ChatWindow()
-
-        # CONNECT MENU BAR SLOTS
+        # Connect menu bar signals to their slots
         self.ui.actionAide.triggered.connect(self.help)
         self.ui.actionQuitter.triggered.connect(self.close_)
 
-        # LOGIN WINDOW ---------
+        # On startup, show login window
+        self.login_window = LoginWindow()
+        self.ui.stackedWidget.addWidget(self.login_window)
+        self.ui.stackedWidget.setCurrentWidget(self.login_window)
+        self.setWindowTitle(self.login_window.windowTitle())
 
-        # HIDE WARNINGS
-        self.ui.name_warning.hide()
-        self.ui.psw_warning.hide()
+        # Prepare chat window
+        self.chat_window = ChatWindow()
 
-        # CHANGE ECHO MODE TO PREVIEW PASSWORD
-        self.ui.toogle_button.enterEvent = lambda event: self.ui.log_password.setEchoMode(QLineEdit.EchoMode.Normal)
-        self.ui.toogle_button.leaveEvent = lambda event: self.ui.log_password.setEchoMode(QLineEdit.EchoMode.Password)
+        # Listen for authenticated signal emitted from login window on a success login
+        self.login_window.authenticated.connect(self.show_chat_window)
 
-        # GET USER INFORMATION FROM DATABASE
-        user = User.find(1)
-        self.user_name = user.get_user_name()
-        self.password = user.get_password()
-
-        # The inputted password
-        self.ui_password = None
-
-        # CONNECT UI BUTTONS TO SLOTS
-        self.ui.connect_log.clicked.connect(self.auth)
-        self.ui.connect_log.keyPressEvent = self.auth
-
+        # Show Main window
         self.show()
 
     @Slot()
@@ -65,72 +54,22 @@ class MainWindow(QMainWindow):
         """
         Close all connections, timers and exit the application
         """
-        try:
-            self.net_scanner.stop()
-            # Stop all clients instances
-            self.server.stop()
-        except Exception as e:
-            print(f"Error while trying to close app: {e}")
-        finally:
-            pass
-            # self.close()
+        print("Exiting app")
+        # try:
+        #     self.net_scanner.stop()
+        #     # Stop all clients instances
+        #     self.server.stop()
+        # except Exception as e:
+        #     print(f"Error while trying to close app: {e}")
+        # finally:
+        #     pass
+        #     # self.close()
 
     @Slot()
-    def check_username(self):
-        """
-        Check if the username is authentic
-        """
-        if not self.ui.log_username.text():
-            self.ui.log_username.setStyleSheet(LineEdit.style_error)
-            self.ui.name_warning.show()
-            self.ui.name_warning.setText("Entrez votre nom d'utilisateur")
-
-        elif self.ui.log_username.text() != self.user_name:
-            self.ui.name_warning.show()
-            self.ui.name_warning.setText("Nom d'utilisateur incorrect !")
-
-        else:
-            self.ui.name_warning.hide()
-            self.ui.log_username.setStyleSheet(LineEdit.style_normal)
-
-    @Slot()
-    def check_password(self):
-        """
-        CHeck if the password is authentic
-        """
-        ui_password = self.ui.log_password.text()
-        self.ui_password = hashlib.sha1(ui_password.encode()).hexdigest()
-
-        if not self.ui.log_password.text():
-            self.ui.log_password.setStyleSheet(LineEdit.style_error)
-            self.ui.psw_warning.show()
-            self.ui.psw_warning.setText("Entrez votre mot de passe")
-
-        elif self.ui_password != self.password:
-            self.ui.psw_warning.show()
-            self.ui.psw_warning.setText("Mot de passe incorrect !")
-
-        else:
-            self.ui.psw_warning.hide()
-            self.ui.log_password.setStyleSheet(LineEdit.style_normal)
-
-    @Slot(bool)
-    def auth(self, event):
-        """
-        Verifies user credentials and allow access to the chat window if the user is authenticated
-        """
-
-        if event is not True or event.key() == Qt.Key.Key_Return:
-            self.check_username()
-            self.check_password()
-
-        if (self.ui.log_username.text(), self.ui_password) != (self.user_name, self.password):
-            # show chat window
-            print("Authenticated")
-            # chat_window = ChatWindow()
-            self.ui.stackedWidget.addWidget(self.chat_window.ui.central_chat)
-            self.ui.stackedWidget.setCurrentWidget(self.chat_window.ui.central_chat)
-
+    def show_chat_window(self):
+        self.ui.stackedWidget.addWidget(self.chat_window)
+        self.ui.stackedWidget.setCurrentWidget(self.chat_window)
+        self.setWindowTitle(self.chat_window.windowTitle())
 
 
 if __name__ == "__main__":

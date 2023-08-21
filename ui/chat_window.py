@@ -8,6 +8,7 @@ from PySide6.QtCore import QObject, Qt, Signal, Slot
 from message import Message
 import utils
 from styles import *
+from resources import img_rc
 
 
 class Ui_ChatWindow(QObject):
@@ -35,9 +36,10 @@ class Ui_ChatWindow(QObject):
         self.left_side()
         self.right_side()
 
-
     def left_side(self):
-
+        """
+        Create the user's (contacts) widgets
+        """
         # CONTAINER
         self.left_container = QtWidgets.QWidget()
         self.left_container.setMinimumSize(QtCore.QSize(150, 250))
@@ -150,7 +152,9 @@ class Ui_ChatWindow(QObject):
 # LET'S DESIGN THE RIGHT SIDE NOW
 
     def right_side(self):
-
+        """
+        Create the conversation widgets
+        """
         # CONTAINER
         self.right_container = QtWidgets.QWidget()
         self.right_container.setMinimumSize(285, 200)
@@ -240,8 +244,6 @@ class Ui_ChatWindow(QObject):
                 self.media_button.setStyleSheet(MediaButton.style_more)
                 self.media_bg.deleteLater()
 
-
-
         # button
         self.media_button = QtWidgets.QPushButton(self.right_container)
         self.media_button.setFixedSize(40, 40)
@@ -260,7 +262,6 @@ class Ui_ChatWindow(QObject):
                                        "QLineEdit:hover{border:2px solid #3385CC;}")
         self.entry_field.setFrame(True)
         self.entry_field.setPlaceholderText("Saisissez votre message ici !")
-
 
         # SEND MESSAGE BUTTON
         self.send_button = QtWidgets.QPushButton(self.right_container)
@@ -588,5 +589,3 @@ class Ui_ChatWindow(QObject):
     def play(self):
         button = self.sender()
         self.playButtonPressed.emit(button)
-
-from resources import img_rc
