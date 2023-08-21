@@ -15,59 +15,34 @@ class Ui_ChatWindow(QObject):
     playButtonPressed = Signal(object)
 
     def setupUi(self, ChatWindow):
+
         if not ChatWindow.objectName():
             ChatWindow.setObjectName(u"ChatWindow")
+
         ChatWindow.resize(690, 470)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icons/ARsoftlogo.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         ChatWindow.setWindowIcon(icon)
-        ChatWindow.setWindowTitle("AR Intercom")
+        ChatWindow.setWindowTitle("AR Intercom - Chat Window")
 
-        # SET THE MENU BAR
-        self.menubar = QtWidgets.QMenuBar()
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 663, 26))
-        # ChatWindow.setMenuBar(self.menubar)
-
-        # 1 MENU 'MENU'
-        self.menuMenu = QtWidgets.QMenu("Menu")
-
-        # ACTIONS
-        self.actionAide = QtGui.QAction("Aide")
-        self.actionQuitter = QtGui.QAction("Quitter")
-
-        # ADD ACTIONS
-        self.menuMenu.addAction(self.actionAide)
-        self.menuMenu.addSeparator()
-        self.menuMenu.addAction(self.actionQuitter)
-
-        # ADD MENUS TO THE MENU BAR
-        self.menubar.addAction(self.menuMenu.menuAction())
-
-        # CENTRAL WIDGETS
-        # Create a layout
-        self.mainlay = QtWidgets.QHBoxLayout()
-        self.mainlay.setSpacing(0)
-        self.mainlay.setContentsMargins(0, 0, 0, 0)
-
-        # Create and set the central widget
-        self.central_chat = QtWidgets.QWidget(ChatWindow)
-        self.central_chat.setLayout(self.mainlay)
-        # ChatWindow.setCentralWidget(self.central_chat)
+        self.chat_window_layout = QtWidgets.QHBoxLayout()
+        self.chat_window_layout.setSpacing(0)
+        self.chat_window_layout.setContentsMargins(0, 0, 0, 0)
+        
+        ChatWindow.setLayout(self.chat_window_layout)
 
         # Create widgets
         self.left_side()
         self.right_side()
 
-        # Layout widgets
-        self.mainlay.addWidget(self.left_container)
-        self.mainlay.addWidget(self.right_container)
 
     def left_side(self):
 
         # CONTAINER
-        self.left_container = QtWidgets.QWidget(self.central_chat)
+        self.left_container = QtWidgets.QWidget()
         self.left_container.setMinimumSize(QtCore.QSize(150, 250))
         self.left_container.setMaximumWidth(236)
+        self.chat_window_layout.addWidget(self.left_container)
 
         # Layout inside container
         self.layleft = QtWidgets.QVBoxLayout(self.left_container)
@@ -103,17 +78,19 @@ class Ui_ChatWindow(QObject):
         self.clients_field.setWidget(self.left_scroll)
         self.clients_field.setStyleSheet(ScrollBar.orange_style)
 
-
-
         # LAYOUT LEFT SIDE
         self.layleft.addWidget(self.chatlist)
         self.layleft.addWidget(self.clients_field)
-       # ---------------------------------------client_frame
 
-    def load_client(self, users: list = []):
+        # --------------------------------------- Client_frame
+
+    def load_client(self, users: list = None):
         """
         Load users conversation list from users who are registered in database
         """
+        if users is None:
+            users = []
+
         for user in users:
             uuid = user.get_uuid()
             name = user.get_user_name()
@@ -177,6 +154,7 @@ class Ui_ChatWindow(QObject):
         # CONTAINER
         self.right_container = QtWidgets.QWidget()
         self.right_container.setMinimumSize(285, 200)
+        self.chat_window_layout.addWidget(self.right_container)
 
         # Layout inside container
         self.layright = QtWidgets.QVBoxLayout(self.right_container)

@@ -23,7 +23,6 @@ class Server(QObject):
     CONNECTED_CLIENTS = []
     CONNECTED_CLIENTS_IPS = []
 
-
     def __init__(self):
         QObject.__init__(self)
         self.host = "0.0.0.0"
