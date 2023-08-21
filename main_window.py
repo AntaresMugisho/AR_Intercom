@@ -30,13 +30,13 @@ class MainWindow(QMainWindow):
         self.ui.stackedWidget.setCurrentWidget(self.login_window)
         self.setWindowTitle(self.login_window.windowTitle())
 
-        # Prepare chat window
-        self.chat_window = ChatWindow()
-
         # Listen for authenticated signal emitted from login window on a success login
         self.login_window.authenticated.connect(self.show_chat_window)
 
-        # Show Main window
+        # Prepare chat window
+        self.chat_window = ChatWindow()
+
+        # # Show Main window
         self.show()
 
     @Slot()
@@ -54,7 +54,10 @@ class MainWindow(QMainWindow):
         """
         Close all connections, timers and exit the application
         """
-        print("Exiting app")
+        self.close()
+        app = QApplication.instance()
+        app.quit()
+
         # try:
         #     self.net_scanner.stop()
         #     # Stop all clients instances
@@ -77,4 +80,5 @@ if __name__ == "__main__":
     if not app:
         app = QApplication(sys.argv)
     main_window = MainWindow()
+    # main_window.show()
     sys.exit(app.exec())

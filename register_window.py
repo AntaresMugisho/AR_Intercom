@@ -13,7 +13,7 @@ from PySide6.QtCore import Qt, QTimer, QPoint
 from ui.register_window import Ui_SigninWindow
 from styles import LineEdit, ComboBox, Features
 from user import User
-from login_window import LoginWindow
+from main_window import MainWindow
 import utils
 
 
@@ -23,7 +23,7 @@ class RegisterWindow(QWidget):
     """
 
     def __init__(self):
-        super().__init__()
+        QWidget.__init__(self)
         self.ui = Ui_SigninWindow()
         self.ui.setupUi(self)
 
@@ -53,8 +53,8 @@ class RegisterWindow(QWidget):
         # CONNECT CHOOSE PROFILE
         self.ui.choose_profilepicture.mousePressEvent = self.choose_profile
 
-        # CONNECT "NEXT" ADN "VALIDATE" BUTTON
-        self.ui.next.clicked.connect(self.validate)
+        # CONNECT "NEXT" AND "VALIDATE" BUTTONS
+        self.ui.next.clicked.connect(self.terminate)  #self.validate
         self.ui.validate.clicked.connect(self.confirm_subscription)
 
         # HIDE "BACK" BUTTON ON START
@@ -224,11 +224,12 @@ class RegisterWindow(QWidget):
         """
         Ends subscription process and go to log in window
         """
-        # Show login window
-        LoginWindow()
-
         # Close registration window
         self.close()
+
+        # Show login window
+        print("Show main window")
+        MainWindow()
 
 
 if __name__ == "__main__":
