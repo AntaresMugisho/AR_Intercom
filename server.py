@@ -169,7 +169,7 @@ class Server(QObject):
         Download and save file from distant client machine.
         """
         home_directory = utils.get_home_directory()
-        directory = f"{home_directory}/AR Intercom/Media/{kind.capitalize()}s"
+        directory = f"{home_directory}/AR_Intercom/Media/{kind.capitalize()}s"
 
         # SET DIFFERENT DIRECTORY IF IT IS A PROFILE PICTURE
         if kind == "id":

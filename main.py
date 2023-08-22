@@ -64,6 +64,9 @@ class SplashScreen(QWidget):
         QtCore.QTimer.singleShot(4050, lambda: self.ui.loading.setText("Loading User Interface"))
         QtCore.QTimer.singleShot(4500, lambda: self.ui.loading.setText("Launching..."))
 
+        # CREATE DATABASES IF NOT EXISTS
+        utils.create_databases()
+
         # CREATE MEDIA FOLDERS IF NOT EXISTS
         utils.create_media_folders()
 

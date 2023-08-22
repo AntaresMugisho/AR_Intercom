@@ -16,7 +16,7 @@ class Database:
             return cls.__instance
 
 
-    def __init__(self, fetch_class):
+    def __init__(self, fetch_class=None):
         self.connection = sqlite3.connect("user/database.db")
         self.cursor = self.connection.cursor()
 
@@ -70,51 +70,3 @@ class Database:
     @classmethod
     def set_fetch_mode(cls, fetch_class: str):
         cls.FETCH_CLASS = fetch_class
-
-
-if __name__ == "__main__":
-    from user import User
-    from message import Message
-
-    create_users_table = """
-    CREATE TABLE IF NOT EXISTS users(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        uuid VARCHAR,
-        host_address VARCHAR,
-        host_name VARCHAR,
-        user_name VARCHAR,
-        user_status VARCHAR,
-        password VARCHAR,
-        image_path VARCHAR DEFAULT('user/default.png'),
-        department VARCHAR,
-        role VARCHAR,
-        created_at DATETIME,
-        updated_at DATETIME,
-        deleted_at DATETIME
-    )
-    """
-    create_messages_table = """
-    CREATE TABLE IF NOT EXISTS messages(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        sender_id INTEGER,
-        receiver_id INTEGER,
-        kind VARCHAR,
-        body TEXT,
-        received BOOLEAN,
-        created_at DATETIME,
-        updated_at DATETIME,
-        deleted_at DATETIME
-    )
-    """
-
-    # db.execute(create_users_table)
-    # db.execute(create_messages_table)
-
-    db = Database(User)
-    user = db._fetchone("SELECT * FROM users WHERE id=1")
-    print(user.get_user_name())
-
-    db = Database(Message)
-    messages = db.fetchall("SELECT * FROM messages")
-    for message in messages:
-        print(message.get_body())
