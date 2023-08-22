@@ -36,46 +36,47 @@ def create_media_folders():
             except Exception as e:
                 print(f"Failed to create media files : {e}")
 
+
 def create_databases():
     """
     Create databases and tables if they not exists
     """
-    create_users_table = """
-        CREATE TABLE IF NOT EXISTS users(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            uuid VARCHAR,
-            host_address VARCHAR,
-            host_name VARCHAR,
-            user_name VARCHAR,
-            user_status VARCHAR,
-            password VARCHAR,
-            image_path VARCHAR DEFAULT('user/default.png'),
-            department VARCHAR,
-            role VARCHAR,
-            created_at DATETIME,
-            updated_at DATETIME,
-            deleted_at DATETIME
-        )
-        """
-    create_messages_table = """
-        CREATE TABLE IF NOT EXISTS messages(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            sender_id INTEGER,
-            receiver_id INTEGER,
-            kind VARCHAR,
-            body TEXT,
-            received BOOLEAN,
-            created_at DATETIME,
-            updated_at DATETIME,
-            deleted_at DATETIME
-        )
-        """
-
     db_path = "user/database.db"
     if not os.path.exists(db_path):
+
+        create_users_table = """
+            CREATE TABLE IF NOT EXISTS users(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                uuid VARCHAR,
+                host_address VARCHAR,
+                host_name VARCHAR,
+                user_name VARCHAR,
+                user_status VARCHAR,
+                password VARCHAR,
+                image_path VARCHAR DEFAULT('user/default.png'),
+                department VARCHAR,
+                role VARCHAR,
+                created_at DATETIME,
+                updated_at DATETIME,
+                deleted_at DATETIME
+        )"""
+        create_messages_table = """
+            CREATE TABLE IF NOT EXISTS messages(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                sender_id INTEGER,
+                receiver_id INTEGER,
+                kind VARCHAR,
+                body TEXT,
+                received BOOLEAN,
+                created_at DATETIME,
+                updated_at DATETIME,
+                deleted_at DATETIME
+        )"""
+
         with sqlite3.connect(db_path) as connection:
             connection.execute(create_users_table)
             connection.execute(create_messages_table)
+
 
 def create_rounded_image(image_path, size):
     """
@@ -110,6 +111,3 @@ def get_private_ip():
         return ip_address
     except OSError:
         return "127.0.0.1"
-
-
-create_databases()
