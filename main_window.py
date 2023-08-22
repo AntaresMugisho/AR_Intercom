@@ -1,7 +1,6 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 import sys
 import os
-import hashlib
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QLineEdit
 from PySide6.QtCore import Qt, Slot
@@ -9,8 +8,6 @@ from PySide6.QtCore import Qt, Slot
 from ui.main_window import Ui_MainWindow
 from login_window import LoginWindow
 from chat_window import ChatWindow
-from styles import LineEdit
-from user import User
 
 
 class MainWindow(QMainWindow):
@@ -24,19 +21,22 @@ class MainWindow(QMainWindow):
         self.ui.actionAide.triggered.connect(self.help)
         self.ui.actionQuitter.triggered.connect(self.close_)
 
-        # On startup, show login window
+        # ADD WIDGETS
+        # Login window
         self.login_window = LoginWindow()
         self.ui.stackedWidget.addWidget(self.login_window)
-        self.ui.stackedWidget.setCurrentWidget(self.login_window)
-        self.setWindowTitle(self.login_window.windowTitle())
 
-        # Listen for authenticated signal emitted from login window on a success login
+        # Chat window
+        self.chat_window = ChatWindow()
+        self.ui.stackedWidget.addWidget(self.chat_window)
+
+        # On startup, show login window
+        self.show_login_window()
+
+        # After authentication, show chat window
         self.login_window.authenticated.connect(self.show_chat_window)
 
-        # Prepare chat window
-        self.chat_window = ChatWindow()
-
-        # # Show Main window
+        # Show Main window
         self.show()
 
     @Slot()
@@ -58,19 +58,14 @@ class MainWindow(QMainWindow):
         app = QApplication.instance()
         app.quit()
 
-        # try:
-        #     self.net_scanner.stop()
-        #     # Stop all clients instances
-        #     self.server.stop()
-        # except Exception as e:
-        #     print(f"Error while trying to close app: {e}")
-        # finally:
-        #     pass
-        #     # self.close()
+
+    @Slot()
+    def show_login_window(self):
+        self.ui.stackedWidget.setCurrentWidget(self.login_window)
+        self.setWindowTitle(self.login_window.windowTitle())
 
     @Slot()
     def show_chat_window(self):
-        self.ui.stackedWidget.addWidget(self.chat_window)
         self.ui.stackedWidget.setCurrentWidget(self.chat_window)
         self.setWindowTitle(self.chat_window.windowTitle())
 
