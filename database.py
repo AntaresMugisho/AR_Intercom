@@ -41,11 +41,14 @@ class Database:
         result = self.cursor.fetchone()
         self._close()
 
-        class_object = self.FETCH_CLASS()
-        for i, attribute in enumerate(class_object.__dict__.keys()):
-            class_object.__dict__[attribute] = result[i]
+        # Assign values to the class object
+        if result is not None:
+            class_object = self.FETCH_CLASS()
+            for i, attribute in enumerate(class_object.__dict__.keys()):
+                class_object.__dict__[attribute] = result[i]
+            return class_object
 
-        return class_object
+        return None
 
     def _fetchall(self, statement):
         """
@@ -55,13 +58,16 @@ class Database:
         results = self.cursor.fetchall()
         self._close()
 
-        class_objects = []
-        for result in results:
-            class_object = self.FETCH_CLASS()
-            for i, attribute in enumerate(class_object.__dict__.keys()):
-                class_object.__dict__[attribute] = result[i]
-            class_objects.append(class_object)
-        return class_objects
+        if results is not None:
+            class_objects = []
+            for result in results:
+                class_object = self.FETCH_CLASS()
+                for i, attribute in enumerate(class_object.__dict__.keys()):
+                    class_object.__dict__[attribute] = result[i]
+                class_objects.append(class_object)
+            return class_objects
+
+        return None
 
     def _close(self):
         self.cursor.close()
