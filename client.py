@@ -16,7 +16,7 @@ class Client:
     SERVER_IP = utils.get_private_ip()
 
     # Port Unique for all clients
-    PORT = 12000
+    PORT = 33511
 
     def __init__(self, server_host="127.0.0.1"):
         self.server_host = server_host

@@ -38,7 +38,7 @@ class ChatWindow(QWidget):
         self.ui.setupUi(self)
 
         # SHOW USER'S LIST
-        users = User.where("id", ">=", 1)
+        users = User.where("id", ">", 1)
         self.ui.load_client(users)
 
         # CONNECT USER'S CONVERSATION BUTTONS
