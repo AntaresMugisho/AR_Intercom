@@ -95,7 +95,6 @@ class Ui_ChatWindow(QObject):
         for user in users:
             uuid = user.get_uuid()
             name = user.get_user_name()
-            print(user.get_image_path())
             profile_picture_path = user.get_image_path()
 
             # FRAME FOR ONE CLIENT

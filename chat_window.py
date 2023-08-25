@@ -82,7 +82,7 @@ class ChatWindow(QWidget):
         self.player = Player()
         self.player.errorOccurred.connect(lambda error: print(error))
 
-        # self.ui.playButtonPressed.connect(self.play)
+        self.ui.playButtonPressed.connect(self.play)
 
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
 
@@ -422,7 +422,6 @@ class ChatWindow(QWidget):
             play_button.setObjectName(None)
 
     def player_error(self, error):
-        print("Yo")
         if error == QMediaPlayer.Error.ResourceError:
             print("Player resource error")
             self.player.stop()

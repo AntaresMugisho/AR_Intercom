@@ -42,6 +42,7 @@ class LoginWindow(QWidget, QObject):
         # CONNECT UI BUTTONS TO SLOTS
         self.ui.connect_log.clicked.connect(self.auth)
         self.ui.connect_log.keyPressEvent = self.auth
+        # self.ui.log_password.keyPressEvent = self.auth
 
     def check_username(self):
         """
@@ -85,8 +86,7 @@ class LoginWindow(QWidget, QObject):
         """
         Verifies user credentials and allow access to the chat window if the user is authenticated
         """
-
-        if event is not True or event.key() == Qt.Key.Key_Return:
+        if event and event.key() == Qt.Key.Key_Return:
             self.check_username()
             self.check_password()
 

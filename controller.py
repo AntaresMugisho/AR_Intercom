@@ -46,7 +46,6 @@ class Controller:
         """
         cls.setup_db()
         statement = f"SELECT * FROM {cls.table_name} WHERE deleted_at ISNULL"
-        print(statement)
         return cls.db.fetchall(statement)
 
     @classmethod
@@ -91,7 +90,6 @@ class Controller:
         """
 
         statement = statement.replace("[", "").replace("]", "").replace("'", "")
-
         # Execute statement
         self.__class__.db._execute(statement, values)
 
@@ -106,7 +104,7 @@ class Controller:
         """
         cls.setup_db()
         statement = f"SELECT * FROM {cls.table_name} WHERE {field} {operator} '{value}' AND deleted_at ISNULL"
-        return cls.db._fetchall(statement)\
+        return cls.db._fetchall(statement)
 
     @classmethod
     def first_where(cls, field: str, operator: str, value):
