@@ -16,13 +16,12 @@ class Ui_ChatWindow(QObject):
     playButtonPressed = Signal(object)
 
     def setupUi(self, ChatWindow):
-
         if not ChatWindow.objectName():
             ChatWindow.setObjectName(u"ChatWindow")
 
         ChatWindow.resize(690, 470)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/icons/ARsoftlogo.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addFile(":/icons/icons/ARsoftlogo.png", QtCore.QSize(), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         ChatWindow.setWindowIcon(icon)
         ChatWindow.setWindowTitle("AR Intercom - Chat Window")
 

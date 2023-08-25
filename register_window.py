@@ -21,11 +21,11 @@ class RegisterWindow(QWidget):
     """
     Register a new user on first app launch
     """
-
     def __init__(self):
         QWidget.__init__(self)
         self.ui = Ui_SigninWindow()
         self.ui.setupUi(self)
+        self.setWindowTitle("AR Intercom - Création de compte")
 
         # REMOVE TITLE BAR
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
@@ -41,7 +41,7 @@ class RegisterWindow(QWidget):
         # Apply shadow on register window
         self.setGraphicsEffect(self.shadow)
 
-        self.ui.choose_profilepicture.setToolTip("Choose profile picture (PRO)")
+        self.ui.choose_profilepicture.setToolTip("Photo de profile")
 
         # Initialize a new user
         self.user = User()
@@ -79,8 +79,10 @@ class RegisterWindow(QWidget):
 
         # CONNECT "TERMINATE" BUTTON
         self.ui.terminate.clicked.connect(self.terminate)
-        # SHOW REGISTER WINDOW
-        self.show()
+
+        # PREPARE MAIN WINDOW
+        self.main_window = MainWindow()
+
 
     def move_window(self, event):
         if event.buttons() == Qt.MouseButton.LeftButton:
@@ -227,14 +229,15 @@ class RegisterWindow(QWidget):
         # Close registration window
         self.close()
 
-        # Show login window
-        print("Show main window")
-        MainWindow()
-
+        # Show Main window
+        self.main_window.show()
 
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    run = RegisterWindow()
+    app = QApplication.instance()
+    if not app:
+        app = QApplication(sys.argv)
+    register_window = RegisterWindow()
+    register_window.show()
     sys.exit(app.exec())

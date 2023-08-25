@@ -7,7 +7,7 @@ import threading
 from functools import partial
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider, QMessageBox
-from PySide6.QtCore import QObject, QTimer, Slot
+from PySide6.QtCore import QObject, QTimer, Slot, Qt, Signal
 from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
 
 from ui.chat_window import Ui_ChatWindow
@@ -26,6 +26,7 @@ import utils
 
 # Global variables for recorder time counter
 seconds = minutes = 0
+
 
 class ChatWindow(QWidget):
     """
@@ -81,7 +82,7 @@ class ChatWindow(QWidget):
         self.player = Player()
         self.player.errorOccurred.connect(lambda error: print(error))
 
-        self.ui.playButtonPressed.connect(self.play)
+        # self.ui.playButtonPressed.connect(self.play)
 
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
 
@@ -344,7 +345,7 @@ class ChatWindow(QWidget):
         # IF PLAYER IS IN PLAYING STATE, THE PAUSE
         if play_button.objectName() == "playing":
             self.player._pause()
-            
+
         else:
             # Try to stop an eventual playing player
             self.player.stop()
@@ -487,7 +488,9 @@ class ChatWindow(QWidget):
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
+    app = QApplication.instance()
+    if not app:
+        app = QApplication(sys.argv)
     chat_window = ChatWindow()
     chat_window.show()
     sys.exit(app.exec())

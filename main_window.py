@@ -11,7 +11,9 @@ from chat_window import ChatWindow
 
 
 class MainWindow(QMainWindow):
-
+    """
+    Main window, multiscreen
+    """
     def __init__(self):
         QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
@@ -37,7 +39,7 @@ class MainWindow(QMainWindow):
         self.login_window.authenticated.connect(self.show_chat_window)
 
         # Show Main window
-        self.show()
+        # self.show()
 
     @Slot()
     def help(self):
@@ -75,5 +77,5 @@ if __name__ == "__main__":
     if not app:
         app = QApplication(sys.argv)
     main_window = MainWindow()
-    # main_window.show()
+    main_window.show()
     sys.exit(app.exec())

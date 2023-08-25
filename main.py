@@ -10,6 +10,8 @@ from PySide6.QtCore import Qt, Slot
 from ui.splash import Ui_SplashScreen
 from register_window import RegisterWindow
 from main_window import MainWindow
+from login_window import LoginWindow
+from chat_window import ChatWindow
 from user import User
 import utils
 
@@ -34,6 +36,12 @@ class SplashScreen(QWidget):
         self.ui.setupUi(self)
 
         self.setWindowTitle("AR Intercom")
+
+        # CREATE DATABASES IF NOT EXISTS
+        utils.create_databases()
+
+        # CREATE MEDIA FOLDERS IF NOT EXISTS
+        utils.create_media_folders()
 
         # REMOVE TITLE BAR
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
@@ -64,11 +72,9 @@ class SplashScreen(QWidget):
         QtCore.QTimer.singleShot(4050, lambda: self.ui.loading.setText("Loading User Interface"))
         QtCore.QTimer.singleShot(4500, lambda: self.ui.loading.setText("Launching..."))
 
-        # CREATE DATABASES IF NOT EXISTS
-        utils.create_databases()
-
-        # CREATE MEDIA FOLDERS IF NOT EXISTS
-        utils.create_media_folders()
+        # PREPARE REGISTER AND MAIN WINDOWS
+        self.register_window = RegisterWindow()
+        self.main_window = MainWindow()
 
         # SHOW SPLASH SCREEN
         self.show()
@@ -97,9 +103,9 @@ class SplashScreen(QWidget):
 
             # SHOW REGISTER WINDOW OR LOGIN WINDOW
             if not User.find(1):
-                RegisterWindow()
+                self.register_window.show()
             else:
-                MainWindow()
+                self.main_window.show()
 
         # INCREASE COUNTER
         counter += 0.9
@@ -111,7 +117,7 @@ class SplashScreen(QWidget):
         stylesheet = """
           QFrame{
               border-radius:132px;
-              background-color: qconicalgradient(cx:0.5, cy:0.5, angle:90, stop:{STOP_1} 
+              background-color: qconicalgradient(cx:0.5, cy:0.5, angle:90, stop:{STOP_1}
               rgba(250, 249, 251, 255), stop:{STOP_2} rgba(255, 0, 0, 255));}
           """
 
@@ -133,6 +139,5 @@ if __name__ == "__main__":
     app = QApplication.instance()
     if not app:
         app = QApplication(sys.argv)
-
-    run = MainWindow()
+    run = SplashScreen()
     sys.exit(app.exec())
