@@ -170,6 +170,8 @@ class RegisterWindow(QWidget):
             except TypeError:
                 pass
 
+            if self.user.get_image_path() is None:
+                self.user.set_image_path("user/default.png")
             self.user.save()
 
             self.ui.stackedWidget.setCurrentIndex(2)
