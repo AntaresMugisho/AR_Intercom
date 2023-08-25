@@ -98,7 +98,7 @@ class SplashScreen(QWidget):
             self.close()
 
             # SHOW REGISTER WINDOW OR LOGIN WINDOW
-            if User.find(1):
+            if not User.find(1):
                 self.register_window = RegisterWindow()
                 self.register_window.show()
             else:

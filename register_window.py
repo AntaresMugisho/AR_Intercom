@@ -116,6 +116,7 @@ class RegisterWindow(QWidget):
                 # Show image on the label
                 rounded_pixmap = utils.create_rounded_image(path, self.ui.choose_profilepicture.height())
                 self.ui.choose_profilepicture.setPixmap(rounded_pixmap)
+                print(path)
                 self.user.set_image_path(path)
 
     def validate(self):
@@ -123,31 +124,37 @@ class RegisterWindow(QWidget):
         Verify if data where correctly entered by the user in the register window,
         in which case they ara saved in database
         """
+        errors = []
 
         # CHECK LINES EDIT
         for widget in self.ui.form.findChildren(QLineEdit):
             if not widget.text():
+                errors.append("1")
                 widget.setStyleSheet(LineEdit.style_error)
             else:
+                try:
+                    errors.pop()
+                except IndexError:
+                    pass
                 widget.setStyleSheet(LineEdit.style_normal)
                 if widget.objectName() == "user_name":
                     self.user.set_user_name(self.ui.user_name.text())
 
-        # CHECK COMBO BOX
-        if self.ui.code.currentIndex() == 0:
-            self.ui.code.setStyleSheet(ComboBox.style_error)
-        else:
-            self.ui.code.setStyleSheet(ComboBox.style_normal)
-
         # CHECK IDENTICAL PASSWORDS
         if self.ui.passcode2.text() != self.ui.passcode.text():
+            errors.append("1")
             self.ui.passcode2.setStyleSheet(LineEdit.style_error)
         else:
+            try:
+                errors.pop()
+            except IndexError:
+                pass
             self.ui.passcode2.setStyleSheet(LineEdit.style_normal)
             self.user.set_password(self.ui.passcode.text())
 
         # IF NECESSARY DATA IS COLLECTED, GO TO THE NEXT PAGE
-        if self.user.get_user_name() and self.user.get_password():
+        print(errors)
+        if len(errors) == 0:
             self.ui.stackedWidget.setCurrentIndex(1)
             self.ui.return_button.show()
 
