@@ -38,8 +38,6 @@ class MainWindow(QMainWindow):
         # After authentication, show chat window
         self.login_window.authenticated.connect(self.show_chat_window)
 
-        # Show Main window
-        # self.show()
 
     @Slot()
     def help(self):

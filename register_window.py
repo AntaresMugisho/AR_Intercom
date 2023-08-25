@@ -54,7 +54,7 @@ class RegisterWindow(QWidget):
         self.ui.choose_profilepicture.mousePressEvent = self.choose_profile
 
         # CONNECT "NEXT" AND "VALIDATE" BUTTONS
-        self.ui.next.clicked.connect(self.terminate)  #self.validate
+        self.ui.next.clicked.connect(self.validate)
         self.ui.validate.clicked.connect(self.confirm_subscription)
 
         # HIDE "BACK" BUTTON ON START
@@ -79,9 +79,6 @@ class RegisterWindow(QWidget):
 
         # CONNECT "TERMINATE" BUTTON
         self.ui.terminate.clicked.connect(self.terminate)
-
-        # PREPARE MAIN WINDOW
-        self.main_window = MainWindow()
 
 
     def move_window(self, event):
@@ -230,6 +227,7 @@ class RegisterWindow(QWidget):
         self.close()
 
         # Show Main window
+        self.main_window = MainWindow()
         self.main_window.show()
 
 

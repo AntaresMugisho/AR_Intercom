@@ -72,10 +72,6 @@ class SplashScreen(QWidget):
         QtCore.QTimer.singleShot(4050, lambda: self.ui.loading.setText("Loading User Interface"))
         QtCore.QTimer.singleShot(4500, lambda: self.ui.loading.setText("Launching..."))
 
-        # PREPARE REGISTER AND MAIN WINDOWS
-        self.register_window = RegisterWindow()
-        self.main_window = MainWindow()
-
         # SHOW SPLASH SCREEN
         self.show()
 
@@ -102,13 +98,15 @@ class SplashScreen(QWidget):
             self.close()
 
             # SHOW REGISTER WINDOW OR LOGIN WINDOW
-            if not User.find(1):
+            if User.find(1):
+                self.register_window = RegisterWindow()
                 self.register_window.show()
             else:
+                self.main_window = MainWindow()
                 self.main_window.show()
 
         # INCREASE COUNTER
-        counter += 0.9
+        counter += 0.2
 
     def progress_value(self, value):
         """
