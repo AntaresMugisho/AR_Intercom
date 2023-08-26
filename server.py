@@ -28,7 +28,6 @@ class Server(QObject):
         self.host = "0.0.0.0"
         self.port = 33511
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # self.message_listener = Message()
 
     def accept_connections(self):
         """
@@ -42,7 +41,7 @@ class Server(QObject):
                     self.CONNECTED_CLIENTS.append(client)
                     self.CONNECTED_CLIENTS_IPS.append(ip_address[0])
             except Exception as e:
-                print("Error in server :", e)
+                print("[-] Error in server :", e)
                 break
 
     def start(self):
@@ -52,10 +51,10 @@ class Server(QObject):
         try:
             self.sock.bind((self.host, self.port))
         except OSError as e:
-            print("[-] ", e)
+            print("[-] Error while trying to bind host", e)
         else:
             self.sock.listen(5)
-            print(f"Server listening on {self.host}:{self.port}")
+            print(f"[+] Server listening on {self.host}:{self.port}")
 
             # Wait for connections and messages
             connections_thread = threading.Thread(target=self.accept_connections)
@@ -68,13 +67,13 @@ class Server(QObject):
         Close socket server.
         """
         self.sock.close()
-        print("Server closed !")
+        print("[!] Server closed !")
 
     def receive_massages(self):
         """
         Receive messages and send status report
         """
-        print("Waiting for messages...")
+        print("[+] Waiting for messages...")
         while True:
             try:
                 rlist, wlist, xlist = select.select(self.CONNECTED_CLIENTS, [], [], 0.50)
@@ -85,7 +84,7 @@ class Server(QObject):
                 for client in rlist:
                     try:
                         packet = client.recv(1024).decode()
-                        client.send("Message Received".encode())
+                        client.send("[+] New message received".encode())
 
                         packet = packet.split("|")
                         client_id = packet[0]
@@ -99,7 +98,7 @@ class Server(QObject):
                         pass
 
                     except Exception as e:
-                        print("Error while receiving message", e)
+                        print("[-] Error while receiving message", e)
 
                     else:
                         sender = User.first_where("host_address", "=", client_id)
@@ -129,20 +128,21 @@ class Server(QObject):
 
                             # Save message and emit signal so that it can be displayed in the GUI
                             message.save()
+                            print("Message id before emitting signal :", message.get_id())
                             self.messageReceived.emit(message.get_id())
 
-                        elif message_kind == "id":
-                            profile_picture_size = int(packet[2])
-                            profile_picture_path = packet[3]
-                            user_name = packet[4]
-                            user_status = packet[5]
-                            department = packet[6]
-                            role = packet[7]
-
-                            if profile_picture_path != "user/default.png":
-                                extension = os.path.splitext(profile_picture_path)[1]
-                                file_name = f"{client_id}_profile{extension}"
-                                self.download_file(client, message_kind, profile_picture_size, file_name)
+                        # elif message_kind == "id":
+                        #     profile_picture_size = int(packet[2])
+                        #     profile_picture_path = packet[3]
+                        #     user_name = packet[4]
+                        #     user_status = packet[5]
+                        #     department = packet[6]
+                        #     role = packet[7]
+                        #
+                        #     if profile_picture_path != "user/default.png":
+                        #         extension = os.path.splitext(profile_picture_path)[1]
+                        #         file_name = f"{client_id}_profile{extension}"
+                        #         self.download_file(client, message_kind, profile_picture_size, file_name)
 
                             # Store or update user's information in database
                             # user_exists = User.first_where("host_address", "=", client_id)
@@ -191,7 +191,7 @@ class Server(QObject):
                 print("Downloading file...", str(round(len(downloaded) * 100 / file_size)), "%")
 
             # ONCE DOWNLOAD IS DONE
-            client_socket.send("File Received".encode())
+            client_socket.send("[!] File Received".encode())
 
         # Return the path where the file was stored so that we can save it in database
         return f"{directory}/{file_name}"
