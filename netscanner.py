@@ -22,13 +22,11 @@ class NetscanThread(threading.Thread):
         """
         Ping the given address and try to get more data if the address is alive
         """
-        reply = subprocess.call(["ping", "-c", "1", address], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        if reply == 0:
-            try:
-                hostname, _, _ = socket.gethostbyaddr(address)
-            except socket.herror:
-                hostname = f"Unknown<{address}>"
+        try:
+            hostname, _, _ = socket.gethostbyaddr(address)
             NetscanThread.hosts[address] = hostname
+        except socket.herror:
+            pass
 
 
 if __name__ == "__main__":

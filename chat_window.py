@@ -442,7 +442,7 @@ class ChatWindow(QWidget):
             my_ip_bytes = my_ip.split(".")
             net_id = ".".join(my_ip_bytes[:3])
 
-            for host_id in range(0, 256):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
+            for host_id in range(2, 255):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
                 # if host_id != int(my_ip_bytes[3]):
                 addresses.append(f"{net_id}.{str(host_id)}")
 
@@ -455,6 +455,7 @@ class ChatWindow(QWidget):
                 thread.join()
 
             self.server_hosts = NetscanThread.hosts
+            print(self.server_hosts)
 
             # Check online hosts after network scan
             online_checkers = []
@@ -462,8 +463,12 @@ class ChatWindow(QWidget):
                 thread = threading.Thread(target=self.check_online, args=(server_host,))
                 online_checkers.append(thread)
 
+            online_threads = []
             for thread in online_checkers:
                 thread.start()
+                online_threads.append(thread)
+
+            for thread in online_threads:
                 thread.join()
 
     def check_online(self, server_host: str):
@@ -471,19 +476,17 @@ class ChatWindow(QWidget):
         Checks online devices and show or hide green online indicator widget.
         """
         client = Client(server_host)
-        threading.Thread(target=client.connect_to_server).start()
-        # client.connect_to_server()
+        client.connect_to_server()
 
         # Show green online toast if client is online
         user = User.first_where("host_address", "=", server_host)
         if user:
             user_uuid = user.get_uuid()
-            for widget in self.ui.left_scroll.findChildren(QFrame):
-                if widget.objectName() == f"{user_uuid}_toast":
-                    if client.online:
-                        widget.show()
-                    else:
-                        widget.hide()
+            online_toast = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_toast")
+            if client.online:
+                online_toast.show()
+            else:
+                online_toast.hide()
 
 
 if __name__ == "__main__":
