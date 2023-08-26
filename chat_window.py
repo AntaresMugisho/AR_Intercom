@@ -65,10 +65,10 @@ class ChatWindow(QWidget):
         # Scan on startup
         QTimer().singleShot(1000, self.scan_network)
 
-        # Scan network every 5 minutes to refresh active servers
+        # Scan network to refresh active servers
         self.net_scanner = QTimer()
         self.net_scanner.timeout.connect(self.scan_network)
-        self.net_scanner.start(300_000)
+        self.net_scanner.start(10_000)
 
         # CREATE RECORDER INSTANCE AND ASSOCIATED TIME COUNTER
         self.recorder = Recorder()
@@ -126,6 +126,7 @@ class ChatWindow(QWidget):
             #  messages sent from user_id 1 will be shown in the right bubble
             if sender_id == 1:
                 self.ui.create_right_bubble(message)
+                print(self.ui.message_status.objectName())
                 if self.ui.message_status.objectName().startswith("error"):
                     self.ui.message_status.clicked.connect(self.resend_message)
             else:
@@ -140,7 +141,7 @@ class ChatWindow(QWidget):
         message_counter.parent().setStyleSheet(Clients.frame_normal)
 
         # Connect delete messages button
-        self.ui.delete_button.released.connect(self.delete_messages)
+        self.ui.delete_button.clicked.connect(self.delete_messages)
 
     @Slot(int)
     def show_incoming_message(self, id: int):
@@ -151,6 +152,7 @@ class ChatWindow(QWidget):
         user = User.find(message.get_sender_id())
 
         if self.ui.active_client.objectName() and self.ui.active_client.objectName() == user.get_uuid():
+            # Show message in the bubble
             self.ui.create_left_bubble(message)
         else:
             # Increase the unread message counter badge
@@ -189,42 +191,41 @@ class ChatWindow(QWidget):
         """
         if not self.ui.active_client.text():
             QMessageBox.warning(self, "Destinataire non défini",
-                                "Veuillez spécifiez d'abord votre destinataire!",
+                                "Veuillez sélectionner d'abord votre destinataire !",
                                 QMessageBox.StandardButton.Ok)
-        else:
-            # SEND TEXT MESSAGE
-            if self.ui.send_button.styleSheet() == SendButton.style_send:
-                receiver = User.first_where("uuid", "=", self.ui.active_client.objectName())
-                receiver_id = receiver.get_id()
 
-                text_message = self.ui.entry_field.text()
+        # SEND TEXT MESSAGE
+        elif self.ui.entry_field.text():
+            receiver = User.first_where("uuid", "=", self.ui.active_client.objectName())
+            receiver_id = receiver.get_id()
 
-                message = Message()
-                message.set_sender_id(1)
-                message.set_receiver_id(receiver_id)
-                message.set_kind("text")
-                message.set_body(text_message)
+            text_message = self.ui.entry_field.text()
 
-                # Send message and get it back with the status report modified
-                client = Client(receiver.get_host_address())
-                message = client.send_message(message)
+            message = Message()
+            message.set_sender_id(1)
+            message.set_receiver_id(receiver_id)
+            message.set_kind("text")
+            message.set_body(text_message)
 
-                # Save text message in database
-                print(message.__dict__)
-                message.save()
+            # Send message and get it back with the status report modified
+            client = Client(receiver.get_host_address())
+            message = client.send_message(message)
 
-                # Show bubble
-                self.ui.create_right_bubble(message)
+            # Save text message in database
+            message.save()
 
-                # Reset some ui states
-                self.ui.entry_field.setText(None)
-                self.ui.send_button.setStyleSheet(SendButton.style_record)
-                self.ui.media_button.setEnabled(True)
+            # Show bubble
+            self.ui.create_right_bubble(message)
 
-            # RECORD VOICE MESSAGE
-            elif self.ui.send_button.styleSheet() == SendButton.style_record:
-                self.ui.media_button.setEnabled(False)
-                self.record_voice()
+            # Reset some ui states
+            self.ui.entry_field.setText(None)
+            self.ui.send_button.setStyleSheet(SendButton.style_record)
+            self.ui.media_button.setEnabled(True)
+
+        # RECORD VOICE MESSAGE
+        elif not self.ui.entry_field.text():
+            self.ui.media_button.setEnabled(False)
+            self.record_voice()
 
     @Slot(str, str)
     def send_media(self, kind: str, path: str):
@@ -264,7 +265,7 @@ class ChatWindow(QWidget):
 
         # Send message
         client = Client(receiver.get_host_address())
-        client.send_message(message)
+        message = client.send_message(message)
 
         # Update in database
         message.update()
@@ -319,7 +320,6 @@ class ChatWindow(QWidget):
 
         time_counter = "%02d:%02d" % (minutes, seconds)
         self.ui.record_time.setText(time_counter)
-        print(time_counter)
 
     def recorder_state_changed(self):
         """

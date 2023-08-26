@@ -42,14 +42,13 @@ class Client:
             print(f"[-] Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
 
         else:
-            pass
             # Save user in the database if not exist
-            # user_exists = User.first_where("host_address", "=", self.server_host)
-            # if not user_exists:
-            #     user = User()
-            #     user.set_host_address(self.server_host)
-            #     user.set_user_name(f"<{self.server_host}>")
-            #     user.save()
+            user_exists = User.first_where("host_address", "=", self.server_host)
+            if not user_exists:
+                user = User()
+                user.set_host_address(self.server_host)
+                user.set_user_name(f"<{self.server_host}>")
+                user.save()
 
             # If I find the user online, just send him my IDS, he will do the same
             # print(f"Hello {self.server_host}, take my IDs")
@@ -63,9 +62,9 @@ class Client:
             self.sock.send(packet.encode())
             server_response = self.sock.recv(1024).decode()
             self.message_delivered = True
-            print(server_response)
+            print(f"[+] Delivery status : {server_response}")
         except Exception as e:
-            print("Error while sending message: ", e)
+            print("[-] Error while sending message: ", e)
             # Need to catch 2 exceptions,
             # One if the message was not sent
             # Another if the message was sent but the server didn't send feedback
@@ -89,7 +88,7 @@ class Client:
 
             # COLLECT MEDIA METADATA FIRST
             file_size = os.path.getsize(path)
-            file_name = os.path.split(path)[1]
+            file_name = os.path.basename(path)
 
             # SEND CLIENT ID AND FILE INFORMATION THEN UPLOAD FILE
             media_message = f"{self.SERVER_IP}|{message.get_kind()}|{file_size}|{file_name}"
@@ -128,8 +127,6 @@ class Client:
             except Exception as e:
                 self.message_delivered = False
                 print("Error while sending file: ", e)
-
-        return self.message_delivered
 
     def disconnect(self):
         """
