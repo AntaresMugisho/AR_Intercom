@@ -98,6 +98,7 @@ class Server(QObject):
                         pass
 
                     except Exception as e:
+                        # pass
                         print("[-] Error while receiving message", e)
 
                     else:

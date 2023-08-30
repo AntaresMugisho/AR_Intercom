@@ -41,15 +41,7 @@ class Client:
         except Exception as e:
             print(f"[-] Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
 
-        else:
-            # Save user in the database if not exist
-            user_exists = User.first_where("host_address", "=", self.server_host)
-            if not user_exists:
-                user = User()
-                user.set_host_address(self.server_host)
-                user.set_user_name(f"<{self.server_host}>")
-                user.save()
-
+        # else:
             # If I find the user online, just send him my IDS, he will do the same
             # print(f"Hello {self.server_host}, take my IDs")
             # self.send_message("id")

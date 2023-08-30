@@ -68,7 +68,7 @@ class ChatWindow(QWidget):
         # Scan network to refresh active servers
         self.net_scanner = QTimer()
         self.net_scanner.timeout.connect(self.scan_network)
-        self.net_scanner.start(10_000)
+        self.net_scanner.start(300_000)
 
         # CREATE RECORDER INSTANCE AND ASSOCIATED TIME COUNTER
         self.recorder = Recorder()
@@ -433,26 +433,21 @@ class ChatWindow(QWidget):
         Scan network to find connected devices and put them in server_host dictionary.
         """
         addresses = []
-        threads = []
 
         my_ip = utils.get_private_ip()
-        if my_ip.startswith("127.0"):
+        if not my_ip.startswith("127.0"):
             print("Aucun réseau détecté.\nVeuillez vous connecter à un réseau Wi-Fi !")
         else:
             my_ip_bytes = my_ip.split(".")
             net_id = ".".join(my_ip_bytes[:3])
 
-            for host_id in range(2, 255):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
+            for host_id in range(1, 255):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
                 # if host_id != int(my_ip_bytes[3]):
                 addresses.append(f"{net_id}.{str(host_id)}")
 
             scan_threads = [NetscanThread(address) for address in addresses]
             for thread in scan_threads:
                 thread.start()
-                threads.append(thread)
-
-            for thread in threads:
-                thread.join()
 
             self.server_hosts = NetscanThread.hosts
             print(self.server_hosts)
@@ -463,30 +458,39 @@ class ChatWindow(QWidget):
                 thread = threading.Thread(target=self.check_online, args=(server_host,))
                 online_checkers.append(thread)
 
-            online_threads = []
             for thread in online_checkers:
                 thread.start()
-                online_threads.append(thread)
 
-            for thread in online_threads:
-                thread.join()
 
-    def check_online(self, server_host: str):
+    def check_online(self, host_address: str):
         """
         Checks online devices and show or hide green online indicator widget.
         """
-        client = Client(server_host)
+        client = Client(host_address)
         client.connect_to_server()
 
         # Show green online toast if client is online
-        user = User.first_where("host_address", "=", server_host)
+        user = User.first_where("host_address", "=", host_address)
         if user:
             user_uuid = user.get_uuid()
             online_toast = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_toast")
             if client.online:
+                print("online")
                 online_toast.show()
             else:
+                print("offline")
                 online_toast.hide()
+
+    def add_user(self, host_address, host_name):
+        # Save user in the database if not exist
+        user_exists = User.first_where("host_address", "=", host_address)
+        if not user_exists:
+            user = User()
+            user.set_host_address(host_address)
+            user.set_host_name(f"<{host_name}>")
+            user.save()
+        else:
+            print("User exists")
 
 
 if __name__ == "__main__":
