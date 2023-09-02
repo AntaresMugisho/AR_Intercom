@@ -1,55 +1,78 @@
+
+
+import sys
 import socket
-import threading
-import subprocess
+from PySide6.QtCore import QThread, QTimer, QRunnable, QThreadPool, QObject, Signal, Slot
+from PySide6.QtWidgets import QApplication
 
 import utils
 
 
-class NetscanThread(threading.Thread):
+class NetScannerSignals(QObject):
+    """
+    Defines the signals available from the running worker thread
+    """
+    finished = Signal()
+    hosts = Signal(list)
+    error = Signal(tuple)
+
+
+class NetScanner(QRunnable):
     """
     Thread to regularly scan the network by pinging addresses
     """
     hosts = {}
+    hosts = []
 
-    def __init__(self, address):
-        threading.Thread.__init__(self)
-        self.address = address
+    def __init__(self):
+        QRunnable.__init__(self)
+        self.signals = NetScannerSignals()
 
+    @Slot()
     def run(self):
-        self.lookup(self.address)
+        hosts = self.lookup()
+        self.signals.hosts.emit(hosts)
+        self.signals.finished.emit()
 
-    def lookup(self, address):
+    def lookup(self):
         """
         Ping the given address and try to get more data if the address is alive
         """
-        try:
-            hostname, _, _ = socket.gethostbyaddr(address)
-            NetscanThread.hosts[address] = hostname
-        except socket.herror:
-            pass
+        my_ip = utils.get_private_ip()
+        if my_ip.startswith("127.0"):
+            print("Aucun réseau détecté.\nVeuillez vous connecter à un réseau !")
+
+        else:
+            my_ip_bytes = my_ip.split(".")
+            net_id = ".".join(my_ip_bytes[:3])
+
+            for host_id in range(1, 255):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
+                # if host_id != int(my_ip_bytes[3]):
+                address = f"{net_id}.{host_id}"
+            try:
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                # sock.settimeout(1)
+                sock.connect((address, 33511))
+                # sock.settimeout(None)
+                NetScanner.hosts.append(address)
+                # hostname, _, _ = socket.gethostbyaddr(address)
+                # NetScanner.hosts[address] = hostname
+            except TimeoutError:
+                pass
+            # else:
+                # pass
+
+        return NetScanner.hosts
 
 
 if __name__ == "__main__":
-    addresses = []
-    threads = []
+    app = QApplication(sys.argv)
 
-    my_ip = utils.get_private_ip()
-    my_ip_bytes = my_ip.split(".")
-    net_id = ".".join(my_ip_bytes[:3])
+    scanner = NetScanner()
+    scanner.signals.finished.connect(lambda: print("I'm done"))
+    scanner.signals.hosts.connect(lambda h: print(h))
 
-    for host_id in range(0, 255):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
-        if host_id != int(my_ip_bytes[3]):
-            addresses.append(f"{net_id}.{str(host_id)}")
+    thread_pool = QThreadPool()
+    thread_pool.start(scanner)
 
-    netscanthreads = [NetscanThread(address) for address in addresses]
-    for thread in netscanthreads:
-        thread.start()
-        threads.append(thread)
-
-    for thread in threads:
-        thread.join()
-
-    hosts = NetscanThread.hosts
-
-    for address, hostname in hosts.items():
-        print(address, '=>', hostname)
+    app.exec()

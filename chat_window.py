@@ -7,7 +7,7 @@ import threading
 from functools import partial
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider, QMessageBox
-from PySide6.QtCore import QObject, QTimer, Slot, Qt, Signal
+from PySide6.QtCore import QObject, QTimer, Slot, Qt, Signal, QThreadPool
 from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
 
 from ui.chat_window import Ui_ChatWindow
@@ -17,11 +17,9 @@ from client import Client
 
 from user import User
 from message import Message
-
 from recorder import Recorder
 from player import Player
-
-from netscanner import NetscanThread
+from netscanner import NetScanner
 import utils
 
 # Global variables for recorder time counter
@@ -63,12 +61,12 @@ class ChatWindow(QWidget):
         self.server_hosts = {}
 
         # Scan on startup
-        QTimer().singleShot(1000, self.scan_network)
+        # QTimer().singleShot(1000, self.scan_network)
 
         # Scan network to refresh active servers
         self.net_scanner = QTimer()
         self.net_scanner.timeout.connect(self.scan_network)
-        self.net_scanner.start(300_000)
+        self.net_scanner.start(10_000)
 
         # CREATE RECORDER INSTANCE AND ASSOCIATED TIME COUNTER
         self.recorder = Recorder()
@@ -432,34 +430,12 @@ class ChatWindow(QWidget):
         """
         Scan network to find connected devices and put them in server_host dictionary.
         """
-        addresses = []
+        scanner = NetScanner()
+        scanner.signals.finished.connect(lambda: print("I'm done"))
+        scanner.signals.hosts.connect(lambda h: print(h))
 
-        my_ip = utils.get_private_ip()
-        if not my_ip.startswith("127.0"):
-            print("Aucun réseau détecté.\nVeuillez vous connecter à un réseau Wi-Fi !")
-        else:
-            my_ip_bytes = my_ip.split(".")
-            net_id = ".".join(my_ip_bytes[:3])
-
-            for host_id in range(1, 255):  # 0 is supposed to be Net address, 1 the Gateway and 255 the Broadcast address
-                # if host_id != int(my_ip_bytes[3]):
-                addresses.append(f"{net_id}.{str(host_id)}")
-
-            scan_threads = [NetscanThread(address) for address in addresses]
-            for thread in scan_threads:
-                thread.start()
-
-            self.server_hosts = NetscanThread.hosts
-            print(self.server_hosts)
-
-            # Check online hosts after network scan
-            online_checkers = []
-            for server_host in self.server_hosts.keys():
-                thread = threading.Thread(target=self.check_online, args=(server_host,))
-                online_checkers.append(thread)
-
-            for thread in online_checkers:
-                thread.start()
+        thread_pool = QThreadPool()
+        thread_pool.start(scanner)
 
 
     def check_online(self, host_address: str):
