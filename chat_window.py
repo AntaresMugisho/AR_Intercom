@@ -36,7 +36,7 @@ class ChatWindow(QWidget):
         self.ui.setupUi(self)
 
         # SHOW USER'S LIST
-        users = User.where("id", ">", 1)
+        users = User.where("id", ">=", 1)
         self.ui.load_client(users)
 
         # CONNECT USER'S CONVERSATION BUTTONS
@@ -61,12 +61,12 @@ class ChatWindow(QWidget):
         self.server_hosts = {}
 
         # Scan on startup
-        # QTimer().singleShot(1000, self.scan_network)
+        QTimer().singleShot(5000, self.scan_network)
 
         # Scan network to refresh active servers
         self.net_scanner = QTimer()
         self.net_scanner.timeout.connect(self.scan_network)
-        self.net_scanner.start(10_000)
+        # self.net_scanner.start(10_000)
 
         # CREATE RECORDER INSTANCE AND ASSOCIATED TIME COUNTER
         self.recorder = Recorder()
@@ -430,13 +430,26 @@ class ChatWindow(QWidget):
         """
         Scan network to find connected devices and put them in server_host dictionary.
         """
-        scanner = NetScanner()
-        scanner.signals.finished.connect(lambda: print("I'm done"))
-        scanner.signals.hosts.connect(lambda h: print(h))
+        my_ip = utils.get_private_ip()
+        if my_ip.startswith("127.0"):
+            print("Aucune connexion détectée.\nVeuillez vous connecter à un réseau !")
 
-        thread_pool = QThreadPool()
-        thread_pool.start(scanner)
+        else:
+            my_ip_bytes = my_ip.split(".")
+            net_id = ".".join(my_ip_bytes[:3])
 
+            threads = []
+            for host_id in range(1, 255):
+                # if host_id != int(my_ip_bytes[3]):
+                address = f"{net_id}.{host_id}"
+                scanner = NetScanner(address)
+                scanner.signal.scanFinished.connect(lambda h: print(h))
+
+                threads.append(scanner)
+
+            # Start threads
+            for scanner in threads:
+                scanner.start()
 
     def check_online(self, host_address: str):
         """

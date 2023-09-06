@@ -2,6 +2,7 @@
 
 import sys
 import socket
+from threading import Thread
 from PySide6.QtCore import QThread, QTimer, QRunnable, QThreadPool, QObject, Signal, Slot
 from PySide6.QtWidgets import QApplication
 
@@ -12,29 +13,28 @@ class NetScannerSignals(QObject):
     """
     Defines the signals available from the running worker thread
     """
-    # finished = Signal()
-    hosts = Signal(list)
-    error = Signal(tuple)
-    host = Signal(str)
+    # Signal emitted after a network scan, returning an IP -> hostname dictionary of online hosts
+    scanFinished = Signal(dict)
 
 
-class NetScanner(QThread):
+class NetScanner(Thread):
     """
     Thread to regularly scan the network by pinging addresses
     """
-    # hosts = {}
-    hosts = []
+
+    COUNTER = 0
+    hosts = {}
 
     def __init__(self, address):
-        QThread.__init__(self)
-        self.signals = NetScannerSignals()
+        Thread.__init__(self)
         self.address = address
+
+        # Create signals
+        self.signal = NetScannerSignals()
 
     @Slot()
     def run(self):
-        hosts = self.lookup(self.address)
-        self.signals.host.emit(self.address)
-        # self.signals.finished.emit()
+        self.lookup(self.address)
 
     def lookup(self, address):
         """
@@ -42,14 +42,16 @@ class NetScanner(QThread):
         """
 
         try:
-            # print(f"[*] Reaching {address} ...")
             hostname, _, _ = socket.gethostbyaddr(address)
-            # NetScanner.hosts[address] = hostname
-            NetScanner.hosts.append(address)
+            NetScanner.hosts[address] = hostname
         except socket.herror:
             pass
 
-        return NetScanner.hosts
+        finally:
+            NetScanner.COUNTER += 1
+            if NetScanner.COUNTER == 254:
+                self.signal.scanFinished.emit(NetScanner.hosts)
+
 
 
 if __name__ == "__main__":
@@ -68,7 +70,7 @@ if __name__ == "__main__":
             # if host_id != int(my_ip_bytes[3]):
             address = f"{net_id}.{host_id}"
             scanner = NetScanner(address)
-            scanner.signals.host.connect(lambda h: print(f"Scanning done for host {h}"))
+            scanner.signal.scanFinished.connect(lambda h: print(h))
 
             threads.append(scanner)
 
