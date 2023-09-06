@@ -39,7 +39,8 @@ class Client:
             print(f"[-] Connection refused on {self.server_host}:{self.PORT}")
 
         except Exception as e:
-            print(f"[-] Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
+            pass
+            # print(f"[-] Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
 
         # else:
             # If I find the user online, just send him my IDS, he will do the same

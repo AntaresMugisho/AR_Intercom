@@ -425,7 +425,6 @@ class ChatWindow(QWidget):
             self.player.stop()
 
     # NETWORKING  ----------------------------------------------------------------------
-
     def scan_network(self):
         """
         Scan network to find connected devices and put them in server_host dictionary.
@@ -435,15 +434,17 @@ class ChatWindow(QWidget):
             print("Aucune connexion détectée.\nVeuillez vous connecter à un réseau !")
 
         else:
+            print()
             my_ip_bytes = my_ip.split(".")
             net_id = ".".join(my_ip_bytes[:3])
 
+            # Create threads
             threads = []
             for host_id in range(1, 255):
                 # if host_id != int(my_ip_bytes[3]):
                 address = f"{net_id}.{host_id}"
                 scanner = NetScanner(address)
-                scanner.signal.scanFinished.connect(lambda h: print(h))
+                scanner.signal.scanFinished.connect(self.check_online)
 
                 threads.append(scanner)
 
@@ -451,35 +452,52 @@ class ChatWindow(QWidget):
             for scanner in threads:
                 scanner.start()
 
-    def check_online(self, host_address: str):
+    def check_online(self, hosts: dict):
         """
         Checks online devices and show or hide green online indicator widget.
         """
-        client = Client(host_address)
-        client.connect_to_server()
+        # print(hosts)
+        clients = []
+        threads = []
 
-        # Show green online toast if client is online
-        user = User.first_where("host_address", "=", host_address)
-        if user:
-            user_uuid = user.get_uuid()
-            online_toast = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_toast")
-            if client.online:
-                print("online")
-                online_toast.show()
+        for host_address in hosts.keys():
+            client = Client(host_address)
+            clients.append(client)
+
+            th = threading.Thread(target=client.connect_to_server)
+            threads.append(th)
+
+        for thread in threads:
+            thread.start()
+
+        for client in clients:
+            user = User.first_where("host_name", "=", hosts.get(client.server_host))
+
+            # Show green online toast cause the client is online
+            if user:
+                user_uuid = user.get_uuid()
+                online_toast = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_toast")
+
+                if client.online:
+                    print("online")
+                    online_toast.show()
+                else:
+                    print("offline")
+                    online_toast.hide()
+
             else:
-                print("offline")
-                online_toast.hide()
+                if client.online:
+                    self.add_user(client.server_host, hosts.get(client.server_host))
 
-    def add_user(self, host_address, host_name):
+    @staticmethod
+    def add_user(host_address, host_name):
         # Save user in the database if not exist
-        user_exists = User.first_where("host_address", "=", host_address)
-        if not user_exists:
+        if host_name is not None:
             user = User()
+            user.set_user_name(host_address.capitalize())
             user.set_host_address(host_address)
-            user.set_host_name(f"<{host_name}>")
+            user.set_host_name(host_name)
             user.save()
-        else:
-            print("User exists")
 
 
 if __name__ == "__main__":

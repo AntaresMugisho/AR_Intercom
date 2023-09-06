@@ -45,7 +45,7 @@ class NetScanner(Thread):
             hostname, _, _ = socket.gethostbyaddr(address)
             NetScanner.hosts[address] = hostname
         except socket.herror:
-            pass
+            NetScanner.hosts[address] = None
 
         finally:
             NetScanner.COUNTER += 1

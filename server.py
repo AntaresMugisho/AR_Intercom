@@ -97,6 +97,9 @@ class Server(QObject):
                     except IndexError:
                         pass
 
+                    except ConnectionAbortedError:
+                        pass
+
                     except Exception as e:
                         # pass
                         print("[-] Error while receiving message", e)

@@ -60,6 +60,7 @@ def create_databases():
                 updated_at DATETIME,
                 deleted_at DATETIME
         )"""
+
         create_messages_table = """
             CREATE TABLE IF NOT EXISTS messages(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
