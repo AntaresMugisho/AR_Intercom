@@ -6,7 +6,7 @@ import time
 import threading
 from functools import partial
 
-from PySide6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider, QMessageBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QFrame, QLabel, QPushButton, QWidget, QSlider, QMessageBox, QSpacerItem, QSizePolicy
 from PySide6.QtCore import QObject, QTimer, Slot, Qt, Signal, QThreadPool
 from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
 
@@ -37,7 +37,10 @@ class ChatWindow(QWidget):
 
         # SHOW USER'S LIST
         users = User.where("id", ">=", 1)
-        self.ui.load_client(users)
+        for user in users:
+            self.ui.add_user_widget(user)
+        self.spacer = QSpacerItem(1, 240, vData=QSizePolicy.Policy.Preferred)
+        self.left_scroll_layout.addSpacerItem(self.spacer)
 
         # CONNECT USER'S CONVERSATION BUTTONS
         for frame in self.ui.left_scroll.findChildren(QFrame):
@@ -433,7 +436,7 @@ class ChatWindow(QWidget):
         if my_ip.startswith("127.0"):
             print("Aucune connexion détectée.\nVeuillez vous connecter à un réseau !")
 
-        else:
+        # else:
             print()
             my_ip_bytes = my_ip.split(".")
             net_id = ".".join(my_ip_bytes[:3])
@@ -489,15 +492,18 @@ class ChatWindow(QWidget):
                 if client.online:
                     self.add_user(client.server_host, hosts.get(client.server_host))
 
-    @staticmethod
-    def add_user(host_address, host_name):
+    def add_user(self, host_address, host_name):
         # Save user in the database if not exist
         if host_name is not None:
+            print(f"Adding user {host_name}")
             user = User()
-            user.set_user_name(host_address.capitalize())
+            user.set_user_name(host_name.capitalize())
             user.set_host_address(host_address)
             user.set_host_name(host_name)
+            user.set_image_path("user/default.png")
             user.save()
+
+            self.ui.add_user_widget(user)
 
 
 if __name__ == "__main__":
