@@ -85,20 +85,17 @@ class Controller:
                 vars.append("?")
                 values.append(value)
 
-        print(sql_fields)
-        print(values)
-
         statement = f"""
             INSERT INTO {self.__class__.table_name} ({sql_fields}) VALUES ({vars})  
         """
 
         statement = statement.replace("[", "").replace("]", "").replace("'", "")
         # Execute statement
-        # self.__class__.db._execute(statement, values)
-        #
-        # # Set object id according to the last inserted id
-        # self.set_id(self.__class__.db.cursor.lastrowid)
-        # self.update()
+        self.__class__.db._execute(statement, values)
+
+        # Set object id according to the last inserted id
+        self.set_id(self.__class__.db.cursor.lastrowid)
+        self.update()
 
     @classmethod
     def where(cls, field: str, operator: str, value):

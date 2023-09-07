@@ -63,10 +63,10 @@ class Client:
             # Another if the message was sent but the server didn't send feedback
             self.message_delivered = False
 
-
     def send_message(self, message: Message):
         """
-        Determines the kind of message and sends it.
+        Try to establish connection with the distant server and sends the given message.
+        Returns the message after adding the report status (if received or not)
         """
         self.connect_to_server()
 

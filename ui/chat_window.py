@@ -89,7 +89,7 @@ class Ui_ChatWindow(QObject):
 
         # --------------------------------------- Client_frame
 
-    def add_user_widget(self, user):
+    def add_user_widget(self, user, online: bool = False):
         """
         Load users conversation list from users who are registered in database
         """
@@ -125,7 +125,8 @@ class Ui_ChatWindow(QObject):
                                         border-radius:8px;
                                         background-color: #00ff00;}""")
         self.online_toast.setObjectName(f"{uuid}_toast")
-        self.online_toast.hide()
+        if not online:
+            self.online_toast.hide()
 
         # NAME
         self.client_name = QtWidgets.QPushButton(self.client_info)

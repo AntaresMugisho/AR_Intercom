@@ -222,7 +222,7 @@ class ChatWindow(QWidget):
             self.ui.media_button.setEnabled(True)
 
         # RECORD VOICE MESSAGE
-        elif not self.ui.entry_field.text():
+        elif self.ui.entry_field.text() is None:
             self.ui.media_button.setEnabled(False)
             self.record_voice()
 
@@ -331,8 +331,7 @@ class ChatWindow(QWidget):
             self.ui.record_tip.deleteLater()
             seconds = minutes = 0
             self.ui.media_button.setEnabled(True)
-
-        # May change the stylesheet of Play/Pause button on a next feature
+            # self.ui.send_button.setEnabled(True)
 
     # MEDIA PLAYER ----------------------------------------------------------------------
 
@@ -457,7 +456,6 @@ class ChatWindow(QWidget):
         """
         Checks online devices and show or hide green online indicator widget.
         """
-        # print(hosts)
         clients = []
         threads = []
 
@@ -491,7 +489,10 @@ class ChatWindow(QWidget):
                     self.add_user(client.server_host, hosts.get(client.server_host))
 
     def add_user(self, host_address, host_name):
-        # Save user in the database if not exist
+        """
+        Add new user in the database
+        """
+        # Save user database
         if host_name is not None:
             print(f"Adding user {host_name}")
             user = User()
@@ -501,7 +502,7 @@ class ChatWindow(QWidget):
             user.set_image_path("user/default.png")
             user.save()
 
-            self.ui.add_user_widget(user)
+            self.ui.add_user_widget(user, online=True)
 
 
 if __name__ == "__main__":
