@@ -65,6 +65,10 @@ class Ui_ChatWindow(QObject):
         self.left_scroll_layout.setSpacing(4)
         self.left_scroll_layout.setContentsMargins(0, 0, 0, 0)
 
+        self.spacer = QtWidgets.QSpacerItem(1, 240, vData=QSizePolicy.Policy.Preferred)
+        self.left_scroll_layout.addSpacerItem(self.spacer)
+
+
         # Scroll widget
         self.left_scroll = QtWidgets.QWidget()
         self.left_scroll.setStyleSheet("QWidget{background-color:rgba(24, 53, 72, 250)}")
@@ -89,7 +93,6 @@ class Ui_ChatWindow(QObject):
         """
         Load users conversation list from users who are registered in database
         """
-
         uuid = user.get_uuid()
         name = user.get_user_name()
         profile_picture_path = user.get_image_path()
@@ -101,17 +104,10 @@ class Ui_ChatWindow(QObject):
         self.client_info.setMaximumSize(QtCore.QSize(236, 60))
         self.client_info.setStyleSheet(Clients.frame_normal)
         self.client_info.setLineWidth(1)
-        self.left_scroll_layout.addWidget(self.client_info, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
 
         last_index = self.left_scroll_layout.count() - 1
-        print(last_index)
-        spacer = self.left_scroll_layout.itemAt(last_index).spacerItem()
-        # print(spacer)
-        # if spacer is not None:
-        #
-        #     self.left_scroll_layout.removeItem(spacer)
-
-
+        self.left_scroll_layout.insertWidget(last_index, self.client_info,
+                                             Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
 
         # PROFILE PICTURE
         self.client_picture = QtWidgets.QLabel(self.client_info)

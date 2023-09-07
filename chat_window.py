@@ -35,12 +35,10 @@ class ChatWindow(QWidget):
         self.ui = Ui_ChatWindow()
         self.ui.setupUi(self)
 
-        # SHOW USER'S LIST
+        # SHOW USERS / CONVERSATION LIST
         users = User.where("id", ">=", 1)
         for user in users:
             self.ui.add_user_widget(user)
-        self.spacer = QSpacerItem(1, 240, vData=QSizePolicy.Policy.Preferred)
-        self.left_scroll_layout.addSpacerItem(self.spacer)
 
         # CONNECT USER'S CONVERSATION BUTTONS
         for frame in self.ui.left_scroll.findChildren(QFrame):
