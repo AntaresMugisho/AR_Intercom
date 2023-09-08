@@ -14,6 +14,7 @@ from resources import img_rc
 class Ui_ChatWindow(QObject):
 
     playButtonPressed = Signal(object)
+    conversationButtonPressed(object)
 
     def setupUi(self, ChatWindow):
         if not ChatWindow.objectName():

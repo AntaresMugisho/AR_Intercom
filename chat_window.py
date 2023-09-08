@@ -42,6 +42,7 @@ class ChatWindow(QWidget):
 
         # CONNECT USER'S CONVERSATION BUTTONS
         for frame in self.ui.left_scroll.findChildren(QFrame):
+            print(frame)
             user_conversation_button = frame.findChild(QPushButton)
             if user_conversation_button:
                 user_conversation_button.clicked.connect(self.show_conversations)
@@ -293,7 +294,7 @@ class ChatWindow(QWidget):
 
     # MEDIA RECORDER -----------------------------------------------------------------
 
-    # @Slot()
+    @Slot()
     def record_voice(self):
         """
         Starts recording voice message
