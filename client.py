@@ -80,6 +80,8 @@ class Client:
         if message_kind == "ID":
             # GET MY IDS FROM DATABASE
             me = User.first_where("id", "=", 1)
+            print(f"User to send info : {me.__dict__}")
+            host_name = me.get_host_name()
             user_name = me.get_user_name()
             user_status = me.get_user_status()
             department = me.get_department()
@@ -89,7 +91,7 @@ class Client:
             profile_picture_size = os.path.getsize(profile_picture_path)
         
             id_message = f"{self.PRIVATE_IP}|{message_kind}|{profile_picture_size}|{profile_picture_path}|" \
-                         f"{user_name}|{user_status}|{department}|{role}"
+                         f"{host_name}|{user_name}|{user_status}|{department}|{role}"
 
             # SEND MY IDS
             self.reliable_send(id_message)

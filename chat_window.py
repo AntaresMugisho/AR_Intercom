@@ -476,10 +476,15 @@ class ChatWindow(QWidget):
                 if client.online:
                     print(f"[+] {client.server_host} online")
                     online_toast.show()
+
+                    # Send my ID to the connected client
+                    message = Message()
+                    message.set_kind("ID")
+                    client.send_message(message)
+
                 else:
                     print(f"[-] {client.server_host} offline")
                     online_toast.hide()
-
             else:
                 if client.online:
                     self.add_user(client.server_host, hosts.get(client.server_host))

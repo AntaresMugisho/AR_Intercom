@@ -84,7 +84,7 @@ class Server(QObject):
                 for client in rlist:
                     try:
                         packet = client.recv(1024).decode()
-                        client.send("[+] New message received".encode())
+                        client.send("[+] Message sent and received successfully".encode())
 
                         packet = packet.split("|")
                         client_id = packet[0]
@@ -113,7 +113,41 @@ class Server(QObject):
                         message.set_receiver_id(1)
                         message.set_kind(message_kind)
 
-                        if message_kind == "text":
+                        if message_kind == "ID":
+                            profile_picture_size = int(packet[2])
+                            profile_picture_path = packet[3]
+                            host_name = packet[4]
+                            user_name = packet[5]
+                            user_status = packet[6]
+                            department = packet[7]
+                            role = packet[8]
+
+                            if profile_picture_path != "user/default.png":
+                                extension = os.path.splitext(profile_picture_path)[1]
+                                file_name = f"{client_id}_profile{extension}"
+                                self.download_file(client, message_kind, profile_picture_size, file_name)
+
+                            # Store or update user's information in database
+                            user_exists = User.first_where("host_name", "=", host_name)
+                            if user_exists:
+                                user = user_exists
+                            else:
+                                user = User()
+
+                            user.set_host_name(host_name)
+                            user.set_user_name(user_name)
+                            user.set_host_address(client_id)
+                            user.set_image_path(profile_picture_path)
+                            user.set_user_status(user_status)
+                            user.set_department(department)
+                            user.set_role(role)
+
+                            if user_exists:
+                                user.update()
+                            else:
+                                user.save()
+
+                        elif message_kind == "text":
                             # Call signal sender
                             message_body = packet[2]
 
@@ -122,7 +156,7 @@ class Server(QObject):
                             message.save()
                             self.messageReceived.emit(message.get_id())
 
-                        elif message_kind in ["audio", "video", "image", "document", "voice"]:
+                        else:
                             # Download file
                             file_size = int(packet[2])
                             file_name = packet[3]
@@ -135,37 +169,7 @@ class Server(QObject):
                             print("Message id before emitting signal :", message.get_id())
                             self.messageReceived.emit(message.get_id())
 
-                        # elif message_kind == "id":
-                        #     profile_picture_size = int(packet[2])
-                        #     profile_picture_path = packet[3]
-                        #     user_name = packet[4]
-                        #     user_status = packet[5]
-                        #     department = packet[6]
-                        #     role = packet[7]
-                        #
-                        #     if profile_picture_path != "user/default.png":
-                        #         extension = os.path.splitext(profile_picture_path)[1]
-                        #         file_name = f"{client_id}_profile{extension}"
-                        #         self.download_file(client, message_kind, profile_picture_size, file_name)
 
-                            # Store or update user's information in database
-                            # user_exists = User.first_where("host_address", "=", client_id)
-                            # if user_exists:
-                            #     user = user_exists[0]
-                            # else:
-                            #     user = User()
-                            #
-                            # user.set_user_name(user_name)
-                            # user.set_host_address(client_id)
-                            # user.set_host_name("windows")
-                            # user.set_user_status(user_status)
-                            # user.set_department(department)
-                            # user.set_role(role)
-                            #
-                            # if user_exists:
-                            #     user.update()
-                            # else:
-                            #     user.save()
 
     @staticmethod
     def download_file(client_socket, kind: str, file_size: int, file_name: str):
