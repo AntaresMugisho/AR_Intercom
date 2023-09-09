@@ -38,14 +38,10 @@ class ChatWindow(QWidget):
         # SHOW USERS / CONVERSATION LIST
         users = User.where("id", ">=", 1)
         for user in users:
-            self.ui.add_user_widget(user)
+            self.ui.show_user_widget(user)
 
         # CONNECT USER'S CONVERSATION BUTTONS
-        for frame in self.ui.left_scroll.findChildren(QFrame):
-            print(frame)
-            user_conversation_button = frame.findChild(QPushButton)
-            if user_conversation_button:
-                user_conversation_button.clicked.connect(self.show_conversations)
+        self.ui.conversationButtonPressed.connect(self.show_conversations)
 
         # CONNECT SEND BUTTON
         self.ui.entry_field.textEdited.connect(self.change_send_style)
@@ -86,19 +82,17 @@ class ChatWindow(QWidget):
 
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
 
-    @Slot()
-    def show_conversations(self):
+    @Slot(str)
+    def show_conversations(self, button_object_name: str):
         """
         Shows conversation bubbles with a specified user
         """
         # TRY TO STOP MEDIA PLAYER
         self.player.stop()
 
-        # GET CLICKED BUTTON
-        clicked_button = self.sender()
-        user_uuid = clicked_button.objectName()
+        # GET USER UUID
+        user_uuid = button_object_name
 
-        # GET USER FROM CLICKED BUTTON'S OBJECT NAME
         user = User.first_where("uuid", "=", user_uuid)
         user_name = user.get_user_name()
 
@@ -223,8 +217,9 @@ class ChatWindow(QWidget):
             self.ui.media_button.setEnabled(True)
 
         # RECORD VOICE MESSAGE
-        elif self.ui.entry_field.text() is None:
+        elif not self.ui.entry_field.text():
             self.ui.media_button.setEnabled(False)
+            self.ui.send_button.setEnabled(False)
             self.record_voice()
 
     @Slot(str, str)
@@ -332,11 +327,11 @@ class ChatWindow(QWidget):
             self.ui.record_tip.deleteLater()
             seconds = minutes = 0
             self.ui.media_button.setEnabled(True)
-            # self.ui.send_button.setEnabled(True)
+            self.ui.send_button.setEnabled(True)
 
     # MEDIA PLAYER ----------------------------------------------------------------------
 
-    @Slot(object)
+    @Slot(QPushButton)
     def play(self, play_button: QPushButton):
         """
         Play/Pause Media
@@ -503,7 +498,7 @@ class ChatWindow(QWidget):
             user.set_image_path("user/default.png")
             user.save()
 
-            self.ui.add_user_widget(user, online=True)
+            self.ui.show_user_widget(user, online=True)
 
 
 if __name__ == "__main__":

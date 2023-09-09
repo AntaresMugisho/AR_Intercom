@@ -14,7 +14,7 @@ from resources import img_rc
 class Ui_ChatWindow(QObject):
 
     playButtonPressed = Signal(object)
-    conversationButtonPressed(object)
+    conversationButtonPressed = Signal(object)
 
     def setupUi(self, ChatWindow):
         if not ChatWindow.objectName():
@@ -90,7 +90,7 @@ class Ui_ChatWindow(QObject):
 
         # --------------------------------------- Client_frame
 
-    def add_user_widget(self, user, online: bool = False):
+    def show_user_widget(self, user, online: bool = False):
         """
         Load users conversation list from users who are registered in database
         """
@@ -136,6 +136,7 @@ class Ui_ChatWindow(QObject):
                                        "border:none;background:none;}")
         self.client_name.setText(name)
         self.client_name.setObjectName(uuid)
+        self.client_name.clicked.connect(self.show_conversation)
 
         # MESSAGE COUNTER
         self.msg_counter = QtWidgets.QLabel(self.client_info)
@@ -590,3 +591,7 @@ class Ui_ChatWindow(QObject):
     def play(self):
         button = self.sender()
         self.playButtonPressed.emit(button)
+
+    def show_conversation(self):
+        button = self.sender()
+        self.conversationButtonPressed.emit(button.objectName())
