@@ -474,10 +474,10 @@ class ChatWindow(QWidget):
                 online_toast = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_toast")
 
                 if client.online:
-                    print("online")
+                    print(f"[+] {client.server_host} online")
                     online_toast.show()
                 else:
-                    print("offline")
+                    print(f"[-] {client.server_host} offline")
                     online_toast.hide()
 
             else:

@@ -13,10 +13,12 @@ class Client:
     Client to ask connection on different servers, and send them messages.
     """
     # OWNER SERVER IP ADDRESS
-    SERVER_IP = utils.get_private_ip()
+    PRIVATE_IP = utils.get_private_ip()
 
     # Port Unique for all clients
     PORT = 33511
+
+    CONNECTED_SERVERS = []
 
     def __init__(self, server_host="127.0.0.1"):
         self.server_host = server_host
@@ -34,9 +36,11 @@ class Client:
             print(f"[+] Connected on {self.server_host}:{self.PORT}")
             self.online = True
             self.sock.settimeout(None)
+            self.CONNECTED_SERVERS.append(self.server_host)
 
         except ConnectionRefusedError:
-            print(f"[-] Connection refused on {self.server_host}:{self.PORT}")
+            pass
+            # print(f"[-] Connection refused on {self.server_host}:{self.PORT}")
 
         except Exception as e:
             pass
@@ -55,7 +59,8 @@ class Client:
             self.sock.send(packet.encode())
             server_response = self.sock.recv(1024).decode()
             self.message_delivered = True
-            print(f"[+] Delivery status : {server_response}")
+            print(server_response)
+
         except Exception as e:
             print("[-] Error while sending message: ", e)
             # Need to catch 2 exceptions,
@@ -68,11 +73,32 @@ class Client:
         Try to establish connection with the distant server and sends the given message.
         Returns the message after adding the report status (if received or not)
         """
-        self.connect_to_server()
 
-        if message.get_kind() == "text":
+        self.connect_to_server()
+        message_kind = message.get_kind()
+
+        if message_kind == "ID":
+            # GET MY IDS FROM DATABASE
+            me = User.first_where("id", "=", 1)
+            user_name = me.get_user_name()
+            user_status = me.get_user_status()
+            department = me.get_department()
+            role = me.get_role()
+            profile_picture_path = me.get_image_path()
+            
+            profile_picture_size = os.path.getsize(profile_picture_path)
+        
+            id_message = f"{self.PRIVATE_IP}|{message_kind}|{profile_picture_size}|{profile_picture_path}|" \
+                         f"{user_name}|{user_status}|{department}|{role}"
+
+            # SEND MY IDS
+            self.reliable_send(id_message)
+            if profile_picture_path != "user/default.png":
+                self.upload_file(profile_picture_path)
+
+        elif message_kind == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
-            text_message = f"{self.SERVER_IP}|{message.get_kind()}|{message.get_body()}"
+            text_message = f"{self.PRIVATE_IP}|{message_kind}|{message.get_body()}"
             self.reliable_send(text_message)
             message.set_status(self.message_delivered)
 
@@ -84,7 +110,7 @@ class Client:
             file_name = os.path.basename(path)
 
             # SEND CLIENT ID AND FILE INFORMATION THEN UPLOAD FILE
-            media_message = f"{self.SERVER_IP}|{message.get_kind()}|{file_size}|{file_name}"
+            media_message = f"{self.PRIVATE_IP}|{message_kind}|{file_size}|{file_name}"
             self.reliable_send(media_message)
             self.upload_file(path)
 
@@ -92,21 +118,7 @@ class Client:
 
         return message
 
-        # if kind == "id":
-        #     # GET MY IDS FROM DATABASE
-        #     user_name = "Antares"
-        #     user_status = "We live, we love, we die"
-        #     department = "AR Software"
-        #     role = "Security Analyst"
-        #     profile_picture_path = 'user/profile.jpg'
-        #     profile_picture_size = os.path.getsize(profile_picture_path)
-        #     id_message = f"{self.SERVER_IP}|{kind}|{profile_picture_size}|{profile_picture_path}|" \
-        #                  f"{user_name}|{user_status}|{department}|{role}"
-        #
-        #     # SEND MY IDS
-        #     self.reliable_send(id_message)
-        #     if profile_picture_path != "user/default.png":
-        #         self.upload_file(profile_picture_path)
+
 
     def upload_file(self, path: str):
         """
