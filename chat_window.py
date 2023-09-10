@@ -36,7 +36,7 @@ class ChatWindow(QWidget):
         self.ui.setupUi(self)
 
         # SHOW USERS / CONVERSATION LIST
-        users = User.where("id", ">=", 1)
+        users = User.where("id", ">", 1)
         for user in users:
             self.ui.show_user_widget(user)
 
@@ -64,7 +64,7 @@ class ChatWindow(QWidget):
         # Scan network to refresh active servers
         self.net_scanner = QTimer()
         self.net_scanner.timeout.connect(self.scan_network)
-        # self.net_scanner.start(10_000)
+        self.net_scanner.start(300_000)
 
         # CREATE RECORDER INSTANCE AND ASSOCIATED TIME COUNTER
         self.recorder = Recorder()
