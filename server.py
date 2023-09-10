@@ -67,7 +67,7 @@ class Server(QObject):
         Close socket server.
         """
         self.sock.close()
-        print("[!] Server closed !")
+        print("[!] Server closed.")
 
     def receive_massages(self):
         """
@@ -142,6 +142,8 @@ class Server(QObject):
                             user.set_department(department)
                             user.set_role(role)
 
+                            print(f"User received info : {user.__dict__}")
+
                             if user_exists:
                                 user.update()
                             else:
@@ -180,7 +182,7 @@ class Server(QObject):
         directory = f"{home_directory}/AR_Intercom/Media/{kind.capitalize()}s"
 
         # SET DIFFERENT DIRECTORY IF IT IS A PROFILE PICTURE
-        if kind == "id":
+        if kind == "ID":
             directory = "user"
 
         # SET FILE NAME IF IT IS A VOICE

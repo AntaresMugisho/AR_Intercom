@@ -12,12 +12,13 @@ class Database:
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
             return cls.__instance
-        else:
-            return cls.__instance
+
+        return cls.__instance
 
 
     def __init__(self, fetch_class=None):
-        self.connection = sqlite3.connect("user/database.db")
+        self.connection = sqlite3.connect("user/database.db",
+                                          detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         self.cursor = self.connection.cursor()
 
         self.set_fetch_mode(fetch_class)
@@ -26,20 +27,28 @@ class Database:
         """
         Executes a given statement
         """
-        if data is not None:
-            self.cursor.execute(statement, data)
-        else:
-            self.cursor.execute(statement)
-        self.connection.commit()
-        self._close()
+        try:
+            if data is not None:
+                self.cursor.execute(statement, data)
+            else:
+                self.cursor.execute(statement)
+            self.connection.commit()
+        except sqlite3.Error as e:
+            print(f"[-] SQL Error : {e}")
+        finally:
+            self._close()
 
     def _fetchone(self, statement):
         """
         Fetches one result and return it as a class object
         """
-        self.cursor.execute(statement)
-        result = self.cursor.fetchone()
-        self._close()
+        try:
+            self.cursor.execute(statement)
+            result = self.cursor.fetchone()
+        except sqlite3.Error as e:
+            print(f"[-] SQL Error : {e}")
+        finally:
+            self._close()
 
         # Assign values to the class object
         if result is not None:
@@ -54,9 +63,13 @@ class Database:
         """
         Fetches all results and return it as a list of class objects
         """
-        self.cursor.execute(statement)
-        results = self.cursor.fetchall()
-        self._close()
+        try:
+            self.cursor.execute(statement)
+            results = self.cursor.fetchall()
+        except sqlite3.Error as e:
+            print(f"[-] SQL Error : {e}")
+        finally:
+            self._close()
 
         if results is not None:
             class_objects = []

@@ -56,9 +56,9 @@ def create_databases():
                 image_path VARCHAR DEFAULT('user/default.png'),
                 department VARCHAR,
                 role VARCHAR,
-                created_at DATETIME,
-                updated_at DATETIME,
-                deleted_at DATETIME
+                created_at TIMESTAMP,
+                updated_at TIMESTAMP,
+                deleted_at TIMESTAMP
         )"""
 
         create_messages_table = """
@@ -69,9 +69,9 @@ def create_databases():
                 kind VARCHAR,
                 body TEXT,
                 received BOOLEAN,
-                created_at DATETIME,
-                updated_at DATETIME,
-                deleted_at DATETIME
+                created_at TIMESTAMP, 
+                updated_at TIMESTAMP,
+                deleted_at TIMESTAMP
         )"""
 
         with sqlite3.connect(db_path) as connection:
