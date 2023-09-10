@@ -58,15 +58,7 @@ class Message(Controller):
 
 
 if __name__ == "__main__":
-    # message = Message()
-    # message.set_kind("text")
-    # message.set_body("Salut mon ami !")
-    # message.set_sender_id(1)
-    # message.set_receiver_id(2)
-    # message.set_status(False)
-    # message.save()
+    message = Message()
+    message.set_body("Hello world !")
 
-    message = Message.find(2)
-
-    dt = message.get_created_at()
-    print(dt)
+    message.save()

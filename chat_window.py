@@ -495,12 +495,12 @@ class ChatWindow(QWidget):
         """
         # Save user database
         if host_name is not None:
-            print(f"Adding user {host_name}")
+            print(f"Adding new user {host_name}")
             user = User()
             user.set_user_name(host_name.capitalize())
             user.set_host_address(host_address)
             user.set_host_name(host_name)
-            user.set_image_path("user/default.png")
+            user.set_image_path()
             user.save()
 
             self.ui.show_user_widget(user, online=True)

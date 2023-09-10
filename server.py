@@ -168,7 +168,6 @@ class Server(QObject):
 
                             # Save message and emit signal so that it can be displayed in the GUI
                             message.save()
-                            print("Message id before emitting signal :", message.get_id())
                             self.messageReceived.emit(message.get_id())
 
 
@@ -187,8 +186,8 @@ class Server(QObject):
 
         # SET FILE NAME IF IT IS A VOICE
         elif kind == "voice":
-            file_extension = ".arv" if sys.platform == "win32" else ".wav"
-            file_name = f"ARV-{time.strftime('%d%m%Y-%H%M-%S')}{file_extension}"
+            # file_extension = ".arv" if sys.platform == "win32" else ".wav"
+            file_name = f"ARV-{time.strftime('%d%m%Y-%H%M-%S')}"
 
         # DOWNLOAD FILE
         with open(f"{directory}/{file_name}", "wb") as file:

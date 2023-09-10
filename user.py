@@ -46,7 +46,7 @@ class User(Controller):
     def set_password(self, password: str):
         self.password = hashlib.sha1(password.encode()).hexdigest()
 
-    def set_image_path(self, path: str):
+    def set_image_path(self, path: str = "user/default.png"):
         self.image_path = path
 
     def set_department(self, department: str):
@@ -101,15 +101,7 @@ class User(Controller):
 
 
 if __name__ == "__main__":
-    # user = User()
-    # user.set_user_name("Antares")
-    # user.set_user_status("We live we love we die !")
-    # user.set_department("IT")
-    # user.set_role("Security Analyst")
-    # user.set_host_name("Antares")
-    # user.set_host_address("192.168.43198")
-    # user.set_password("1234")
-    # user.save()
+    user = User()
+    user.set_user_name("Antares")
 
-    user = User.find(5)
-    print(user.get_created_at())
+    user.save()

@@ -102,12 +102,7 @@ class Controller:
             INSERT INTO {self.__class__.table_name} ({sql_fields}) VALUES ({vars})  
         """
 
-
         statement = statement.replace("[", "").replace("]", "").replace("'", "")
-
-        print(statement)
-        print(values)
-
 
         # Execute statement
         self.__class__.db._execute(statement, values)
