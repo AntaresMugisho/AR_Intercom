@@ -87,8 +87,6 @@ class Controller:
         self.set_created_at()
         self.set_updated_at()
 
-        print(self.__dict__)
-
         sql_fields = []
         vars = []
         values = []

@@ -46,11 +46,6 @@ class Client:
             pass
             # print(f"[-] Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
 
-        # else:
-            # If I find the user online, just send him my IDS, he will do the same
-            # print(f"Hello {self.server_host}, take my IDs")
-            # self.send_message("id")
-
     def reliable_send(self, packet):
         """
         Sends message using socket's 'send' function and receive feed back from the server.
@@ -133,7 +128,7 @@ class Client:
                 self.message_delivered = True
             except Exception as e:
                 self.message_delivered = False
-                print("Error while sending file: ", e)
+                print("[-] Error while sending file: ", e)
 
     def disconnect(self):
         """

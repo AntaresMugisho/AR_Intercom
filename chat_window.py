@@ -59,7 +59,7 @@ class ChatWindow(QWidget):
         self.server_hosts = {}
 
         # Scan on startup
-        QTimer().singleShot(5000, self.scan_network)
+        QTimer().singleShot(60_000, self.scan_network)
 
         # Scan network to refresh active servers
         self.net_scanner = QTimer()
@@ -120,7 +120,6 @@ class ChatWindow(QWidget):
             #  messages sent from user_id 1 will be shown in the right bubble
             if sender_id == 1:
                 self.ui.create_right_bubble(message)
-                print(self.ui.message_status.objectName())
                 if self.ui.message_status.objectName().startswith("error"):
                     self.ui.message_status.clicked.connect(self.resend_message)
             else:
@@ -429,20 +428,19 @@ class ChatWindow(QWidget):
         if my_ip.startswith("127.0"):
             print("Aucune connexion détectée.\nVeuillez vous connecter à un réseau !")
 
-        # else:
-            print()
+        else:
             my_ip_bytes = my_ip.split(".")
             net_id = ".".join(my_ip_bytes[:3])
 
             # Create threads
             threads = []
             for host_id in range(1, 255):
-                # if host_id != int(my_ip_bytes[3]):
-                address = f"{net_id}.{host_id}"
-                scanner = NetScanner(address)
-                scanner.signal.scanFinished.connect(self.check_online)
+                if host_id != int(my_ip_bytes[3]):
+                    address = f"{net_id}.{host_id}"
+                    scanner = NetScanner(address)
+                    scanner.signal.scanFinished.connect(self.check_online)
 
-                threads.append(scanner)
+                    threads.append(scanner)
 
             # Start threads
             for scanner in threads:
@@ -495,9 +493,10 @@ class ChatWindow(QWidget):
         """
         # Save user database
         if host_name is not None:
+            host_name = host_name.capitalize()
             print(f"Adding new user {host_name}")
             user = User()
-            user.set_user_name(host_name.capitalize())
+            user.set_user_name(host_name)
             user.set_host_address(host_address)
             user.set_host_name(host_name)
             user.set_image_path()

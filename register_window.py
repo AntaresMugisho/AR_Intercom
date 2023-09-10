@@ -116,7 +116,6 @@ class RegisterWindow(QWidget):
                 # Show image on the label
                 rounded_pixmap = utils.create_rounded_image(path, self.ui.choose_profilepicture.height())
                 self.ui.choose_profilepicture.setPixmap(rounded_pixmap)
-                print(path)
                 self.user.set_image_path(path)
 
     def validate(self):
@@ -171,7 +170,7 @@ class RegisterWindow(QWidget):
                 pass
 
             if self.user.get_image_path() is None:
-                self.user.set_image_path("user/default.png")
+                self.user.set_image_path()  # Default image path will apply
             self.user.save()
 
             self.ui.stackedWidget.setCurrentIndex(2)
