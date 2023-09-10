@@ -17,7 +17,7 @@ import utils
 
 try:
     from ctypes import windll
-    app_id = "com.artrevolutionlabel.software.arintercom.v2"
+    app_id = "com.artrevolutionlabel.software.arintercom.v2.1"
     windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
 except ImportError:
     pass
@@ -67,7 +67,7 @@ class SplashScreen(QWidget):
 
         # CHANGE LOADING LABEL TEXT
         QtCore.QTimer.singleShot(1400, lambda: self.ui.loading.setText("Checking Network"))
-        QtCore.QTimer.singleShot(2500, lambda: self.ui.loading.setText("Starting Databases"))
+        QtCore.QTimer.singleShot(2500, lambda: self.ui.loading.setText("Analysing Databases"))
         QtCore.QTimer.singleShot(3500, lambda: self.ui.loading.setText("Starting Server"))
         QtCore.QTimer.singleShot(4050, lambda: self.ui.loading.setText("Loading User Interface"))
         QtCore.QTimer.singleShot(4500, lambda: self.ui.loading.setText("Launching..."))

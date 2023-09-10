@@ -401,7 +401,7 @@ class Ui_ChatWindow(QObject):
 
         # UPDATE SCROLL BAR
         QtCore.QTimer.singleShot(10, self.scroll_to_end)
-        QtCore.QTimer.singleShot(100, self.scroll_to_end)
+        QtCore.QTimer.singleShot(1000, self.scroll_to_end)
 
     def create_right_bubble(self, message: Message):
 
@@ -497,7 +497,7 @@ class Ui_ChatWindow(QObject):
 
         # UPDATE SCROLL BAR
         QtCore.QTimer.singleShot(10, self.scroll_to_end)
-        QtCore.QTimer.singleShot(100, self.scroll_to_end)
+        QtCore.QTimer.singleShot(1000, self.scroll_to_end)
 
     def scroll_to_end(self):
         # SCROLL TO END
