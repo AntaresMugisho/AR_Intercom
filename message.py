@@ -16,10 +16,10 @@ class Message(Controller):
         self.receiver_id = None
         self.kind = None
         self.body = None
+        self.received = True
         self.created_at = None
         self.updated_at = None
         self.deleted_at = None
-        self.received = True
 
     # SETTERS
     def set_sender_id(self, sender_id):
