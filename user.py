@@ -1,7 +1,6 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
 import hashlib
-from datetime import datetime
 
 from controller import Controller
 from message import Message
@@ -55,15 +54,6 @@ class User(Controller):
 
     def set_role(self, role: str):
         self.role = role
-
-    def set_created_at(self):
-        self.created_at = datetime.now()
-
-    def set_updated_at(self):
-        self.updated_at = datetime.now()
-
-    def set_deleted_at(self):
-        self.deleted_at = datetime.now()
 
     # GETTERS
     def get_id(self):
@@ -121,5 +111,5 @@ if __name__ == "__main__":
     # user.set_password("1234")
     # user.save()
 
-    user = User.find(1)
-    print(user.get_uuid())
+    user = User.find(5)
+    print(user.get_created_at())

@@ -16,13 +16,13 @@ class Controller:
         self.id = id
 
     def set_created_at(self):
-        pass
+        self.created_at = datetime.now()
 
     def set_updated_at(self):
-        pass
+        self.updated_at = datetime.now()
 
     def set_deleted_at(self):
-        pass
+        self.deleted_at = datetime.now()
 
     def get_created_at(self):
         return datetime.strftime(self.created_at, self.time_format)
@@ -87,20 +87,28 @@ class Controller:
         self.set_created_at()
         self.set_updated_at()
 
+        print(self.__dict__)
+
         sql_fields = []
         vars = []
         values = []
         for field, value in self.__dict__.items():
-            if value is not None:
-                sql_fields.append(field)
-                vars.append("?")
-                values.append(value)
+            # if value is not None:
+            sql_fields.append(field)
+            vars.append("?")
+            values.append(value)
 
         statement = f"""
             INSERT INTO {self.__class__.table_name} ({sql_fields}) VALUES ({vars})  
         """
 
+
         statement = statement.replace("[", "").replace("]", "").replace("'", "")
+
+        print(statement)
+        print(values)
+
+
         # Execute statement
         self.__class__.db._execute(statement, values)
 

@@ -1,10 +1,5 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
-from datetime import datetime
-import time
-
-from PySide6.QtCore import QObject, Signal
-
 from controller import Controller
 
 
@@ -42,15 +37,6 @@ class Message(Controller):
     def set_status(self, status: bool):
         self.received = status
 
-    def set_created_at(self):
-        self.created_at = datetime.now()
-
-    def set_updated_at(self):
-        self.updated_at = datetime.now()
-
-    def set_deleted_at(self):
-        self.deleted_at = datetime.now()
-
     # GETTERS
     def get_id(self):
         return self.id
@@ -74,15 +60,13 @@ class Message(Controller):
 if __name__ == "__main__":
     # message = Message()
     # message.set_kind("text")
-    # message.set_body("Salut mmon ami !")
+    # message.set_body("Salut mon ami !")
     # message.set_sender_id(1)
     # message.set_receiver_id(2)
-    # message.set_status(True)
+    # message.set_status(False)
     # message.save()
 
-    message = Message.find(1)
+    message = Message.find(2)
 
-    # print(message.__dict__)
-
-    dt = message.get_updated_at()
+    dt = message.get_created_at()
     print(dt)
