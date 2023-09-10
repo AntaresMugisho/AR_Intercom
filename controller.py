@@ -1,6 +1,7 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
 from database import Database
+from datetime import datetime
 
 
 class Controller:
@@ -9,6 +10,7 @@ class Controller:
     """
     db = None
     table_name = None
+    time_format = "%d-%m-%Y %H:%M"
 
     def set_id(self, id: int):
         self.id = id
@@ -21,6 +23,15 @@ class Controller:
 
     def set_deleted_at(self):
         pass
+
+    def get_created_at(self):
+        return datetime.strftime(self.created_at, self.time_format)
+
+    def get_updated_at(self):
+        return datetime.strftime(self.updated_at, self.time_format)
+
+    def get_deleted_at(self):
+        return datetime.strftime(self.deleted_at, self.time_format)
 
     @classmethod
     def setup_db(cls):
@@ -95,7 +106,7 @@ class Controller:
 
         # Set object id according to the last inserted id
         self.set_id(self.__class__.db.cursor.lastrowid)
-        # self.update()
+        self.update()  # This is only to update the user uuid
 
     @classmethod
     def where(cls, field: str, operator: str, value):

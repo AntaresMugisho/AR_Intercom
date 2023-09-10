@@ -96,15 +96,6 @@ class User(Controller):
     def get_role(self):
         return self.role
 
-    def get_created_at(self):
-        return self.created_at
-
-    def get_updated_at(self):
-        return self.updated_at
-
-    def get_deleted_at(self):
-        return self.deleted_at
-
     # Relationships
     def messages(self):
         """
@@ -120,7 +111,15 @@ class User(Controller):
 
 
 if __name__ == "__main__":
-    user = User.find(2)
-    messages = user.messages()
-    for m in messages:
-        print(m.get_body())
+    # user = User()
+    # user.set_user_name("Antares")
+    # user.set_user_status("We live we love we die !")
+    # user.set_department("IT")
+    # user.set_role("Security Analyst")
+    # user.set_host_name("Antares")
+    # user.set_host_address("192.168.43198")
+    # user.set_password("1234")
+    # user.save()
+
+    user = User.find(1)
+    print(user.get_uuid())

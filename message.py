@@ -14,7 +14,6 @@ class Message(Controller):
     This class contains also some signals that the server can emit on new incoming message
     to show GUI bubble
     """
-    time_format = "%d-%m-%Y %H:%M"
 
     def __init__(self):
         self.id = None
@@ -68,27 +67,22 @@ class Message(Controller):
     def get_body(self):
         return self.body
 
-    def get_created_at(self):
-        # if type(self.created_at) is str:
-        #     return datetime.fromisoformat(self.created_at).strftime(self.time_format)
-        return self.created_at
-
-    def get_updated_at(self):
-        # if type(self.updated_at) is str:
-        #     return datetime.fromisoformat(self.updated_at).strftime(self.time_format)
-        return self.updated_at
-
-    def get_deleted_at(self):
-        # if type(self.deleted_at) is str:
-        #     return datetime.fromisoformat(self.deleted_at).strftime(self.time_format)
-        return self.deleted_at
-
     def get_status(self):
         return self.received
 
 
 if __name__ == "__main__":
+    # message = Message()
+    # message.set_kind("text")
+    # message.set_body("Salut mmon ami !")
+    # message.set_sender_id(1)
+    # message.set_receiver_id(2)
+    # message.set_status(True)
+    # message.save()
+
     message = Message.find(1)
+
+    # print(message.__dict__)
+
     dt = message.get_updated_at()
-    print(type(dt))
-    # print(datetime.timestamp(datetime.now()))
+    print(dt)

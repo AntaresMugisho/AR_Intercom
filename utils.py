@@ -42,7 +42,7 @@ def create_databases():
     Create databases and tables if they not exists
     """
     db_path = "user/database.db"
-    if not os.path.exists(db_path):
+    if os.path.exists(db_path):
 
         create_users_table = """
             CREATE TABLE IF NOT EXISTS users(
@@ -112,3 +112,6 @@ def get_private_ip():
         return ip_address
     except OSError:
         return "127.0.0.1"
+
+
+# create_databases()

@@ -6,7 +6,7 @@ import sqlite3
 class Database:
     __instance = None
 
-    FETCH_CLASS = None
+    MODEL = None
 
     def __new__(cls, *args, **kwargs):
         if cls.__instance is None:
@@ -42,45 +42,49 @@ class Database:
         """
         Fetches one result and return it as a class object
         """
+        __object = None
+
         try:
             self.cursor.execute(statement)
-            result = self.cursor.fetchone()
         except sqlite3.Error as e:
             print(f"[-] SQL Error : {e}")
+        else:
+            row = self.cursor.fetchone()
+
+            # Assign values to the class object
+            if row is not None:
+                __object = self.MODEL()
+                for i, attribute in enumerate(__object.__dict__.keys()):
+                    __object.__dict__[attribute] = row[i]
         finally:
             self._close()
 
-        # Assign values to the class object
-        if result is not None:
-            class_object = self.FETCH_CLASS()
-            for i, attribute in enumerate(class_object.__dict__.keys()):
-                class_object.__dict__[attribute] = result[i]
-            return class_object
-
-        return None
+        return __object
 
     def _fetchall(self, statement):
         """
         Fetches all results and return it as a list of class objects
         """
+        __objects = None
+
         try:
             self.cursor.execute(statement)
             results = self.cursor.fetchall()
         except sqlite3.Error as e:
             print(f"[-] SQL Error : {e}")
+        else:
+            if results is not None:
+                __objects = []
+                for result in results:
+                    __object = self.MODEL()
+                    for i, attribute in enumerate(__object.__dict__.keys()):
+                        __object.__dict__[attribute] = result[i]
+                    __objects.append(__object)
         finally:
             self._close()
 
-        if results is not None:
-            class_objects = []
-            for result in results:
-                class_object = self.FETCH_CLASS()
-                for i, attribute in enumerate(class_object.__dict__.keys()):
-                    class_object.__dict__[attribute] = result[i]
-                class_objects.append(class_object)
-            return class_objects
+        return __objects
 
-        return None
 
     def _close(self):
         self.cursor.close()
@@ -88,4 +92,4 @@ class Database:
 
     @classmethod
     def set_fetch_mode(cls, fetch_class: str):
-        cls.FETCH_CLASS = fetch_class
+        cls.MODEL = fetch_class
