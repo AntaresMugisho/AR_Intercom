@@ -42,41 +42,40 @@ def create_databases():
     Create databases and tables if they not exists
     """
     db_path = "user/database.db"
-    if os.path.exists(db_path):
 
-        create_users_table = """
-            CREATE TABLE IF NOT EXISTS users(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                uuid VARCHAR,
-                host_address VARCHAR,
-                host_name VARCHAR,
-                user_name VARCHAR,
-                user_status VARCHAR,
-                password VARCHAR,
-                image_path VARCHAR DEFAULT('user/default.png'),
-                department VARCHAR,
-                role VARCHAR,
-                created_at TIMESTAMP,
-                updated_at TIMESTAMP,
-                deleted_at TIMESTAMP
-        )"""
+    create_users_table = """
+        CREATE TABLE IF NOT EXISTS users(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            uuid VARCHAR,
+            host_address VARCHAR,
+            host_name VARCHAR,
+            user_name VARCHAR,
+            user_status VARCHAR,
+            password VARCHAR,
+            image_path VARCHAR DEFAULT('user/default.png'),
+            department VARCHAR,
+            role VARCHAR,
+            created_at TIMESTAMP,
+            updated_at TIMESTAMP,
+            deleted_at TIMESTAMP
+    )"""
 
-        create_messages_table = """
-            CREATE TABLE IF NOT EXISTS messages(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                sender_id INTEGER,
-                receiver_id INTEGER,
-                kind VARCHAR,
-                body TEXT,
-                received BOOLEAN,
-                created_at TIMESTAMP, 
-                updated_at TIMESTAMP,
-                deleted_at TIMESTAMP
-        )"""
+    create_messages_table = """
+        CREATE TABLE IF NOT EXISTS messages(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sender_id INTEGER,
+            receiver_id INTEGER,
+            kind VARCHAR,
+            body TEXT,
+            received BOOLEAN,
+            created_at TIMESTAMP, 
+            updated_at TIMESTAMP,
+            deleted_at TIMESTAMP
+    )"""
 
-        with sqlite3.connect(db_path) as connection:
-            connection.execute(create_users_table)
-            connection.execute(create_messages_table)
+    with sqlite3.connect(db_path) as connection:
+        connection.execute(create_users_table)
+        connection.execute(create_messages_table)
 
 
 def create_rounded_image(image_path, size):
