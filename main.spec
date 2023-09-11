@@ -1,14 +1,20 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import sys
 
 block_cipher = None
 
+icon = "resources/ARsoftlogo.icns" if sys.platform == "darwin" else "resources/ARsoftlogo.ico"
 
 a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[("resources", "resources"), ("ui/*.py", "ui"), ("user/default.png", "user")],
+    datas=[
+        ("resources", "resources"),
+        ("ui/*.py", "ui"),
+        ("user/default.png", "user")
+    ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -38,7 +44,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon="resources/ARsoftlogo.ico"
+    icon=icon
 )
 coll = COLLECT(
     exe,
