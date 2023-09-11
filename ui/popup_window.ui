@@ -23,16 +23,12 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QFrame{
+    <string notr="true">#global_frame{
 	outline:none;
-	background-color:grey;
+	background-color: rgb(200, 211, 211);
+	background-color: rgba(255, 255, 127, 100);
 	border-radius:10px;
-
-}
-
-QLabel{
-	background:none;
-	font-family:Kirvy;
+	border:1px solid  rgba(255, 0, 0, 100);
 }</string>
    </property>
    <property name="frameShape">
@@ -45,15 +41,20 @@ QLabel{
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>2</y>
-      <width>221</width>
+      <y>12</y>
+      <width>241</width>
       <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
      <string notr="true">QLabel{
-	background:none;
-	font:bold 18px;
+	background:transparent;
 }</string>
     </property>
     <property name="text">
@@ -66,16 +67,15 @@ QLabel{
    <widget class="QPushButton" name="logo">
     <property name="geometry">
      <rect>
-      <x>2</x>
-      <y>-1</y>
-      <width>85</width>
-      <height>85</height>
+      <x>10</x>
+      <y>13</y>
+      <width>61</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton{
-	image: url(:/icons/icons/AR_logo.png);
-	background:none;
+	image: url(:/icons/icons/ARsoftlogo.png);
 	border:none;
 }</string>
     </property>
@@ -84,44 +84,53 @@ QLabel{
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>32</y>
-      <width>221</width>
-      <height>31</height>
+      <y>40</y>
+      <width>241</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true">QLabel{
-	background:none;
-	font: bold 16px;
+	background:transparent;
 }</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Un message de Antares&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>Username sent you a massage</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="app_name">
+   <widget class="QLabel" name="sender_name_2">
     <property name="geometry">
      <rect>
-      <x>215</x>
+      <x>260</x>
       <y>60</y>
-      <width>101</width>
-      <height>20</height>
+      <width>71</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>7</pointsize>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true">QLabel{
-	background:none;
-	color:#EcEcEc;
+	background:transparent;
+	color:gray;
 }</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt;&quot;&gt;AR Intercom 2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>AR Intercom 2.1</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
   </widget>

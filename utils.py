@@ -6,7 +6,7 @@ import socket
 import sqlite3
 
 from PySide6.QtGui import QPixmap, QPainter, QPainterPath
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 
 
 def get_home_directory():
@@ -111,6 +111,3 @@ def get_private_ip():
         return ip_address
     except OSError:
         return "127.0.0.1"
-
-
-# create_databases()

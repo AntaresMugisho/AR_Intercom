@@ -27,51 +27,54 @@ class Ui_NotificationWidget(object):
         self.global_frame = QFrame(NotificationWidget)
         self.global_frame.setObjectName(u"global_frame")
         self.global_frame.setGeometry(QRect(5, 11, 331, 81))
-        self.global_frame.setStyleSheet(u"QFrame{\n"
+        self.global_frame.setStyleSheet(u"#global_frame{\n"
 "	outline:none;\n"
-"	background-color:grey;\n"
+"	background-color: rgb(200, 211, 211);\n"
+"	background-color: rgba(255, 255, 127, 100);\n"
 "	border-radius:10px;\n"
-"\n"
-"}\n"
-"\n"
-"QLabel{\n"
-"	background:none;\n"
-"	font-family:Kirvy;\n"
+"	border:1px solid  rgba(255, 0, 0, 100);\n"
 "}")
         self.global_frame.setFrameShape(QFrame.StyledPanel)
         self.global_frame.setFrameShadow(QFrame.Raised)
         self.title = QLabel(self.global_frame)
         self.title.setObjectName(u"title")
-        self.title.setGeometry(QRect(80, 2, 221, 31))
+        self.title.setGeometry(QRect(80, 12, 241, 31))
+        font = QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        self.title.setFont(font)
         self.title.setStyleSheet(u"QLabel{\n"
-"	background:none;\n"
-"	font:bold 18px;\n"
+"	background:transparent;\n"
 "}")
         self.title.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.logo = QPushButton(self.global_frame)
         self.logo.setObjectName(u"logo")
-        self.logo.setGeometry(QRect(2, -1, 85, 85))
+        self.logo.setGeometry(QRect(10, 13, 61, 51))
         self.logo.setStyleSheet(u"QPushButton{\n"
-"	image: url(:/icons/icons/AR_logo.png);\n"
-"	background:none;\n"
+"	image: url(:/icons/icons/ARsoftlogo.png);\n"
 "	border:none;\n"
 "}")
         self.sender_name = QLabel(self.global_frame)
         self.sender_name.setObjectName(u"sender_name")
-        self.sender_name.setGeometry(QRect(80, 32, 221, 31))
+        self.sender_name.setGeometry(QRect(80, 40, 241, 21))
+        font1 = QFont()
+        font1.setPointSize(10)
+        self.sender_name.setFont(font1)
         self.sender_name.setStyleSheet(u"QLabel{\n"
-"	background:none;\n"
-"	font: bold 16px;\n"
+"	background:transparent;\n"
 "}")
         self.sender_name.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.app_name = QLabel(self.global_frame)
-        self.app_name.setObjectName(u"app_name")
-        self.app_name.setGeometry(QRect(215, 60, 101, 20))
-        self.app_name.setStyleSheet(u"QLabel{\n"
-"	background:none;\n"
-"	color:#EcEcEc;\n"
+        self.sender_name_2 = QLabel(self.global_frame)
+        self.sender_name_2.setObjectName(u"sender_name_2")
+        self.sender_name_2.setGeometry(QRect(260, 60, 71, 21))
+        font2 = QFont()
+        font2.setPointSize(7)
+        self.sender_name_2.setFont(font2)
+        self.sender_name_2.setStyleSheet(u"QLabel{\n"
+"	background:transparent;\n"
+"	color:gray;\n"
 "}")
-        self.app_name.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.sender_name_2.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.retranslateUi(NotificationWidget)
 
@@ -81,7 +84,7 @@ class Ui_NotificationWidget(object):
     def retranslateUi(self, NotificationWidget):
         NotificationWidget.setWindowTitle(QCoreApplication.translate("NotificationWidget", u"AR Notifier", None))
         self.title.setText(QCoreApplication.translate("NotificationWidget", u"<html><head/><body><p><span style=\" font-size:10pt;\">Nouveau message</span></p></body></html>", None))
-        self.sender_name.setText(QCoreApplication.translate("NotificationWidget", u"<html><head/><body><p>Un message de Antares</p></body></html>", None))
-        self.app_name.setText(QCoreApplication.translate("NotificationWidget", u"<html><head/><body><p><span style=\" font-size:7pt;\">AR Intercom 2</span></p></body></html>", None))
+        self.sender_name.setText(QCoreApplication.translate("NotificationWidget", u"Username sent you a massage", None))
+        self.sender_name_2.setText(QCoreApplication.translate("NotificationWidget", u"AR Intercom 2.1", None))
     # retranslateUi
 
