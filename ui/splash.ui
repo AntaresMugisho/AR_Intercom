@@ -14,8 +14,8 @@
    <string>AR Intercom</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/AR logo/ARsoftlogo.png</normaloff>:/AR logo/ARsoftlogo.png</iconset>
+   <iconset resource="../resources/img.qrc">
+    <normaloff>:/icons/icons/app_icon.png</normaloff>:/icons/icons/app_icon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">border:none;</string>
