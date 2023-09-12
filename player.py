@@ -26,3 +26,6 @@ class Player(QMediaPlayer):
             self.pause()
         elif self.playbackState() == QMediaPlayer.PlaybackState.PausedState:
             self.play()
+
+    def volume(self, value):
+        self.audio_output.setVolume(value/100)

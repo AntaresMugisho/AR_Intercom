@@ -7,7 +7,7 @@ from PySide6.QtGui import QGuiApplication, QIcon, QPixmap, QColor
 from PySide6.QtCore import QTimer, Qt
 
 from ui.popup_window import Ui_NotificationWidget
-
+from player import Player
 
 class NotificationWidget(QWidget):
 
@@ -38,7 +38,7 @@ class NotificationWidget(QWidget):
         # Apply shadow
         self.ui.global_frame.setGraphicsEffect(shadow)
 
-        # SET NOTIFICATION WINDOW POSITION
+        # SET POSITION OF THE NOTIFICATION WIDGET ON THE SCREEN
         screen_rect = QGuiApplication.primaryScreen().availableGeometry()
 
         if sys.platform == "win32":
@@ -46,7 +46,12 @@ class NotificationWidget(QWidget):
         else:
             self.move(screen_rect.bottomRight().x() - 360, screen_rect.topRight().y() + 40)
 
-        # AUTO CLOSE NOTIFICATION WINDOW
+        # PLAY A RINGTONE
+        self.player = Player()
+        self.player.volume(20)
+        self.player._play("resources/ringtones/1.wav")
+
+        # AUTO CLOSE NOTIFICATION WINDOW AFTER 4 SECONDS
         QTimer.singleShot(4_000, lambda: self.close())
 
 if __name__ == "__main__":
