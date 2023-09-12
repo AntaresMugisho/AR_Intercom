@@ -72,7 +72,7 @@ class Ui_NotificationWidget(object):
         self.sender_name_2.setFont(font2)
         self.sender_name_2.setStyleSheet(u"QLabel{\n"
 "	background:transparent;\n"
-"	color:gray;\n"
+"	color:#fff;\n"
 "}")
         self.sender_name_2.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
