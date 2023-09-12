@@ -14,8 +14,8 @@
    <string>Signin</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/16x16/icons/16x16/cil-user-follow.png</normaloff>:/16x16/icons/16x16/cil-user-follow.png</iconset>
+   <iconset resource="../resources/img.qrc">
+    <normaloff>:/icons/icons/app_icon.png</normaloff>:/icons/icons/app_icon.png</iconset>
   </property>
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">

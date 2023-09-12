@@ -26,7 +26,7 @@ class Ui_SigninWindow(object):
             SigninWindow.setObjectName(u"SigninWindow")
         SigninWindow.resize(275, 593)
         icon = QIcon()
-        icon.addFile(u":/16x16/icons/16x16/cil-user-follow.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/icons/icons/app_icon.png", QSize(), QIcon.Normal, QIcon.Off)
         SigninWindow.setWindowIcon(icon)
         self.stackedWidget = QStackedWidget(SigninWindow)
         self.stackedWidget.setObjectName(u"stackedWidget")
@@ -143,7 +143,7 @@ class Ui_SigninWindow(object):
         self.logo.setGeometry(QRect(0, 59, 271, 71))
         self.logo.setStyleSheet(u"background-color: rgba(57, 146, 240, 5);\n"
 "background-image: url(:/icons/icons/multilogo.png);\n"
-"image:url(:/icons/icons/app_icon.png)")
+"image:url(:/icons/icons/ARsoftlogo.png)")
         self.welcome = QLabel(self.central_signin)
         self.welcome.setObjectName(u"welcome")
         self.welcome.setGeometry(QRect(0, -7, 281, 41))
