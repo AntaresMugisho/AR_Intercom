@@ -51,7 +51,7 @@ class Ui_NotificationWidget(object):
         self.logo.setObjectName(u"logo")
         self.logo.setGeometry(QRect(10, 13, 61, 51))
         self.logo.setStyleSheet(u"QPushButton{\n"
-"	image: url(:/icons/icons/ARsoftlogo.png);\n"
+"	image: url(:/icons/icons/app_icon.png);\n"
 "	border:none;\n"
 "}")
         self.sender_name = QLabel(self.global_frame)

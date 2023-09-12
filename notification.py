@@ -21,7 +21,7 @@ class NotificationWidget(QWidget):
 
         # SET WINDOW ICON
         icon = QIcon()
-        icon.addPixmap(QPixmap(":/icons/icons/ARsoftlogo.png"), QIcon.Normal, QIcon.Off)
+        icon.addPixmap(QPixmap(":/icons/icons/app_icon.png"), QIcon.Normal, QIcon.Off)
         self.setWindowIcon(icon)
 
         # REMOVE TITLE BAR

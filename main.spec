@@ -4,7 +4,7 @@ import sys
 
 block_cipher = None
 
-icon = "resources/ARsoftlogo.icns" if sys.platform == "darwin" else "resources/ARsoftlogo.ico"
+icon = "resources/app_icon.icns" if sys.platform == "darwin" else "resources/app_icon.ico"
 
 a = Analysis(
     ['main.py'],

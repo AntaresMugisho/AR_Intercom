@@ -2,7 +2,7 @@
   <qresource prefix="icons">
     <file>icons/1.png</file>
     <file>icons/24778-200.png</file>
-    <file>icons/ARsoftlogo.png</file>
+    <file>icons/app_icon.png</file>
     <file>icons/document.png</file>
     <file>icons/Less.png</file>
     <file>icons/minus.png</file>

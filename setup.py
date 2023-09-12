@@ -15,7 +15,7 @@ if sys.platform == "darwin":
     APP = ['main.py']
     DATA_FILES = ['resources/Arlogo.icns']
     OPTIONS = {
-        'iconfile': 'resources/ARsoftlogo.icns',
+        'iconfile': 'resources/app_icon.icns',
         'argv_emulation': True,
         'packages': ['sounddevice']
     }
@@ -37,7 +37,7 @@ else:
     path = sys.path
 
     # Icon path
-    icone = "resources/ARsoftlogo.ico"
+    icone = "resources/app_icon.ico"
 
     # To able translations
     # includefiles = []

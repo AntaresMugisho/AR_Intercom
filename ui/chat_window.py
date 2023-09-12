@@ -22,7 +22,7 @@ class Ui_ChatWindow(QObject):
 
         ChatWindow.resize(690, 470)
         icon = QtGui.QIcon()
-        icon.addFile(":/icons/icons/ARsoftlogo.png", QtCore.QSize(), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addFile(":/icons/icons/app_icon.png", QtCore.QSize(), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         ChatWindow.setWindowIcon(icon)
         ChatWindow.setWindowTitle("AR Intercom - Chat Window")
 

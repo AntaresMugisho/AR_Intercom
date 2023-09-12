@@ -143,7 +143,7 @@ class Ui_SigninWindow(object):
         self.logo.setGeometry(QRect(0, 59, 271, 71))
         self.logo.setStyleSheet(u"background-color: rgba(57, 146, 240, 5);\n"
 "background-image: url(:/icons/icons/multilogo.png);\n"
-"image:url(:/icons/icons/ARsoftlogo.png)")
+"image:url(:/icons/icons/app_icon.png)")
         self.welcome = QLabel(self.central_signin)
         self.welcome.setObjectName(u"welcome")
         self.welcome.setGeometry(QRect(0, -7, 281, 41))

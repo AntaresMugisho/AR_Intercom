@@ -25,7 +25,7 @@ class Ui_SplashScreen(object):
             SplashScreen.setObjectName(u"SplashScreen")
         SplashScreen.resize(353, 336)
         icon = QIcon()
-        icon.addFile(u":/AR logo/ARsoftlogo.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/AR logo/app_icon.png", QSize(), QIcon.Normal, QIcon.Off)
         SplashScreen.setWindowIcon(icon)
         SplashScreen.setStyleSheet(u"border:none;")
         self.base = QFrame(SplashScreen)

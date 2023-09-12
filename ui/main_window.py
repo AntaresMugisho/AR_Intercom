@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(690, 470)
         MainWindow.setMinimumSize(QSize(690, 470))
         icon = QIcon()
-        icon.addFile(u":/icons/icons/ARsoftlogo.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/icons/icons/app_icon.png", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"")
         self.actionAide = QAction(MainWindow)
