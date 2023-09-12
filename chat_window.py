@@ -20,6 +20,7 @@ from message import Message
 from recorder import Recorder
 from player import Player
 from netscanner import NetScanner
+from notification import NotificationWidget
 import utils
 
 # Global variables for recorder time counter
@@ -148,6 +149,10 @@ class ChatWindow(QWidget):
             # Show message in the bubble
             self.ui.create_left_bubble(message)
         else:
+            # Show notification widget
+            self.notification_widget = NotificationWidget(user.get_user_name())
+            self.notification_widget.show()
+
             # Increase the unread message counter badge
             message_counter = self.ui.left_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
             unread_msg = int(message_counter.text())

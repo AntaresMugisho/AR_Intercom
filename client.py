@@ -138,31 +138,37 @@ class Client:
 
 
 if __name__ == "__main__":
+    from message import Message
+
     client = Client()
     client.connect_to_server()
 
     # This while loop will run only if the connection is established
     while True:
         message_type = input("Choose an option :\n0.IDs\n1.Text message\n2.Media message\n3.Exit\n>>> ")
+        message = Message()
 
         if message_type == "0":
-            message_type = "id"
-            message = "user/profile.jpg"
+            message.set_kind("ID")
 
         elif message_type == "1":
-            message_type = "text"
-            message = input("Type your text message\n>>> ")
+            text = input("Type your text message\n>>> ")
+            message.set_kind("text")
+            message.set_body(text)
 
         elif message_type == "2":
             media_types = ["audio", "image", "video", "document", "voice"]
             media_type = input("1.Audio 2.Image 3.Video 4.Document 5.Voice\n>>> ")
             message_type = media_types[int(media_type)-1]
 
-            message = input("Enter the file path\n>>> ")
+            path = input("Enter the file path\n>>> ")
+            message.set_kind(message_type)
+            message.set_body(path)
+
         else:
             client.disconnect()
             print("See you again !")
             break
 
         # SEND MESSAGE
-        client.send_message(message_type, message)
+        client.send_message(message)
