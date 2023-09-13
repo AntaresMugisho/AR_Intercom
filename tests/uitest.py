@@ -2,9 +2,12 @@
 
 import sys
 from functools import partial
-from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton
+
+from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QGridLayout,\
+    QPushButton, QListWidget, QListWidgetItem, QTabWidget
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput, QAudioDevice
 from PySide6.QtCore import QUrl
+import emojis
 
 import player
 import recorder
@@ -16,40 +19,23 @@ class Window(QWidget):
     def __init__(self):
         super().__init__()
         self.resize(400, 200)
-        self.setWindowTitle("Hello world")
+        categories = ["Smileys & Emotion", "Animals & Nature", "Food & Drink", "Travel & Places", "Activities", "Objects", "Symbols", "Flags"]
+        tab_widget = QTabWidget()
 
-        player = Player()
-        recorder = Recorder()
+        for category in categories:
+            tab = QListWidget()
+            for emoji in emojis.db.get_emojis_by_category(category):
+               tab.addItem(QListWidgetItem(emoji.emoji))
 
-        vlayout = QVBoxLayout()
-        self.setLayout(vlayout)
+            tab_widget.addTab(tab, f"{category}")
 
-        play_btn = QPushButton("Play audio")
-        play_btn.clicked.connect(partial(player.play))
+        layout = QVBoxLayout()
+        layout.addWidget(tab_widget)
 
-        pause_btn = QPushButton("Pause audio")
-        pause_btn.clicked.connect(player.pause)
-
-        start_record_btn = QPushButton("Start record")
-        start_record_btn.clicked.connect(recorder.start)
-
-        pause_record_btn = QPushButton("Pause record")
-        pause_record_btn.clicked.connect(recorder.pause)
-
-        stop_record_btn = QPushButton("Stop record")
-        stop_record_btn.clicked.connect(recorder.stop)
-
-        vlayout.addWidget(play_btn)
-        vlayout.addWidget(pause_btn)
-        vlayout.addWidget(start_record_btn)
-        vlayout.addWidget(pause_record_btn)
-        vlayout.addWidget(stop_record_btn)
-
-
-        self.show()
-
+        self.setLayout(layout)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     run = Window()
+    run.show()
     sys.exit(app.exec())
