@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        users = User.where("id", ">=", 1)
+        users = User.where("id", ">", 1)
         for user in users:
             self.show_user_widget(user)
 

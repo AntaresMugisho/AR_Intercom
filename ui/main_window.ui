@@ -840,8 +840,7 @@ background-image: url(:/cils/cils/cil-menu.png);
                </rect>
               </property>
               <property name="styleSheet">
-               <string notr="true">
-</string>
+               <string notr="true"/>
               </property>
               <widget class="QLabel" name="p_usrer_pict">
                <property name="geometry">
@@ -1230,7 +1229,7 @@ border-radius:28px;</string>
                        <enum>QFrame::Raised</enum>
                       </property>
                      </widget>
-                     <widget class="QLabel" name="messege_number_2">
+                     <widget class="QLabel" name="last_seen_0">
                       <property name="geometry">
                        <rect>
                         <x>198</x>
@@ -1259,7 +1258,7 @@ border-radius:28px;</string>
                      <zorder>client_name</zorder>
                      <zorder>messege_number</zorder>
                      <zorder>envelop_msg</zorder>
-                     <zorder>messege_number_2</zorder>
+                     <zorder>last_seen_0</zorder>
                     </widget>
                    </item>
                    <item>
@@ -1445,7 +1444,7 @@ border-radius:28px;</string>
                        <enum>QFrame::Raised</enum>
                       </property>
                      </widget>
-                     <widget class="QLabel" name="messege_number_6">
+                     <widget class="QLabel" name="last_seen_2">
                       <property name="geometry">
                        <rect>
                         <x>198</x>
@@ -1481,165 +1480,6 @@ border-radius:28px;</string>
                       </size>
                      </property>
                     </spacer>
-                   </item>
-                   <item>
-                    <widget class="QWidget" name="media_bg" native="true">
-                     <property name="minimumSize">
-                      <size>
-                       <width>46</width>
-                       <height>191</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>46</width>
-                       <height>191</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true"/>
-                     </property>
-                     <layout class="QVBoxLayout" name="verticalLayout">
-                      <property name="spacing">
-                       <number>6</number>
-                      </property>
-                      <property name="leftMargin">
-                       <number>3</number>
-                      </property>
-                      <property name="topMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>3</number>
-                      </property>
-                      <property name="bottomMargin">
-                       <number>0</number>
-                      </property>
-                      <item>
-                       <widget class="QPushButton" name="media_doc">
-                        <property name="minimumSize">
-                         <size>
-                          <width>40</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>40</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">QPushButton{
-	background-image: url(:/cils/cils/cil-paperclip.png);
-	background-color: rgb(0, 0, 127);}
-
-QPushButton:hover{
-	background-color: rgb(61, 62, 63);}
-
-QPushButton:pressed{
-	background-color: rgb(31, 32, 34);}</string>
-                        </property>
-                        <property name="text">
-                         <string/>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="media_audio">
-                        <property name="minimumSize">
-                         <size>
-                          <width>40</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>40</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">QPushButton{
-	background-image: url(:/cils/cils/blacks/cil-music-note.png);
-	background-color: rgb(255, 170, 0);
-}
-
-QPushButton:hover{
-	background-color: rgb(201, 202, 203);}
-
-QPushButton:pressed{
-	background-color: rgb(101, 102, 103);}</string>
-                        </property>
-                        <property name="text">
-                         <string/>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="media_image">
-                        <property name="minimumSize">
-                         <size>
-                          <width>40</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>40</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">QPushButton{
-	background-image: url(:/cils/cils/cil-image1.png);
-	background-color: rgb(156, 0, 0);
-}
-
-QPushButton:hover{
-	background-color: rgb(61, 62, 63);}
-
-QPushButton:pressed{
-	background-color: rgb(31, 32, 34);}</string>
-                        </property>
-                        <property name="text">
-                         <string/>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="media_video">
-                        <property name="minimumSize">
-                         <size>
-                          <width>40</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>40</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">QPushButton{
-	background-image: url(:/cils/cils/blacks/cil-movie.png);
-	background-color: rgb(0, 105, 255);
-}
-
-QPushButton:hover{
-	background-color: rgb(201, 202, 203);}
-
-QPushButton:pressed{
-	background-color: rgb(101, 102, 103);}</string>
-                        </property>
-                        <property name="text">
-                         <string/>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </widget>
                    </item>
                   </layout>
                  </widget>
@@ -4380,8 +4220,8 @@ border-radius:7px;
                <widget class="QLabel" name="label_2">
                 <property name="geometry">
                  <rect>
-                  <x>200</x>
-                  <y>20</y>
+                  <x>20</x>
+                  <y>680</y>
                   <width>120</width>
                   <height>20</height>
                  </rect>
@@ -4404,6 +4244,398 @@ border-radius:4px;</string>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
+               </widget>
+               <widget class="QWidget" name="media_bg" native="true">
+                <property name="geometry">
+                 <rect>
+                  <x>490</x>
+                  <y>410</y>
+                  <width>46</width>
+                  <height>191</height>
+                 </rect>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>46</width>
+                  <height>191</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>46</width>
+                  <height>191</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout">
+                 <property name="spacing">
+                  <number>6</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>3</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>3</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="media_doc">
+                   <property name="minimumSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	background-image: url(:/cils/cils/cil-paperclip.png);
+	background-color: rgb(0, 0, 127);}
+
+QPushButton:hover{
+	background-color: rgb(61, 62, 63);}
+
+QPushButton:pressed{
+	background-color: rgb(31, 32, 34);}</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="media_audio">
+                   <property name="minimumSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	background-image: url(:/cils/cils/blacks/cil-music-note.png);
+	background-color: rgb(255, 170, 0);
+}
+
+QPushButton:hover{
+	background-color: rgb(201, 202, 203);}
+
+QPushButton:pressed{
+	background-color: rgb(101, 102, 103);}</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="media_image">
+                   <property name="minimumSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	background-image: url(:/cils/cils/cil-image1.png);
+	background-color: rgb(156, 0, 0);
+}
+
+QPushButton:hover{
+	background-color: rgb(61, 62, 63);}
+
+QPushButton:pressed{
+	background-color: rgb(31, 32, 34);}</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="media_video">
+                   <property name="minimumSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+	background-image: url(:/cils/cils/blacks/cil-movie.png);
+	background-color: rgb(0, 105, 255);
+}
+
+QPushButton:hover{
+	background-color: rgb(201, 202, 203);}
+
+QPushButton:pressed{
+	background-color: rgb(101, 102, 103);}</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="emoji_widget" native="true">
+                <property name="geometry">
+                 <rect>
+                  <x>210</x>
+                  <y>10</y>
+                  <width>391</width>
+                  <height>180</height>
+                 </rect>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>180</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>180</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QWidget#emoji_widget{
+	background-color: rgb(30,32,33);
+	border-radius:10px;
+}</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_11">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_17">
+                   <item>
+                    <widget class="QLabel" name="emoji_widget_title">
+                     <property name="font">
+                      <font>
+                       <pointsize>10</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Emojis</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_10">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="close_emoji_btn">
+                     <property name="maximumSize">
+                      <size>
+                       <width>20</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">QPushButton{
+
+background-color:#111;
+border:none;
+border-radius:4px;
+image: url(:/cils/cils/cil-x.png);
+padding:4px;
+
+}
+
+QPushButton:hover{
+background-color:red;
+}</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QTabWidget" name="emoji_tab_widget">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>140</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QTabWidget::pane {
+background-color:#000;
+}
+
+QTabWidget::tab-bar {
+}
+
+QTabBar::tab{
+    background-color:#222;
+	width:35px;
+	height:35px;
+}
+
+QTabBar::tab:hover{
+    background-color:#666;
+}
+
+QTabBar::tab:selected{
+	border-bottom:4px solid #111;
+}
+QTabBar::tab:!selected{
+	border-bottom:4px solid #222;
+}
+
+QTabWidget QWidget{
+background-color:#111;
+}</string>
+                   </property>
+                   <property name="tabPosition">
+                    <enum>QTabWidget::North</enum>
+                   </property>
+                   <property name="tabShape">
+                    <enum>QTabWidget::Rounded</enum>
+                   </property>
+                   <property name="currentIndex">
+                    <number>0</number>
+                   </property>
+                   <property name="tabsClosable">
+                    <bool>false</bool>
+                   </property>
+                   <widget class="QWidget" name="tab">
+                    <attribute name="title">
+                     <string>S</string>
+                    </attribute>
+                    <layout class="QVBoxLayout" name="verticalLayout_12">
+                     <item>
+                      <widget class="QScrollArea" name="emoji_scroll_area">
+                       <property name="styleSheet">
+                        <string notr="true">border:none;</string>
+                       </property>
+                       <property name="horizontalScrollBarPolicy">
+                        <enum>Qt::ScrollBarAlwaysOff</enum>
+                       </property>
+                       <property name="widgetResizable">
+                        <bool>true</bool>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                       </property>
+                       <widget class="QWidget" name="scrollAreaWidgetContents_2">
+                        <property name="geometry">
+                         <rect>
+                          <x>0</x>
+                          <y>0</y>
+                          <width>355</width>
+                          <height>83</height>
+                         </rect>
+                        </property>
+                        <layout class="QGridLayout" name="gridLayout_3">
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="spacing">
+                          <number>1</number>
+                         </property>
+                         <item row="0" column="0">
+                          <widget class="QPushButton" name="select_emoji_btn">
+                           <property name="minimumSize">
+                            <size>
+                             <width>35</width>
+                             <height>35</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>35</width>
+                             <height>35</height>
+                            </size>
+                           </property>
+                           <property name="font">
+                            <font>
+                             <pointsize>16</pointsize>
+                            </font>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">QPushButton{
+	border:none;
+	background-color:#333;
+}
+
+QPushButton:hover{
+	background-color:#444;
+}</string>
+                           </property>
+                           <property name="text">
+                            <string>:)</string>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="tab_2">
+                    <attribute name="title">
+                     <string>O</string>
+                    </attribute>
+                   </widget>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </widget>
               <widget class="QWidget" name="chat_page">
@@ -4638,7 +4870,7 @@ background-color: rgb(40, 44, 52);
                      <x>0</x>
                      <y>0</y>
                      <width>606</width>
-                     <height>446</height>
+                     <height>628</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="chat_scroll_layout">
@@ -6005,227 +6237,6 @@ QPushButton::pressed{
                     </item>
                    </layout>
                   </widget>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QWidget" name="emoji_widget" native="true">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>180</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>180</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QWidget#emoji_widget{
-	background-color: rgb(30,32,33);
-	border-radius:10px;
-}</string>
-                  </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_11">
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_17">
-                     <item>
-                      <widget class="QLabel" name="emoji_widget_title">
-                       <property name="font">
-                        <font>
-                         <pointsize>10</pointsize>
-                        </font>
-                       </property>
-                       <property name="text">
-                        <string>Emojis</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_10">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="close_emoji_btn">
-                       <property name="maximumSize">
-                        <size>
-                         <width>20</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">QPushButton{
-
-background-color:#111;
-border:none;
-border-radius:4px;
-image: url(:/cils/cils/cil-x.png);
-padding:4px;
-
-}
-
-QPushButton:hover{
-background-color:red;
-}</string>
-                       </property>
-                       <property name="text">
-                        <string/>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <widget class="QTabWidget" name="emoji_tab_widget">
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>140</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">QTabWidget::pane {
-background-color:#000;
-}
-
-QTabWidget::tab-bar {
-}
-
-QTabBar::tab{
-    background-color:#222;
-	width:35px;
-	height:35px;
-}
-
-QTabBar::tab:hover{
-    background-color:#666;
-}
-
-QTabBar::tab:selected{
-	border-bottom:4px solid #111;
-}
-QTabBar::tab:!selected{
-	border-bottom:4px solid #222;
-}
-
-QTabWidget QWidget{
-background-color:#111;
-}</string>
-                     </property>
-                     <property name="tabPosition">
-                      <enum>QTabWidget::North</enum>
-                     </property>
-                     <property name="tabShape">
-                      <enum>QTabWidget::Rounded</enum>
-                     </property>
-                     <property name="currentIndex">
-                      <number>0</number>
-                     </property>
-                     <property name="tabsClosable">
-                      <bool>false</bool>
-                     </property>
-                     <widget class="QWidget" name="tab">
-                      <attribute name="title">
-                       <string>S</string>
-                      </attribute>
-                      <layout class="QVBoxLayout" name="verticalLayout_12">
-                       <item>
-                        <widget class="QScrollArea" name="emoji_scroll_area">
-                         <property name="styleSheet">
-                          <string notr="true">border:none;</string>
-                         </property>
-                         <property name="horizontalScrollBarPolicy">
-                          <enum>Qt::ScrollBarAlwaysOff</enum>
-                         </property>
-                         <property name="widgetResizable">
-                          <bool>true</bool>
-                         </property>
-                         <property name="alignment">
-                          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                         </property>
-                         <widget class="QWidget" name="scrollAreaWidgetContents_2">
-                          <property name="geometry">
-                           <rect>
-                            <x>0</x>
-                            <y>0</y>
-                            <width>570</width>
-                            <height>83</height>
-                           </rect>
-                          </property>
-                          <layout class="QGridLayout" name="gridLayout_3">
-                           <property name="leftMargin">
-                            <number>0</number>
-                           </property>
-                           <property name="topMargin">
-                            <number>0</number>
-                           </property>
-                           <property name="rightMargin">
-                            <number>0</number>
-                           </property>
-                           <property name="bottomMargin">
-                            <number>0</number>
-                           </property>
-                           <property name="spacing">
-                            <number>1</number>
-                           </property>
-                           <item row="0" column="0">
-                            <widget class="QPushButton" name="select_emoji_btn">
-                             <property name="minimumSize">
-                              <size>
-                               <width>35</width>
-                               <height>35</height>
-                              </size>
-                             </property>
-                             <property name="maximumSize">
-                              <size>
-                               <width>35</width>
-                               <height>35</height>
-                              </size>
-                             </property>
-                             <property name="font">
-                              <font>
-                               <pointsize>16</pointsize>
-                              </font>
-                             </property>
-                             <property name="styleSheet">
-                              <string notr="true">QPushButton{
-	border:none;
-	background-color:#333;
-}
-
-QPushButton:hover{
-	background-color:#444;
-}</string>
-                             </property>
-                             <property name="text">
-                              <string>:)</string>
-                             </property>
-                            </widget>
-                           </item>
-                          </layout>
-                         </widget>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                     <widget class="QWidget" name="tab_2">
-                      <attribute name="title">
-                       <string>O</string>
-                      </attribute>
-                     </widget>
-                    </widget>
-                   </item>
-                  </layout>
                  </widget>
                 </item>
                 <item>

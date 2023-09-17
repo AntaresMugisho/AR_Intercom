@@ -50,8 +50,10 @@ class ChatWindow(QMainWindow):
 
         # SHOW USERS / CONVERSATION LIST
         users = User.where("id", ">", 1)
-        for user in users:
-            self.show_user_widget(user)
+        for i in range(50):
+            self.show_user_widget(users[0])
+        # for user in users:
+        #     self.show_user_widget(user)
 
         # CONNECT USER'S CONVERSATION BUTTONS
         # self.ui.conversationButtonPressed.connect(self.show_conversations)
@@ -102,6 +104,8 @@ class ChatWindow(QMainWindow):
         uuid = user.get_uuid()
         name = user.get_user_name()
         profile_picture_path = user.get_image_path()
+        if profile_picture_path == "user/default.png":
+            profile_picture_path = ":/icons/icons/avatar.png"
 
         font1 = QFont()
         font1.setPointSize(10)
@@ -126,7 +130,7 @@ class ChatWindow(QMainWindow):
         self.client_info.setLineWidth(1)
 
         last_index = self.ui.chat_list_layout.count() - 1
-        self.ui.chat_list_layout.insertWidget(last_index - 1, self.client_info,
+        self.ui.chat_list_layout.insertWidget(last_index, self.client_info,
                                              Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
 
 
@@ -153,6 +157,21 @@ class ChatWindow(QMainWindow):
         self.online_toast.setFrameShadow(QFrame.Raised)
         if not online:
             self.online_toast.hide()
+
+        # LAST SEEN
+        self.last_seen_0 = QLabel(self.client_info)
+        self.last_seen_0.setObjectName(u"last_seen_0")
+        self.last_seen_0.setGeometry(QRect(198, 39, 61, 20))
+        self.last_seen_0.setStyleSheet(u"QLabel{\n"
+                                       "	background-color:transparent;\n"
+                                       "	color:rgb(0, 255, 0);\n"
+                                       "}")
+        self.last_seen_0.setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
+        if online:
+            self.last_seen_0.setText("online")
+        else:
+            pass
+            # self.last_seen_0.setText("offline")
 
         # NAME
         self.client_name = QLabel(self.client_info)

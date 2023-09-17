@@ -780,14 +780,14 @@ class Ui_MainWindow(object):
 "	border:none;}")
         self.envelop_msg.setFrameShape(QFrame.StyledPanel)
         self.envelop_msg.setFrameShadow(QFrame.Raised)
-        self.messege_number_2 = QLabel(self.client_info)
-        self.messege_number_2.setObjectName(u"messege_number_2")
-        self.messege_number_2.setGeometry(QRect(198, 39, 61, 20))
-        self.messege_number_2.setStyleSheet(u"QLabel{\n"
+        self.last_seen_0 = QLabel(self.client_info)
+        self.last_seen_0.setObjectName(u"last_seen_0")
+        self.last_seen_0.setGeometry(QRect(198, 39, 61, 20))
+        self.last_seen_0.setStyleSheet(u"QLabel{\n"
 "	background-color:transparent;\n"
 "	color:rgb(0, 255, 0);\n"
 "}")
-        self.messege_number_2.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.last_seen_0.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
         self.client_picture.raise_()
         self.msg_countrer.raise_()
         self.online_toast.raise_()
@@ -795,7 +795,7 @@ class Ui_MainWindow(object):
         self.client_name.raise_()
         self.messege_number.raise_()
         self.envelop_msg.raise_()
-        self.messege_number_2.raise_()
+        self.last_seen_0.raise_()
 
         self.chat_list_layout.addWidget(self.client_info)
 
@@ -869,99 +869,20 @@ class Ui_MainWindow(object):
 "	border:none;}")
         self.envelop_msg_3.setFrameShape(QFrame.StyledPanel)
         self.envelop_msg_3.setFrameShadow(QFrame.Raised)
-        self.messege_number_6 = QLabel(self.client_info_2)
-        self.messege_number_6.setObjectName(u"messege_number_6")
-        self.messege_number_6.setGeometry(QRect(198, 39, 61, 20))
-        self.messege_number_6.setStyleSheet(u"QLabel{\n"
+        self.last_seen_2 = QLabel(self.client_info_2)
+        self.last_seen_2.setObjectName(u"last_seen_2")
+        self.last_seen_2.setGeometry(QRect(198, 39, 61, 20))
+        self.last_seen_2.setStyleSheet(u"QLabel{\n"
 "	background-color:transparent;\n"
 "	color:rgb(255, 128, 0);\n"
 "}")
-        self.messege_number_6.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.last_seen_2.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.chat_list_layout.addWidget(self.client_info_2)
 
         self.verticalSpacer_2 = QSpacerItem(20, 309, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.chat_list_layout.addItem(self.verticalSpacer_2)
-
-        self.media_bg = QWidget(self.chat_list_widget)
-        self.media_bg.setObjectName(u"media_bg")
-        self.media_bg.setMinimumSize(QSize(46, 191))
-        self.media_bg.setMaximumSize(QSize(46, 191))
-        self.media_bg.setStyleSheet(u"")
-        self.verticalLayout = QVBoxLayout(self.media_bg)
-        self.verticalLayout.setSpacing(6)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(3, 0, 3, 0)
-        self.media_doc = QPushButton(self.media_bg)
-        self.media_doc.setObjectName(u"media_doc")
-        self.media_doc.setMinimumSize(QSize(40, 40))
-        self.media_doc.setMaximumSize(QSize(40, 40))
-        self.media_doc.setStyleSheet(u"QPushButton{\n"
-"	background-image: url(:/cils/cils/cil-paperclip.png);\n"
-"	background-color: rgb(0, 0, 127);}\n"
-"\n"
-"QPushButton:hover{\n"
-"	background-color: rgb(61, 62, 63);}\n"
-"\n"
-"QPushButton:pressed{\n"
-"	background-color: rgb(31, 32, 34);}")
-
-        self.verticalLayout.addWidget(self.media_doc)
-
-        self.media_audio = QPushButton(self.media_bg)
-        self.media_audio.setObjectName(u"media_audio")
-        self.media_audio.setMinimumSize(QSize(40, 40))
-        self.media_audio.setMaximumSize(QSize(40, 40))
-        self.media_audio.setStyleSheet(u"QPushButton{\n"
-"	background-image: url(:/cils/cils/blacks/cil-music-note.png);\n"
-"	background-color: rgb(255, 170, 0);\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	background-color: rgb(201, 202, 203);}\n"
-"\n"
-"QPushButton:pressed{\n"
-"	background-color: rgb(101, 102, 103);}")
-
-        self.verticalLayout.addWidget(self.media_audio)
-
-        self.media_image = QPushButton(self.media_bg)
-        self.media_image.setObjectName(u"media_image")
-        self.media_image.setMinimumSize(QSize(40, 40))
-        self.media_image.setMaximumSize(QSize(40, 40))
-        self.media_image.setStyleSheet(u"QPushButton{\n"
-"	background-image: url(:/cils/cils/cil-image1.png);\n"
-"	background-color: rgb(156, 0, 0);\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	background-color: rgb(61, 62, 63);}\n"
-"\n"
-"QPushButton:pressed{\n"
-"	background-color: rgb(31, 32, 34);}")
-
-        self.verticalLayout.addWidget(self.media_image)
-
-        self.media_video = QPushButton(self.media_bg)
-        self.media_video.setObjectName(u"media_video")
-        self.media_video.setMinimumSize(QSize(40, 40))
-        self.media_video.setMaximumSize(QSize(40, 40))
-        self.media_video.setStyleSheet(u"QPushButton{\n"
-"	background-image: url(:/cils/cils/blacks/cil-movie.png);\n"
-"	background-color: rgb(0, 105, 255);\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	background-color: rgb(201, 202, 203);}\n"
-"\n"
-"QPushButton:pressed{\n"
-"	background-color: rgb(101, 102, 103);}")
-
-        self.verticalLayout.addWidget(self.media_video)
-
-
-        self.chat_list_layout.addWidget(self.media_bg)
 
         self.left_scroll.setWidget(self.chat_list_widget)
 
@@ -2112,13 +2033,214 @@ class Ui_MainWindow(object):
 
         self.label_2 = QLabel(self.home_page)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(200, 20, 120, 20))
+        self.label_2.setGeometry(QRect(20, 680, 120, 20))
         self.label_2.setMaximumSize(QSize(120, 20))
         self.label_2.setStyleSheet(u"background-color: rgb(255, 255, 127);\n"
 "color:black;\n"
 "padding:4px;\n"
 "border-radius:4px;")
         self.label_2.setAlignment(Qt.AlignCenter)
+        self.media_bg = QWidget(self.home_page)
+        self.media_bg.setObjectName(u"media_bg")
+        self.media_bg.setGeometry(QRect(490, 410, 46, 191))
+        self.media_bg.setMinimumSize(QSize(46, 191))
+        self.media_bg.setMaximumSize(QSize(46, 191))
+        self.media_bg.setStyleSheet(u"")
+        self.verticalLayout = QVBoxLayout(self.media_bg)
+        self.verticalLayout.setSpacing(6)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(3, 0, 3, 0)
+        self.media_doc = QPushButton(self.media_bg)
+        self.media_doc.setObjectName(u"media_doc")
+        self.media_doc.setMinimumSize(QSize(40, 40))
+        self.media_doc.setMaximumSize(QSize(40, 40))
+        self.media_doc.setStyleSheet(u"QPushButton{\n"
+"	background-image: url(:/cils/cils/cil-paperclip.png);\n"
+"	background-color: rgb(0, 0, 127);}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color: rgb(61, 62, 63);}\n"
+"\n"
+"QPushButton:pressed{\n"
+"	background-color: rgb(31, 32, 34);}")
+
+        self.verticalLayout.addWidget(self.media_doc)
+
+        self.media_audio = QPushButton(self.media_bg)
+        self.media_audio.setObjectName(u"media_audio")
+        self.media_audio.setMinimumSize(QSize(40, 40))
+        self.media_audio.setMaximumSize(QSize(40, 40))
+        self.media_audio.setStyleSheet(u"QPushButton{\n"
+"	background-image: url(:/cils/cils/blacks/cil-music-note.png);\n"
+"	background-color: rgb(255, 170, 0);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color: rgb(201, 202, 203);}\n"
+"\n"
+"QPushButton:pressed{\n"
+"	background-color: rgb(101, 102, 103);}")
+
+        self.verticalLayout.addWidget(self.media_audio)
+
+        self.media_image = QPushButton(self.media_bg)
+        self.media_image.setObjectName(u"media_image")
+        self.media_image.setMinimumSize(QSize(40, 40))
+        self.media_image.setMaximumSize(QSize(40, 40))
+        self.media_image.setStyleSheet(u"QPushButton{\n"
+"	background-image: url(:/cils/cils/cil-image1.png);\n"
+"	background-color: rgb(156, 0, 0);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color: rgb(61, 62, 63);}\n"
+"\n"
+"QPushButton:pressed{\n"
+"	background-color: rgb(31, 32, 34);}")
+
+        self.verticalLayout.addWidget(self.media_image)
+
+        self.media_video = QPushButton(self.media_bg)
+        self.media_video.setObjectName(u"media_video")
+        self.media_video.setMinimumSize(QSize(40, 40))
+        self.media_video.setMaximumSize(QSize(40, 40))
+        self.media_video.setStyleSheet(u"QPushButton{\n"
+"	background-image: url(:/cils/cils/blacks/cil-movie.png);\n"
+"	background-color: rgb(0, 105, 255);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color: rgb(201, 202, 203);}\n"
+"\n"
+"QPushButton:pressed{\n"
+"	background-color: rgb(101, 102, 103);}")
+
+        self.verticalLayout.addWidget(self.media_video)
+
+        self.emoji_widget = QWidget(self.home_page)
+        self.emoji_widget.setObjectName(u"emoji_widget")
+        self.emoji_widget.setGeometry(QRect(210, 10, 391, 180))
+        self.emoji_widget.setMinimumSize(QSize(0, 180))
+        self.emoji_widget.setMaximumSize(QSize(16777215, 180))
+        self.emoji_widget.setStyleSheet(u"QWidget#emoji_widget{\n"
+"	background-color: rgb(30,32,33);\n"
+"	border-radius:10px;\n"
+"}")
+        self.verticalLayout_11 = QVBoxLayout(self.emoji_widget)
+        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+        self.horizontalLayout_17 = QHBoxLayout()
+        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
+        self.emoji_widget_title = QLabel(self.emoji_widget)
+        self.emoji_widget_title.setObjectName(u"emoji_widget_title")
+        self.emoji_widget_title.setFont(font1)
+
+        self.horizontalLayout_17.addWidget(self.emoji_widget_title)
+
+        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_17.addItem(self.horizontalSpacer_10)
+
+        self.close_emoji_btn = QPushButton(self.emoji_widget)
+        self.close_emoji_btn.setObjectName(u"close_emoji_btn")
+        self.close_emoji_btn.setMaximumSize(QSize(20, 20))
+        self.close_emoji_btn.setStyleSheet(u"QPushButton{\n"
+"\n"
+"background-color:#111;\n"
+"border:none;\n"
+"border-radius:4px;\n"
+"image: url(:/cils/cils/cil-x.png);\n"
+"padding:4px;\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"background-color:red;\n"
+"}")
+
+        self.horizontalLayout_17.addWidget(self.close_emoji_btn)
+
+
+        self.verticalLayout_11.addLayout(self.horizontalLayout_17)
+
+        self.emoji_tab_widget = QTabWidget(self.emoji_widget)
+        self.emoji_tab_widget.setObjectName(u"emoji_tab_widget")
+        self.emoji_tab_widget.setMinimumSize(QSize(0, 140))
+        self.emoji_tab_widget.setStyleSheet(u"QTabWidget::pane {\n"
+"background-color:#000;\n"
+"}\n"
+"\n"
+"QTabWidget::tab-bar {\n"
+"}\n"
+"\n"
+"QTabBar::tab{\n"
+"    background-color:#222;\n"
+"	width:35px;\n"
+"	height:35px;\n"
+"}\n"
+"\n"
+"QTabBar::tab:hover{\n"
+"    background-color:#666;\n"
+"}\n"
+"\n"
+"QTabBar::tab:selected{\n"
+"	border-bottom:4px solid #111;\n"
+"}\n"
+"QTabBar::tab:!selected{\n"
+"	border-bottom:4px solid #222;\n"
+"}\n"
+"\n"
+"QTabWidget QWidget{\n"
+"background-color:#111;\n"
+"}")
+        self.emoji_tab_widget.setTabPosition(QTabWidget.North)
+        self.emoji_tab_widget.setTabShape(QTabWidget.Rounded)
+        self.emoji_tab_widget.setTabsClosable(False)
+        self.tab = QWidget()
+        self.tab.setObjectName(u"tab")
+        self.verticalLayout_12 = QVBoxLayout(self.tab)
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.emoji_scroll_area = QScrollArea(self.tab)
+        self.emoji_scroll_area.setObjectName(u"emoji_scroll_area")
+        self.emoji_scroll_area.setStyleSheet(u"border:none;")
+        self.emoji_scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.emoji_scroll_area.setWidgetResizable(True)
+        self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.scrollAreaWidgetContents_2 = QWidget()
+        self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 355, 83))
+        self.gridLayout_3 = QGridLayout(self.scrollAreaWidgetContents_2)
+        self.gridLayout_3.setSpacing(1)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.select_emoji_btn = QPushButton(self.scrollAreaWidgetContents_2)
+        self.select_emoji_btn.setObjectName(u"select_emoji_btn")
+        self.select_emoji_btn.setMinimumSize(QSize(35, 35))
+        self.select_emoji_btn.setMaximumSize(QSize(35, 35))
+        font11 = QFont()
+        font11.setPointSize(16)
+        self.select_emoji_btn.setFont(font11)
+        self.select_emoji_btn.setStyleSheet(u"QPushButton{\n"
+"	border:none;\n"
+"	background-color:#333;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color:#444;\n"
+"}")
+
+        self.gridLayout_3.addWidget(self.select_emoji_btn, 0, 0, 1, 1)
+
+        self.emoji_scroll_area.setWidget(self.scrollAreaWidgetContents_2)
+
+        self.verticalLayout_12.addWidget(self.emoji_scroll_area)
+
+        self.emoji_tab_widget.addTab(self.tab, "")
+        self.tab_2 = QWidget()
+        self.tab_2.setObjectName(u"tab_2")
+        self.emoji_tab_widget.addTab(self.tab_2, "")
+
+        self.verticalLayout_11.addWidget(self.emoji_tab_widget)
+
         self.chat_stacked_widget.addWidget(self.home_page)
         self.chat_page = QWidget()
         self.chat_page.setObjectName(u"chat_page")
@@ -2154,12 +2276,12 @@ class Ui_MainWindow(object):
         self.contact_name.setObjectName(u"contact_name")
         self.contact_name.setMinimumSize(QSize(251, 31))
         self.contact_name.setMaximumSize(QSize(16777215, 31))
-        font11 = QFont()
-        font11.setFamilies([u"Segoe UI"])
-        font11.setPointSize(12)
-        font11.setBold(True)
-        font11.setItalic(False)
-        self.contact_name.setFont(font11)
+        font12 = QFont()
+        font12.setFamilies([u"Segoe UI"])
+        font12.setPointSize(12)
+        font12.setBold(True)
+        font12.setItalic(False)
+        self.contact_name.setFont(font12)
 
         self.verticalLayout_6.addWidget(self.contact_name)
 
@@ -2214,7 +2336,7 @@ class Ui_MainWindow(object):
         self.chat_scroll.setWidgetResizable(True)
         self.chat_scroll_content = QWidget()
         self.chat_scroll_content.setObjectName(u"chat_scroll_content")
-        self.chat_scroll_content.setGeometry(QRect(0, 0, 606, 446))
+        self.chat_scroll_content.setGeometry(QRect(0, 0, 606, 628))
         self.chat_scroll_layout = QVBoxLayout(self.chat_scroll_content)
         self.chat_scroll_layout.setSpacing(9)
         self.chat_scroll_layout.setObjectName(u"chat_scroll_layout")
@@ -2806,132 +2928,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.chat_scroll)
 
-        self.emoji_widget = QWidget(self.chat_page)
-        self.emoji_widget.setObjectName(u"emoji_widget")
-        self.emoji_widget.setMinimumSize(QSize(0, 180))
-        self.emoji_widget.setMaximumSize(QSize(16777215, 180))
-        self.emoji_widget.setStyleSheet(u"QWidget#emoji_widget{\n"
-"	background-color: rgb(30,32,33);\n"
-"	border-radius:10px;\n"
-"}")
-        self.verticalLayout_11 = QVBoxLayout(self.emoji_widget)
-        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
-        self.horizontalLayout_17 = QHBoxLayout()
-        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
-        self.emoji_widget_title = QLabel(self.emoji_widget)
-        self.emoji_widget_title.setObjectName(u"emoji_widget_title")
-        self.emoji_widget_title.setFont(font1)
-
-        self.horizontalLayout_17.addWidget(self.emoji_widget_title)
-
-        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_17.addItem(self.horizontalSpacer_10)
-
-        self.close_emoji_btn = QPushButton(self.emoji_widget)
-        self.close_emoji_btn.setObjectName(u"close_emoji_btn")
-        self.close_emoji_btn.setMaximumSize(QSize(20, 20))
-        self.close_emoji_btn.setStyleSheet(u"QPushButton{\n"
-"\n"
-"background-color:#111;\n"
-"border:none;\n"
-"border-radius:4px;\n"
-"image: url(:/cils/cils/cil-x.png);\n"
-"padding:4px;\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"background-color:red;\n"
-"}")
-
-        self.horizontalLayout_17.addWidget(self.close_emoji_btn)
-
-
-        self.verticalLayout_11.addLayout(self.horizontalLayout_17)
-
-        self.emoji_tab_widget = QTabWidget(self.emoji_widget)
-        self.emoji_tab_widget.setObjectName(u"emoji_tab_widget")
-        self.emoji_tab_widget.setMinimumSize(QSize(0, 140))
-        self.emoji_tab_widget.setStyleSheet(u"QTabWidget::pane {\n"
-"background-color:#000;\n"
-"}\n"
-"\n"
-"QTabWidget::tab-bar {\n"
-"}\n"
-"\n"
-"QTabBar::tab{\n"
-"    background-color:#222;\n"
-"	width:35px;\n"
-"	height:35px;\n"
-"}\n"
-"\n"
-"QTabBar::tab:hover{\n"
-"    background-color:#666;\n"
-"}\n"
-"\n"
-"QTabBar::tab:selected{\n"
-"	border-bottom:4px solid #111;\n"
-"}\n"
-"QTabBar::tab:!selected{\n"
-"	border-bottom:4px solid #222;\n"
-"}\n"
-"\n"
-"QTabWidget QWidget{\n"
-"background-color:#111;\n"
-"}")
-        self.emoji_tab_widget.setTabPosition(QTabWidget.North)
-        self.emoji_tab_widget.setTabShape(QTabWidget.Rounded)
-        self.emoji_tab_widget.setTabsClosable(False)
-        self.tab = QWidget()
-        self.tab.setObjectName(u"tab")
-        self.verticalLayout_12 = QVBoxLayout(self.tab)
-        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
-        self.emoji_scroll_area = QScrollArea(self.tab)
-        self.emoji_scroll_area.setObjectName(u"emoji_scroll_area")
-        self.emoji_scroll_area.setStyleSheet(u"border:none;")
-        self.emoji_scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.emoji_scroll_area.setWidgetResizable(True)
-        self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.scrollAreaWidgetContents_2 = QWidget()
-        self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 570, 83))
-        self.gridLayout_3 = QGridLayout(self.scrollAreaWidgetContents_2)
-        self.gridLayout_3.setSpacing(1)
-        self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.select_emoji_btn = QPushButton(self.scrollAreaWidgetContents_2)
-        self.select_emoji_btn.setObjectName(u"select_emoji_btn")
-        self.select_emoji_btn.setMinimumSize(QSize(35, 35))
-        self.select_emoji_btn.setMaximumSize(QSize(35, 35))
-        font12 = QFont()
-        font12.setPointSize(16)
-        self.select_emoji_btn.setFont(font12)
-        self.select_emoji_btn.setStyleSheet(u"QPushButton{\n"
-"	border:none;\n"
-"	background-color:#333;\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	background-color:#444;\n"
-"}")
-
-        self.gridLayout_3.addWidget(self.select_emoji_btn, 0, 0, 1, 1)
-
-        self.emoji_scroll_area.setWidget(self.scrollAreaWidgetContents_2)
-
-        self.verticalLayout_12.addWidget(self.emoji_scroll_area)
-
-        self.emoji_tab_widget.addTab(self.tab, "")
-        self.tab_2 = QWidget()
-        self.tab_2.setObjectName(u"tab_2")
-        self.emoji_tab_widget.addTab(self.tab_2, "")
-
-        self.verticalLayout_11.addWidget(self.emoji_tab_widget)
-
-
-        self.verticalLayout_7.addWidget(self.emoji_widget)
-
         self.bottom_frame = QWidget(self.chat_page)
         self.bottom_frame.setObjectName(u"bottom_frame")
         self.bottom_frame.setMinimumSize(QSize(551, 61))
@@ -3510,17 +3506,13 @@ class Ui_MainWindow(object):
         self.last_message.setText(QCoreApplication.translate("MainWindow", u"Last message strip...", None))
         self.client_name.setText(QCoreApplication.translate("MainWindow", u"Charlie", None))
         self.messege_number.setText(QCoreApplication.translate("MainWindow", u"1268", None))
-        self.messege_number_2.setText(QCoreApplication.translate("MainWindow", u"online", None))
+        self.last_seen_0.setText(QCoreApplication.translate("MainWindow", u"online", None))
         self.client_picture_3.setText("")
         self.online_toast_3.setText("")
         self.last_message_3.setText(QCoreApplication.translate("MainWindow", u"Seems like a see a...", None))
         self.client_name_3.setText(QCoreApplication.translate("MainWindow", u"Alpha", None))
         self.messege_number_5.setText(QCoreApplication.translate("MainWindow", u"123", None))
-        self.messege_number_6.setText(QCoreApplication.translate("MainWindow", u"27 min ago", None))
-        self.media_doc.setText("")
-        self.media_audio.setText("")
-        self.media_image.setText("")
-        self.media_video.setText("")
+        self.last_seen_2.setText(QCoreApplication.translate("MainWindow", u"27 min ago", None))
         self.device_icon.setText("")
         self.socket_adress.setText(QCoreApplication.translate("MainWindow", u"192.168.1.100", None))
         self.socket_name.setText(QCoreApplication.translate("MainWindow", u"DESKTOP-LKJOK-KJL", None))
@@ -3562,6 +3554,15 @@ class Ui_MainWindow(object):
         self.title_13.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#848484;\">1.2Mb</span> \u2022 Image.ext</p></body></html>", None))
         self.time_13.setText(QCoreApplication.translate("MainWindow", u"23:36", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"23 SEPTEMBRE 2023", None))
+        self.media_doc.setText("")
+        self.media_audio.setText("")
+        self.media_image.setText("")
+        self.media_video.setText("")
+        self.emoji_widget_title.setText(QCoreApplication.translate("MainWindow", u"Emojis", None))
+        self.close_emoji_btn.setText("")
+        self.select_emoji_btn.setText(QCoreApplication.translate("MainWindow", u":)", None))
+        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"S", None))
+        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"O", None))
         self.contact_name.setText(QCoreApplication.translate("MainWindow", u"Alpha", None))
         self.contact_status.setText(QCoreApplication.translate("MainWindow", u"Hello, i'm using AR Intercom !", None))
         self.last_seen.setText(QCoreApplication.translate("MainWindow", u"online 27 min ago", None))
@@ -3582,11 +3583,6 @@ class Ui_MainWindow(object):
         self.title_2.setText(QCoreApplication.translate("MainWindow", u"ARV-20062021-1200.arv", None))
         self.elapsed_time_2.setText(QCoreApplication.translate("MainWindow", u"00:00", None))
         self.total_time_2.setText(QCoreApplication.translate("MainWindow", u"00:00", None))
-        self.emoji_widget_title.setText(QCoreApplication.translate("MainWindow", u"Emojis", None))
-        self.close_emoji_btn.setText("")
-        self.select_emoji_btn.setText(QCoreApplication.translate("MainWindow", u":)", None))
-        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"S", None))
-        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"O", None))
         self.media_btn.setText("")
         self.emoji_btn.setText("")
         self.entry_field.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Type your message ...", None))
