@@ -618,7 +618,7 @@ background-image: url(:/cils/cils/cil-menu.png);
 </string>
             </property>
             <property name="text">
-             <string>Cacher le menu</string>
+             <string>Hide menu</string>
             </property>
            </widget>
           </item>
@@ -646,7 +646,7 @@ background-image: url(:/cils/cils/cil-menu.png);
 </string>
             </property>
             <property name="text">
-             <string>Accueil</string>
+             <string>Home</string>
             </property>
            </widget>
           </item>
@@ -674,7 +674,7 @@ background-image: url(:/cils/cils/cil-menu.png);
 </string>
             </property>
             <property name="text">
-             <string>Scan du réseau</string>
+             <string>Scan network</string>
             </property>
            </widget>
           </item>
@@ -702,7 +702,7 @@ background-image: url(:/cils/cils/cil-menu.png);
 </string>
             </property>
             <property name="text">
-             <string>Discussions</string>
+             <string>Chat</string>
             </property>
            </widget>
           </item>
@@ -742,7 +742,7 @@ background-image: url(:/cils/cils/cil-menu.png);
              <string notr="true">background-image: url(:/cils/cils/cil-equalizer.png);</string>
             </property>
             <property name="text">
-             <string>Parametres</string>
+             <string>Settings</string>
             </property>
            </widget>
           </item>
@@ -769,7 +769,7 @@ background-image: url(:/cils/cils/cil-menu.png);
              <string notr="true">background-image: url(:/cils/cils/cil-at.png);</string>
             </property>
             <property name="text">
-             <string>A propos</string>
+             <string>About</string>
             </property>
            </widget>
           </item>
@@ -938,6 +938,9 @@ background-size: 50px;*/</string>
                 <height>31</height>
                </rect>
               </property>
+              <property name="text">
+               <string>Search user, message</string>
+              </property>
               <property name="placeholderText">
                <string>Rechercher un contact</string>
               </property>
@@ -1001,13 +1004,13 @@ background-size: 50px;*/</string>
                  <property name="widgetResizable">
                   <bool>true</bool>
                  </property>
-                 <widget class="QWidget" name="left_scroll_2">
+                 <widget class="QWidget" name="chat_scroll_widget">
                   <property name="geometry">
                    <rect>
                     <x>0</x>
                     <y>0</y>
                     <width>291</width>
-                    <height>648</height>
+                    <height>669</height>
                    </rect>
                   </property>
                   <property name="styleSheet">
@@ -1151,7 +1154,7 @@ border-radius:28px;</string>
 }</string>
                       </property>
                       <property name="text">
-                       <string>Dernier message...</string>
+                       <string>Last message strip...</string>
                       </property>
                      </widget>
                      <widget class="QLabel" name="client_name">
@@ -1244,7 +1247,7 @@ border-radius:28px;</string>
 }</string>
                       </property>
                       <property name="text">
-                       <string>en ligne</string>
+                       <string>online</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1366,7 +1369,7 @@ border-radius:28px;</string>
 }</string>
                       </property>
                       <property name="text">
-                       <string>Dernier message...</string>
+                       <string>Seems like a see a...</string>
                       </property>
                      </widget>
                      <widget class="QLabel" name="client_name_3">
@@ -1459,7 +1462,7 @@ border-radius:28px;</string>
 }</string>
                       </property>
                       <property name="text">
-                       <string>env 27 min</string>
+                       <string>27 min ago</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1852,7 +1855,7 @@ background-position: left center;</string>
                </font>
               </property>
               <property name="text">
-               <string>Connecté</string>
+               <string>You're connected !</string>
               </property>
              </widget>
             </widget>
@@ -1863,27 +1866,27 @@ background-position: left center;</string>
           <widget class="QLabel" name="label_8">
            <property name="geometry">
             <rect>
-             <x>50</x>
-             <y>70</y>
+             <x>60</x>
+             <y>590</y>
              <width>181</width>
              <height>20</height>
             </rect>
            </property>
            <property name="text">
-            <string>A propos de AR Intercom</string>
+            <string>About AR Intercom</string>
            </property>
           </widget>
           <widget class="QPushButton" name="pushButton_11">
            <property name="geometry">
             <rect>
              <x>60</x>
-             <y>570</y>
+             <y>650</y>
              <width>161</width>
              <height>41</height>
             </rect>
            </property>
            <property name="text">
-            <string>Faire un don</string>
+            <string>Donate</string>
            </property>
           </widget>
          </widget>
@@ -4536,7 +4539,7 @@ background-color: rgb(40, 44, 52);
                         <string notr="true">color:#888;</string>
                        </property>
                        <property name="text">
-                        <string>Hello, j'utilise AR Intercom !</string>
+                        <string>Hello, i'm using AR Intercom !</string>
                        </property>
                       </widget>
                      </item>
@@ -4561,7 +4564,7 @@ background-color: rgb(40, 44, 52);
 </string>
                      </property>
                      <property name="text">
-                      <string>En ligne il y a 27 min</string>
+                      <string>online 27 min ago</string>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -4635,8 +4638,8 @@ background-color: rgb(40, 44, 52);
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>598</width>
-                     <height>429</height>
+                     <width>606</width>
+                     <height>446</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="chat_scroll_layout">
@@ -6177,7 +6180,7 @@ background-color:#111;
                             <number>1</number>
                            </property>
                            <item row="0" column="0">
-                            <widget class="QPushButton" name="pushButton_10">
+                            <widget class="QPushButton" name="select_emoji_btn">
                              <property name="minimumSize">
                               <size>
                                <width>35</width>
@@ -6206,7 +6209,7 @@ QPushButton:hover{
 }</string>
                              </property>
                              <property name="text">
-                              <string>🎄</string>
+                              <string>:)</string>
                              </property>
                             </widget>
                            </item>
@@ -6365,7 +6368,7 @@ color:white;</string>
                          <number>1</number>
                         </property>
                         <property name="placeholderText">
-                         <string>Entrez votre message ici ...</string>
+                         <string>Type your message ...</string>
                         </property>
                        </widget>
                       </item>
@@ -6447,7 +6450,7 @@ QStackedWidget &gt; QWidget {
                  </font>
                 </property>
                 <property name="text">
-                 <string>Paramètres</string>
+                 <string>Settings</string>
                 </property>
                </widget>
                <widget class="QLabel" name="label_18">
@@ -6477,7 +6480,7 @@ border-bottom:3px solid red;
 </string>
                 </property>
                 <property name="text">
-                 <string>Paramètres &gt; Mon compte</string>
+                 <string>Settings &gt; Account</string>
                 </property>
                </widget>
                <widget class="QStackedWidget" name="settings_stacked_widget">
@@ -6517,108 +6520,17 @@ border-top:2px dotted rgb(30,32,33);
                    <string>Mode clair</string>
                   </property>
                  </widget>
-                 <widget class="QLabel" name="label_3">
-                  <property name="geometry">
-                   <rect>
-                    <x>10</x>
-                    <y>10</y>
-                    <width>171</width>
-                    <height>16</height>
-                   </rect>
-                  </property>
-                  <property name="text">
-                   <string>Préférences</string>
-                  </property>
-                 </widget>
                  <widget class="QLabel" name="label_5">
                   <property name="geometry">
                    <rect>
-                    <x>10</x>
-                    <y>210</y>
+                    <x>20</x>
+                    <y>90</y>
                     <width>171</width>
                     <height>16</height>
                    </rect>
                   </property>
                   <property name="text">
                    <string>Mon compte</string>
-                  </property>
-                 </widget>
-                 <widget class="QPushButton" name="pushButton_4">
-                  <property name="geometry">
-                   <rect>
-                    <x>20</x>
-                    <y>240</y>
-                    <width>211</width>
-                    <height>28</height>
-                   </rect>
-                  </property>
-                  <property name="text">
-                   <string>Modifier mes informaions </string>
-                  </property>
-                 </widget>
-                 <widget class="QPushButton" name="pushButton_5">
-                  <property name="geometry">
-                   <rect>
-                    <x>20</x>
-                    <y>280</y>
-                    <width>211</width>
-                    <height>28</height>
-                   </rect>
-                  </property>
-                  <property name="text">
-                   <string>Signaler un problème</string>
-                  </property>
-                 </widget>
-                 <widget class="QPushButton" name="pushButton_6">
-                  <property name="geometry">
-                   <rect>
-                    <x>20</x>
-                    <y>320</y>
-                    <width>211</width>
-                    <height>31</height>
-                   </rect>
-                  </property>
-                  <property name="text">
-                   <string>Aide</string>
-                  </property>
-                 </widget>
-                 <widget class="QPushButton" name="pushButton_7">
-                  <property name="geometry">
-                   <rect>
-                    <x>20</x>
-                    <y>360</y>
-                    <width>211</width>
-                    <height>28</height>
-                   </rect>
-                  </property>
-                  <property name="text">
-                   <string>Mentions légales et politiques</string>
-                  </property>
-                 </widget>
-                 <widget class="QPushButton" name="pushButton_8">
-                  <property name="geometry">
-                   <rect>
-                    <x>10</x>
-                    <y>450</y>
-                    <width>211</width>
-                    <height>28</height>
-                   </rect>
-                  </property>
-                  <property name="text">
-                   <string>Mises à jour de l'app</string>
-                  </property>
-                 </widget>
-                 <widget class="QPushButton" name="pushButton_9">
-                  <property name="geometry">
-                   <rect>
-                    <x>10</x>
-                    <y>410</y>
-                    <width>211</width>
-                    <height>28</height>
-                   </rect>
-                  </property>
-                  <property name="text">
-                   <string>Notifications</string>
                   </property>
                  </widget>
                 </widget>
@@ -6814,7 +6726,7 @@ QPushButton:hover{
                         <string notr="true">color:gray;</string>
                        </property>
                        <property name="text">
-                        <string>Nom</string>
+                        <string>Name</string>
                        </property>
                       </widget>
                      </item>
@@ -6922,7 +6834,7 @@ QPushButton:hover{
                         <string notr="true">color:gray;</string>
                        </property>
                        <property name="text">
-                        <string>Humeur</string>
+                        <string>Status</string>
                        </property>
                       </widget>
                      </item>
@@ -7008,7 +6920,7 @@ QPushButton:hover{
                         <string notr="true">color:gray;</string>
                        </property>
                        <property name="text">
-                        <string>Poste</string>
+                        <string>Role</string>
                        </property>
                       </widget>
                      </item>
@@ -7026,7 +6938,7 @@ background-color:rgb(30,32,33);
 padding:4px;</string>
                        </property>
                        <property name="text">
-                        <string>Programmeur</string>
+                        <string>Programmer</string>
                        </property>
                        <property name="alignment">
                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -7094,7 +7006,7 @@ QPushButton:hover{
                         <string notr="true">color:gray;</string>
                        </property>
                        <property name="text">
-                        <string>Département</string>
+                        <string>Department</string>
                        </property>
                       </widget>
                      </item>
@@ -7191,7 +7103,7 @@ QPushButton:hover{
                       <string notr="true"/>
                      </property>
                      <property name="text">
-                      <string>Modifier le mot de passe</string>
+                      <string>Change password</string>
                      </property>
                     </widget>
                    </item>
@@ -7223,7 +7135,7 @@ QPushButton:hover{
                         <string notr="true">color:gray;</string>
                        </property>
                        <property name="text">
-                        <string>Mot de passe actuel</string>
+                        <string>Actual password</string>
                        </property>
                       </widget>
                      </item>
@@ -7273,7 +7185,7 @@ QLineEdit:hover, QLineEdit:focus{
                         <string notr="true">color:gray;</string>
                        </property>
                        <property name="text">
-                        <string>Nouveau mot de passe</string>
+                        <string>New password</string>
                        </property>
                       </widget>
                      </item>
@@ -7323,7 +7235,7 @@ QLineEdit:hover, QLineEdit:focus{
                         <string notr="true">color:gray;</string>
                        </property>
                        <property name="text">
-                        <string>Nouveau mot de passe encore</string>
+                        <string>New password again</string>
                        </property>
                       </widget>
                      </item>
@@ -7375,7 +7287,7 @@ QLineEdit:hover, QLineEdit:focus{
 padding-left:4px;</string>
                      </property>
                      <property name="text">
-                      <string>Mot de passe incorrect</string>
+                      <string>Incorrect password</string>
                      </property>
                     </widget>
                    </item>
@@ -7398,41 +7310,14 @@ QPushButton:hover{
 }</string>
                      </property>
                      <property name="text">
-                      <string>Modifier le mot de passe</string>
+                      <string>Update password</string>
                      </property>
                     </widget>
                    </item>
                   </layout>
                  </widget>
                 </widget>
-                <widget class="QWidget" name="page_3">
-                 <widget class="QLabel" name="label_6">
-                  <property name="geometry">
-                   <rect>
-                    <x>60</x>
-                    <y>80</y>
-                    <width>111</width>
-                    <height>111</height>
-                   </rect>
-                  </property>
-                  <property name="text">
-                   <string>Félicitations !</string>
-                  </property>
-                 </widget>
-                 <widget class="QLabel" name="label_7">
-                  <property name="geometry">
-                   <rect>
-                    <x>60</x>
-                    <y>210</y>
-                    <width>111</width>
-                    <height>111</height>
-                   </rect>
-                  </property>
-                  <property name="text">
-                   <string>Vous êtes à jour!</string>
-                  </property>
-                 </widget>
-                </widget>
+                <widget class="QWidget" name="page_3"/>
                </widget>
                <zorder>label_17</zorder>
                <zorder>settings_stacked_widget</zorder>
@@ -7481,7 +7366,6 @@ background-position:right;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionAide">
    <property name="text">
     <string>Aide</string>
