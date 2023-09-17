@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main.ui'
+## Form generated from reading UI file 'main_window.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.5.1
 ##
@@ -22,7 +22,6 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QCheckBox, QFr
     QSlider, QSpacerItem, QStackedWidget, QTabWidget,
     QTextEdit, QVBoxLayout, QWidget)
 from resources import img_rc
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -632,9 +631,7 @@ class Ui_MainWindow(object):
         self.p_user_box = QWidget(self.p_user)
         self.p_user_box.setObjectName(u"p_user_box")
         self.p_user_box.setGeometry(QRect(3, 4, 281, 71))
-        self.p_user_box.setStyleSheet(u"#client_info{border-radius:30px;\n"
-"background-color: rgba(220, 220, 220, 200);}\n"
-"")
+        self.p_user_box.setStyleSheet(u"")
         self.p_usrer_pict = QLabel(self.p_user_box)
         self.p_usrer_pict.setObjectName(u"p_usrer_pict")
         self.p_usrer_pict.setGeometry(QRect(4, 8, 61, 61))
@@ -688,23 +685,23 @@ class Ui_MainWindow(object):
         self.left_scroll.setMaximumSize(QSize(291, 16777215))
         self.left_scroll.setStyleSheet(u"border:none;")
         self.left_scroll.setWidgetResizable(True)
-        self.chat_scroll_widget = QWidget()
-        self.chat_scroll_widget.setObjectName(u"chat_scroll_widget")
-        self.chat_scroll_widget.setGeometry(QRect(0, 0, 291, 669))
-        self.chat_scroll_widget.setStyleSheet(u"")
-        self.verticalLayout_3 = QVBoxLayout(self.chat_scroll_widget)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.client_info = QFrame(self.chat_scroll_widget)
+        self.chat_list_widget = QWidget()
+        self.chat_list_widget.setObjectName(u"chat_list_widget")
+        self.chat_list_widget.setGeometry(QRect(0, 0, 291, 669))
+        self.chat_list_widget.setStyleSheet(u"")
+        self.chat_list_layout = QVBoxLayout(self.chat_list_widget)
+        self.chat_list_layout.setObjectName(u"chat_list_layout")
+        self.client_info = QFrame(self.chat_list_widget)
         self.client_info.setObjectName(u"client_info")
         self.client_info.setMinimumSize(QSize(271, 61))
         self.client_info.setMaximumSize(QSize(271, 61))
         self.client_info.setCursor(QCursor(Qt.PointingHandCursor))
-        self.client_info.setStyleSheet(u"#client_info{\n"
+        self.client_info.setStyleSheet(u"QFrame{\n"
 "	border-radius:8px;\n"
 "	background-color: rgba(50, 50, 50, 50);\n"
 "}\n"
 "\n"
-"#client_info:hover{\n"
+"QFrame:hover{\n"
 "	background-color: rgba(50, 50, 50, 255);\n"
 "}\n"
 "")
@@ -800,9 +797,9 @@ class Ui_MainWindow(object):
         self.envelop_msg.raise_()
         self.messege_number_2.raise_()
 
-        self.verticalLayout_3.addWidget(self.client_info)
+        self.chat_list_layout.addWidget(self.client_info)
 
-        self.client_info_2 = QFrame(self.chat_scroll_widget)
+        self.client_info_2 = QFrame(self.chat_list_widget)
         self.client_info_2.setObjectName(u"client_info_2")
         self.client_info_2.setMinimumSize(QSize(271, 61))
         self.client_info_2.setMaximumSize(QSize(271, 61))
@@ -881,13 +878,13 @@ class Ui_MainWindow(object):
 "}")
         self.messege_number_6.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.verticalLayout_3.addWidget(self.client_info_2)
+        self.chat_list_layout.addWidget(self.client_info_2)
 
         self.verticalSpacer_2 = QSpacerItem(20, 309, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.verticalLayout_3.addItem(self.verticalSpacer_2)
+        self.chat_list_layout.addItem(self.verticalSpacer_2)
 
-        self.media_bg = QWidget(self.chat_scroll_widget)
+        self.media_bg = QWidget(self.chat_list_widget)
         self.media_bg.setObjectName(u"media_bg")
         self.media_bg.setMinimumSize(QSize(46, 191))
         self.media_bg.setMaximumSize(QSize(46, 191))
@@ -964,9 +961,9 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.media_video)
 
 
-        self.verticalLayout_3.addWidget(self.media_bg)
+        self.chat_list_layout.addWidget(self.media_bg)
 
-        self.left_scroll.setWidget(self.chat_scroll_widget)
+        self.left_scroll.setWidget(self.chat_list_widget)
 
         self.verticalLayout_4.addWidget(self.left_scroll)
 

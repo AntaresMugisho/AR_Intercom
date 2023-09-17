@@ -840,8 +840,7 @@ background-image: url(:/cils/cils/cil-menu.png);
                </rect>
               </property>
               <property name="styleSheet">
-               <string notr="true">#client_info{border-radius:30px;
-background-color: rgba(220, 220, 220, 200);}
+               <string notr="true">
 </string>
               </property>
               <widget class="QLabel" name="p_usrer_pict">
@@ -1004,7 +1003,7 @@ background-size: 50px;*/</string>
                  <property name="widgetResizable">
                   <bool>true</bool>
                  </property>
-                 <widget class="QWidget" name="chat_scroll_widget">
+                 <widget class="QWidget" name="chat_list_widget">
                   <property name="geometry">
                    <rect>
                     <x>0</x>
@@ -1016,7 +1015,7 @@ background-size: 50px;*/</string>
                   <property name="styleSheet">
                    <string notr="true"/>
                   </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_3">
+                  <layout class="QVBoxLayout" name="chat_list_layout">
                    <item>
                     <widget class="QFrame" name="client_info">
                      <property name="minimumSize">
@@ -1035,12 +1034,12 @@ background-size: 50px;*/</string>
                       <cursorShape>PointingHandCursor</cursorShape>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">#client_info{
+                      <string notr="true">QFrame{
 	border-radius:8px;
 	background-color: rgba(50, 50, 50, 50);
 }
 
-#client_info:hover{
+QFrame:hover{
 	background-color: rgba(50, 50, 50, 255);
 }
 </string>
