@@ -614,8 +614,8 @@ class Ui_MainWindow(object):
 
         self.left_side_container = QStackedWidget(self.bg_app)
         self.left_side_container.setObjectName(u"left_side_container")
-        self.left_side_container.setMinimumSize(QSize(291, 701))
-        self.left_side_container.setMaximumSize(QSize(291, 16777215))
+        self.left_side_container.setMinimumSize(QSize(294, 701))
+        self.left_side_container.setMaximumSize(QSize(294, 16777215))
         self.left_side_container.setStyleSheet(u"")
         self.page_1 = QWidget()
         self.page_1.setObjectName(u"page_1")
@@ -684,6 +684,7 @@ class Ui_MainWindow(object):
         self.left_scroll.setMinimumSize(QSize(291, 491))
         self.left_scroll.setMaximumSize(QSize(291, 16777215))
         self.left_scroll.setStyleSheet(u"border:none;")
+        self.left_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.left_scroll.setWidgetResizable(True)
         self.chat_list_widget = QWidget()
         self.chat_list_widget.setObjectName(u"chat_list_widget")
@@ -691,23 +692,20 @@ class Ui_MainWindow(object):
         self.chat_list_widget.setStyleSheet(u"")
         self.chat_list_layout = QVBoxLayout(self.chat_list_widget)
         self.chat_list_layout.setObjectName(u"chat_list_layout")
-        self.client_info = QFrame(self.chat_list_widget)
+        self.client_info = QWidget(self.chat_list_widget)
         self.client_info.setObjectName(u"client_info")
         self.client_info.setMinimumSize(QSize(271, 61))
         self.client_info.setMaximumSize(QSize(271, 61))
         self.client_info.setCursor(QCursor(Qt.PointingHandCursor))
-        self.client_info.setStyleSheet(u"QFrame{\n"
+        self.client_info.setStyleSheet(u"QWidget{\n"
 "	border-radius:8px;\n"
 "	background-color: rgba(50, 50, 50, 50);\n"
 "}\n"
 "\n"
-"QFrame:hover{\n"
+"QWidget:hover{\n"
 "	background-color: rgba(50, 50, 50, 255);\n"
 "}\n"
 "")
-        self.client_info.setFrameShape(QFrame.Box)
-        self.client_info.setFrameShadow(QFrame.Plain)
-        self.client_info.setLineWidth(1)
         self.msg_countrer = QLabel(self.client_info)
         self.msg_countrer.setObjectName(u"msg_countrer")
         self.msg_countrer.setGeometry(QRect(243, 7, 16, 16))
@@ -799,7 +797,7 @@ class Ui_MainWindow(object):
 
         self.chat_list_layout.addWidget(self.client_info)
 
-        self.client_info_2 = QFrame(self.chat_list_widget)
+        self.client_info_2 = QWidget(self.chat_list_widget)
         self.client_info_2.setObjectName(u"client_info_2")
         self.client_info_2.setMinimumSize(QSize(271, 61))
         self.client_info_2.setMaximumSize(QSize(271, 61))
@@ -813,9 +811,6 @@ class Ui_MainWindow(object):
 "	background-color: rgba(50, 50, 50, 255);\n"
 "}\n"
 "")
-        self.client_info_2.setFrameShape(QFrame.Box)
-        self.client_info_2.setFrameShadow(QFrame.Plain)
-        self.client_info_2.setLineWidth(1)
         self.client_picture_3 = QLabel(self.client_info_2)
         self.client_picture_3.setObjectName(u"client_picture_3")
         self.client_picture_3.setGeometry(QRect(3, 3, 56, 56))
@@ -2272,27 +2267,27 @@ class Ui_MainWindow(object):
         self.verticalLayout_6 = QVBoxLayout()
         self.verticalLayout_6.setSpacing(0)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.contact_name = QLabel(self.active_client_frame)
-        self.contact_name.setObjectName(u"contact_name")
-        self.contact_name.setMinimumSize(QSize(251, 31))
-        self.contact_name.setMaximumSize(QSize(16777215, 31))
+        self.active_client_name = QLabel(self.active_client_frame)
+        self.active_client_name.setObjectName(u"active_client_name")
+        self.active_client_name.setMinimumSize(QSize(251, 31))
+        self.active_client_name.setMaximumSize(QSize(16777215, 31))
         font12 = QFont()
         font12.setFamilies([u"Segoe UI"])
         font12.setPointSize(12)
         font12.setBold(True)
         font12.setItalic(False)
-        self.contact_name.setFont(font12)
+        self.active_client_name.setFont(font12)
 
-        self.verticalLayout_6.addWidget(self.contact_name)
+        self.verticalLayout_6.addWidget(self.active_client_name)
 
-        self.contact_status = QLabel(self.active_client_frame)
-        self.contact_status.setObjectName(u"contact_status")
-        self.contact_status.setMinimumSize(QSize(251, 20))
-        self.contact_status.setMaximumSize(QSize(16777215, 20))
-        self.contact_status.setFont(font2)
-        self.contact_status.setStyleSheet(u"color:#888;")
+        self.active_client_status = QLabel(self.active_client_frame)
+        self.active_client_status.setObjectName(u"active_client_status")
+        self.active_client_status.setMinimumSize(QSize(251, 20))
+        self.active_client_status.setMaximumSize(QSize(16777215, 20))
+        self.active_client_status.setFont(font2)
+        self.active_client_status.setStyleSheet(u"color:#888;")
 
-        self.verticalLayout_6.addWidget(self.contact_status)
+        self.verticalLayout_6.addWidget(self.active_client_status)
 
 
         self.horizontalLayout_3.addLayout(self.verticalLayout_6)
@@ -2318,14 +2313,14 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_3.addWidget(self.attachment_btn)
 
-        self.more_btn = QPushButton(self.active_client_frame)
-        self.more_btn.setObjectName(u"more_btn")
-        self.more_btn.setMinimumSize(QSize(40, 40))
-        self.more_btn.setMaximumSize(QSize(40, 40))
-        self.more_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-trash.png);\n"
+        self.delete_btn = QPushButton(self.active_client_frame)
+        self.delete_btn.setObjectName(u"delete_btn")
+        self.delete_btn.setMinimumSize(QSize(40, 40))
+        self.delete_btn.setMaximumSize(QSize(40, 40))
+        self.delete_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-trash.png);\n"
 "")
 
-        self.horizontalLayout_3.addWidget(self.more_btn)
+        self.horizontalLayout_3.addWidget(self.delete_btn)
 
 
         self.verticalLayout_7.addWidget(self.active_client_frame)
@@ -2334,10 +2329,10 @@ class Ui_MainWindow(object):
         self.chat_scroll.setObjectName(u"chat_scroll")
         self.chat_scroll.setMinimumSize(QSize(551, 50))
         self.chat_scroll.setWidgetResizable(True)
-        self.chat_scroll_content = QWidget()
-        self.chat_scroll_content.setObjectName(u"chat_scroll_content")
-        self.chat_scroll_content.setGeometry(QRect(0, 0, 606, 628))
-        self.chat_scroll_layout = QVBoxLayout(self.chat_scroll_content)
+        self.chat_scroll_widget = QWidget()
+        self.chat_scroll_widget.setObjectName(u"chat_scroll_widget")
+        self.chat_scroll_widget.setGeometry(QRect(0, 0, 603, 628))
+        self.chat_scroll_layout = QVBoxLayout(self.chat_scroll_widget)
         self.chat_scroll_layout.setSpacing(9)
         self.chat_scroll_layout.setObjectName(u"chat_scroll_layout")
         self.chat_scroll_layout.setContentsMargins(0, 0, 0, 0)
@@ -2345,7 +2340,7 @@ class Ui_MainWindow(object):
 
         self.chat_scroll_layout.addItem(self.verticalSpacer_4)
 
-        self.date_label = QLabel(self.chat_scroll_content)
+        self.date_label = QLabel(self.chat_scroll_widget)
         self.date_label.setObjectName(u"date_label")
         self.date_label.setMaximumSize(QSize(120, 20))
         self.date_label.setStyleSheet(u"background-color: rgb(255, 255, 127);\n"
@@ -2356,14 +2351,14 @@ class Ui_MainWindow(object):
 
         self.chat_scroll_layout.addWidget(self.date_label)
 
-        self.widget = QWidget(self.chat_scroll_content)
-        self.widget.setObjectName(u"widget")
-        self.widget.setStyleSheet(u"")
-        self.horizontalLayout_11 = QHBoxLayout(self.widget)
+        self.bubble_container_widget = QWidget(self.chat_scroll_widget)
+        self.bubble_container_widget.setObjectName(u"bubble_container_widget")
+        self.bubble_container_widget.setStyleSheet(u"")
+        self.horizontalLayout_11 = QHBoxLayout(self.bubble_container_widget)
         self.horizontalLayout_11.setSpacing(0)
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.left_msg_frame = QFrame(self.widget)
+        self.left_msg_frame = QFrame(self.bubble_container_widget)
         self.left_msg_frame.setObjectName(u"left_msg_frame")
         self.left_msg_frame.setMinimumSize(QSize(120, 71))
         self.left_msg_frame.setStyleSheet(u"")
@@ -2377,83 +2372,83 @@ class Ui_MainWindow(object):
 "border-radius:7px;")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
-        self.frame_3 = QFrame(self.left_msg_frame)
-        self.frame_3.setObjectName(u"frame_3")
-        self.frame_3.setGeometry(QRect(5, 4, 8, 8))
-        self.frame_3.setStyleSheet(u"background-color: rgb(40, 40, 43);\n"
-"border-radius:4px;")
-        self.frame_3.setFrameShape(QFrame.StyledPanel)
-        self.frame_3.setFrameShadow(QFrame.Raised)
         self.frame_2 = QFrame(self.left_msg_frame)
         self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setGeometry(QRect(17, 17, 92, 51))
-        sizePolicy1.setHeightForWidth(self.frame_2.sizePolicy().hasHeightForWidth())
-        self.frame_2.setSizePolicy(sizePolicy1)
-        self.frame_2.setStyleSheet(u"	border-radius:20px;\n"
+        self.frame_2.setGeometry(QRect(5, 4, 8, 8))
+        self.frame_2.setStyleSheet(u"background-color: rgb(40, 40, 43);\n"
+"border-radius:4px;")
+        self.frame_2.setFrameShape(QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QFrame.Raised)
+        self.bubble = QFrame(self.left_msg_frame)
+        self.bubble.setObjectName(u"bubble")
+        self.bubble.setGeometry(QRect(17, 17, 92, 51))
+        sizePolicy1.setHeightForWidth(self.bubble.sizePolicy().hasHeightForWidth())
+        self.bubble.setSizePolicy(sizePolicy1)
+        self.bubble.setStyleSheet(u"	border-radius:20px;\n"
 "	border-top-left-radius:8px;\n"
 "	background-color: rgb(255, 170, 0);\n"
 "	background-color: rgb(40, 40, 43);\n"
 "")
-        self.frame_2.setFrameShape(QFrame.StyledPanel)
-        self.frame_2.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_22 = QVBoxLayout(self.frame_2)
+        self.bubble.setFrameShape(QFrame.StyledPanel)
+        self.bubble.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_22 = QVBoxLayout(self.bubble)
         self.verticalLayout_22.setSpacing(0)
         self.verticalLayout_22.setObjectName(u"verticalLayout_22")
         self.verticalLayout_22.setContentsMargins(12, 6, 12, 0)
-        self.left_bubble = QLabel(self.frame_2)
-        self.left_bubble.setObjectName(u"left_bubble")
-        sizePolicy2.setHeightForWidth(self.left_bubble.sizePolicy().hasHeightForWidth())
-        self.left_bubble.setSizePolicy(sizePolicy2)
-        self.left_bubble.setMaximumSize(QSize(304, 16777215))
-        self.left_bubble.setFont(font4)
-        self.left_bubble.setStyleSheet(u"QLabel{\n"
+        self.message_label = QLabel(self.bubble)
+        self.message_label.setObjectName(u"message_label")
+        sizePolicy2.setHeightForWidth(self.message_label.sizePolicy().hasHeightForWidth())
+        self.message_label.setSizePolicy(sizePolicy2)
+        self.message_label.setMaximumSize(QSize(304, 16777215))
+        self.message_label.setFont(font4)
+        self.message_label.setStyleSheet(u"QLabel{\n"
 "	color: #ddd;\n"
 "background-color:transparent;\n"
 "}")
-        self.left_bubble.setScaledContents(False)
-        self.left_bubble.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
-        self.left_bubble.setWordWrap(True)
-        self.left_bubble.setTextInteractionFlags(Qt.LinksAccessibleByKeyboard|Qt.LinksAccessibleByMouse|Qt.TextBrowserInteraction|Qt.TextSelectableByKeyboard|Qt.TextSelectableByMouse)
+        self.message_label.setScaledContents(False)
+        self.message_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.message_label.setWordWrap(True)
+        self.message_label.setTextInteractionFlags(Qt.LinksAccessibleByKeyboard|Qt.LinksAccessibleByMouse|Qt.TextBrowserInteraction|Qt.TextSelectableByKeyboard|Qt.TextSelectableByMouse)
 
-        self.verticalLayout_22.addWidget(self.left_bubble)
+        self.verticalLayout_22.addWidget(self.message_label)
 
-        self.horizontalLayout_9 = QHBoxLayout()
-        self.horizontalLayout_9.setSpacing(0)
-        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.horizontalSpacer_2 = QSpacerItem(41, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.time_label_layout = QHBoxLayout()
+        self.time_label_layout.setSpacing(0)
+        self.time_label_layout.setObjectName(u"time_label_layout")
+        self.time_label_spacer = QSpacerItem(41, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_9.addItem(self.horizontalSpacer_2)
+        self.time_label_layout.addItem(self.time_label_spacer)
 
-        self.time = QLabel(self.frame_2)
-        self.time.setObjectName(u"time")
-        self.time.setMinimumSize(QSize(31, 14))
-        self.time.setMaximumSize(QSize(31, 14))
-        self.time.setFont(font5)
-        self.time.setStyleSheet(u"QLabel{\n"
+        self.time_label = QLabel(self.bubble)
+        self.time_label.setObjectName(u"time_label")
+        self.time_label.setMinimumSize(QSize(31, 14))
+        self.time_label.setMaximumSize(QSize(31, 14))
+        self.time_label.setFont(font5)
+        self.time_label.setStyleSheet(u"QLabel{\n"
 "color:#555;\n"
 "border-radius:7px;\n"
 "}")
-        self.time.setAlignment(Qt.AlignCenter)
+        self.time_label.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout_9.addWidget(self.time)
+        self.time_label_layout.addWidget(self.time_label)
 
 
-        self.verticalLayout_22.addLayout(self.horizontalLayout_9)
+        self.verticalLayout_22.addLayout(self.time_label_layout)
 
+        self.bubble.raise_()
         self.frame_2.raise_()
-        self.frame_3.raise_()
         self.frame.raise_()
 
         self.horizontalLayout_11.addWidget(self.left_msg_frame)
 
-        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_11.addItem(self.horizontalSpacer_9)
+        self.horizontalLayout_11.addItem(self.spacer)
 
 
-        self.chat_scroll_layout.addWidget(self.widget)
+        self.chat_scroll_layout.addWidget(self.bubble_container_widget)
 
-        self.widget_2 = QWidget(self.chat_scroll_content)
+        self.widget_2 = QWidget(self.chat_scroll_widget)
         self.widget_2.setObjectName(u"widget_2")
         self.widget_2.setLayoutDirection(Qt.LeftToRight)
         self.widget_2.setStyleSheet(u"")
@@ -2569,7 +2564,7 @@ class Ui_MainWindow(object):
 
         self.chat_scroll_layout.addWidget(self.widget_2)
 
-        self.widget_3 = QWidget(self.chat_scroll_content)
+        self.widget_3 = QWidget(self.chat_scroll_widget)
         self.widget_3.setObjectName(u"widget_3")
         self.widget_3.setStyleSheet(u"")
         self.horizontalLayout_15 = QHBoxLayout(self.widget_3)
@@ -2740,7 +2735,7 @@ class Ui_MainWindow(object):
 
         self.chat_scroll_layout.addWidget(self.widget_3)
 
-        self.widget_4 = QWidget(self.chat_scroll_content)
+        self.widget_4 = QWidget(self.chat_scroll_widget)
         self.widget_4.setObjectName(u"widget_4")
         self.widget_4.setStyleSheet(u"")
         self.horizontalLayout_16 = QHBoxLayout(self.widget_4)
@@ -2924,7 +2919,7 @@ class Ui_MainWindow(object):
 
         self.chat_scroll_layout.addWidget(self.widget_4)
 
-        self.chat_scroll.setWidget(self.chat_scroll_content)
+        self.chat_scroll.setWidget(self.chat_scroll_widget)
 
         self.verticalLayout_7.addWidget(self.chat_scroll)
 
@@ -3563,14 +3558,14 @@ class Ui_MainWindow(object):
         self.select_emoji_btn.setText(QCoreApplication.translate("MainWindow", u":)", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"S", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"O", None))
-        self.contact_name.setText(QCoreApplication.translate("MainWindow", u"Alpha", None))
-        self.contact_status.setText(QCoreApplication.translate("MainWindow", u"Hello, i'm using AR Intercom !", None))
+        self.active_client_name.setText(QCoreApplication.translate("MainWindow", u"Alpha", None))
+        self.active_client_status.setText(QCoreApplication.translate("MainWindow", u"Hello, i'm using AR Intercom !", None))
         self.last_seen.setText(QCoreApplication.translate("MainWindow", u"online 27 min ago", None))
         self.attachment_btn.setText("")
-        self.more_btn.setText("")
+        self.delete_btn.setText("")
         self.date_label.setText(QCoreApplication.translate("MainWindow", u"23 SEPTEMBRE 2023", None))
-        self.left_bubble.setText(QCoreApplication.translate("MainWindow", u"Hello !", None))
-        self.time.setText(QCoreApplication.translate("MainWindow", u"23:33", None))
+        self.message_label.setText(QCoreApplication.translate("MainWindow", u"Hello !", None))
+        self.time_label.setText(QCoreApplication.translate("MainWindow", u"23:33", None))
         self.left_bubble_2.setText(QCoreApplication.translate("MainWindow", u"Bonjour !", None))
         self.time_2.setText(QCoreApplication.translate("MainWindow", u"23:35", None))
         self.ticks_2.setText("")

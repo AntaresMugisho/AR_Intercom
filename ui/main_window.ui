@@ -780,13 +780,13 @@ background-image: url(:/cils/cils/cil-menu.png);
         <widget class="QStackedWidget" name="left_side_container">
          <property name="minimumSize">
           <size>
-           <width>291</width>
+           <width>294</width>
            <height>701</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>291</width>
+           <width>294</width>
            <height>16777215</height>
           </size>
          </property>
@@ -999,6 +999,9 @@ background-size: 50px;*/</string>
                  <property name="styleSheet">
                   <string notr="true">border:none;</string>
                  </property>
+                 <property name="horizontalScrollBarPolicy">
+                  <enum>Qt::ScrollBarAlwaysOff</enum>
+                 </property>
                  <property name="widgetResizable">
                   <bool>true</bool>
                  </property>
@@ -1016,7 +1019,7 @@ background-size: 50px;*/</string>
                   </property>
                   <layout class="QVBoxLayout" name="chat_list_layout">
                    <item>
-                    <widget class="QFrame" name="client_info">
+                    <widget class="QWidget" name="client_info" native="true">
                      <property name="minimumSize">
                       <size>
                        <width>271</width>
@@ -1033,24 +1036,15 @@ background-size: 50px;*/</string>
                       <cursorShape>PointingHandCursor</cursorShape>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">QFrame{
+                      <string notr="true">QWidget{
 	border-radius:8px;
 	background-color: rgba(50, 50, 50, 50);
 }
 
-QFrame:hover{
+QWidget:hover{
 	background-color: rgba(50, 50, 50, 255);
 }
 </string>
-                     </property>
-                     <property name="frameShape">
-                      <enum>QFrame::Box</enum>
-                     </property>
-                     <property name="frameShadow">
-                      <enum>QFrame::Plain</enum>
-                     </property>
-                     <property name="lineWidth">
-                      <number>1</number>
                      </property>
                      <widget class="QLabel" name="msg_countrer">
                       <property name="geometry">
@@ -1262,7 +1256,7 @@ border-radius:28px;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QFrame" name="client_info_2">
+                    <widget class="QWidget" name="client_info_2" native="true">
                      <property name="minimumSize">
                       <size>
                        <width>271</width>
@@ -1288,15 +1282,6 @@ border-radius:28px;</string>
 	background-color: rgba(50, 50, 50, 255);
 }
 </string>
-                     </property>
-                     <property name="frameShape">
-                      <enum>QFrame::Box</enum>
-                     </property>
-                     <property name="frameShadow">
-                      <enum>QFrame::Plain</enum>
-                     </property>
-                     <property name="lineWidth">
-                      <number>1</number>
                      </property>
                      <widget class="QLabel" name="client_picture_3">
                       <property name="geometry">
@@ -4721,7 +4706,7 @@ background-color: rgb(40, 44, 52);
                       <number>0</number>
                      </property>
                      <item>
-                      <widget class="QLabel" name="contact_name">
+                      <widget class="QLabel" name="active_client_name">
                        <property name="minimumSize">
                         <size>
                          <width>251</width>
@@ -4748,7 +4733,7 @@ background-color: rgb(40, 44, 52);
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLabel" name="contact_status">
+                      <widget class="QLabel" name="active_client_status">
                        <property name="minimumSize">
                         <size>
                          <width>251</width>
@@ -4828,7 +4813,7 @@ background-color: rgb(40, 44, 52);
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="more_btn">
+                    <widget class="QPushButton" name="delete_btn">
                      <property name="minimumSize">
                       <size>
                        <width>40</width>
@@ -4864,12 +4849,12 @@ background-color: rgb(40, 44, 52);
                   <property name="widgetResizable">
                    <bool>true</bool>
                   </property>
-                  <widget class="QWidget" name="chat_scroll_content">
+                  <widget class="QWidget" name="chat_scroll_widget">
                    <property name="geometry">
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>606</width>
+                     <width>603</width>
                      <height>628</height>
                     </rect>
                    </property>
@@ -4925,7 +4910,7 @@ border-radius:4px;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QWidget" name="widget" native="true">
+                     <widget class="QWidget" name="bubble_container_widget" native="true">
                       <property name="styleSheet">
                        <string notr="true"/>
                       </property>
@@ -4983,7 +4968,7 @@ border-radius:7px;</string>
                            <enum>QFrame::Raised</enum>
                           </property>
                          </widget>
-                         <widget class="QFrame" name="frame_3">
+                         <widget class="QFrame" name="frame_2">
                           <property name="geometry">
                            <rect>
                             <x>5</x>
@@ -5003,7 +4988,7 @@ border-radius:4px;</string>
                            <enum>QFrame::Raised</enum>
                           </property>
                          </widget>
-                         <widget class="QFrame" name="frame_2">
+                         <widget class="QFrame" name="bubble">
                           <property name="geometry">
                            <rect>
                             <x>17</x>
@@ -5048,7 +5033,7 @@ border-radius:4px;</string>
                             <number>0</number>
                            </property>
                            <item>
-                            <widget class="QLabel" name="left_bubble">
+                            <widget class="QLabel" name="message_label">
                              <property name="sizePolicy">
                               <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
                                <horstretch>0</horstretch>
@@ -5090,12 +5075,12 @@ background-color:transparent;
                             </widget>
                            </item>
                            <item>
-                            <layout class="QHBoxLayout" name="horizontalLayout_9">
+                            <layout class="QHBoxLayout" name="time_label_layout">
                              <property name="spacing">
                               <number>0</number>
                              </property>
                              <item>
-                              <spacer name="horizontalSpacer_2">
+                              <spacer name="time_label_spacer">
                                <property name="orientation">
                                 <enum>Qt::Horizontal</enum>
                                </property>
@@ -5108,7 +5093,7 @@ background-color:transparent;
                               </spacer>
                              </item>
                              <item>
-                              <widget class="QLabel" name="time">
+                              <widget class="QLabel" name="time_label">
                                <property name="minimumSize">
                                 <size>
                                  <width>31</width>
@@ -5144,13 +5129,13 @@ border-radius:7px;
                            </item>
                           </layout>
                          </widget>
+                         <zorder>bubble</zorder>
                          <zorder>frame_2</zorder>
-                         <zorder>frame_3</zorder>
                          <zorder>frame</zorder>
                         </widget>
                        </item>
                        <item>
-                        <spacer name="horizontalSpacer_9">
+                        <spacer name="spacer">
                          <property name="orientation">
                           <enum>Qt::Horizontal</enum>
                          </property>

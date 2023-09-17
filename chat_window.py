@@ -39,6 +39,7 @@ from ui.main_window import Ui_MainWindow
 seconds = minutes = 0
 
 from widgets.client_widget import ClientWidget
+from widgets.bubbles import Bubble
 
 
 class ChatWindow(QMainWindow):
@@ -101,15 +102,11 @@ class ChatWindow(QMainWindow):
         Load users conversation list from users who are registered in database
         """
         users = User.where("id", ">=", 1)
-        for i in range(10):
-            widget = ClientWidget(users[0])
-            print(widget)
-        # for user in users:
-        #     self.show_user_widget(user)
-
+        for user in users:
+            widget = ClientWidget(user)
             last_index = self.ui.chat_list_layout.count() - 1
-            self.ui.chat_list_layout.insertWidget(last_index, widget,
-                                                 Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
+            self.ui.chat_list_layout.insertWidget(last_index, widget, Qt.AlignmentFlag.AlignCenter,
+                                                  Qt.AlignmentFlag.AlignTop)
 
     @Slot(str)
     def show_conversations(self, button_object_name: str):
@@ -124,17 +121,20 @@ class ChatWindow(QMainWindow):
 
         user = User.first_where("uuid", "=", user_uuid)
         user_name = user.get_user_name()
+        user_status = user.get_user_status()
 
         # SET NAME TO THE ACTIVE CLIENT LABEL
-        self.ui.active_client.setText(user_name)
-        self.ui.active_client.setObjectName(user_uuid)
-        self.ui.active_client.show()
-        self.ui.delete_button.show()
+        self.ui.active_client_name.setText(user_name)
+        self.ui.active_client_name.setObjectName(user_uuid)
+        self.ui.active_client_name.show()
+
+        self.ui.active_client_status.setText(user_status)
+        self.ui.active_client_status.show()
 
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
         try:
-            for index in reversed(range(1, self.ui.layout_bubble.count())):
-                self.ui.layout_bubble.itemAt(index).widget().deleteLater()
+            for index in reversed(range(1, self.ui.chat_scroll_layout.count())):
+                self.ui.chat_scroll_layout.itemAt(index).widget().deleteLater()
                 # The widget at index 0 is a layout spacer, we don't need to delete it
                 # That's why we end with index 1
         except Exception as e:  # If chat field was not visible or is empty
@@ -143,16 +143,17 @@ class ChatWindow(QMainWindow):
         # SHOW OLDER MESSAGES WITH THE ACTIVE USER IN NEW BUBBLES
         messages = user.messages()
         for message in messages:
-            sender_id = message.get_sender_id()
+            self.show_bubble(message)
+            # sender_id = message.get_sender_id()
 
             #  Knowing that the user with id == 1 is the owner,
             #  messages sent from user_id 1 will be shown in the right bubble
-            if sender_id == 1:
-                self.ui.create_right_bubble(message)
-                if self.ui.message_status.objectName().startswith("error"):
-                    self.ui.message_status.clicked.connect(self.resend_message)
-            else:
-                self.ui.create_left_bubble(message)
+            # if sender_id == 1:
+            #     self.ui.create_right_bubble(message)
+            #     if self.ui.message_status.objectName().startswith("error"):
+            #         self.ui.message_status.clicked.connect(self.resend_message)
+            # else:
+            #     self.ui.create_left_bubble(message)
 
         # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
         message_counter = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_counter")
@@ -163,7 +164,18 @@ class ChatWindow(QMainWindow):
         message_counter.parent().setStyleSheet(Clients.frame_normal)
 
         # Connect delete messages button
-        self.ui.delete_button.clicked.connect(self.delete_messages)
+        self.ui.delete_btn.clicked.connect(self.delete_messages)
+
+    def show_bubble(self, message: Message):
+
+        # if message.get_created_at(): Verifie message date to show date label
+
+        if message.get_sender_id() == 1:
+            bubble = Bubble(message, "right")
+        else:
+            bubble = Bubble(message, "left")
+
+        self.ui.chat_scroll_layout.addWidget(bubble)
 
     @Slot(int)
     def show_incoming_message(self, id: int):

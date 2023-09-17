@@ -29,14 +29,14 @@ class ClientWidget(QFrame):
         self.setMaximumSize(QSize(271, 61))
         self.setCursor(QCursor(Qt.PointingHandCursor))
         self.setStyleSheet(u"QFrame{\n"
-                           "	border-radius:8px;\n"
-                           "	background-color: rgba(50, 50, 50, 50);\n"
-                           "}\n"
-                           "\n"
-                           "QFrame:hover{\n"
-                           "	background-color: rgba(50, 50, 50, 255);\n"
-                           "}\n"
-                           "")
+            "	border-radius:8px;\n"
+            "	background-color: rgba(50, 50, 50, 50);\n"
+            "}\n"
+            "\n"
+            "QFrame:hover{\n"
+            "	background-color: rgba(50, 50, 50, 255);\n"
+            "}\n"
+            "")
 
         self.setup_ui()
 
