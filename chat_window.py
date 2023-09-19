@@ -1,5 +1,6 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
+from datetime import datetime, timedelta
 import sys
 import os
 import time
@@ -40,6 +41,7 @@ seconds = minutes = 0
 
 from widgets.client_widget import ClientWidget
 from widgets.bubbles import Bubble
+from widgets.date_label import DateLabel
 
 
 class ChatWindow(QMainWindow):
@@ -172,14 +174,27 @@ class ChatWindow(QMainWindow):
         self.ui.delete_btn.clicked.connect(self.delete_messages)
 
     def show_bubble(self, message: Message):
+        date = message.get_created_at()
+        today = datetime.today()
+        yeserday = datetime.now() - timedelta(days=1)
 
-        # if message.get_created_at(): Verify message date to show date label
+
+        if datetime.strftime(date, "%x") == datetime.strftime(today, "%x"):
+            text = "Today"
+
+        elif datetime.strftime(date, "%x") == datetime.strftime(yeserday, "%x"):
+            text = "Yesterday"
+        else:
+            text = datetime.strftime(date, "%c")
+
+        print(text)
+        date_label = DateLabel(text)
 
         if message.get_sender_id() == 1:
             bubble = Bubble(message, "right")
         else:
             bubble = Bubble(message, "left")
-
+        self.ui.chat_scroll_layout.addWidget(date_label)
         self.ui.chat_scroll_layout.addWidget(bubble)
 
     @Slot(int)
