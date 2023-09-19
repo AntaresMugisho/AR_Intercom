@@ -440,7 +440,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "/*Chat scroll*/\n"
-"#chat_scroll, #chat_scroll_content{\n"
+"#chat_scroll, #chat_scroll_widget{\n"
 "background:transparent;\n"
 "border-radius: 10px;\n"
 "}\n"
@@ -478,8 +478,8 @@ class Ui_MainWindow(object):
 "	}\n"
 "#media_bg{\n"
 "	border-radius:23px;\n"
-"	background"
-                        ":transparent;\n"
+"	background:"
+                        "transparent;\n"
 "}\n"
 "#media_bg QPushButton{\n"
 "	border-radius:20px;\n"
@@ -2202,7 +2202,7 @@ class Ui_MainWindow(object):
         self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 355, 83))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 74, 35))
         self.gridLayout_3 = QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_3.setSpacing(1)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
@@ -2358,13 +2358,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_11.setSpacing(0)
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.left_msg_frame = QFrame(self.bubble_container_widget)
-        self.left_msg_frame.setObjectName(u"left_msg_frame")
-        self.left_msg_frame.setMinimumSize(QSize(120, 71))
-        self.left_msg_frame.setStyleSheet(u"")
-        self.left_msg_frame.setFrameShape(QFrame.StyledPanel)
-        self.left_msg_frame.setFrameShadow(QFrame.Raised)
-        self.frame = QFrame(self.left_msg_frame)
+        self.bubble_frame = QFrame(self.bubble_container_widget)
+        self.bubble_frame.setObjectName(u"bubble_frame")
+        self.bubble_frame.setMinimumSize(QSize(120, 71))
+        self.bubble_frame.setStyleSheet(u"")
+        self.bubble_frame.setFrameShape(QFrame.StyledPanel)
+        self.bubble_frame.setFrameShadow(QFrame.Raised)
+        self.frame = QFrame(self.bubble_frame)
         self.frame.setObjectName(u"frame")
         self.frame.setGeometry(QRect(10, 10, 14, 14))
         self.frame.setStyleSheet(u"\n"
@@ -2372,14 +2372,14 @@ class Ui_MainWindow(object):
 "border-radius:7px;")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
-        self.frame_2 = QFrame(self.left_msg_frame)
+        self.frame_2 = QFrame(self.bubble_frame)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setGeometry(QRect(5, 4, 8, 8))
         self.frame_2.setStyleSheet(u"background-color: rgb(40, 40, 43);\n"
 "border-radius:4px;")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
-        self.bubble = QFrame(self.left_msg_frame)
+        self.bubble = QFrame(self.bubble_frame)
         self.bubble.setObjectName(u"bubble")
         self.bubble.setGeometry(QRect(17, 17, 92, 51))
         sizePolicy1.setHeightForWidth(self.bubble.sizePolicy().hasHeightForWidth())
@@ -2439,7 +2439,7 @@ class Ui_MainWindow(object):
         self.frame_2.raise_()
         self.frame.raise_()
 
-        self.horizontalLayout_11.addWidget(self.left_msg_frame)
+        self.horizontalLayout_11.addWidget(self.bubble_frame)
 
         self.spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 

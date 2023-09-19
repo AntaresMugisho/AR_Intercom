@@ -175,10 +175,10 @@ class ChatWindow(QMainWindow):
 
         # if message.get_created_at(): Verify message date to show date label
 
-        if message.get_sender_id() == 1:
-            bubble = Bubble(message, "right")
-        else:
-            bubble = Bubble(message, "left")
+        # if message.get_sender_id() == 1:
+        #     bubble = Bubble(message, "right")
+        # else:
+        bubble = Bubble(message, "left")
 
         print(bubble)
         self.ui.chat_scroll_layout.addWidget(bubble)

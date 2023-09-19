@@ -17,7 +17,7 @@ class Bubble(QWidget):
 
     def __init__(self, message: Message, position: str):
         QWidget.__init__(self)
-        # self.setObjectName(u"bubble_container_widget")
+        self.setObjectName(u"bubble_container_widget")
 
         self.message = message
         self.position = position
@@ -67,26 +67,24 @@ class Bubble(QWidget):
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         # sizePolicy2.setHeightForWidth(self.left_bubble_3.sizePolicy().hasHeightForWidth())
-        self.bubble_container_widget = QWidget(self)
-        self.bubble_container_widget.setObjectName(u"bubble_container_widget")
-        self.bubble_container_widget.setStyleSheet(u"")
 
-        self.horizontalLayout_11 = QHBoxLayout(self.bubble_container_widget)
+
+        self.horizontalLayout_11 = QHBoxLayout(self)
         self.horizontalLayout_11.setSpacing(0)
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
 
 
         # Labels container
-        self.left_msg_frame = QFrame(self)
-        self.left_msg_frame.setObjectName(u"left_msg_frame")
-        self.left_msg_frame.setMinimumSize(QSize(120, 71))
-        self.left_msg_frame.setStyleSheet(u"")
-        self.left_msg_frame.setFrameShape(QFrame.StyledPanel)
-        self.left_msg_frame.setFrameShadow(QFrame.Raised)
+        self.bubble_frame = QFrame(self)
+        self.bubble_frame.setObjectName(u"left_msg_frame")
+        self.bubble_frame.setMinimumSize(QSize(120, 71))
+        self.bubble_frame.setStyleSheet(u"")
+        self.bubble_frame.setFrameShape(QFrame.StyledPanel)
+        self.bubble_frame.setFrameShadow(QFrame.Raised)
 
-        # Small decorators
-        self.frame = QFrame(self.left_msg_frame)
+        # Small decoration frames
+        self.frame = QFrame(self.bubble_frame)
         self.frame.setObjectName(u"frame")
         self.frame.setGeometry(QRect(10, 10, 14, 14))
         self.frame.setStyleSheet(u"\n"
@@ -95,7 +93,7 @@ class Bubble(QWidget):
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
 
-        self.frame_2 = QFrame(self.left_msg_frame)
+        self.frame_2 = QFrame(self.bubble_frame)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setGeometry(QRect(5, 4, 8, 8))
         self.frame_2.setStyleSheet(u"background-color: rgb(40, 40, 43);\n"
@@ -103,8 +101,8 @@ class Bubble(QWidget):
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
 
-        # Background
-        self.bubble = QFrame(self.left_msg_frame)
+        # Bubble
+        self.bubble = QFrame(self.bubble_frame)
         self.bubble.setObjectName(u"bubble")
         self.bubble.setGeometry(QRect(17, 17, 92, 51))
         sizePolicy1.setHeightForWidth(self.bubble.sizePolicy().hasHeightForWidth())
@@ -139,12 +137,14 @@ class Bubble(QWidget):
         self.message_label.setTextInteractionFlags(
             Qt.LinksAccessibleByKeyboard | Qt.LinksAccessibleByMouse | Qt.TextBrowserInteraction | Qt.TextSelectableByKeyboard | Qt.TextSelectableByMouse)
         self.message_label.setText(self.message_body)
+
         self.verticalLayout_22.addWidget(self.message_label)
 
         # Time label
         self.time_label_layout = QHBoxLayout()
         self.time_label_layout.setSpacing(0)
         self.time_label_layout.setObjectName(u"time_label_layout")
+
         self.time_label_spacer = QSpacerItem(41, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.time_label_layout.addItem(self.time_label_spacer)
@@ -165,8 +165,7 @@ class Bubble(QWidget):
 
         self.verticalLayout_22.addLayout(self.time_label_layout)
 
-
-        self.horizontalLayout_11.addWidget(self.left_msg_frame)
+        self.horizontalLayout_11.addWidget(self.bubble_frame)
 
         self.spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 

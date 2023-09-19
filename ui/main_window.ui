@@ -421,7 +421,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 }
 
 /*Chat scroll*/
-#chat_scroll, #chat_scroll_content{
+#chat_scroll, #chat_scroll_widget{
 background:transparent;
 border-radius: 10px;
 }
@@ -4553,8 +4553,8 @@ background-color:#111;
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>355</width>
-                          <height>83</height>
+                          <width>74</width>
+                          <height>35</height>
                          </rect>
                         </property>
                         <layout class="QGridLayout" name="gridLayout_3">
@@ -4931,7 +4931,7 @@ border-radius:4px;</string>
                         <number>0</number>
                        </property>
                        <item>
-                        <widget class="QFrame" name="left_msg_frame">
+                        <widget class="QFrame" name="bubble_frame">
                          <property name="minimumSize">
                           <size>
                            <width>120</width>
