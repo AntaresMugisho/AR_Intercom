@@ -1,5 +1,8 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
+from datetime import datetime
+
+
 from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton, QSizePolicy, QHBoxLayout, QVBoxLayout, QSpacerItem
 from PySide6.QtGui import QFont, QCursor    
 from PySide6.QtCore import QSize, Qt, QRect
@@ -7,39 +10,48 @@ from PySide6.QtCore import QSize, Qt, QRect
 from message import Message
 import utils
 
+
 class Bubble(QWidget):
+
+    STRING_FORMAT_TIME = "%H:%M"
+
     def __init__(self, message: Message, position: str):
         QWidget.__init__(self)
-        self.setObjectName(u"bubble_container_widget")
+        # self.setObjectName(u"bubble_container_widget")
 
         self.message = message
         self.position = position
 
+        self.message_kind = self.message.get_kind()
+        self.message_body = self.message.get_body()
+        self.message_time = datetime.strftime(self.message.get_created_at(), self.STRING_FORMAT_TIME)
+        self.message_received = self.message.get_status()
+
         if self.position == "left":
-            pass
-            # show right_bubble()
+            self.show_left_bubble()
         else:
-            self.left_bubble()
-
-    def show_left_bubble(self, message_kind):
-        if message_kind == "text":
+            # show_right_bubble()
             pass
 
-        elif message_kind == "voice":
+    def show_left_bubble(self):
+        if self.message_kind == "text":
+            self.text()
+        elif self.message_kind == "voice":
             pass
-        elif message_kind == "video":
-            pass
-
-        elif message_kind == "audio":
-            pass
-
-        elif message_kind == "image":
+        elif self.message_kind == "video":
             pass
 
-        elif message_kind == "document":
+        elif self.message_kind == "audio":
             pass
 
-    def left_bubble(self):
+        elif self.message_kind == "image":
+            pass
+
+        elif self.message_kind == "document":
+            pass
+
+    def text(self):
+        print("Text Label")
         font4 = QFont()
         font4.setPointSize(12)
 
@@ -55,12 +67,15 @@ class Bubble(QWidget):
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         # sizePolicy2.setHeightForWidth(self.left_bubble_3.sizePolicy().hasHeightForWidth())
+        self.bubble_container_widget = QWidget(self)
+        self.bubble_container_widget.setObjectName(u"bubble_container_widget")
+        self.bubble_container_widget.setStyleSheet(u"")
 
-
-        self.horizontalLayout_11 = QHBoxLayout(self)
+        self.horizontalLayout_11 = QHBoxLayout(self.bubble_container_widget)
         self.horizontalLayout_11.setSpacing(0)
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
+
 
         # Labels container
         self.left_msg_frame = QFrame(self)
@@ -123,7 +138,7 @@ class Bubble(QWidget):
         self.message_label.setWordWrap(True)
         self.message_label.setTextInteractionFlags(
             Qt.LinksAccessibleByKeyboard | Qt.LinksAccessibleByMouse | Qt.TextBrowserInteraction | Qt.TextSelectableByKeyboard | Qt.TextSelectableByMouse)
-        self.message_label.setText("Message texte")
+        self.message_label.setText(self.message_body)
         self.verticalLayout_22.addWidget(self.message_label)
 
         # Time label
@@ -144,8 +159,15 @@ class Bubble(QWidget):
                                       "border-radius:7px;\n"
                                       "}")
         self.time_label.setAlignment(Qt.AlignCenter)
-        self.time_label.setText("12:00")
+        self.time_label.setText(self.message_time)
 
         self.time_label_layout.addWidget(self.time_label)
 
         self.verticalLayout_22.addLayout(self.time_label_layout)
+
+
+        self.horizontalLayout_11.addWidget(self.left_msg_frame)
+
+        self.spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_11.addItem(self.spacer)

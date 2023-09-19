@@ -55,6 +55,7 @@ class ChatWindow(QMainWindow):
         self.show_user_widget()
 
 
+
         # CONNECT USER'S CONVERSATION BUTTONS
         # self.ui.conversationButtonPressed.connect(self.show_conversations)
 
@@ -95,6 +96,10 @@ class ChatWindow(QMainWindow):
 
         # self.ui.playButtonPressed.connect(self.play)
 
+        # Just for testing
+        self.show_conversations()
+        # ///////////////////////
+
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
 
     def show_user_widget(self):
@@ -109,7 +114,7 @@ class ChatWindow(QMainWindow):
                                                   Qt.AlignmentFlag.AlignTop)
 
     @Slot(str)
-    def show_conversations(self, button_object_name: str):
+    def show_conversations(self, button_object_name: str = "356a192b7913b04c54574d18c28d46e6395428ac"):
         """
         Shows conversation bubbles with a specified user
         """
@@ -168,13 +173,14 @@ class ChatWindow(QMainWindow):
 
     def show_bubble(self, message: Message):
 
-        # if message.get_created_at(): Verifie message date to show date label
+        # if message.get_created_at(): Verify message date to show date label
 
         if message.get_sender_id() == 1:
             bubble = Bubble(message, "right")
         else:
             bubble = Bubble(message, "left")
 
+        print(bubble)
         self.ui.chat_scroll_layout.addWidget(bubble)
 
     @Slot(int)

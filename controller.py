@@ -10,7 +10,6 @@ class Controller:
     """
     db = None
     table_name = None
-    time_format = "%d-%m-%Y %H:%M"
 
     def set_id(self, id: int):
         self.id = id
@@ -25,13 +24,13 @@ class Controller:
         self.deleted_at = datetime.now()
 
     def get_created_at(self):
-        return datetime.strftime(self.created_at, self.time_format)
+        return self.created_at
 
     def get_updated_at(self):
-        return datetime.strftime(self.updated_at, self.time_format)
+        return self.updated_at
 
     def get_deleted_at(self):
-        return datetime.strftime(self.deleted_at, self.time_format)
+        return self.deleted_at
 
     @classmethod
     def setup_db(cls):
