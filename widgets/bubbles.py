@@ -46,7 +46,7 @@ class Bubble(QWidget):
             pass
 
         elif self.message_kind == "document":
-            pass
+            self.document()
 
     def text(self):
         """
@@ -300,3 +300,93 @@ class Bubble(QWidget):
 
         # Add frame on the widget
         self.add_widget(self.voice_bubble_frame)
+
+    def document(self):
+
+        self.document_bubble_frame = QFrame(self)
+        self.document_bubble_frame.setObjectName(u"document_bubble_frame")
+        self.document_bubble_frame.setGeometry(QRect(380, 180, 201, 101))
+        self.document_bubble_frame.setMinimumSize(QSize(201, 101))
+
+        self.document_bubble = QFrame(self.document_bubble_frame)
+        self.document_bubble.setObjectName(u"document_bubble")
+        self.document_bubble.setGeometry(QRect(17, 17, 181, 71))
+        self.document_bubble.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.document_bubble.setStyleSheet(u"border-radius:10px;border-top-left-radius:8px;\n"
+                                           "	background-color: rgb(40, 40, 43);")
+
+        self.doc = QFrame(self.document_bubble)
+        self.doc.setObjectName(u"document")
+        self.doc.setStyleSheet(u".QFrame{\n"
+                                    "	background-color:#88FFFFFF;\n"
+                                    "	border-radius:10px;\n"
+                                    "\n"
+                                    "}")
+        self.horizontalLayout_23 = QHBoxLayout(self.doc)
+        self.horizontalLayout_23.setSpacing(6)
+        self.horizontalLayout_23.setObjectName(u"horizontalLayout_23")
+        self.horizontalLayout_23.setContentsMargins(9, 6, 9, 6)
+        self.document_icon = QLabel(self.doc)
+        self.document_icon.setObjectName(u"document_icon")
+        self.document_icon.setMinimumSize(QSize(35, 35))
+        self.document_icon.setMaximumSize(QSize(35, 35))
+        font9 = QFont()
+        font9.setPointSize(8)
+        font9.setBold(True)
+        self.document_icon.setFont(font9)
+        self.document_icon.setStyleSheet(u"QLabel{\n"
+                                         "	\n"
+                                         "	background-color: #bbb;\n"
+                                         "	border-radius:4px;\n"
+                                         "    color:#fff;\n"
+                                         "	image: url(:/cils/cils/blacks/cil-file.png);\n"
+                                         "}")
+        self.document_icon.setAlignment(Qt.AlignCenter)
+        self.document_icon.setTextInteractionFlags(Qt.TextSelectableByMouse)
+
+        path = self.message_body
+        extension = os.path.splitext(path)[1][1:]
+        self.document_icon.setText(extension.upper())
+
+        self.horizontalLayout_23.addWidget(self.document_icon)
+
+        self.document_title_size_layout = QVBoxLayout()
+        self.document_title_size_layout.setSpacing(0)
+        self.document_title_size_layout.setObjectName(u"document_title_size_layout")
+
+        self.document_title = QLabel(self.doc)
+        self.document_title.setObjectName(u"document_title")
+        font6 = QFont()
+        font6.setBold(True)
+        self.document_title.setFont(font6)
+        self.document_title.setStyleSheet(u"QLabel{\n"
+                                          "    color:#000;\n"
+                                          "background-color:transparent;\n"
+                                          "}")
+        self.document_title.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
+        self.document_title.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        self.document_title.setText(os.path.basename(path))
+        # self.document_title.setWordWrap(True)
+
+        self.document_title_size_layout.addWidget(self.document_title)
+
+        self.document_size = QLabel(self.doc)
+        self.document_size.setObjectName(u"document_size")
+        self.document_size.setStyleSheet(u"QLabel{\n"
+                                         "	background:transparent;\n"
+                                         "    color:gray;\n"
+                                         "}")
+        self.document_size.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
+        self.document_size.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        size = round((os.path.getsize(path) / 1024 / 1024), 2)
+        self.document_size.setText(f"{size} Mb")
+
+        self.document_title_size_layout.addWidget(self.document_size)
+
+        self.horizontalLayout_23.addLayout(self.document_title_size_layout)
+
+        # Add message label and time
+        self.create_time_label(self.document_bubble, self.doc)
+
+        # Add frame on the widget
+        self.add_widget(self.document_bubble_frame)

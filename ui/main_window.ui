@@ -3148,7 +3148,7 @@ QPushButton::pressed{
                  </layout>
                 </widget>
                </widget>
-               <widget class="QFrame" name="left_msg_frame_7">
+               <widget class="QFrame" name="document_bubble_frame">
                 <property name="geometry">
                  <rect>
                   <x>380</x>
@@ -3212,7 +3212,7 @@ border-radius:7px;</string>
                   <enum>QFrame::Raised</enum>
                  </property>
                 </widget>
-                <widget class="QFrame" name="frame_27">
+                <widget class="QFrame" name="document_bubble">
                  <property name="geometry">
                   <rect>
                    <x>17</x>
@@ -3250,7 +3250,7 @@ border-radius:7px;</string>
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QFrame" name="arv_bubble_5">
+                   <widget class="QFrame" name="document">
                     <property name="styleSheet">
                      <string notr="true">.QFrame{
 	background-color:#88FFFFFF;
@@ -3281,7 +3281,7 @@ border-radius:7px;</string>
                       <number>6</number>
                      </property>
                      <item>
-                      <widget class="QLabel" name="title_6">
+                      <widget class="QLabel" name="document_icon">
                        <property name="minimumSize">
                         <size>
                          <width>35</width>
@@ -3321,12 +3321,12 @@ border-radius:7px;</string>
                       </widget>
                      </item>
                      <item>
-                      <layout class="QVBoxLayout" name="verticalLayout_13">
+                      <layout class="QVBoxLayout" name="document_title_size_layout">
                        <property name="spacing">
                         <number>0</number>
                        </property>
                        <item>
-                        <widget class="QLabel" name="title_5">
+                        <widget class="QLabel" name="document_title">
                          <property name="font">
                           <font>
                            <bold>true</bold>
@@ -3350,7 +3350,7 @@ background-color:transparent;
                         </widget>
                        </item>
                        <item>
-                        <widget class="QLabel" name="title_7">
+                        <widget class="QLabel" name="document_size">
                          <property name="styleSheet">
                           <string notr="true">QLabel{
 	background:transparent;
@@ -3997,7 +3997,7 @@ padding:1px;</string>
                  </layout>
                 </widget>
                </widget>
-               <widget class="QFrame" name="left_msg_frame_11">
+               <widget class="QFrame" name="image_bubble_frame">
                 <property name="geometry">
                  <rect>
                   <x>20</x>
@@ -4061,7 +4061,7 @@ border-radius:7px;</string>
                   <enum>QFrame::Raised</enum>
                  </property>
                 </widget>
-                <widget class="QFrame" name="frame_39">
+                <widget class="QFrame" name="image_bubble">
                  <property name="geometry">
                   <rect>
                    <x>17</x>
@@ -4099,7 +4099,7 @@ border-radius:7px;</string>
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLabel" name="title_13">
+                   <widget class="QLabel" name="image">
                     <property name="minimumSize">
                      <size>
                       <width>180</width>
@@ -4553,8 +4553,8 @@ background-color:#111;
                          <rect>
                           <x>0</x>
                           <y>0</y>
-                          <width>74</width>
-                          <height>35</height>
+                          <width>355</width>
+                          <height>83</height>
                          </rect>
                         </property>
                         <layout class="QGridLayout" name="gridLayout_3">

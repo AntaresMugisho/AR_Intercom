@@ -1594,104 +1594,104 @@ class Ui_MainWindow(object):
 
         self.gridLayout_9.addWidget(self.arv_bubble_4, 0, 0, 1, 1)
 
-        self.left_msg_frame_7 = QFrame(self.home_page)
-        self.left_msg_frame_7.setObjectName(u"left_msg_frame_7")
-        self.left_msg_frame_7.setGeometry(QRect(380, 180, 201, 101))
-        self.left_msg_frame_7.setMinimumSize(QSize(201, 101))
-        self.left_msg_frame_7.setStyleSheet(u"")
-        self.left_msg_frame_7.setFrameShape(QFrame.StyledPanel)
-        self.left_msg_frame_7.setFrameShadow(QFrame.Raised)
-        self.frame_25 = QFrame(self.left_msg_frame_7)
+        self.document_bubble_frame = QFrame(self.home_page)
+        self.document_bubble_frame.setObjectName(u"document_bubble_frame")
+        self.document_bubble_frame.setGeometry(QRect(380, 180, 201, 101))
+        self.document_bubble_frame.setMinimumSize(QSize(201, 101))
+        self.document_bubble_frame.setStyleSheet(u"")
+        self.document_bubble_frame.setFrameShape(QFrame.StyledPanel)
+        self.document_bubble_frame.setFrameShadow(QFrame.Raised)
+        self.frame_25 = QFrame(self.document_bubble_frame)
         self.frame_25.setObjectName(u"frame_25")
         self.frame_25.setGeometry(QRect(5, 4, 8, 8))
         self.frame_25.setStyleSheet(u"background-color: rgb(255, 170, 0);\n"
 "border-radius:4px;")
         self.frame_25.setFrameShape(QFrame.StyledPanel)
         self.frame_25.setFrameShadow(QFrame.Raised)
-        self.frame_26 = QFrame(self.left_msg_frame_7)
+        self.frame_26 = QFrame(self.document_bubble_frame)
         self.frame_26.setObjectName(u"frame_26")
         self.frame_26.setGeometry(QRect(10, 10, 14, 14))
         self.frame_26.setStyleSheet(u"background-color: rgba(255, 170, 0, .7);\n"
 "border-radius:7px;")
         self.frame_26.setFrameShape(QFrame.StyledPanel)
         self.frame_26.setFrameShadow(QFrame.Raised)
-        self.frame_27 = QFrame(self.left_msg_frame_7)
-        self.frame_27.setObjectName(u"frame_27")
-        self.frame_27.setGeometry(QRect(17, 17, 181, 71))
-        self.frame_27.setStyleSheet(u"	border-radius:10px;\n"
+        self.document_bubble = QFrame(self.document_bubble_frame)
+        self.document_bubble.setObjectName(u"document_bubble")
+        self.document_bubble.setGeometry(QRect(17, 17, 181, 71))
+        self.document_bubble.setStyleSheet(u"	border-radius:10px;\n"
 "	border-top-left-radius:8px;\n"
 "	background-color: rgb(255, 170, 0);\n"
 "")
-        self.frame_27.setFrameShape(QFrame.StyledPanel)
-        self.frame_27.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_17 = QVBoxLayout(self.frame_27)
+        self.document_bubble.setFrameShape(QFrame.StyledPanel)
+        self.document_bubble.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_17 = QVBoxLayout(self.document_bubble)
         self.verticalLayout_17.setSpacing(0)
         self.verticalLayout_17.setObjectName(u"verticalLayout_17")
         self.verticalLayout_17.setContentsMargins(2, 1, 2, 0)
-        self.arv_bubble_5 = QFrame(self.frame_27)
-        self.arv_bubble_5.setObjectName(u"arv_bubble_5")
-        self.arv_bubble_5.setStyleSheet(u".QFrame{\n"
+        self.document = QFrame(self.document_bubble)
+        self.document.setObjectName(u"document")
+        self.document.setStyleSheet(u".QFrame{\n"
 "	background-color:#88FFFFFF;\n"
 "	border-radius:10px;\n"
 "\n"
 "}")
-        self.arv_bubble_5.setFrameShape(QFrame.StyledPanel)
-        self.arv_bubble_5.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_23 = QHBoxLayout(self.arv_bubble_5)
+        self.document.setFrameShape(QFrame.StyledPanel)
+        self.document.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_23 = QHBoxLayout(self.document)
         self.horizontalLayout_23.setSpacing(6)
         self.horizontalLayout_23.setObjectName(u"horizontalLayout_23")
         self.horizontalLayout_23.setContentsMargins(9, 6, 9, 6)
-        self.title_6 = QLabel(self.arv_bubble_5)
-        self.title_6.setObjectName(u"title_6")
-        self.title_6.setMinimumSize(QSize(35, 35))
-        self.title_6.setMaximumSize(QSize(35, 35))
+        self.document_icon = QLabel(self.document)
+        self.document_icon.setObjectName(u"document_icon")
+        self.document_icon.setMinimumSize(QSize(35, 35))
+        self.document_icon.setMaximumSize(QSize(35, 35))
         font9 = QFont()
         font9.setPointSize(8)
         font9.setBold(True)
-        self.title_6.setFont(font9)
-        self.title_6.setStyleSheet(u"QLabel{\n"
+        self.document_icon.setFont(font9)
+        self.document_icon.setStyleSheet(u"QLabel{\n"
 "	\n"
 "	background-color: #bbb;\n"
 "	border-radius:4px;\n"
 "    color:#fff;\n"
 "	image: url(:/cils/cils/blacks/cil-file.png);\n"
 "}")
-        self.title_6.setAlignment(Qt.AlignCenter)
-        self.title_6.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        self.document_icon.setAlignment(Qt.AlignCenter)
+        self.document_icon.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
-        self.horizontalLayout_23.addWidget(self.title_6)
+        self.horizontalLayout_23.addWidget(self.document_icon)
 
-        self.verticalLayout_13 = QVBoxLayout()
-        self.verticalLayout_13.setSpacing(0)
-        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
-        self.title_5 = QLabel(self.arv_bubble_5)
-        self.title_5.setObjectName(u"title_5")
-        self.title_5.setFont(font6)
-        self.title_5.setStyleSheet(u"QLabel{\n"
+        self.document_title_size_layout = QVBoxLayout()
+        self.document_title_size_layout.setSpacing(0)
+        self.document_title_size_layout.setObjectName(u"document_title_size_layout")
+        self.document_title = QLabel(self.document)
+        self.document_title.setObjectName(u"document_title")
+        self.document_title.setFont(font6)
+        self.document_title.setStyleSheet(u"QLabel{\n"
 "    color:#000;\n"
 "background-color:transparent;\n"
 "}")
-        self.title_5.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.title_5.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        self.document_title.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.document_title.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
-        self.verticalLayout_13.addWidget(self.title_5)
+        self.document_title_size_layout.addWidget(self.document_title)
 
-        self.title_7 = QLabel(self.arv_bubble_5)
-        self.title_7.setObjectName(u"title_7")
-        self.title_7.setStyleSheet(u"QLabel{\n"
+        self.document_size = QLabel(self.document)
+        self.document_size.setObjectName(u"document_size")
+        self.document_size.setStyleSheet(u"QLabel{\n"
 "	background:transparent;\n"
 "    color:gray;\n"
 "}")
-        self.title_7.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.title_7.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        self.document_size.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.document_size.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
-        self.verticalLayout_13.addWidget(self.title_7)
-
-
-        self.horizontalLayout_23.addLayout(self.verticalLayout_13)
+        self.document_title_size_layout.addWidget(self.document_size)
 
 
-        self.verticalLayout_17.addWidget(self.arv_bubble_5)
+        self.horizontalLayout_23.addLayout(self.document_title_size_layout)
+
+
+        self.verticalLayout_17.addWidget(self.document)
 
         self.horizontalLayout_24 = QHBoxLayout()
         self.horizontalLayout_24.setObjectName(u"horizontalLayout_24")
@@ -1700,7 +1700,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_24.addItem(self.horizontalSpacer_16)
 
-        self.time_9 = QLabel(self.frame_27)
+        self.time_9 = QLabel(self.document_bubble)
         self.time_9.setObjectName(u"time_9")
         self.time_9.setMinimumSize(QSize(31, 14))
         self.time_9.setMaximumSize(QSize(31, 14))
@@ -1952,56 +1952,56 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_21.addLayout(self.horizontalLayout_27)
 
-        self.left_msg_frame_11 = QFrame(self.home_page)
-        self.left_msg_frame_11.setObjectName(u"left_msg_frame_11")
-        self.left_msg_frame_11.setGeometry(QRect(20, 410, 221, 241))
-        self.left_msg_frame_11.setMinimumSize(QSize(201, 101))
-        self.left_msg_frame_11.setStyleSheet(u"")
-        self.left_msg_frame_11.setFrameShape(QFrame.StyledPanel)
-        self.left_msg_frame_11.setFrameShadow(QFrame.Raised)
-        self.frame_37 = QFrame(self.left_msg_frame_11)
+        self.image_bubble_frame = QFrame(self.home_page)
+        self.image_bubble_frame.setObjectName(u"image_bubble_frame")
+        self.image_bubble_frame.setGeometry(QRect(20, 410, 221, 241))
+        self.image_bubble_frame.setMinimumSize(QSize(201, 101))
+        self.image_bubble_frame.setStyleSheet(u"")
+        self.image_bubble_frame.setFrameShape(QFrame.StyledPanel)
+        self.image_bubble_frame.setFrameShadow(QFrame.Raised)
+        self.frame_37 = QFrame(self.image_bubble_frame)
         self.frame_37.setObjectName(u"frame_37")
         self.frame_37.setGeometry(QRect(5, 4, 8, 8))
         self.frame_37.setStyleSheet(u"background-color: rgb(255, 170, 0);\n"
 "border-radius:4px;")
         self.frame_37.setFrameShape(QFrame.StyledPanel)
         self.frame_37.setFrameShadow(QFrame.Raised)
-        self.frame_38 = QFrame(self.left_msg_frame_11)
+        self.frame_38 = QFrame(self.image_bubble_frame)
         self.frame_38.setObjectName(u"frame_38")
         self.frame_38.setGeometry(QRect(10, 10, 14, 14))
         self.frame_38.setStyleSheet(u"background-color: rgba(255, 170, 0, .7);\n"
 "border-radius:7px;")
         self.frame_38.setFrameShape(QFrame.StyledPanel)
         self.frame_38.setFrameShadow(QFrame.Raised)
-        self.frame_39 = QFrame(self.left_msg_frame_11)
-        self.frame_39.setObjectName(u"frame_39")
-        self.frame_39.setGeometry(QRect(17, 17, 191, 201))
-        self.frame_39.setStyleSheet(u"	border-radius:10px;\n"
+        self.image_bubble = QFrame(self.image_bubble_frame)
+        self.image_bubble.setObjectName(u"image_bubble")
+        self.image_bubble.setGeometry(QRect(17, 17, 191, 201))
+        self.image_bubble.setStyleSheet(u"	border-radius:10px;\n"
 "	border-top-left-radius:8px;\n"
 "	background-color: rgb(255, 170, 0);\n"
 "")
-        self.frame_39.setFrameShape(QFrame.StyledPanel)
-        self.frame_39.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_23 = QVBoxLayout(self.frame_39)
+        self.image_bubble.setFrameShape(QFrame.StyledPanel)
+        self.image_bubble.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_23 = QVBoxLayout(self.image_bubble)
         self.verticalLayout_23.setSpacing(0)
         self.verticalLayout_23.setObjectName(u"verticalLayout_23")
         self.verticalLayout_23.setContentsMargins(2, 1, 2, 0)
-        self.title_13 = QLabel(self.frame_39)
-        self.title_13.setObjectName(u"title_13")
-        self.title_13.setMinimumSize(QSize(180, 180))
-        self.title_13.setMaximumSize(QSize(16777215, 180))
-        self.title_13.setFont(font10)
-        self.title_13.setStyleSheet(u"QLabel{\n"
+        self.image = QLabel(self.image_bubble)
+        self.image.setObjectName(u"image")
+        self.image.setMinimumSize(QSize(180, 180))
+        self.image.setMaximumSize(QSize(16777215, 180))
+        self.image.setFont(font10)
+        self.image.setStyleSheet(u"QLabel{\n"
 "	border-radius:10px;\n"
 "	border-image: url(:/icons/icons/test.jpg);\n"
 "	color:#000;\n"
 "	padding:2px;\n"
 "\n"
 "}")
-        self.title_13.setAlignment(Qt.AlignBottom|Qt.AlignLeading|Qt.AlignLeft)
-        self.title_13.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        self.image.setAlignment(Qt.AlignBottom|Qt.AlignLeading|Qt.AlignLeft)
+        self.image.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
-        self.verticalLayout_23.addWidget(self.title_13)
+        self.verticalLayout_23.addWidget(self.image)
 
         self.horizontalLayout_32 = QHBoxLayout()
         self.horizontalLayout_32.setObjectName(u"horizontalLayout_32")
@@ -2010,7 +2010,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_32.addItem(self.horizontalSpacer_19)
 
-        self.time_13 = QLabel(self.frame_39)
+        self.time_13 = QLabel(self.image_bubble)
         self.time_13.setObjectName(u"time_13")
         self.time_13.setMinimumSize(QSize(31, 14))
         self.time_13.setMaximumSize(QSize(31, 14))
@@ -2202,7 +2202,7 @@ class Ui_MainWindow(object):
         self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 74, 35))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 355, 83))
         self.gridLayout_3 = QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_3.setSpacing(1)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
@@ -3534,9 +3534,9 @@ class Ui_MainWindow(object):
         self.title_4.setText(QCoreApplication.translate("MainWindow", u"ARV-20062021-1200.arv", None))
         self.elapsed_time_4.setText(QCoreApplication.translate("MainWindow", u"00:00", None))
         self.total_time_4.setText(QCoreApplication.translate("MainWindow", u"00:00", None))
-        self.title_6.setText(QCoreApplication.translate("MainWindow", u"EXT", None))
-        self.title_5.setText(QCoreApplication.translate("MainWindow", u"Document.ext", None))
-        self.title_7.setText(QCoreApplication.translate("MainWindow", u"2Mb", None))
+        self.document_icon.setText(QCoreApplication.translate("MainWindow", u"EXT", None))
+        self.document_title.setText(QCoreApplication.translate("MainWindow", u"Document.ext", None))
+        self.document_size.setText(QCoreApplication.translate("MainWindow", u"2Mb", None))
         self.time_9.setText(QCoreApplication.translate("MainWindow", u"23:36", None))
         self.title_8.setText(QCoreApplication.translate("MainWindow", u"EXT", None))
         self.title_9.setText(QCoreApplication.translate("MainWindow", u"Document.ext", None))
@@ -3546,7 +3546,7 @@ class Ui_MainWindow(object):
         self.title_12.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#848484;\">1.2Mb</span> \u2022 Image.ext</p></body></html>", None))
         self.time_11.setText(QCoreApplication.translate("MainWindow", u"23:38", None))
         self.ticks_7.setText("")
-        self.title_13.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#848484;\">1.2Mb</span> \u2022 Image.ext</p></body></html>", None))
+        self.image.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#848484;\">1.2Mb</span> \u2022 Image.ext</p></body></html>", None))
         self.time_13.setText(QCoreApplication.translate("MainWindow", u"23:36", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"23 SEPTEMBRE 2023", None))
         self.media_doc.setText("")
