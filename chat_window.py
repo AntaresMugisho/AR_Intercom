@@ -157,16 +157,6 @@ class ChatWindow(QMainWindow):
         messages = user.messages()
         for message in messages:
             self.show_bubble(message)
-            # sender_id = message.get_sender_id()
-
-            #  Knowing that the user with id == 1 is the owner,
-            #  messages sent from user_id 1 will be shown in the right bubble
-            # if sender_id == 1:
-            #     self.ui.create_right_bubble(message)
-            #     if self.ui.message_status.objectName().startswith("error"):
-            #         self.ui.message_status.clicked.connect(self.resend_message)
-            # else:
-            #     self.ui.create_left_bubble(message)
 
         # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
         message_counter = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_counter")
@@ -198,6 +188,7 @@ class ChatWindow(QMainWindow):
             date_label = DateLabel(self.DATE.upper())
             self.ui.chat_scroll_layout.addWidget(date_label, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignCenter)
 
+        # SHOW BUBBLE
         if message.get_sender_id() == 1:
             bubble = Bubble(message, "right")
         else:
@@ -212,9 +203,9 @@ class ChatWindow(QMainWindow):
         message = Message.find(id)
         user = User.find(message.get_sender_id())
 
-        if self.ui.active_client.objectName() and self.ui.active_client.objectName() == user.get_uuid():
+        if self.ui.active_client_name.isVisible() and self.ui.active_client_name.objectName() == user.get_uuid():
             # Show message in the bubble
-            self.ui.create_left_bubble(message)
+            self.show_bubble(message)
         else:
             # Show notification widget
             self.notification_widget = NotificationWidget(user.get_user_name())
@@ -254,14 +245,14 @@ class ChatWindow(QMainWindow):
         """
         According to the send button style, send text message or record a voice
         """
-        if not self.ui.active_client.text():
+        if not self.ui.active_client_name.text():
             QMessageBox.warning(self, "Destinataire non défini",
                                 "Veuillez sélectionner d'abord votre destinataire !",
                                 QMessageBox.StandardButton.Ok)
 
         # SEND TEXT MESSAGE
         elif self.ui.entry_field.text():
-            receiver = User.first_where("uuid", "=", self.ui.active_client.objectName())
+            receiver = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
             receiver_id = receiver.get_id()
 
             text_message = self.ui.entry_field.text()
@@ -298,7 +289,7 @@ class ChatWindow(QMainWindow):
         """
         Sends the media message and shows bubble
         """
-        receiver = User.first_where("uuid", "=", self.ui.active_client.objectName())
+        receiver = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
         receiver_id = receiver.get_id()
 
         message = Message()
@@ -342,7 +333,7 @@ class ChatWindow(QMainWindow):
 
     @Slot()
     def delete_messages(self):
-        user = User.first_where("uuid", "=", self.ui.active_client.objectName())
+        user = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
         messages = user.messages()
 
         print("Deleting conversation of you with", user.get_user_name())
