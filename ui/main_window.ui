@@ -5458,7 +5458,7 @@ padding:1px;</string>
                         <number>0</number>
                        </property>
                        <item>
-                        <widget class="QFrame" name="left_msg_frame_3">
+                        <widget class="QFrame" name="voice_bubble_frame">
                          <property name="minimumSize">
                           <size>
                            <width>320</width>
