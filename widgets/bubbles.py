@@ -1,9 +1,10 @@
 # -*- This python file uses the following encoding : utf-8 -*-
-
+import os.path
 from datetime import datetime
 
 
-from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton, QSizePolicy, QHBoxLayout, QVBoxLayout, QSpacerItem
+from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton, QSizePolicy, QHBoxLayout, QVBoxLayout, QSpacerItem, \
+    QGridLayout, QSlider
 from PySide6.QtGui import QFont, QCursor    
 from PySide6.QtCore import QSize, Qt, QRect
 
@@ -62,9 +63,6 @@ class Bubble(QWidget):
         self.bubble_frame.setMaximumWidth(300)
         self.bubble_frame.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
 
-        # Show small decorators
-        self.create_small_decorators(self.bubble_frame)
-
         # Bubble : background
         self.bubble = QFrame(self.bubble_frame)
         self.bubble.move(17, 17)
@@ -76,11 +74,6 @@ class Bubble(QWidget):
             self.bubble.setStyleSheet(left_style)
         else:
             self.bubble.setStyleSheet(right_style)
-
-        self.verticalLayout_22 = QVBoxLayout(self.bubble)
-        self.verticalLayout_22.setSpacing(0)
-        self.verticalLayout_22.setObjectName(u"verticalLayout_22")
-        self.verticalLayout_22.setContentsMargins(12, 6, 12, 0)
 
         # Message Label
         self.message_label = QLabel(self.bubble)
@@ -99,12 +92,8 @@ class Bubble(QWidget):
         else:
             self.message_label.setStyleSheet(u"QLabel{color: #eee;background-color:transparent;}")
 
-        self.verticalLayout_22.addWidget(self.message_label)
-
-        # Create time label layout and add it
-        self.create_time_label(self.bubble)
-        self.verticalLayout_22.addLayout(self.time_label_layout)
-
+        # Add message label and time
+        self.create_time_label(self.bubble, self.message_label)
 
         # Add frame on the widget
         self.add_widget(self.bubble_frame)
@@ -128,6 +117,13 @@ class Bubble(QWidget):
             self.frame_2.setStyleSheet(u"background-color: rgb(14, 14, 15);border-radius:4px;")
 
     def add_widget(self, widget):
+        # Show small decorators
+        self.create_small_decorators(widget)
+
+        # Add time on the widget
+
+
+        # Add the bubble container on the main widget
         self.horizontalLayout_11 = QHBoxLayout(self)
         self.horizontalLayout_11.setSpacing(0)
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
@@ -142,7 +138,7 @@ class Bubble(QWidget):
             self.horizontalLayout_11.addItem(self.spacer)
             self.horizontalLayout_11.addWidget(widget)
 
-    def create_time_label(self, widget):
+    def create_time_label(self, parent, time_buddy):
         font7 = QFont()
         font7.setPointSize(7)
 
@@ -150,7 +146,7 @@ class Bubble(QWidget):
         font8.setPointSize(8)
 
         # Time label
-        self.time_label = QLabel(widget)
+        self.time_label = QLabel(parent)
         self.time_label.setFixedSize(QSize(31, 14))
         self.time_label.setFont(font8)
         self.time_label.setStyleSheet(u"QLabel{color:#555;border-radius:7px;}")
@@ -165,15 +161,142 @@ class Bubble(QWidget):
         self.time_label_layout.addWidget(self.time_label)
 
         if not self.on_left:
-            self.ticks = QLabel(self.bubble)
+            self.ticks = QLabel(parent)
             self.ticks.setFixedSize(QSize(24, 14))
             self.ticks.setFont(font7)
             self.ticks.setStyleSheet(u"image: url(:/cils/cils/cil-check-circle-green.png);\n"
                                      "background-color:rgba(255,255,255,0.1);border-radius:7px;padding:1px;")
             self.time_label_layout.addWidget(self.ticks)
 
+        self.verticalLayout_22 = QVBoxLayout(parent)
+        self.verticalLayout_22.setSpacing(2)
+        self.verticalLayout_22.setObjectName(u"verticalLayout_22")
+
+        if self.message_kind == "text":
+            self.verticalLayout_22.setContentsMargins(12, 6, 12, 0)
+        else:
+            self.verticalLayout_22.setContentsMargins(2, 2, 2, 0)
+
+        self.verticalLayout_22.addWidget(time_buddy)
+        self.verticalLayout_22.addLayout(self.time_label_layout)
+
 
     def voice(self):
         self.voice_bubble_frame = QFrame(self)
         self.voice_bubble_frame.setObjectName(u"voice_bubble_frame")
         self.voice_bubble_frame.setFixedSize(QSize(320, 111))
+
+
+        self.voice_bubble = QFrame(self.voice_bubble_frame)
+        self.voice_bubble.setObjectName(u"frame_12")
+        self.voice_bubble.setGeometry(QRect(17, 17, 304, 91))
+        self.voice_bubble.setMaximumSize(QSize(304, 16777215))
+        self.voice_bubble.setStyleSheet(u"	border-radius:10px;\n"
+                                    "	border-top-left-radius:8px;\n"
+                                    "	background-color: rgb(40, 40, 43);\n"
+                                    "")
+
+        self.arv_bubble = QFrame(self.voice_bubble)
+        self.arv_bubble.setObjectName(u"arv_bubble")
+        self.arv_bubble.setMinimumSize(QSize(300, 70))
+        self.arv_bubble.setMaximumSize(QSize(300, 70))
+        self.arv_bubble.setStyleSheet(u"QFrame{\n"
+                                      "	background-color:#88FFFFFF;\n"
+                                      "	border-radius:10px;\n"
+                                      "\n"
+                                      "}")
+
+
+        self.title = QLabel(self.arv_bubble)
+        self.title.setObjectName(u"title")
+        self.title.setGeometry(QRect(52, 3, 241, 20))
+        self.title.setStyleSheet(u"QLabel{	background:#44FFFFFF;color:#000;}")
+        self.title.setAlignment(Qt.AlignCenter)
+        self.title.setTextInteractionFlags(Qt.TextSelectableByMouse)
+
+        path = self.message_body
+        filename = os.path.splitext(os.path.basename(path))[0] + ".arv"
+        self.title.setText(filename)
+        self.title.setObjectName(f"path|{path}")
+
+
+
+
+        self.elapsed_time = QLabel(self.arv_bubble)
+        self.elapsed_time.setObjectName(u"elapsed_time")
+        self.elapsed_time.setGeometry(QRect(52, 49, 51, 16))
+        self.elapsed_time.setStyleSheet(u"QLabel{\n"
+                                        "	background:#44FFFFFF;\n"
+                                        "    color:#333;\n"
+                                        "	border-radius:8px;\n"
+                                        "}")
+        self.elapsed_time.setAlignment(Qt.AlignCenter)
+        self.elapsed_time.setText("00:00")
+
+        self.total_time = QLabel(self.arv_bubble)
+        self.total_time.setObjectName(u"total_time")
+        self.total_time.setGeometry(QRect(241, 49, 51, 16))
+        self.total_time.setStyleSheet(u"QLabel{\n"
+                                      "	background:#44FFFFFF;\n"
+                                      "    color:#333;\n"
+                                      "	border-radius:8px;\n"
+                                      "}")
+        self.total_time.setAlignment(Qt.AlignCenter)
+        self.total_time.setText("--:--")
+
+        self.slider = QSlider(self.arv_bubble)
+        self.slider.setObjectName(u"slider")
+        self.slider.setGeometry(QRect(52, 30, 241, 12))
+        self.slider.setStyleSheet(u"""QSlider{
+            background:none;}
+    
+        QSlider::groove:horizontal{ 
+            height:4px;
+            border:none;}
+        
+        QSlider::handle:horizontal{
+            height:12px;
+            width:12px;
+            border-radius:6px;
+            margin:-4px 0px -4px 0px;
+            background-color: rgba(0, 121, 215, 255);}
+            
+        QSlider::handle:hover{
+            background-color: rgba(0, 52, 93, 255);}
+        
+        QSlider::handle:pressed{
+            background-color: rgba(0, 121, 215, 255);}
+        
+        QSlider::add-page:horizontal{
+            background-color:#55FFFFFF;}
+        
+        QSlider::sub-page:horizontal{
+            background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
+            stop:0 rgba(0, 52, 93, 255), stop:1 rgba(0, 121, 215, 255));}""")
+        self.slider.setMaximum(100)
+        self.slider.setValue(0)
+        self.slider.setOrientation(Qt.Horizontal)
+
+        self.play_button = QPushButton(self.arv_bubble)
+        # self.play_button.setObjectName(u"play_button")
+        self.play_button.setGeometry(QRect(7, 16, 41, 41))
+        self.play_button.setStyleSheet(u"QPushButton{\n"
+                                       "	background-image: url(:/cils/cils/cil-media-play.png);\n"
+                                       "	background-repeat: no-repeat;\n"
+                                       "	background-position:center;\n"
+                                       "	border-radius:6px;\n"
+                                       "	border:none;\n"
+                                       "}\n"
+                                       "QPushButton::hover{\n"
+                                       "    border:1px inset rgba(255, 255, 255, 0.6);\n"
+                                       "}\n"
+                                       "        \n"
+                                       "QPushButton::pressed{\n"
+                                       "     border:2px inset rgba(255, 255, 255, 1);\n"
+                                       "}")
+
+        # Add message label and time
+        self.create_time_label(self.voice_bubble, self.arv_bubble)
+
+        # Add frame on the widget
+        self.add_widget(self.voice_bubble_frame)
