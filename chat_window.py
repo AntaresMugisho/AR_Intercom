@@ -48,6 +48,9 @@ class ChatWindow(QMainWindow):
     """
     Initialize chat window to show conversations and start chatting
     """
+
+    DATE = None
+
     def __init__(self):
         QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
@@ -147,6 +150,9 @@ class ChatWindow(QMainWindow):
         except Exception as e:  # If chat field was not visible or is empty
             print(e)
 
+        # RESET DATE
+        self.DATE = None
+
         # SHOW OLDER MESSAGES WITH THE ACTIVE USER IN NEW BUBBLES
         messages = user.messages()
         for message in messages:
@@ -174,27 +180,28 @@ class ChatWindow(QMainWindow):
         self.ui.delete_btn.clicked.connect(self.delete_messages)
 
     def show_bubble(self, message: Message):
+
+        # SHOW DATE LABEL
         date = message.get_created_at()
         today = datetime.today()
-        yeserday = datetime.now() - timedelta(days=1)
-
+        yesterday = datetime.now() - timedelta(days=1)
 
         if datetime.strftime(date, "%x") == datetime.strftime(today, "%x"):
             text = "Today"
-
-        elif datetime.strftime(date, "%x") == datetime.strftime(yeserday, "%x"):
+        elif datetime.strftime(date, "%x") == datetime.strftime(yesterday, "%x"):
             text = "Yesterday"
         else:
-            text = datetime.strftime(date, "%c")
+            text = datetime.strftime(date, "%d - %m - %Y")
 
-        print(text)
-        date_label = DateLabel(text)
+        if text != self.DATE:
+            self.DATE = text
+            date_label = DateLabel(self.DATE.upper())
+            self.ui.chat_scroll_layout.addWidget(date_label, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignCenter)
 
         if message.get_sender_id() == 1:
             bubble = Bubble(message, "right")
         else:
             bubble = Bubble(message, "left")
-        self.ui.chat_scroll_layout.addWidget(date_label)
         self.ui.chat_scroll_layout.addWidget(bubble)
 
     @Slot(int)

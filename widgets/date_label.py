@@ -13,10 +13,8 @@ class DateLabel(QLabel):
         self.text = text
 
         self.setObjectName(u"date_label")
-        self.setMaximumSize(QSize(120, 20))
-        self.setStyleSheet(u"background-color: rgb(255, 255, 127);\n"
-                                      "color:black;\n"
-                                      "padding:4px;\n"
+        # self.setMaximumSize(QSize(120, 20))
+        self.setStyleSheet(u"background-color: rgb(30, 32, 33);color:#888;padding:4px 8px;margin:8px 0px;"
                                       "border-radius:4px;")
         self.setAlignment(Qt.AlignCenter)
         self.setText(self.text)
