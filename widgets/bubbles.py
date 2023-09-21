@@ -57,8 +57,10 @@ class Bubble(QWidget):
 
         # Labels container
         # self.bubble_frame = QWidget(self)
-        # self.bubble_frame.setLayout(QVBoxLayout())
         # self.bubble_frame.setStyleSheet(u"background-color:rgba(255,255,255,0.1);")
+        # self.bubble_frame.setMinimumSize(QSize(100, 71))
+        # self.bubble_frame.setMaximumSize(QSize(316, 120))
+        # self.bubble_frame.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
 
 
         # Bubble : background
@@ -73,7 +75,7 @@ class Bubble(QWidget):
             # self.bubble.move(17, 17)
             self.bubble.setStyleSheet(left_style)
         else:
-            # self.bubble.move(-30, -30)
+            # self.bubble.move(-17, -17)
             self.bubble.setStyleSheet(right_style)
 
         # Message Label
@@ -180,12 +182,12 @@ class Bubble(QWidget):
 
 
     def voice(self):
-        self.voice_bubble_frame = QFrame(self)
-        self.voice_bubble_frame.setObjectName(u"voice_bubble_frame")
-        self.voice_bubble_frame.setFixedSize(QSize(320, 111))
+        # self.voice_bubble_frame = QFrame(self)
+        # self.voice_bubble_frame.setObjectName(u"voice_bubble_frame")
+        # self.voice_bubble_frame.setFixedSize(QSize(320, 111))
 
 
-        self.voice_bubble = QFrame(self.voice_bubble_frame)
+        self.voice_bubble = QFrame(self)
         self.voice_bubble.setObjectName(u"frame_12")
         self.voice_bubble.setGeometry(QRect(17, 17, 304, 91))
         self.voice_bubble.setMaximumSize(QSize(304, 16777215))
@@ -216,8 +218,6 @@ class Bubble(QWidget):
         filename = os.path.splitext(os.path.basename(path))[0] + ".arv"
         self.title.setText(filename)
         self.title.setObjectName(f"path|{path}")
-
-
 
 
         self.elapsed_time = QLabel(self.arv_bubble)
@@ -297,16 +297,16 @@ class Bubble(QWidget):
         self.create_time_label(self.voice_bubble, self.arv_bubble)
 
         # Add frame on the widget
-        self.add_widget(self.voice_bubble_frame)
+        self.add_widget(self.voice_bubble)
 
     def document(self):
 
-        self.document_bubble_frame = QFrame(self)
-        self.document_bubble_frame.setObjectName(u"document_bubble_frame")
-        self.document_bubble_frame.setGeometry(QRect(380, 180, 201, 101))
-        self.document_bubble_frame.setMinimumSize(QSize(201, 101))
+        # self.document_bubble_frame = QFrame(self)
+        # self.document_bubble_frame.setObjectName(u"document_bubble_frame")
+        # self.document_bubble_frame.setGeometry(QRect(380, 180, 201, 101))
+        # self.document_bubble_frame.setMinimumSize(QSize(201, 101))
 
-        self.document_bubble = QFrame(self.document_bubble_frame)
+        self.document_bubble = QFrame(self)
         self.document_bubble.setObjectName(u"document_bubble")
         self.document_bubble.setGeometry(QRect(17, 17, 181, 71))
         self.document_bubble.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -326,13 +326,13 @@ class Bubble(QWidget):
         self.horizontalLayout_23.setContentsMargins(9, 6, 9, 6)
         self.document_icon = QLabel(self.doc)
         self.document_icon.setObjectName(u"document_icon")
-        self.document_icon.setMinimumSize(QSize(35, 35))
-        self.document_icon.setMaximumSize(QSize(35, 35))
+        self.document_icon.setMinimumSize(QSize(40, 50))
+        self.document_icon.setMaximumSize(QSize(40, 50))
         font9 = QFont()
-        font9.setPointSize(8)
+        font9.setPointSize(6)
         font9.setBold(True)
         self.document_icon.setFont(font9)
-        self.document_icon.setStyleSheet(u"QLabel{background-color: #bbb;border-radius:4px;color:#fff;"
+        self.document_icon.setStyleSheet(u"QLabel{background-color: #bbb;border-radius:4px;color:#000;"
                                          "image: url(:/cils/cils/blacks/cil-file.png);}")
         self.document_icon.setAlignment(Qt.AlignCenter)
         self.document_icon.setTextInteractionFlags(Qt.TextSelectableByMouse)
@@ -367,7 +367,7 @@ class Bubble(QWidget):
         self.document_size.setObjectName(u"document_size")
         self.document_size.setStyleSheet(u"QLabel{\n"
                                          "	background:transparent;\n"
-                                         "    color:gray;\n"
+                                         "    color:#333;\n"
                                          "}")
         self.document_size.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
         self.document_size.setTextInteractionFlags(Qt.TextSelectableByMouse)
@@ -382,4 +382,4 @@ class Bubble(QWidget):
         self.create_time_label(self.document_bubble, self.doc)
 
         # Add frame on the widget
-        self.add_widget(self.document_bubble_frame)
+        self.add_widget(self.document_bubble)

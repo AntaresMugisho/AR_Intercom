@@ -2202,7 +2202,7 @@ class Ui_MainWindow(object):
         self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 355, 83))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 74, 35))
         self.gridLayout_3 = QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_3.setSpacing(1)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
@@ -2335,7 +2335,7 @@ class Ui_MainWindow(object):
         self.chat_scroll_layout = QVBoxLayout(self.chat_scroll_widget)
         self.chat_scroll_layout.setSpacing(9)
         self.chat_scroll_layout.setObjectName(u"chat_scroll_layout")
-        self.chat_scroll_layout.setContentsMargins(0, 0, 0, 0)
+        self.chat_scroll_layout.setContentsMargins(6, 12, 6, 12)
         self.verticalSpacer_4 = QSpacerItem(20, 48, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.chat_scroll_layout.addItem(self.verticalSpacer_4)
