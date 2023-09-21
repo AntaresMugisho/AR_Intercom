@@ -56,31 +56,29 @@ class Bubble(QWidget):
         font12.setPointSize(12)
 
         # Labels container
-        # self.bubble_frame = QFrame(self)
-        # self.bubble_frame.setStyleSheet(u"background-color:rgba(255,255,255,0);")
-        # self.bubble_frame.setMinimumSize(QSize(300, 71))
-        # self.bubble_frame.setMaximumWidth(300)
-        # self.bubble_frame.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        # self.bubble_frame = QWidget(self)
+        # self.bubble_frame.setLayout(QVBoxLayout())
+        # self.bubble_frame.setStyleSheet(u"background-color:rgba(255,255,255,0.1);")
+
 
         # Bubble : background
         self.bubble = QFrame(self)
-        # self.bubble.move(17, 17)
-        self.bubble.setMaximumWidth(304)
-        self.bubble.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        self.bubble.setMaximumWidth(316)
+        self.bubble.setSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Preferred)
 
         left_style = u"border-radius:20px;border-top-left-radius:8px;background-color: rgb(40, 40, 43);"
         right_style = u"border-radius:20px;border-top-right-radius:8px;background-color: rgb(14, 14, 15);"
 
         if self.on_left:
+            # self.bubble.move(17, 17)
             self.bubble.setStyleSheet(left_style)
         else:
+            # self.bubble.move(-30, -30)
             self.bubble.setStyleSheet(right_style)
 
         # Message Label
         self.message_label = QLabel(self.bubble)
         self.message_label.setObjectName(u"message_label")
-        # self.message_label.setMaximumWidth(304)
-        # self.message_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.message_label.setFont(font12)
         self.message_label.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
         self.message_label.setWordWrap(True)
@@ -123,14 +121,13 @@ class Bubble(QWidget):
 
         # Add time on the widget
 
-
         # Add the bubble container on the main widget
         self.horizontalLayout_11 = QHBoxLayout(self)
         self.horizontalLayout_11.setSpacing(0)
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
 
-        self.spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.spacer = QSpacerItem(500, 2, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
         if self.on_left:
             self.horizontalLayout_11.addWidget(widget)
