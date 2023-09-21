@@ -30,7 +30,6 @@ class Bubble(QWidget):
 
         self.show_bubble()
 
-
     def show_bubble(self):
         if self.message_kind == "text":
             self.text()
@@ -57,15 +56,17 @@ class Bubble(QWidget):
         font12.setPointSize(12)
 
         # Labels container
-        self.bubble_frame = QFrame(self)
-        self.bubble_frame.setStyleSheet(u"background-color:rgba(255,255,255,0);")
-        self.bubble_frame.setMinimumSize(QSize(300, 71))
-        self.bubble_frame.setMaximumWidth(300)
-        self.bubble_frame.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        # self.bubble_frame = QFrame(self)
+        # self.bubble_frame.setStyleSheet(u"background-color:rgba(255,255,255,0);")
+        # self.bubble_frame.setMinimumSize(QSize(300, 71))
+        # self.bubble_frame.setMaximumWidth(300)
+        # self.bubble_frame.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
 
         # Bubble : background
-        self.bubble = QFrame(self.bubble_frame)
-        self.bubble.move(17, 17)
+        self.bubble = QFrame(self)
+        # self.bubble.move(17, 17)
+        self.bubble.setMaximumWidth(304)
+        self.bubble.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
 
         left_style = u"border-radius:20px;border-top-left-radius:8px;background-color: rgb(40, 40, 43);"
         right_style = u"border-radius:20px;border-top-right-radius:8px;background-color: rgb(14, 14, 15);"
@@ -78,8 +79,8 @@ class Bubble(QWidget):
         # Message Label
         self.message_label = QLabel(self.bubble)
         self.message_label.setObjectName(u"message_label")
-        self.message_label.setMaximumWidth(300)
-        self.message_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        # self.message_label.setMaximumWidth(304)
+        # self.message_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.message_label.setFont(font12)
         self.message_label.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
         self.message_label.setWordWrap(True)
@@ -96,7 +97,7 @@ class Bubble(QWidget):
         self.create_time_label(self.bubble, self.message_label)
 
         # Add frame on the widget
-        self.add_widget(self.bubble_frame)
+        self.add_widget(self.bubble)
 
     def create_small_decorators(self, widget):
         # Small decoration frames
@@ -118,7 +119,7 @@ class Bubble(QWidget):
 
     def add_widget(self, widget):
         # Show small decorators
-        self.create_small_decorators(widget)
+        # self.create_small_decorators(widget)
 
         # Add time on the widget
 
@@ -334,13 +335,8 @@ class Bubble(QWidget):
         font9.setPointSize(8)
         font9.setBold(True)
         self.document_icon.setFont(font9)
-        self.document_icon.setStyleSheet(u"QLabel{\n"
-                                         "	\n"
-                                         "	background-color: #bbb;\n"
-                                         "	border-radius:4px;\n"
-                                         "    color:#fff;\n"
-                                         "	image: url(:/cils/cils/blacks/cil-file.png);\n"
-                                         "}")
+        self.document_icon.setStyleSheet(u"QLabel{background-color: #bbb;border-radius:4px;color:#fff;"
+                                         "image: url(:/cils/cils/blacks/cil-file.png);}")
         self.document_icon.setAlignment(Qt.AlignCenter)
         self.document_icon.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
