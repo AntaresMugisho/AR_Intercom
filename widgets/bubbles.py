@@ -32,22 +32,24 @@ class Bubble(QWidget):
 
     def show_bubble(self):
         if self.message_kind == "text":
-            self.text()
+            self.show_text_bubble()
+
         elif self.message_kind == "voice":
-            self.voice()
+            self.show_voice_bubble()
+
+        elif self.message_kind == "image":
+            self.show_image_bubble()
+
+        elif self.message_kind == "document":
+            self.show_document_bubble()
+
         elif self.message_kind == "video":
             pass
 
         elif self.message_kind == "audio":
             pass
 
-        elif self.message_kind == "image":
-            pass
-
-        elif self.message_kind == "document":
-            self.document()
-
-    def text(self):
+    def show_text_bubble(self):
         """
         Create text message bubble
         """
@@ -181,7 +183,7 @@ class Bubble(QWidget):
         self.verticalLayout_22.addLayout(self.time_label_layout)
 
 
-    def voice(self):
+    def show_voice_bubble(self):
         # self.voice_bubble_frame = QFrame(self)
         # self.voice_bubble_frame.setObjectName(u"voice_bubble_frame")
         # self.voice_bubble_frame.setFixedSize(QSize(320, 111))
@@ -299,7 +301,7 @@ class Bubble(QWidget):
         # Add frame on the widget
         self.add_widget(self.voice_bubble)
 
-    def document(self):
+    def show_document_bubble(self):
 
         # self.document_bubble_frame = QFrame(self)
         # self.document_bubble_frame.setObjectName(u"document_bubble_frame")
@@ -313,18 +315,18 @@ class Bubble(QWidget):
         self.document_bubble.setStyleSheet(u"border-radius:10px;border-top-left-radius:8px;\n"
                                            "	background-color: rgb(40, 40, 43);")
 
-        self.doc = QFrame(self.document_bubble)
-        self.doc.setObjectName(u"document")
-        self.doc.setStyleSheet(u".QFrame{\n"
+        self.document = QFrame(self.document_bubble)
+        self.document.setObjectName(u"document")
+        self.document.setStyleSheet(u".QFrame{\n"
                                     "	background-color:#88FFFFFF;\n"
                                     "	border-radius:10px;\n"
                                     "\n"
                                     "}")
-        self.horizontalLayout_23 = QHBoxLayout(self.doc)
+        self.horizontalLayout_23 = QHBoxLayout(self.document)
         self.horizontalLayout_23.setSpacing(6)
         self.horizontalLayout_23.setObjectName(u"horizontalLayout_23")
         self.horizontalLayout_23.setContentsMargins(9, 6, 9, 6)
-        self.document_icon = QLabel(self.doc)
+        self.document_icon = QLabel(self.document)
         self.document_icon.setObjectName(u"document_icon")
         self.document_icon.setMinimumSize(QSize(40, 50))
         self.document_icon.setMaximumSize(QSize(40, 50))
@@ -347,7 +349,7 @@ class Bubble(QWidget):
         self.document_title_size_layout.setSpacing(0)
         self.document_title_size_layout.setObjectName(u"document_title_size_layout")
 
-        self.document_title = QLabel(self.doc)
+        self.document_title = QLabel(self.document)
         self.document_title.setObjectName(u"document_title")
         font6 = QFont()
         font6.setBold(True)
@@ -363,7 +365,7 @@ class Bubble(QWidget):
 
         self.document_title_size_layout.addWidget(self.document_title)
 
-        self.document_size = QLabel(self.doc)
+        self.document_size = QLabel(self.document)
         self.document_size.setObjectName(u"document_size")
         self.document_size.setStyleSheet(u"QLabel{\n"
                                          "	background:transparent;\n"
@@ -379,7 +381,41 @@ class Bubble(QWidget):
         self.horizontalLayout_23.addLayout(self.document_title_size_layout)
 
         # Add message label and time
-        self.create_time_label(self.document_bubble, self.doc)
+        self.create_time_label(self.document_bubble, self.document)
 
         # Add frame on the widget
         self.add_widget(self.document_bubble)
+
+    def show_image_bubble(self):
+        font10 = QFont()
+        font10.setBold(False)
+
+        self.image_bubble = QFrame(self)
+        self.image_bubble.setObjectName(u"image_bubble")
+        self.image_bubble.setGeometry(QRect(17, 17, 191, 201))
+        self.image_bubble.setStyleSheet(u"	border-radius:10px;\n"
+                                        "	border-top-left-radius:8px;\n"
+                                        "	background-color: rgb(40, 40, 43);\n"
+                                        "")
+
+        self.image = QLabel(self.image_bubble)
+        self.image.setObjectName(u"image")
+        self.image.setMinimumSize(QSize(180, 180))
+        self.image.setMaximumSize(QSize(16777215, 180))
+        self.image.setFont(font10)
+        self.image.setStyleSheet(u"QLabel{\n"
+                                 "	border-radius:10px;\n"
+                                 "	border-image: url(:/icons/icons/test.jpg);\n"
+                                 "	color:#000;\n"
+                                 "	padding:2px;\n"
+                                 "\n"
+                                 "}")
+        self.image.setText(u"<p><span style=\" color:#848484;\">1.2Mb</span> • Image.ext</p>")
+        self.image.setAlignment(Qt.AlignBottom | Qt.AlignLeading | Qt.AlignLeft)
+        self.image.setTextInteractionFlags(Qt.TextSelectableByMouse)
+
+        # Add message label and time
+        self.create_time_label(self.image_bubble, self.image)
+
+        # Add frame on the widget
+        self.add_widget(self.image_bubble)

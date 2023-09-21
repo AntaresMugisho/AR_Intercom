@@ -136,10 +136,10 @@ class ChatWindow(QMainWindow):
         # SET NAME TO THE ACTIVE CLIENT LABEL
         self.ui.active_client_name.setText(user_name)
         self.ui.active_client_name.setObjectName(user_uuid)
-        self.ui.active_client_name.show()
+        # self.ui.active_client_name.show()
 
-        self.ui.active_client_status.setText(user_status)
-        self.ui.active_client_status.show()
+        self.ui.active_client_status.setText(user_status if user_status != "" else "Hello, i'm using AR Intercom !")
+        # self.ui.active_client_status.show()
 
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
         try:
@@ -213,7 +213,7 @@ class ChatWindow(QMainWindow):
 
             # Increase the unread message counter badge
             message_counter = self.ui.left_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
-            unread_msg = int(message_counter.text())
+            unread_msg = int(message_counter.show_text_bubble())
             unread_msg += 1
             message_counter.setText(f"{unread_msg}")
 
@@ -230,7 +230,7 @@ class ChatWindow(QMainWindow):
         Changes send button style, and disable media button so that a user can not send media message and text message
         at a time.
         """
-        if self.ui.entry_field.text():
+        if self.ui.entry_field.show_text_bubble():
             # Change send button style
             self.ui.send_button.setStyleSheet(SendButton.style_send)
             # Disable media button
@@ -245,17 +245,17 @@ class ChatWindow(QMainWindow):
         """
         According to the send button style, send text message or record a voice
         """
-        if not self.ui.active_client_name.text():
+        if not self.ui.active_client_name.show_text_bubble():
             QMessageBox.warning(self, "Destinataire non défini",
                                 "Veuillez sélectionner d'abord votre destinataire !",
                                 QMessageBox.StandardButton.Ok)
 
         # SEND TEXT MESSAGE
-        elif self.ui.entry_field.text():
+        elif self.ui.entry_field.show_text_bubble():
             receiver = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
             receiver_id = receiver.get_id()
 
-            text_message = self.ui.entry_field.text()
+            text_message = self.ui.entry_field.show_text_bubble()
 
             message = Message()
             message.set_sender_id(1)
@@ -279,7 +279,7 @@ class ChatWindow(QMainWindow):
             self.ui.media_button.setEnabled(True)
 
         # RECORD VOICE MESSAGE
-        elif not self.ui.entry_field.text():
+        elif not self.ui.entry_field.show_text_bubble():
             self.ui.media_button.setEnabled(False)
             self.ui.send_button.setEnabled(False)
             self.record_voice()
