@@ -78,13 +78,16 @@ def create_databases():
         connection.execute(create_messages_table)
 
 
-def create_rounded_image(image_path, size, radius=None):
+def create_rounded_image(image_path, width, height=None, radius=None):
     """
     Create a rounded pixmap from an image with the specified size
     """
-    pixmap = QPixmap(image_path).scaled(size, size, Qt.AspectRatioMode.KeepAspectRatioByExpanding,
+    if height is None:
+        height = width
+
+    pixmap = QPixmap(image_path).scaled(width, height, Qt.AspectRatioMode.KeepAspectRatioByExpanding,
                                         Qt.TransformationMode.SmoothTransformation)
-    rounded_pixmap = QPixmap(size, size)
+    rounded_pixmap = QPixmap(width, height)
     rounded_pixmap.fill(Qt.GlobalColor.transparent)
 
     painter = QPainter(rounded_pixmap)
@@ -94,9 +97,9 @@ def create_rounded_image(image_path, size, radius=None):
     path = QPainterPath()
 
     if radius is not None:
-        path.addRoundedRect(0, 0, size, size, radius, radius)
+        path.addRoundedRect(0, 0, width, height, radius, radius)
     else:
-        path.addRoundedRect(0, 0, size, size, size/2, size/2)
+        path.addRoundedRect(0, 0, width, height, width/2, height/2)
 
     painter.setClipPath(path)
     painter.drawPixmap(0, 0, pixmap)

@@ -5,7 +5,7 @@ from datetime import datetime
 
 from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton, QSizePolicy, QHBoxLayout, QVBoxLayout, QSpacerItem, \
     QGridLayout, QSlider
-from PySide6.QtGui import QFont, QCursor, QPixmap
+from PySide6.QtGui import QFont, QCursor, QPixmap, QImage
 from PySide6.QtCore import QSize, Qt, QRect
 
 from message import Message
@@ -23,8 +23,8 @@ class Bubble(QWidget):
         self.position = position
         self.on_left = self.position == "left"
 
-        self.left_style = u"border-radius:20px;border-top-left-radius:8px;background-color: rgb(40, 40, 43);"
-        self.right_style = u"border-radius:20px;border-top-right-radius:8px;background-color: rgb(14, 14, 15);"
+        self.left_style = u".QFrame{border-radius:20px;border-top-left-radius:8px;background-color: rgb(40, 40, 43);}"
+        self.right_style = u".QFrame{border-radius:20px;border-top-right-radius:8px;background-color: rgb(14, 14, 15)};"
 
         self.message_kind = self.message.get_kind()
         self.message_body = self.message.get_body()
@@ -391,30 +391,38 @@ class Bubble(QWidget):
         font10 = QFont()
         font10.setBold(False)
 
+        # Collect image metadata
+        path = self.message.get_body()
+        filename = os.path.basename(path)
+        size = round((os.path.getsize(path) / 1024 / 1024), 2)
+
+        image = QImage(path).scaledToWidth(280)
+        pixmap = utils.create_rounded_image(path, image.width(), image.height(), radius=10)
+
+        # Global bubble
         self.image_bubble = QFrame(self)
         self.image_bubble.setObjectName(u"image_bubble")
         self.image_bubble.setGeometry(QRect(17, 17, 191, 201))
+        self.image_bubble.setMaximumWidth(280)
         if self.on_left:
             self.image_bubble.setStyleSheet(self.left_style)
         else:
             self.image_bubble.setStyleSheet(self.right_style)
 
+        # Label displaying image
         self.image = QLabel(self.image_bubble)
-        self.image.setObjectName(u"image")
-        self.image.setMinimumSize(QSize(180, 180))
-        self.image.setMaximumHeight(180)
         self.image.setFont(font10)
-        path = self.message.get_body()
-        size = round((os.path.getsize(path) / 1024 / 1024), 2)
-        filename = os.path.basename(path)
         self.image.setStyleSheet(f"border-radius:10px;color:#000;padding:2px;")
-        self.image.setText(f"<p><span style='color:#848484;'>{size} Mb</span> • {filename}</p>")
-        self.image.setAlignment(Qt.AlignBottom | Qt.AlignLeading | Qt.AlignLeft)
-        self.image.setTextInteractionFlags(Qt.TextSelectableByMouse)
-
-        pixmap = utils.create_rounded_image(self.message.get_body(), self.image.width(), radius=10)
         self.image.setPixmap(pixmap)
         self.image.setScaledContents(True)
+
+        # Label displaying image name and size
+        self.image_info = QLabel(self.image_bubble)
+        self.image_info.setGeometry(QRect(9, 6, 270, 20))
+        self.image_info.setStyleSheet(u"background-color:transparent;")
+        self.image_info.setText(f"<p><span style='color:#848484;'>{size} Mb</span> • {filename}</p>")
+        self.image_info.setTextInteractionFlags(Qt.TextSelectableByMouse)
+
 
         # Add message label and time
         self.create_time_label(self.image_bubble, self.image)
