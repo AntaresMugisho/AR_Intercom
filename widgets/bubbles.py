@@ -2,11 +2,12 @@
 import os.path
 from datetime import datetime
 
-
+from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
+from PySide6.QtMultimediaWidgets import QVideoWidget
 from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton, QSizePolicy, QHBoxLayout, QVBoxLayout, QSpacerItem, \
     QGridLayout, QSlider
-from PySide6.QtGui import QFont, QCursor, QPixmap, QImage
-from PySide6.QtCore import QSize, Qt, QRect
+from PySide6.QtGui import QFont, QCursor, QPixmap, QImage, QScreen
+from PySide6.QtCore import QSize, Qt, QRect, QUrl
 
 from message import Message
 import utils
@@ -48,6 +49,7 @@ class Bubble(QWidget):
 
         elif self.message_kind == "video":
             pass
+            # self.show_video_bubble()
 
         elif self.message_kind == "audio":
             pass
@@ -423,9 +425,48 @@ class Bubble(QWidget):
         self.image_info.setText(f"<p><span style='color:#848484;'>{size} Mb</span> • {filename}</p>")
         self.image_info.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
-
         # Add message label and time
         self.create_time_label(self.image_bubble, self.image)
 
         # Add frame on the widget
         self.add_widget(self.image_bubble)
+
+    def show_video_bubble(self):
+        # Collect image metadata
+        path = self.message.get_body()
+        filename = os.path.basename(path)
+        size = round((os.path.getsize(path) / 1024 / 1024), 2)
+
+        # Global bubble
+        self.video_bubble = QFrame(self)
+        self.video_bubble.setObjectName(u"image_bubble")
+        self.video_bubble.setGeometry(QRect(17, 17, 191, 201))
+        self.video_bubble.setMaximumWidth(280)
+        if self.on_left:
+            self.video_bubble.setStyleSheet(self.left_style)
+        else:
+            self.video_bubble.setStyleSheet(self.right_style)
+
+        self.video = QVideoWidget()
+        self.video.setMinimumSize(280, 160)
+        self.video.setMaximumSize(280, 160)
+        self.video.setStyleSheet(u"border-radius:10px;")
+        self.video.setFullScreen(True)
+
+        self.audio_output = QAudioOutput()
+
+        self.player = QMediaPlayer()
+        self.player.setSource(QUrl.fromLocalFile(path))
+        self.player.setVideoOutput(self.video)
+        self.player.setAudioOutput(self.audio_output)
+        # self.player.play()
+
+
+        # Add message label and time
+        self.create_time_label(self.video_bubble, self.video)
+
+        # Add frame on the widget
+        self.add_widget(self.video_bubble)
+
+    def show_audio_bubble(self):
+        pass
