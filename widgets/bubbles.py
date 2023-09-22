@@ -5,7 +5,7 @@ from datetime import datetime
 
 from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton, QSizePolicy, QHBoxLayout, QVBoxLayout, QSpacerItem, \
     QGridLayout, QSlider
-from PySide6.QtGui import QFont, QCursor    
+from PySide6.QtGui import QFont, QCursor, QPixmap
 from PySide6.QtCore import QSize, Qt, QRect
 
 from message import Message
@@ -402,18 +402,19 @@ class Bubble(QWidget):
         self.image = QLabel(self.image_bubble)
         self.image.setObjectName(u"image")
         self.image.setMinimumSize(QSize(180, 180))
-        self.image.setMaximumSize(QSize(16777215, 180))
+        self.image.setMaximumHeight(180)
         self.image.setFont(font10)
-        self.image.setStyleSheet(u"QLabel{\n"
-                                 "	border-radius:10px;\n"
-                                 "	border-image: url(:/icons/icons/test.jpg);\n"
-                                 "	color:#000;\n"
-                                 "	padding:2px;\n"
-                                 "\n"
-                                 "}")
-        self.image.setText(u"<p><span style=\" color:#848484;\">1.2Mb</span> • Image.ext</p>")
+        path = self.message.get_body()
+        size = round((os.path.getsize(path) / 1024 / 1024), 2)
+        filename = os.path.basename(path)
+        self.image.setStyleSheet(f"border-radius:10px;color:#000;padding:2px;")
+        self.image.setText(f"<p><span style='color:#848484;'>{size} Mb</span> • {filename}</p>")
         self.image.setAlignment(Qt.AlignBottom | Qt.AlignLeading | Qt.AlignLeft)
         self.image.setTextInteractionFlags(Qt.TextSelectableByMouse)
+
+        pixmap = utils.create_rounded_image(self.message.get_body(), self.image.width(), radius=10)
+        self.image.setPixmap(pixmap)
+        self.image.setScaledContents(True)
 
         # Add message label and time
         self.create_time_label(self.image_bubble, self.image)

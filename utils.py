@@ -78,7 +78,7 @@ def create_databases():
         connection.execute(create_messages_table)
 
 
-def create_rounded_image(image_path, size):
+def create_rounded_image(image_path, size, radius=None):
     """
     Create a rounded pixmap from an image with the specified size
     """
@@ -92,7 +92,12 @@ def create_rounded_image(image_path, size):
     painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
 
     path = QPainterPath()
-    path.addRoundedRect(0, 0, size, size, size/2, size/2)
+
+    if radius is not None:
+        path.addRoundedRect(0, 0, size, size, radius, radius)
+    else:
+        path.addRoundedRect(0, 0, size, size, size/2, size/2)
+
     painter.setClipPath(path)
     painter.drawPixmap(0, 0, pixmap)
 
