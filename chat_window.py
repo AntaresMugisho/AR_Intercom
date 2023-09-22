@@ -164,7 +164,7 @@ class ChatWindow(QMainWindow):
         message_counter.hide()
 
         # Reset to normal style sheet (important in case of unread messages)
-        message_counter.parent().setStyleSheet(Clients.frame_normal)
+        # message_counter.parent().setStyleSheet(Clients.frame_normal)
 
         # Connect delete messages button
         self.ui.delete_btn.clicked.connect(self.delete_messages)

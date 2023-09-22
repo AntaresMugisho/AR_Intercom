@@ -875,7 +875,7 @@ class Ui_MainWindow(object):
 
         self.chat_list_layout.addWidget(self.client_info_2)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 309, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(1, 309, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.chat_list_layout.addItem(self.verticalSpacer_2)
 
@@ -2202,7 +2202,7 @@ class Ui_MainWindow(object):
         self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 74, 35))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 355, 83))
         self.gridLayout_3 = QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_3.setSpacing(1)
         self.gridLayout_3.setObjectName(u"gridLayout_3")

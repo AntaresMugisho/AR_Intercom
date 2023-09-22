@@ -23,6 +23,9 @@ class Bubble(QWidget):
         self.position = position
         self.on_left = self.position == "left"
 
+        self.left_style = u"border-radius:20px;border-top-left-radius:8px;background-color: rgb(40, 40, 43);"
+        self.right_style = u"border-radius:20px;border-top-right-radius:8px;background-color: rgb(14, 14, 15);"
+
         self.message_kind = self.message.get_kind()
         self.message_body = self.message.get_body()
         self.message_time = datetime.strftime(self.message.get_created_at(), self.STRING_FORMAT_TIME)
@@ -70,15 +73,13 @@ class Bubble(QWidget):
         self.bubble.setMaximumWidth(316)
         self.bubble.setSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Preferred)
 
-        left_style = u"border-radius:20px;border-top-left-radius:8px;background-color: rgb(40, 40, 43);"
-        right_style = u"border-radius:20px;border-top-right-radius:8px;background-color: rgb(14, 14, 15);"
 
         if self.on_left:
             # self.bubble.move(17, 17)
-            self.bubble.setStyleSheet(left_style)
+            self.bubble.setStyleSheet(self.left_style)
         else:
             # self.bubble.move(-17, -17)
-            self.bubble.setStyleSheet(right_style)
+            self.bubble.setStyleSheet(self.right_style)
 
         # Message Label
         self.message_label = QLabel(self.bubble)
@@ -91,9 +92,9 @@ class Bubble(QWidget):
         self.message_label.setText(self.message_body)
 
         if self.on_left:
-            self.message_label.setStyleSheet(u"QLabel{color: #ccc;background-color:transparent;}")
+            self.message_label.setStyleSheet(u"QLabel{color: #ccc;background-color:transparent;padding:4px 4px 0px;}")
         else:
-            self.message_label.setStyleSheet(u"QLabel{color: #eee;background-color:transparent;}")
+            self.message_label.setStyleSheet(u"QLabel{color: #eee;background-color:transparent;padding:4px 4px 0px;}")
 
         # Add message label and time
         self.create_time_label(self.bubble, self.message_label)
@@ -155,6 +156,7 @@ class Bubble(QWidget):
         self.time_label.setText(self.message_time)
 
         self.time_label_layout = QHBoxLayout()
+        self.time_label_layout.setContentsMargins(4, 0, 6, 2)
         self.time_label_layout.setSpacing(3)
 
         self.time_label_spacer = QSpacerItem(41, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
@@ -174,10 +176,7 @@ class Bubble(QWidget):
         self.verticalLayout_22.setSpacing(2)
         self.verticalLayout_22.setObjectName(u"verticalLayout_22")
 
-        if self.message_kind == "text":
-            self.verticalLayout_22.setContentsMargins(12, 6, 12, 0)
-        else:
-            self.verticalLayout_22.setContentsMargins(2, 2, 2, 0)
+        self.verticalLayout_22.setContentsMargins(2, 2, 2, 0)
 
         self.verticalLayout_22.addWidget(time_buddy)
         self.verticalLayout_22.addLayout(self.time_label_layout)
@@ -192,11 +191,11 @@ class Bubble(QWidget):
         self.voice_bubble = QFrame(self)
         self.voice_bubble.setObjectName(u"frame_12")
         self.voice_bubble.setGeometry(QRect(17, 17, 304, 91))
-        self.voice_bubble.setMaximumSize(QSize(304, 16777215))
-        self.voice_bubble.setStyleSheet(u"	border-radius:10px;\n"
-                                    "	border-top-left-radius:8px;\n"
-                                    "	background-color: rgb(40, 40, 43);\n"
-                                    "")
+        self.voice_bubble.setMaximumWidth(304)
+        if self.on_left:
+            self.voice_bubble.setStyleSheet(self.left_style)
+        else:
+            self.voice_bubble.setStyleSheet(self.right_style)
 
         self.arv_bubble = QFrame(self.voice_bubble)
         self.arv_bubble.setObjectName(u"arv_bubble")
@@ -312,8 +311,10 @@ class Bubble(QWidget):
         self.document_bubble.setObjectName(u"document_bubble")
         self.document_bubble.setGeometry(QRect(17, 17, 181, 71))
         self.document_bubble.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        self.document_bubble.setStyleSheet(u"border-radius:10px;border-top-left-radius:8px;\n"
-                                           "	background-color: rgb(40, 40, 43);")
+        if self.on_left:
+            self.document_bubble.setStyleSheet(self.left_style)
+        else:
+            self.document_bubble.setStyleSheet(self.right_style)
 
         self.document = QFrame(self.document_bubble)
         self.document.setObjectName(u"document")
@@ -393,10 +394,10 @@ class Bubble(QWidget):
         self.image_bubble = QFrame(self)
         self.image_bubble.setObjectName(u"image_bubble")
         self.image_bubble.setGeometry(QRect(17, 17, 191, 201))
-        self.image_bubble.setStyleSheet(u"	border-radius:10px;\n"
-                                        "	border-top-left-radius:8px;\n"
-                                        "	background-color: rgb(40, 40, 43);\n"
-                                        "")
+        if self.on_left:
+            self.image_bubble.setStyleSheet(self.left_style)
+        else:
+            self.image_bubble.setStyleSheet(self.right_style)
 
         self.image = QLabel(self.image_bubble)
         self.image.setObjectName(u"image")
