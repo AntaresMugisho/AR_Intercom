@@ -1,12 +1,13 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
-from datetime import datetime, timedelta
 import sys
 import os
 import time
 import threading
+from datetime import datetime, timedelta
 from functools import partial
 
+import emojis
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt, Slot, QTimer)
@@ -34,15 +35,14 @@ from netscanner import NetScanner
 from notification import NotificationWidget
 import utils
 
-
 from ui.main_window import Ui_MainWindow
-# Global variables for recorder time counter
-seconds = minutes = 0
-
 from widgets.client_widget import ClientWidget
 from widgets.bubbles import Bubble
 from widgets.date_label import DateLabel
+from widgets.emoji_btn import EmojiButton
 
+# Global variables for recorder time counter
+seconds = minutes = 0
 
 class ChatWindow(QMainWindow):
     """
@@ -58,8 +58,6 @@ class ChatWindow(QMainWindow):
 
         # SHOW USERS / CONVERSATION LIST
         self.show_user_widget()
-
-
 
         # CONNECT USER'S CONVERSATION BUTTONS
         # self.ui.conversationButtonPressed.connect(self.show_conversations)
@@ -103,9 +101,27 @@ class ChatWindow(QMainWindow):
 
         # Just for testing
         self.show_conversations()
+        self.show_emojis()
         # ///////////////////////
 
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
+
+    def show_emojis(self):
+        categories = ["Smileys & Emotion"] #, "Animals & Nature", "Food & Drink", "Travel & Places", "Activities", "Objects", "Symbols", "Flags"]
+        for i, category in enumerate(categories):
+            tab = self.ui.emoji_tab_widget.widget(i+1)
+            scroll = tab.findChild(QScrollArea)
+
+            row = 0
+            column = -1
+            for emoji in emojis.db.get_emojis_by_category(category):
+                column += 1
+                if column % 15 == 0:
+                    row += 1
+                    column = 0
+                btn = EmojiButton(emoji.emoji)
+                self.ui.emoji_grid_layout.addWidget(btn, row, column)
+
 
     def show_user_widget(self):
         """

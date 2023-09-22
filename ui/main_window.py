@@ -2112,130 +2112,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.media_video)
 
-        self.emoji_widget = QWidget(self.home_page)
-        self.emoji_widget.setObjectName(u"emoji_widget")
-        self.emoji_widget.setGeometry(QRect(210, 10, 391, 180))
-        self.emoji_widget.setMinimumSize(QSize(0, 180))
-        self.emoji_widget.setMaximumSize(QSize(16777215, 180))
-        self.emoji_widget.setStyleSheet(u"QWidget#emoji_widget{\n"
-"	background-color: rgb(30,32,33);\n"
-"	border-radius:10px;\n"
-"}")
-        self.verticalLayout_11 = QVBoxLayout(self.emoji_widget)
-        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
-        self.horizontalLayout_17 = QHBoxLayout()
-        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
-        self.emoji_widget_title = QLabel(self.emoji_widget)
-        self.emoji_widget_title.setObjectName(u"emoji_widget_title")
-        self.emoji_widget_title.setFont(font1)
-
-        self.horizontalLayout_17.addWidget(self.emoji_widget_title)
-
-        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_17.addItem(self.horizontalSpacer_10)
-
-        self.close_emoji_btn = QPushButton(self.emoji_widget)
-        self.close_emoji_btn.setObjectName(u"close_emoji_btn")
-        self.close_emoji_btn.setMaximumSize(QSize(20, 20))
-        self.close_emoji_btn.setStyleSheet(u"QPushButton{\n"
-"\n"
-"background-color:#111;\n"
-"border:none;\n"
-"border-radius:4px;\n"
-"image: url(:/cils/cils/cil-x.png);\n"
-"padding:4px;\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"background-color:red;\n"
-"}")
-
-        self.horizontalLayout_17.addWidget(self.close_emoji_btn)
-
-
-        self.verticalLayout_11.addLayout(self.horizontalLayout_17)
-
-        self.emoji_tab_widget = QTabWidget(self.emoji_widget)
-        self.emoji_tab_widget.setObjectName(u"emoji_tab_widget")
-        self.emoji_tab_widget.setMinimumSize(QSize(0, 140))
-        self.emoji_tab_widget.setStyleSheet(u"QTabWidget::pane {\n"
-"background-color:#000;\n"
-"}\n"
-"\n"
-"QTabWidget::tab-bar {\n"
-"}\n"
-"\n"
-"QTabBar::tab{\n"
-"    background-color:#222;\n"
-"	width:35px;\n"
-"	height:35px;\n"
-"}\n"
-"\n"
-"QTabBar::tab:hover{\n"
-"    background-color:#666;\n"
-"}\n"
-"\n"
-"QTabBar::tab:selected{\n"
-"	border-bottom:4px solid #111;\n"
-"}\n"
-"QTabBar::tab:!selected{\n"
-"	border-bottom:4px solid #222;\n"
-"}\n"
-"\n"
-"QTabWidget QWidget{\n"
-"background-color:#111;\n"
-"}")
-        self.emoji_tab_widget.setTabPosition(QTabWidget.North)
-        self.emoji_tab_widget.setTabShape(QTabWidget.Rounded)
-        self.emoji_tab_widget.setTabsClosable(False)
-        self.tab = QWidget()
-        self.tab.setObjectName(u"tab")
-        self.verticalLayout_12 = QVBoxLayout(self.tab)
-        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
-        self.emoji_scroll_area = QScrollArea(self.tab)
-        self.emoji_scroll_area.setObjectName(u"emoji_scroll_area")
-        self.emoji_scroll_area.setStyleSheet(u"border:none;")
-        self.emoji_scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.emoji_scroll_area.setWidgetResizable(True)
-        self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.scrollAreaWidgetContents_2 = QWidget()
-        self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 355, 83))
-        self.gridLayout_3 = QGridLayout(self.scrollAreaWidgetContents_2)
-        self.gridLayout_3.setSpacing(1)
-        self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.select_emoji_btn = QPushButton(self.scrollAreaWidgetContents_2)
-        self.select_emoji_btn.setObjectName(u"select_emoji_btn")
-        self.select_emoji_btn.setMinimumSize(QSize(35, 35))
-        self.select_emoji_btn.setMaximumSize(QSize(35, 35))
-        font11 = QFont()
-        font11.setPointSize(16)
-        self.select_emoji_btn.setFont(font11)
-        self.select_emoji_btn.setStyleSheet(u"QPushButton{\n"
-"	border:none;\n"
-"	background-color:#333;\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	background-color:#444;\n"
-"}")
-
-        self.gridLayout_3.addWidget(self.select_emoji_btn, 0, 0, 1, 1)
-
-        self.emoji_scroll_area.setWidget(self.scrollAreaWidgetContents_2)
-
-        self.verticalLayout_12.addWidget(self.emoji_scroll_area)
-
-        self.emoji_tab_widget.addTab(self.tab, "")
-        self.tab_2 = QWidget()
-        self.tab_2.setObjectName(u"tab_2")
-        self.emoji_tab_widget.addTab(self.tab_2, "")
-
-        self.verticalLayout_11.addWidget(self.emoji_tab_widget)
-
         self.chat_stacked_widget.addWidget(self.home_page)
         self.chat_page = QWidget()
         self.chat_page.setObjectName(u"chat_page")
@@ -2271,12 +2147,12 @@ class Ui_MainWindow(object):
         self.active_client_name.setObjectName(u"active_client_name")
         self.active_client_name.setMinimumSize(QSize(251, 31))
         self.active_client_name.setMaximumSize(QSize(16777215, 31))
-        font12 = QFont()
-        font12.setFamilies([u"Segoe UI"])
-        font12.setPointSize(12)
-        font12.setBold(True)
-        font12.setItalic(False)
-        self.active_client_name.setFont(font12)
+        font11 = QFont()
+        font11.setFamilies([u"Segoe UI"])
+        font11.setPointSize(12)
+        font11.setBold(True)
+        font11.setItalic(False)
+        self.active_client_name.setFont(font11)
 
         self.verticalLayout_6.addWidget(self.active_client_name)
 
@@ -2331,7 +2207,7 @@ class Ui_MainWindow(object):
         self.chat_scroll.setWidgetResizable(True)
         self.chat_scroll_widget = QWidget()
         self.chat_scroll_widget.setObjectName(u"chat_scroll_widget")
-        self.chat_scroll_widget.setGeometry(QRect(0, 0, 603, 628))
+        self.chat_scroll_widget.setGeometry(QRect(0, 0, 595, 453))
         self.chat_scroll_layout = QVBoxLayout(self.chat_scroll_widget)
         self.chat_scroll_layout.setSpacing(9)
         self.chat_scroll_layout.setObjectName(u"chat_scroll_layout")
@@ -2923,6 +2799,153 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.chat_scroll)
 
+        self.emoji_widget = QWidget(self.chat_page)
+        self.emoji_widget.setObjectName(u"emoji_widget")
+        self.emoji_widget.setMinimumSize(QSize(0, 180))
+        self.emoji_widget.setMaximumSize(QSize(16777215, 180))
+        self.emoji_widget.setStyleSheet(u"QWidget#emoji_widget{\n"
+"	background-color: rgb(30,32,33);\n"
+"	border-radius:10px;\n"
+"}")
+        self.verticalLayout_11 = QVBoxLayout(self.emoji_widget)
+        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+        self.horizontalLayout_17 = QHBoxLayout()
+        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
+        self.emoji_widget_title = QLabel(self.emoji_widget)
+        self.emoji_widget_title.setObjectName(u"emoji_widget_title")
+        self.emoji_widget_title.setFont(font1)
+
+        self.horizontalLayout_17.addWidget(self.emoji_widget_title)
+
+        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_17.addItem(self.horizontalSpacer_10)
+
+        self.close_emoji_btn = QPushButton(self.emoji_widget)
+        self.close_emoji_btn.setObjectName(u"close_emoji_btn")
+        self.close_emoji_btn.setMaximumSize(QSize(20, 20))
+        self.close_emoji_btn.setStyleSheet(u"QPushButton{\n"
+"\n"
+"background-color:#111;\n"
+"border:none;\n"
+"border-radius:4px;\n"
+"image: url(:/cils/cils/cil-x.png);\n"
+"padding:4px;\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"background-color:red;\n"
+"}")
+
+        self.horizontalLayout_17.addWidget(self.close_emoji_btn)
+
+
+        self.verticalLayout_11.addLayout(self.horizontalLayout_17)
+
+        self.emoji_tab_widget = QTabWidget(self.emoji_widget)
+        self.emoji_tab_widget.setObjectName(u"emoji_tab_widget")
+        self.emoji_tab_widget.setMinimumSize(QSize(0, 140))
+        self.emoji_tab_widget.setStyleSheet(u"QTabWidget::pane {\n"
+"background-color:#000;\n"
+"}\n"
+"\n"
+"QTabWidget::tab-bar {\n"
+"}\n"
+"\n"
+"QTabBar::tab{\n"
+"    background-color:#222;\n"
+"	width:35px;\n"
+"	height:35px;\n"
+"}\n"
+"\n"
+"QTabBar::tab:hover{\n"
+"    background-color:#666;\n"
+"}\n"
+"\n"
+"QTabBar::tab:selected{\n"
+"	border-bottom:4px solid #111;\n"
+"}\n"
+"QTabBar::tab:!selected{\n"
+"	border-bottom:4px solid #222;\n"
+"}\n"
+"\n"
+"QTabWidget QWidget{\n"
+"background-color:#111;\n"
+"}")
+        self.emoji_tab_widget.setTabPosition(QTabWidget.North)
+        self.emoji_tab_widget.setTabShape(QTabWidget.Rounded)
+        self.emoji_tab_widget.setTabsClosable(False)
+        self.tab_recent = QWidget()
+        self.tab_recent.setObjectName(u"tab_recent")
+        self.emoji_tab_widget.addTab(self.tab_recent, "")
+        self.tab_smilies = QWidget()
+        self.tab_smilies.setObjectName(u"tab_smilies")
+        self.verticalLayout_12 = QVBoxLayout(self.tab_smilies)
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.emoji_scroll_area = QScrollArea(self.tab_smilies)
+        self.emoji_scroll_area.setObjectName(u"emoji_scroll_area")
+        self.emoji_scroll_area.setStyleSheet(u"border:none;")
+        self.emoji_scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.emoji_scroll_area.setWidgetResizable(True)
+        self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.scrollAreaWidgetContents_2 = QWidget()
+        self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 567, 83))
+        self.emoji_grid_layout = QGridLayout(self.scrollAreaWidgetContents_2)
+        self.emoji_grid_layout.setSpacing(1)
+        self.emoji_grid_layout.setObjectName(u"emoji_grid_layout")
+        self.emoji_grid_layout.setContentsMargins(0, 0, 0, 0)
+        self.select_emoji_btn = QPushButton(self.scrollAreaWidgetContents_2)
+        self.select_emoji_btn.setObjectName(u"select_emoji_btn")
+        self.select_emoji_btn.setMinimumSize(QSize(35, 35))
+        self.select_emoji_btn.setMaximumSize(QSize(35, 35))
+        font12 = QFont()
+        font12.setPointSize(16)
+        self.select_emoji_btn.setFont(font12)
+        self.select_emoji_btn.setStyleSheet(u"QPushButton{\n"
+"	border:none;\n"
+"	background-color:#333;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color:#444;\n"
+"}")
+
+        self.emoji_grid_layout.addWidget(self.select_emoji_btn, 0, 0, 1, 1)
+
+        self.emoji_scroll_area.setWidget(self.scrollAreaWidgetContents_2)
+
+        self.verticalLayout_12.addWidget(self.emoji_scroll_area)
+
+        self.emoji_tab_widget.addTab(self.tab_smilies, "")
+        self.tab_animals = QWidget()
+        self.tab_animals.setObjectName(u"tab_animals")
+        self.emoji_tab_widget.addTab(self.tab_animals, "")
+        self.tab_foods = QWidget()
+        self.tab_foods.setObjectName(u"tab_foods")
+        self.emoji_tab_widget.addTab(self.tab_foods, "")
+        self.tab_travels = QWidget()
+        self.tab_travels.setObjectName(u"tab_travels")
+        self.emoji_tab_widget.addTab(self.tab_travels, "")
+        self.tab_activities = QWidget()
+        self.tab_activities.setObjectName(u"tab_activities")
+        self.emoji_tab_widget.addTab(self.tab_activities, "")
+        self.tab_objects = QWidget()
+        self.tab_objects.setObjectName(u"tab_objects")
+        self.emoji_tab_widget.addTab(self.tab_objects, "")
+        self.tab_symbols = QWidget()
+        self.tab_symbols.setObjectName(u"tab_symbols")
+        self.emoji_tab_widget.addTab(self.tab_symbols, "")
+        self.tab_flags = QWidget()
+        self.tab_flags.setObjectName(u"tab_flags")
+        self.emoji_tab_widget.addTab(self.tab_flags, "")
+
+        self.verticalLayout_11.addWidget(self.emoji_tab_widget)
+
+
+        self.verticalLayout_7.addWidget(self.emoji_widget)
+
         self.bottom_frame = QWidget(self.chat_page)
         self.bottom_frame.setObjectName(u"bottom_frame")
         self.bottom_frame.setMinimumSize(QSize(551, 61))
@@ -3471,7 +3494,7 @@ class Ui_MainWindow(object):
         self.left_side_container.setCurrentIndex(0)
         self.contacts_stack.setCurrentIndex(0)
         self.chat_stacked_widget.setCurrentIndex(1)
-        self.emoji_tab_widget.setCurrentIndex(0)
+        self.emoji_tab_widget.setCurrentIndex(8)
         self.right_stacked_widget.setCurrentIndex(0)
         self.settings_stacked_widget.setCurrentIndex(1)
 
@@ -3553,11 +3576,6 @@ class Ui_MainWindow(object):
         self.media_audio.setText("")
         self.media_image.setText("")
         self.media_video.setText("")
-        self.emoji_widget_title.setText(QCoreApplication.translate("MainWindow", u"Emojis", None))
-        self.close_emoji_btn.setText("")
-        self.select_emoji_btn.setText(QCoreApplication.translate("MainWindow", u":)", None))
-        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"S", None))
-        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"O", None))
         self.active_client_name.setText(QCoreApplication.translate("MainWindow", u"Alpha", None))
         self.active_client_status.setText(QCoreApplication.translate("MainWindow", u"Hello, i'm using AR Intercom !", None))
         self.last_seen.setText(QCoreApplication.translate("MainWindow", u"online 27 min ago", None))
@@ -3578,6 +3596,18 @@ class Ui_MainWindow(object):
         self.title_2.setText(QCoreApplication.translate("MainWindow", u"ARV-20062021-1200.arv", None))
         self.elapsed_time_2.setText(QCoreApplication.translate("MainWindow", u"00:00", None))
         self.total_time_2.setText(QCoreApplication.translate("MainWindow", u"00:00", None))
+        self.emoji_widget_title.setText(QCoreApplication.translate("MainWindow", u"Emojis", None))
+        self.close_emoji_btn.setText("")
+        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_recent), QCoreApplication.translate("MainWindow", u"Recent", None))
+        self.select_emoji_btn.setText(QCoreApplication.translate("MainWindow", u":)", None))
+        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_smilies), QCoreApplication.translate("MainWindow", u"Sm", None))
+        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_animals), QCoreApplication.translate("MainWindow", u"An", None))
+        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_foods), QCoreApplication.translate("MainWindow", u"Fo", None))
+        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_travels), QCoreApplication.translate("MainWindow", u"Tr", None))
+        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_activities), QCoreApplication.translate("MainWindow", u"Ac", None))
+        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_objects), QCoreApplication.translate("MainWindow", u"Ob", None))
+        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_symbols), QCoreApplication.translate("MainWindow", u"Sy", None))
+        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_flags), QCoreApplication.translate("MainWindow", u"Fl", None))
         self.media_btn.setText("")
         self.emoji_btn.setText("")
         self.entry_field.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Type your message ...", None))
