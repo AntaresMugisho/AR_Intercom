@@ -1,14 +1,18 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
 from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton
-from PySide6.QtGui import QFont, QCursor
-from PySide6.QtCore import QSize, Qt, QRect
+from PySide6.QtGui import QFont, QCursor, QMouseEvent
+from PySide6.QtCore import QSize, Qt, QRect, Signal
 
 from user import User
 import utils
 
 
 class ClientWidget(QFrame):
+
+    clicked = Signal(str)
+    released = Signal(str)
+
     def __init__(self, user: User, online: bool = False):
         QFrame.__init__(self)
 
@@ -55,6 +59,21 @@ class ClientWidget(QFrame):
         self.client_picture.setPixmap(rounded_pixmap)
         self.client_picture.setScaledContents(True)
 
+
+        # UNREAD MESSAGE COUNTER
+        self.msg_countrer = QLabel(self)
+        self.msg_countrer.setObjectName(f"{self.user_uuid}_counter")
+        self.msg_countrer.setGeometry(QRect(243, 7, 16, 16))
+        font3 = QFont()
+        font3.setFamilies([u"Segoe UI"])
+        font3.setPointSize(8)
+        font3.setBold(True)
+        font3.setItalic(False)
+        self.msg_countrer.setFont(font3)
+        self.msg_countrer.setStyleSheet(u"QLabel{border-radius:8px;color: white;background-color: red;}")
+        self.msg_countrer.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+        self.msg_countrer.hide()
+
         # ONLINE TOAST
         self.online_toast = QLabel(self)
         self.online_toast.setObjectName(f"{self.user_uuid}_toast")
@@ -85,7 +104,6 @@ class ClientWidget(QFrame):
 
         # NAME
         self.client_name = QLabel(self)
-        self.client_name.setObjectName(f"{self.user_uuid}")
         self.client_name.setGeometry(QRect(70, 6, 131, 31))
         font4 = QFont()
         font4.setPointSize(12)
@@ -110,7 +128,6 @@ class ClientWidget(QFrame):
 
         # MESSAGE COUNTER
         self.messege_number = QLabel(self)
-        self.messege_number.setObjectName(f"{self.user_uuid}_counter")
         self.messege_number.setGeometry(QRect(213, 23, 30, 20))
         self.messege_number.setText("20")
         font5 = QFont()
@@ -132,3 +149,11 @@ class ClientWidget(QFrame):
                                        "	background-color:transparent;\n"
                                        "	image: url(:/cils/cils/cil-envelope-closed.png);\n"
                                        "	border:none;}")
+
+    def mousePressEvent(self, event: QMouseEvent) -> None:
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.clicked.emit(self.objectName())
+
+    def mouseReleaseEvent(self, event: QMouseEvent) -> None:
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.released.emit(self.objectName())

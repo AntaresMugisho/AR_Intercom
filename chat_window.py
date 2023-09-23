@@ -22,6 +22,8 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QCheckBox, QFr
     QSlider, QSpacerItem, QStackedWidget, QTabWidget,
     QTextEdit, QVBoxLayout, QWidget)
 
+from PySide6.QtMultimedia import QMediaRecorder
+
 from ui.chat_window import Ui_ChatWindow
 from styles import Clients, SendButton, Player as PlayerStyle
 from server import Server
@@ -135,6 +137,7 @@ class ChatWindow(QMainWindow):
             last_index = self.ui.chat_list_layout.count() - 1
             self.ui.chat_list_layout.insertWidget(last_index, widget, Qt.AlignmentFlag.AlignCenter,
                                                   Qt.AlignmentFlag.AlignTop)
+            widget.clicked.connect(self.show_conversations)
 
     @Slot(str)
     def show_conversations(self, button_object_name: str = "356a192b7913b04c54574d18c28d46e6395428ac"):
@@ -150,14 +153,13 @@ class ChatWindow(QMainWindow):
         user = User.first_where("uuid", "=", user_uuid)
         user_name = user.get_user_name()
         user_status = user.get_user_status()
+        if user_status == "":
+            user_status = "Hello, i'm using AR Intercom !"
 
-        # SET NAME TO THE ACTIVE CLIENT LABEL
+        # SET NAME AND STATUS TO THE ACTIVE CLIENT LABEL
         self.ui.active_client_name.setText(user_name)
         self.ui.active_client_name.setObjectName(user_uuid)
-        # self.ui.active_client_name.show()
-
-        self.ui.active_client_status.setText(user_status if user_status != "" else "Hello, i'm using AR Intercom !")
-        # self.ui.active_client_status.show()
+        self.ui.active_client_status.setText(user_status)
 
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
         try:
@@ -168,6 +170,11 @@ class ChatWindow(QMainWindow):
         except Exception as e:  # If chat field was not visible or is empty
             print(e)
 
+        # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
+        message_counter = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_counter")
+        message_counter.setText("0")
+        message_counter.hide()
+
         # RESET DATE
         self.DATE = None
 
@@ -176,16 +183,11 @@ class ChatWindow(QMainWindow):
         for message in messages:
             self.show_bubble(message)
 
-        # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
-        message_counter = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_counter")
-        message_counter.setText("0")
-        message_counter.hide()
-
         # Reset to normal style sheet (important in case of unread messages)
         # message_counter.parent().setStyleSheet(Clients.frame_normal)
 
         # Connect delete messages button
-        self.ui.delete_btn.clicked.connect(self.delete_messages)
+        # self.ui.delete_btn.clicked.connect(self.delete_messages)
 
     def show_bubble(self, message: Message):
 
@@ -213,6 +215,11 @@ class ChatWindow(QMainWindow):
             bubble = Bubble(message, "left")
         self.ui.chat_scroll_layout.addWidget(bubble)
 
+        # UPDATE SCROLL POSITION
+        vertical_scroll = self.ui.chat_scroll.verticalScrollBar()
+        QTimer.singleShot(500, lambda: vertical_scroll.setValue(vertical_scroll.maximum()))
+
+
     @Slot(int)
     def show_incoming_message(self, id: int):
         """
@@ -230,17 +237,13 @@ class ChatWindow(QMainWindow):
             self.notification_widget.show()
 
             # Increase the unread message counter badge
-            message_counter = self.ui.left_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
-            unread_msg = int(message_counter.show_text_bubble())
+            message_count = self.ui.left_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
+            unread_msg = int(message_count.text())
             unread_msg += 1
-            message_counter.setText(f"{unread_msg}")
+            message_count.setText(f"{unread_msg}")
 
-            try:
-                message_counter.show()
-            except Exception as e:
-                print(f"Error while trying to show counter widget {e}")
-
-            message_counter.parent().setStyleSheet(Clients.frame_unread_msg)
+            message_count.show()
+            # message_count.parent().setStyleSheet(Clients.frame_unread_msg)
 
     @Slot()
     def change_send_style(self):
@@ -248,32 +251,35 @@ class ChatWindow(QMainWindow):
         Changes send button style, and disable media button so that a user can not send media message and text message
         at a time.
         """
-        if self.ui.entry_field.show_text_bubble():
+        if self.ui.entry_field.toPlainText():
+            print(self.ui.entry_field.toPlainText())
             # Change send button style
-            self.ui.send_button.setStyleSheet(SendButton.style_send)
+            self.ui.send_btn.setStyleSheet(SendButton.style_send)
             # Disable media button
-            self.ui.media_button.setEnabled(False)
+            self.ui.media_btn.setEnabled(False)
 
         else:
-            self.ui.send_button.setStyleSheet(SendButton.style_record)
-            self.ui.media_button.setEnabled(True)
+            self.ui.send_btn.setStyleSheet(SendButton.style_record)
+            self.ui.media_btn.setEnabled(True)
 
     @Slot()
     def send_text_or_record(self):
         """
         According to the send button style, send text message or record a voice
         """
-        if not self.ui.active_client_name.show_text_bubble():
-            QMessageBox.warning(self, "Destinataire non défini",
-                                "Veuillez sélectionner d'abord votre destinataire !",
-                                QMessageBox.StandardButton.Ok)
+        # if not self.ui.active_client_name.show_text_bubble():
+        #     QMessageBox.warning(self, "Destinataire non défini",
+        #                         "Veuillez sélectionner d'abord votre destinataire !",
+        #                         QMessageBox.StandardButton.Ok)
+
+        text_message = self.ui.entry_field.toPlainText()
 
         # SEND TEXT MESSAGE
-        elif self.ui.entry_field.show_text_bubble():
+        if text_message:
             receiver = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
             receiver_id = receiver.get_id()
 
-            text_message = self.ui.entry_field.show_text_bubble()
+
 
             message = Message()
             message.set_sender_id(1)
@@ -284,22 +290,24 @@ class ChatWindow(QMainWindow):
             # Send message and get it back with the status report modified
             client = Client(receiver.get_host_address())
             message = client.send_message(message)
+            message.set_created_at()  # Now
+            message.set_updated_at()  # Now
 
             # Save text message in database
             message.save()
 
             # Show bubble
-            self.ui.create_right_bubble(message)
+            self.show_bubble(message)
 
             # Reset some ui states
             self.ui.entry_field.setText(None)
-            self.ui.send_button.setStyleSheet(SendButton.style_record)
-            self.ui.media_button.setEnabled(True)
+            self.ui.send_btn.setStyleSheet(SendButton.style_record)
+            self.ui.media_btn.setEnabled(True)
 
         # RECORD VOICE MESSAGE
-        elif not self.ui.entry_field.show_text_bubble():
-            self.ui.media_button.setEnabled(False)
-            self.ui.send_button.setEnabled(False)
+        else:
+            self.ui.media_btn.setEnabled(False)
+            self.ui.send_btn.setEnabled(False)
             self.record_voice()
 
     @Slot(str, str)
@@ -324,7 +332,7 @@ class ChatWindow(QMainWindow):
         message.save()
 
         # Show bubble
-        self.ui.create_right_bubble(message)
+        self.show_bubble(message)
 
     @Slot()
     def resend_message(self):
@@ -375,9 +383,9 @@ class ChatWindow(QMainWindow):
         Starts recording voice message
         """
         # SHOW RECORD WIDGET INDICATOR AND CONNECT ACTION BUTTONS
-        self.ui.show_record_widget()
-        self.ui.end_record.clicked.connect(self.recorder._stop)
-        self.ui.cancel_record.clicked.connect(self.recorder.cancel)
+        # self.show_record_widget()
+        # self.ui.end_record.clicked.connect(self.recorder._stop)
+        # self.ui.cancel_record.clicked.connect(self.recorder.cancel)
 
         self.recorder._record()
         self.record_timer.start(1000)
@@ -394,7 +402,8 @@ class ChatWindow(QMainWindow):
             seconds = 0
 
         time_counter = "%02d:%02d" % (minutes, seconds)
-        self.ui.record_time.setText(time_counter)
+        print(time_counter)
+        # self.ui.record_time.setText(time_counter)
 
     def recorder_state_changed(self):
         """
