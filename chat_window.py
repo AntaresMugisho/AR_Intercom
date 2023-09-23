@@ -107,10 +107,12 @@ class ChatWindow(QMainWindow):
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
 
     def show_emojis(self):
-        categories = ["Smileys & Emotion"] #, "Animals & Nature", "Food & Drink", "Travel & Places", "Activities", "Objects", "Symbols", "Flags"]
+        categories = ["Smileys & Emotion", "Animals & Nature", "Food & Drink", "Travel & Places", "Activities", "Objects", "Symbols", "Flags"]
         for i, category in enumerate(categories):
             tab = self.ui.emoji_tab_widget.widget(i+1)
-            scroll = tab.findChild(QScrollArea)
+            for widget in tab.findChildren(QWidget):
+                if widget.objectName().startswith("scrollAreaWidgetContents"):
+                    layout = widget.layout()
 
             row = 0
             column = -1
@@ -120,7 +122,7 @@ class ChatWindow(QMainWindow):
                     row += 1
                     column = 0
                 btn = EmojiButton(emoji.emoji)
-                self.ui.emoji_grid_layout.addWidget(btn, row, column)
+                layout.addWidget(btn, row, column)
 
 
     def show_user_widget(self):

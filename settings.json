@@ -1,0 +1,20 @@
+{
+    "app_name": "AR Intercom",
+    "custom_title_bar": true,
+    "dark_theme": true,
+    "startup_size": {
+        "width": 1400,
+        "height": 800
+    },
+    "minimum_size": {
+        "width": 1400,
+        "height": 800
+    },
+    "left_menu": {
+        "color": "#FF000000",
+        "color_hover": "#151617",
+        "color_pressed": "#ACE500",
+        "icon_color": "#E6E6E6",
+        "icon_color_pressed": "#151617"
+    }
+}
