@@ -7,14 +7,14 @@ from PySide6.QtMultimediaWidgets import QVideoWidget
 from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton, QSizePolicy, QHBoxLayout, QVBoxLayout, QSpacerItem, \
     QGridLayout, QSlider
 from PySide6.QtGui import QFont, QCursor, QPixmap, QImage, QScreen
-from PySide6.QtCore import QSize, Qt, QRect, QUrl
+from PySide6.QtCore import QSize, Qt, QRect, QUrl, Signal
 
 from message import Message
 import utils
 
 
 class Bubble(QWidget):
-
+    playButtonClicked = Signal(object)
     STRING_FORMAT_TIME = "%H:%M"
 
     def __init__(self, message: Message, position: str):
@@ -167,12 +167,14 @@ class Bubble(QWidget):
         self.time_label_layout.addWidget(self.time_label)
 
         if not self.on_left:
-            self.ticks = QLabel(parent)
+            self.ticks = QPushButton(parent)
             self.ticks.setFixedSize(QSize(24, 14))
             self.ticks.setFont(font7)
             self.ticks.setStyleSheet(u"image: url(:/cils/cils/cil-check-circle-green.png);\n"
                                      "background-color:rgba(255,255,255,0.1);border-radius:7px;padding:1px;")
             self.time_label_layout.addWidget(self.ticks)
+            if not self.message_received :
+                self.ticks.setObjectName(f"error_{self.message.get_id()}")
 
         self.verticalLayout_22 = QVBoxLayout(parent)
         self.verticalLayout_22.setSpacing(2)
@@ -296,11 +298,20 @@ class Bubble(QWidget):
                                        "     border:2px inset rgba(255, 255, 255, 1);\n"
                                        "}")
 
+
+
+        self.play_button.clicked.connect(self.play)
+
         # Add message label and time
         self.create_time_label(self.voice_bubble, self.arv_bubble)
 
         # Add frame on the widget
         self.add_widget(self.voice_bubble)
+
+    def play(self):
+        print("Play ...")
+        btn = self.sender()
+        self.playButtonClicked.emit(btn)
 
     def show_document_bubble(self):
 

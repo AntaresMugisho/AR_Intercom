@@ -61,12 +61,10 @@ class ChatWindow(QMainWindow):
         # SHOW USERS / CONVERSATION LIST
         self.show_user_widget()
 
-        # CONNECT USER'S CONVERSATION BUTTONS
-        # self.ui.conversationButtonPressed.connect(self.show_conversations)
+
 
         # CONNECT SEND BUTTON
         self.ui.entry_field.textChanged.connect(self.change_send_style)
-        # self.ui.entry_field.returnPressed.connect(self.send_text_or_record)
         self.ui.send_btn.clicked.connect(self.send_text_or_record)
 
         # START SERVER
@@ -102,8 +100,12 @@ class ChatWindow(QMainWindow):
         # self.ui.playButtonPressed.connect(self.play)
 
         # Just for testing
-        self.show_conversations()
         self.show_emojis()
+        user = User.find(1)
+        self.ui.me_username.setText(user.get_user_name())
+        self.ui.me_status.setText(user.get_user_status())
+        profile_picture = utils.create_rounded_image(user.get_image_path(),  self.ui.me_picture.width())
+        self.ui.me_picture.setPixmap(profile_picture)
         # ///////////////////////
 
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
@@ -111,7 +113,7 @@ class ChatWindow(QMainWindow):
     def show_emojis(self):
         categories = ["Smileys & Emotion", "Animals & Nature", "Food & Drink", "Travel & Places", "Activities", "Objects", "Symbols", "Flags"]
         for i, category in enumerate(categories):
-            tab = self.ui.emoji_tab_widget.widget(i+1)
+            tab = self.ui.emoji_tab_widget.widget(i)
             for widget in tab.findChildren(QWidget):
                 if widget.objectName().startswith("scrollAreaWidgetContents"):
                     layout = widget.layout()
@@ -160,6 +162,9 @@ class ChatWindow(QMainWindow):
         self.ui.active_client_name.setText(user_name)
         self.ui.active_client_name.setObjectName(user_uuid)
         self.ui.active_client_status.setText(user_status)
+        picture = utils.create_rounded_image(user.get_image_path(), self.ui.active_client_picture.width())
+        self.ui.active_client_picture.setPixmap(picture)
+
 
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
         try:
@@ -214,6 +219,10 @@ class ChatWindow(QMainWindow):
         else:
             bubble = Bubble(message, "left")
         self.ui.chat_scroll_layout.addWidget(bubble)
+
+        # Connect play button if the bubble is of type voice:
+        if message.get_kind() in ["voice", "audio", "video"]:
+            bubble.playButtonClicked.connect(lambda x: print(x))
 
         # UPDATE SCROLL POSITION
         vertical_scroll = self.ui.chat_scroll.verticalScrollBar()
@@ -278,8 +287,6 @@ class ChatWindow(QMainWindow):
         if text_message:
             receiver = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
             receiver_id = receiver.get_id()
-
-
 
             message = Message()
             message.set_sender_id(1)
@@ -354,8 +361,8 @@ class ChatWindow(QMainWindow):
         message.update()
 
         # Delete old bubble and create a new one
-        clicked_button.parent().deleteLater()
-        self.ui.create_right_bubble(message)
+        # clicked_button.parent().deleteLater()
+        self.show_bubble(message)
 
     @Slot()
     def delete_messages(self):
@@ -363,8 +370,8 @@ class ChatWindow(QMainWindow):
         messages = user.messages()
 
         print("Deleting conversation of you with", user.get_user_name())
-        for index in reversed(range(1, self.ui.layout_bubble.count())):
-            self.ui.layout_bubble.itemAt(index).widget().deleteLater()
+        for index in reversed(range(1, self.ui.chat_scroll_layout.count())):
+            self.ui.chat_scroll_layout.itemAt(index).widget().deleteLater()
 
         for message in messages:
             if message.get_kind() != "text":
@@ -413,10 +420,10 @@ class ChatWindow(QMainWindow):
 
         if self.recorder.recorderState() == QMediaRecorder.StoppedState:
             self.record_timer.stop()
-            self.ui.record_tip.deleteLater()
+            # self.ui.record_tip.deleteLater()
             seconds = minutes = 0
-            self.ui.media_button.setEnabled(True)
-            self.ui.send_button.setEnabled(True)
+            self.ui.media_btn.setEnabled(True)
+            self.ui.send_btn.setEnabled(True)
 
     # MEDIA PLAYER ----------------------------------------------------------------------
 

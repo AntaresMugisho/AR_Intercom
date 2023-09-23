@@ -842,7 +842,7 @@ background-image: url(:/cils/cils/cil-menu.png);
               <property name="styleSheet">
                <string notr="true"/>
               </property>
-              <widget class="QLabel" name="p_usrer_pict">
+              <widget class="QLabel" name="me_picture">
                <property name="geometry">
                 <rect>
                  <x>4</x>
@@ -864,7 +864,7 @@ background-size: 50px;*/</string>
                 <bool>true</bool>
                </property>
               </widget>
-              <widget class="QLabel" name="p_user_online_toast">
+              <widget class="QLabel" name="me_online_toast">
                <property name="geometry">
                 <rect>
                  <x>52</x>
@@ -886,11 +886,11 @@ background-size: 50px;*/</string>
                 <string/>
                </property>
               </widget>
-              <widget class="QLabel" name="p_user_status">
+              <widget class="QLabel" name="me_status">
                <property name="geometry">
                 <rect>
                  <x>79</x>
-                 <y>39</y>
+                 <y>48</y>
                  <width>191</width>
                  <height>21</height>
                 </rect>
@@ -904,7 +904,7 @@ background-size: 50px;*/</string>
                 <string>Coding...</string>
                </property>
               </widget>
-              <widget class="QLabel" name="p_username">
+              <widget class="QLabel" name="me_username">
                <property name="geometry">
                 <rect>
                  <x>80</x>
@@ -4447,7 +4447,7 @@ QPushButton:pressed{
                     <number>6</number>
                    </property>
                    <item>
-                    <widget class="QFrame" name="contact_image">
+                    <widget class="QLabel" name="active_client_picture">
                      <property name="minimumSize">
                       <size>
                        <width>50</width>
@@ -4460,16 +4460,20 @@ QPushButton:pressed{
                        <height>50</height>
                       </size>
                      </property>
+                     <property name="font">
+                      <font>
+                       <pointsize>26</pointsize>
+                       <bold>true</bold>
+                      </font>
+                     </property>
                      <property name="styleSheet">
-                      <string notr="true">
-background-color: rgb(40, 44, 52);
-</string>
+                      <string notr="true">border-radius:25px;background-color:rgb(20,21,22);</string>
                      </property>
-                     <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                     <property name="text">
+                      <string>A</string>
                      </property>
-                     <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
+                     <property name="alignment">
+                      <set>Qt::AlignHCenter|Qt::AlignTop</set>
                      </property>
                     </widget>
                    </item>
@@ -6142,60 +6146,6 @@ background-color:#111;
                      <property name="tabsClosable">
                       <bool>false</bool>
                      </property>
-                     <widget class="QWidget" name="tab_recent">
-                      <attribute name="title">
-                       <string>Recent</string>
-                      </attribute>
-                      <widget class="QScrollArea" name="emoji_scroll_area_9">
-                       <property name="geometry">
-                        <rect>
-                         <x>0</x>
-                         <y>0</y>
-                         <width>567</width>
-                         <height>83</height>
-                        </rect>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">border:none;</string>
-                       </property>
-                       <property name="horizontalScrollBarPolicy">
-                        <enum>Qt::ScrollBarAlwaysOff</enum>
-                       </property>
-                       <property name="widgetResizable">
-                        <bool>true</bool>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                       </property>
-                       <widget class="QWidget" name="scrollAreaWidgetContents_10">
-                        <property name="geometry">
-                         <rect>
-                          <x>0</x>
-                          <y>0</y>
-                          <width>567</width>
-                          <height>83</height>
-                         </rect>
-                        </property>
-                        <layout class="QGridLayout" name="emoji_grid_layout_9">
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="spacing">
-                          <number>1</number>
-                         </property>
-                        </layout>
-                       </widget>
-                      </widget>
-                     </widget>
                      <widget class="QWidget" name="tab_smilies">
                       <attribute name="title">
                        <string>Sm</string>
