@@ -1,5 +1,5 @@
 # -*- This python file uses the following encoding : utf-8 -*-
-
+import random
 import sys
 import os
 import time
@@ -101,11 +101,20 @@ class ChatWindow(QMainWindow):
 
         # Just for testing
         self.show_emojis()
+
         user = User.find(1)
         self.ui.me_username.setText(user.get_user_name())
         self.ui.me_status.setText(user.get_user_status())
-        profile_picture = utils.create_rounded_image(user.get_image_path(),  self.ui.me_picture.width())
-        self.ui.me_picture.setPixmap(profile_picture)
+        profile_path = user.get_image_path()
+        if profile_path != "user/default.png":
+            profile_picture = utils.create_rounded_image(profile_path,  self.ui.me_picture.width())
+            self.ui.me_picture.setPixmap(profile_picture)
+        else:
+            colors = ["blue", "green", "orange", "purple", "violet"]
+            self.ui.me_picture.setText(user.get_user_name()[0])
+            choice = random.randrange(0, 5)
+            color = colors[choice]
+            self.ui.me_picture.setStyleSheet(f"background-color={color}")
         # ///////////////////////
 
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
@@ -162,8 +171,19 @@ class ChatWindow(QMainWindow):
         self.ui.active_client_name.setText(user_name)
         self.ui.active_client_name.setObjectName(user_uuid)
         self.ui.active_client_status.setText(user_status)
-        picture = utils.create_rounded_image(user.get_image_path(), self.ui.active_client_picture.width())
-        self.ui.active_client_picture.setPixmap(picture)
+        # picture = utils.create_rounded_image(user.get_image_path(), self.ui.active_client_picture.width())
+        # self.ui.active_client_picture.setPixmap(picture)
+
+        profile_path = user.get_image_path()
+        if profile_path != "user/default.png":
+            profile_picture = utils.create_rounded_image(profile_path, self.ui.active_client_picture.width())
+            self.ui.active_client_picture.setPixmap(profile_picture)
+        else:
+            colors = ["blue", "green", "orange", "purple", "violet"]
+            self.ui.active_client_picture.setText(user.get_user_name()[0])
+            choice = random.randrange(0, 5)
+            color = colors[choice]
+            self.ui.active_client_picture.setStyleSheet(f"background-color:{color};border-radius:25px;")
 
 
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
