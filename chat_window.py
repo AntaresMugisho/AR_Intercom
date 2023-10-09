@@ -125,6 +125,7 @@ class ChatWindow(QMainWindow):
         self.ui.left_menu.setFixedWidth(50)
         self.ui.right_stacked_widget.setFixedWidth(0)
         self.ui.emoji_widget.setFixedHeight(0)
+        # self.ui.emoji_widget.setFixedWidth(0)
 
         self.ui.menu_btn.clicked.connect(self.toggle_menu)
         self.ui.settings_btn.clicked.connect(self.toggle_settings)
@@ -141,12 +142,12 @@ class ChatWindow(QMainWindow):
             end_value = 0
 
         # ANIMATION SETTINGS BOX
-        self.left_box = QPropertyAnimation(self.ui.right_stacked_widget, b"minimumWidth")
-        self.left_box.setDuration(300)
-        self.left_box.setStartValue(start_value)
-        self.left_box.setEndValue(end_value)
-        self.left_box.setEasingCurve(QEasingCurve.Type.Linear)
-        self.left_box.start()
+        self.animation = QPropertyAnimation(self.ui.right_stacked_widget, b"minimumWidth")
+        self.animation.setDuration(300)
+        self.animation.setStartValue(start_value)
+        self.animation.setEndValue(end_value)
+        self.animation.setEasingCurve(QEasingCurve.Type.Linear)
+        self.animation.start()
 
     def toggle_menu(self):
         if self.ui.left_menu.width() == 50:
@@ -156,29 +157,21 @@ class ChatWindow(QMainWindow):
             start_value = 168
             end_value = 50
 
-        # ANIMATION SETTINGS BOX
-        self.left_box = QPropertyAnimation(self.ui.left_menu, b"minimumWidth")
-        self.left_box.setDuration(300)
-        self.left_box.setStartValue(start_value)
-        self.left_box.setEndValue(end_value)
-        self.left_box.setEasingCurve(QEasingCurve.Type.Linear)
-        self.left_box.start()
+        # ANIMATION MENU BOX
+        self.animation = QPropertyAnimation(self.ui.left_menu, b"minimumWidth")
+        self.animation.setDuration(300)
+        self.animation.setStartValue(start_value)
+        self.animation.setEndValue(end_value)
+        self.animation.setEasingCurve(QEasingCurve.Type.Linear)
+        self.animation.start()
 
     def toggle_emojis(self):
         if self.ui.emoji_widget.height() == 0:
-            start_value = 0
-            end_value = 180
+            self.ui.emoji_widget.setFixedHeight(206)
         else:
-            start_value = 180
-            end_value = 0
+            self.ui.emoji_widget.setFixedHeight(0)
 
-        # ANIMATION SETTINGS BOX
-        self.left_box = QPropertyAnimation(self.ui.emoji_widget, b"minimumHeight")
-        self.left_box.setDuration(200)
-        self.left_box.setStartValue(start_value)
-        self.left_box.setEndValue(end_value)
-        self.left_box.setEasingCurve(QEasingCurve.Type.Linear)
-        self.left_box.start()
+
 
 
 

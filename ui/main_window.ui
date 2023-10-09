@@ -4390,7 +4390,7 @@ QPushButton:pressed{
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_7">
                 <property name="spacing">
-                 <number>2</number>
+                 <number>6</number>
                 </property>
                 <property name="leftMargin">
                  <number>9</number>
@@ -6172,12 +6172,6 @@ background-image: url(:/cils/cils/cil-microphone.png);</string>
                     <height>180</height>
                    </size>
                   </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>180</height>
-                   </size>
-                  </property>
                   <property name="styleSheet">
                    <string notr="true">QWidget#emoji_widget{
 	background-color: rgb(30,32,33);
@@ -6331,6 +6325,12 @@ background-color:#111;
                        </property>
                        <item>
                         <widget class="QScrollArea" name="emoji_scroll_area">
+                         <property name="minimumSize">
+                          <size>
+                           <width>546</width>
+                           <height>127</height>
+                          </size>
+                         </property>
                          <property name="styleSheet">
                           <string notr="true">border:none;</string>
                          </property>
@@ -6349,7 +6349,7 @@ background-color:#111;
                             <x>0</x>
                             <y>0</y>
                             <width>546</width>
-                            <height>107</height>
+                            <height>130</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="emoji_grid_layout">

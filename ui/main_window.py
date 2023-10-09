@@ -2115,7 +2115,7 @@ class Ui_MainWindow(object):
         self.chat_page.setObjectName(u"chat_page")
         self.chat_page.setStyleSheet(u"")
         self.verticalLayout_7 = QVBoxLayout(self.chat_page)
-        self.verticalLayout_7.setSpacing(2)
+        self.verticalLayout_7.setSpacing(6)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.verticalLayout_7.setContentsMargins(9, 9, 9, 0)
         self.active_client_frame = QWidget(self.chat_page)
@@ -2869,7 +2869,6 @@ class Ui_MainWindow(object):
         self.emoji_widget = QWidget(self.chat_page)
         self.emoji_widget.setObjectName(u"emoji_widget")
         self.emoji_widget.setMinimumSize(QSize(0, 180))
-        self.emoji_widget.setMaximumSize(QSize(16777215, 180))
         self.emoji_widget.setStyleSheet(u"QWidget#emoji_widget{\n"
 "	background-color: rgb(30,32,33);\n"
 "	border-radius:10px;\n"
@@ -2954,13 +2953,14 @@ class Ui_MainWindow(object):
         self.verticalLayout_12.setContentsMargins(3, 3, 3, 3)
         self.emoji_scroll_area = QScrollArea(self.tab_smilies)
         self.emoji_scroll_area.setObjectName(u"emoji_scroll_area")
+        self.emoji_scroll_area.setMinimumSize(QSize(546, 127))
         self.emoji_scroll_area.setStyleSheet(u"border:none;")
         self.emoji_scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.emoji_scroll_area.setWidgetResizable(True)
         self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 546, 107))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 546, 130))
         self.emoji_grid_layout = QGridLayout(self.scrollAreaWidgetContents_2)
         self.emoji_grid_layout.setSpacing(1)
         self.emoji_grid_layout.setObjectName(u"emoji_grid_layout")
