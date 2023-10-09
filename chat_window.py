@@ -9,8 +9,8 @@ from functools import partial
 
 import emojis
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt, Slot, QTimer)
+                            QMetaObject, QObject, QPoint, QRect,
+                            QSize, QTime, QUrl, Qt, Slot, QTimer, QPropertyAnimation)
 from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QCursor, QFont, QFontDatabase, QGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
@@ -119,6 +119,23 @@ class ChatWindow(QMainWindow):
 
 
     # SIGNALS AND SLOTS
+        self.ui.left_menu.setFixedWidth(50)
+
+        # self.ui.right_stacked_widget.setMinimumWidth(0)
+        self.ui.right_stacked_widget.setFixedWidth(0)
+        self.ui.settings_btn.clicked.connect(self.show_settings)
+
+    def show_settings(self):
+        # ANIMATION LEFT BOX
+        self.left_box = QPropertyAnimation(self.ui.extraLeftBox, b"minimumWidth")
+        self.left_box.setDuration(200)
+        self.left_box.setStartValue(0)
+        self.left_box.setEndValue(251)
+        self.left_box.setEasingCurve(QEasingCurve.InOutQuart)
+        self.left_box.start()
+
+        # self.ui.right_stacked_widget.setMinimumWidth(0)
+        # self.ui.right_stacked_widget.setFixedWidth(251)
 
 
 
