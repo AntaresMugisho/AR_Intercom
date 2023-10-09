@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1369</width>
-    <height>870</height>
+    <width>1315</width>
+    <height>840</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1202</width>
+    <height>720</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>AR Intercom</string>
@@ -233,12 +239,6 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
    <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
      <widget class="QWidget" name="bg_app" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>1351</width>
-        <height>711</height>
-       </size>
-      </property>
       <property name="styleSheet">
        <string notr="true">
 /* Bg App*/
@@ -506,15 +506,9 @@ background-color:red;}
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="minimumSize">
-          <size>
-           <width>168</width>
-           <height>681</height>
-          </size>
-         </property>
          <property name="maximumSize">
           <size>
-           <width>191</width>
+           <width>168</width>
            <height>16777215</height>
           </size>
          </property>
@@ -778,15 +772,9 @@ background-image: url(:/cils/cils/cil-menu.png);
        </item>
        <item>
         <widget class="QStackedWidget" name="left_side_container">
-         <property name="minimumSize">
-          <size>
-           <width>294</width>
-           <height>701</height>
-          </size>
-         </property>
          <property name="maximumSize">
           <size>
-           <width>294</width>
+           <width>290</width>
            <height>16777215</height>
           </size>
          </property>
@@ -1011,7 +999,7 @@ background-size: 50px;*/</string>
                     <x>0</x>
                     <y>0</y>
                     <width>291</width>
-                    <height>669</height>
+                    <height>639</height>
                    </rect>
                   </property>
                   <property name="styleSheet">
@@ -1720,8 +1708,8 @@ background-position: left center;</string>
         <widget class="QWidget" name="right_side_container" native="true">
          <property name="minimumSize">
           <size>
-           <width>831</width>
-           <height>671</height>
+           <width>651</width>
+           <height>696</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -1747,7 +1735,7 @@ background-position: left center;</string>
            <widget class="QWidget" name="widget_5" native="true">
             <property name="minimumSize">
              <size>
-              <width>821</width>
+              <width>0</width>
               <height>61</height>
              </size>
             </property>
@@ -1798,8 +1786,8 @@ background-position: left center;</string>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>178</width>
-                 <height>20</height>
+                 <width>2</width>
+                 <height>2</height>
                 </size>
                </property>
               </spacer>
@@ -4631,7 +4619,7 @@ QPushButton:pressed{
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>595</width>
+                     <width>550</width>
                      <height>453</height>
                     </rect>
                    </property>
@@ -6002,6 +5990,181 @@ QPushButton::pressed{
                  </widget>
                 </item>
                 <item>
+                 <widget class="QWidget" name="bottom_frame" native="true">
+                  <property name="minimumSize">
+                   <size>
+                    <width>551</width>
+                    <height>61</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>61</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QWidget.QPushButton{
+border-radius:20px;}</string>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_2">
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="media_btn">
+                     <property name="minimumSize">
+                      <size>
+                       <width>40</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>40</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">/*background-image: url(:/icons/icons/plus.png);*/
+background-image: url(:/cils/cils/cil-plus.png);</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QWidget" name="entry_frame" native="true">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>431</width>
+                       <height>51</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>51</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true"/>
+                     </property>
+                     <layout class="QHBoxLayout" name="horizontalLayout">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>9</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QPushButton" name="emoji_btn">
+                        <property name="minimumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background-image: url(:/cils/cils/cil-mood-good.png);</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QTextEdit" name="entry_field">
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>31</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>12</pointsize>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background-color:transparent;
+color:white;</string>
+                        </property>
+                        <property name="horizontalScrollBarPolicy">
+                         <enum>Qt::ScrollBarAlwaysOff</enum>
+                        </property>
+                        <property name="sizeAdjustPolicy">
+                         <enum>QAbstractScrollArea::AdjustToContents</enum>
+                        </property>
+                        <property name="lineWrapMode">
+                         <enum>QTextEdit::WidgetWidth</enum>
+                        </property>
+                        <property name="cursorWidth">
+                         <number>1</number>
+                        </property>
+                        <property name="placeholderText">
+                         <string>Type your message ...</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="send_btn">
+                     <property name="minimumSize">
+                      <size>
+                       <width>40</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>40</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-image: url(:/svg/svg/icon_send.svg);
+background-image: url(:/cils/cils/cil-microphone.png);</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                  <zorder>media_btn</zorder>
+                  <zorder>send_btn</zorder>
+                  <zorder>entry_frame</zorder>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QWidget" name="emoji_widget" native="true">
                   <property name="minimumSize">
                    <size>
@@ -6185,7 +6348,7 @@ background-color:#111;
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>591</width>
+                            <width>546</width>
                             <height>107</height>
                            </rect>
                           </property>
@@ -6594,181 +6757,6 @@ background-color:#111;
                   </layout>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QWidget" name="bottom_frame" native="true">
-                  <property name="minimumSize">
-                   <size>
-                    <width>551</width>
-                    <height>61</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>61</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QWidget.QPushButton{
-border-radius:20px;}</string>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_2">
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item>
-                    <widget class="QPushButton" name="media_btn">
-                     <property name="minimumSize">
-                      <size>
-                       <width>40</width>
-                       <height>40</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>40</width>
-                       <height>40</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">/*background-image: url(:/icons/icons/plus.png);*/
-background-image: url(:/cils/cils/cil-plus.png);</string>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QWidget" name="entry_frame" native="true">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>431</width>
-                       <height>51</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>51</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true"/>
-                     </property>
-                     <layout class="QHBoxLayout" name="horizontalLayout">
-                      <property name="spacing">
-                       <number>0</number>
-                      </property>
-                      <property name="leftMargin">
-                       <number>9</number>
-                      </property>
-                      <property name="topMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="bottomMargin">
-                       <number>0</number>
-                      </property>
-                      <item>
-                       <widget class="QPushButton" name="emoji_btn">
-                        <property name="minimumSize">
-                         <size>
-                          <width>40</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>40</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">background-image: url(:/cils/cils/cil-mood-good.png);</string>
-                        </property>
-                        <property name="text">
-                         <string/>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QTextEdit" name="entry_field">
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>31</height>
-                         </size>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>12</pointsize>
-                         </font>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">background-color:transparent;
-color:white;</string>
-                        </property>
-                        <property name="horizontalScrollBarPolicy">
-                         <enum>Qt::ScrollBarAlwaysOff</enum>
-                        </property>
-                        <property name="sizeAdjustPolicy">
-                         <enum>QAbstractScrollArea::AdjustToContents</enum>
-                        </property>
-                        <property name="lineWrapMode">
-                         <enum>QTextEdit::WidgetWidth</enum>
-                        </property>
-                        <property name="cursorWidth">
-                         <number>1</number>
-                        </property>
-                        <property name="placeholderText">
-                         <string>Type your message ...</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="send_btn">
-                     <property name="minimumSize">
-                      <size>
-                       <width>40</width>
-                       <height>40</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>40</width>
-                       <height>40</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">background-image: url(:/svg/svg/icon_send.svg);
-background-image: url(:/cils/cils/cil-microphone.png);</string>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                  <zorder>media_btn</zorder>
-                  <zorder>send_btn</zorder>
-                  <zorder>entry_frame</zorder>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </widget>
@@ -6783,7 +6771,7 @@ background-image: url(:/cils/cils/cil-microphone.png);</string>
               </property>
               <property name="maximumSize">
                <size>
-                <width>251</width>
+                <width>0</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -7694,13 +7682,7 @@ QPushButton:hover{
            </layout>
           </item>
           <item>
-           <widget class="QLabel" name="label_4">
-            <property name="minimumSize">
-             <size>
-              <width>831</width>
-              <height>20</height>
-             </size>
-            </property>
+           <widget class="QLabel" name="status_bar">
             <property name="maximumSize">
              <size>
               <width>16777215</width>

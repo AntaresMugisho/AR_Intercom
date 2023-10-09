@@ -27,7 +27,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1369, 870)
+        MainWindow.resize(1315, 840)
+        MainWindow.setMinimumSize(QSize(1202, 720))
         icon = QIcon()
         icon.addFile(u":/icons/icons/ARsoftlogo.png", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -254,7 +255,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.bg_app = QWidget(self.stylesheet)
         self.bg_app.setObjectName(u"bg_app")
-        self.bg_app.setMinimumSize(QSize(1351, 711))
         self.bg_app.setStyleSheet(u"\n"
 "/* Bg App*/\n"
 "#bg_app {	\n"
@@ -515,8 +515,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.left_menu.sizePolicy().hasHeightForWidth())
         self.left_menu.setSizePolicy(sizePolicy)
-        self.left_menu.setMinimumSize(QSize(168, 681))
-        self.left_menu.setMaximumSize(QSize(191, 16777215))
+        self.left_menu.setMaximumSize(QSize(168, 16777215))
         self.left_menu.setStyleSheet(u"")
         self.verticalLayout_2 = QVBoxLayout(self.left_menu)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -543,39 +542,39 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.app_logo_and_name)
 
-        self.menu_bt = QPushButton(self.left_menu)
-        self.menu_bt.setObjectName(u"menu_bt")
-        self.menu_bt.setMinimumSize(QSize(0, 40))
-        self.menu_bt.setMaximumSize(QSize(16777215, 40))
+        self.menu_btn = QPushButton(self.left_menu)
+        self.menu_btn.setObjectName(u"menu_btn")
+        self.menu_btn.setMinimumSize(QSize(0, 40))
+        self.menu_btn.setMaximumSize(QSize(16777215, 40))
         font1 = QFont()
         font1.setPointSize(10)
-        self.menu_bt.setFont(font1)
-        self.menu_bt.setStyleSheet(u"\n"
+        self.menu_btn.setFont(font1)
+        self.menu_btn.setStyleSheet(u"\n"
 "background-image: url(:/cils/cils/cil-menu.png);\n"
 "\n"
 "")
 
-        self.verticalLayout_2.addWidget(self.menu_bt)
+        self.verticalLayout_2.addWidget(self.menu_btn)
 
-        self.home_bt = QPushButton(self.left_menu)
-        self.home_bt.setObjectName(u"home_bt")
-        self.home_bt.setMinimumSize(QSize(0, 40))
-        self.home_bt.setMaximumSize(QSize(16777215, 40))
-        self.home_bt.setFont(font1)
-        self.home_bt.setStyleSheet(u"background-image: url(:/cils/cils/cil-home.png);\n"
+        self.home_btn = QPushButton(self.left_menu)
+        self.home_btn.setObjectName(u"home_btn")
+        self.home_btn.setMinimumSize(QSize(0, 40))
+        self.home_btn.setMaximumSize(QSize(16777215, 40))
+        self.home_btn.setFont(font1)
+        self.home_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-home.png);\n"
 "")
 
-        self.verticalLayout_2.addWidget(self.home_bt)
+        self.verticalLayout_2.addWidget(self.home_btn)
 
-        self.scan_bt = QPushButton(self.left_menu)
-        self.scan_bt.setObjectName(u"scan_bt")
-        self.scan_bt.setMinimumSize(QSize(0, 40))
-        self.scan_bt.setMaximumSize(QSize(16777215, 40))
-        self.scan_bt.setFont(font1)
-        self.scan_bt.setStyleSheet(u"background-image: url(:/svg/svg/icon_signal.svg);\n"
+        self.scan_btn = QPushButton(self.left_menu)
+        self.scan_btn.setObjectName(u"scan_btn")
+        self.scan_btn.setMinimumSize(QSize(0, 40))
+        self.scan_btn.setMaximumSize(QSize(16777215, 40))
+        self.scan_btn.setFont(font1)
+        self.scan_btn.setStyleSheet(u"background-image: url(:/svg/svg/icon_signal.svg);\n"
 "")
 
-        self.verticalLayout_2.addWidget(self.scan_bt)
+        self.verticalLayout_2.addWidget(self.scan_btn)
 
         self.contacts_bt = QPushButton(self.left_menu)
         self.contacts_bt.setObjectName(u"contacts_bt")
@@ -591,31 +590,30 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
 
-        self.about_bt_2 = QPushButton(self.left_menu)
-        self.about_bt_2.setObjectName(u"about_bt_2")
-        self.about_bt_2.setMinimumSize(QSize(0, 40))
-        self.about_bt_2.setMaximumSize(QSize(16777215, 40))
-        self.about_bt_2.setFont(font1)
-        self.about_bt_2.setStyleSheet(u"background-image: url(:/cils/cils/cil-equalizer.png);")
+        self.settings_btn_2 = QPushButton(self.left_menu)
+        self.settings_btn_2.setObjectName(u"settings_btn_2")
+        self.settings_btn_2.setMinimumSize(QSize(0, 40))
+        self.settings_btn_2.setMaximumSize(QSize(16777215, 40))
+        self.settings_btn_2.setFont(font1)
+        self.settings_btn_2.setStyleSheet(u"background-image: url(:/cils/cils/cil-equalizer.png);")
 
-        self.verticalLayout_2.addWidget(self.about_bt_2)
+        self.verticalLayout_2.addWidget(self.settings_btn_2)
 
-        self.about_bt = QPushButton(self.left_menu)
-        self.about_bt.setObjectName(u"about_bt")
-        self.about_bt.setMinimumSize(QSize(0, 40))
-        self.about_bt.setMaximumSize(QSize(16777215, 40))
-        self.about_bt.setFont(font1)
-        self.about_bt.setStyleSheet(u"background-image: url(:/cils/cils/cil-at.png);")
+        self.about_btn = QPushButton(self.left_menu)
+        self.about_btn.setObjectName(u"about_btn")
+        self.about_btn.setMinimumSize(QSize(0, 40))
+        self.about_btn.setMaximumSize(QSize(16777215, 40))
+        self.about_btn.setFont(font1)
+        self.about_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-at.png);")
 
-        self.verticalLayout_2.addWidget(self.about_bt)
+        self.verticalLayout_2.addWidget(self.about_btn)
 
 
         self.horizontalLayout_8.addWidget(self.left_menu)
 
         self.left_side_container = QStackedWidget(self.bg_app)
         self.left_side_container.setObjectName(u"left_side_container")
-        self.left_side_container.setMinimumSize(QSize(294, 701))
-        self.left_side_container.setMaximumSize(QSize(294, 16777215))
+        self.left_side_container.setMaximumSize(QSize(290, 16777215))
         self.left_side_container.setStyleSheet(u"")
         self.page_1 = QWidget()
         self.page_1.setObjectName(u"page_1")
@@ -688,7 +686,7 @@ class Ui_MainWindow(object):
         self.left_scroll.setWidgetResizable(True)
         self.chat_list_widget = QWidget()
         self.chat_list_widget.setObjectName(u"chat_list_widget")
-        self.chat_list_widget.setGeometry(QRect(0, 0, 291, 669))
+        self.chat_list_widget.setGeometry(QRect(0, 0, 291, 639))
         self.chat_list_widget.setStyleSheet(u"")
         self.chat_list_layout = QVBoxLayout(self.chat_list_widget)
         self.chat_list_layout.setObjectName(u"chat_list_layout")
@@ -995,7 +993,7 @@ class Ui_MainWindow(object):
 
         self.right_side_container = QWidget(self.bg_app)
         self.right_side_container.setObjectName(u"right_side_container")
-        self.right_side_container.setMinimumSize(QSize(831, 671))
+        self.right_side_container.setMinimumSize(QSize(651, 696))
         self.right_side_container.setStyleSheet(u"")
         self.verticalLayout_9 = QVBoxLayout(self.right_side_container)
         self.verticalLayout_9.setSpacing(0)
@@ -1003,7 +1001,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
         self.widget_5 = QWidget(self.right_side_container)
         self.widget_5.setObjectName(u"widget_5")
-        self.widget_5.setMinimumSize(QSize(821, 61))
+        self.widget_5.setMinimumSize(QSize(0, 61))
         self.widget_5.setMaximumSize(QSize(16777215, 61))
         self.widget_5.setStyleSheet(u"#widget_5{\n"
 "	border-bottom:1px dashed rgb(55, 56, 57);	\n"
@@ -1021,7 +1019,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_6.addWidget(self.label)
 
-        self.horizontalSpacer = QSpacerItem(178, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(2, 2, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_6.addItem(self.horizontalSpacer)
 
@@ -2208,7 +2206,7 @@ class Ui_MainWindow(object):
         self.chat_scroll.setWidgetResizable(True)
         self.chat_scroll_widget = QWidget()
         self.chat_scroll_widget.setObjectName(u"chat_scroll_widget")
-        self.chat_scroll_widget.setGeometry(QRect(0, 0, 595, 453))
+        self.chat_scroll_widget.setGeometry(QRect(0, 0, 550, 453))
         self.chat_scroll_layout = QVBoxLayout(self.chat_scroll_widget)
         self.chat_scroll_layout.setSpacing(9)
         self.chat_scroll_layout.setObjectName(u"chat_scroll_layout")
@@ -2800,6 +2798,74 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.chat_scroll)
 
+        self.bottom_frame = QWidget(self.chat_page)
+        self.bottom_frame.setObjectName(u"bottom_frame")
+        self.bottom_frame.setMinimumSize(QSize(551, 61))
+        self.bottom_frame.setMaximumSize(QSize(16777215, 61))
+        self.bottom_frame.setStyleSheet(u"QWidget.QPushButton{\n"
+"border-radius:20px;}")
+        self.horizontalLayout_2 = QHBoxLayout(self.bottom_frame)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(-1, 0, -1, 0)
+        self.media_btn = QPushButton(self.bottom_frame)
+        self.media_btn.setObjectName(u"media_btn")
+        self.media_btn.setMinimumSize(QSize(40, 40))
+        self.media_btn.setMaximumSize(QSize(40, 40))
+        self.media_btn.setStyleSheet(u"/*background-image: url(:/icons/icons/plus.png);*/\n"
+"background-image: url(:/cils/cils/cil-plus.png);")
+
+        self.horizontalLayout_2.addWidget(self.media_btn)
+
+        self.entry_frame = QWidget(self.bottom_frame)
+        self.entry_frame.setObjectName(u"entry_frame")
+        sizePolicy.setHeightForWidth(self.entry_frame.sizePolicy().hasHeightForWidth())
+        self.entry_frame.setSizePolicy(sizePolicy)
+        self.entry_frame.setMinimumSize(QSize(431, 51))
+        self.entry_frame.setMaximumSize(QSize(16777215, 51))
+        self.entry_frame.setStyleSheet(u"")
+        self.horizontalLayout = QHBoxLayout(self.entry_frame)
+        self.horizontalLayout.setSpacing(0)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setContentsMargins(9, 0, 0, 0)
+        self.emoji_btn = QPushButton(self.entry_frame)
+        self.emoji_btn.setObjectName(u"emoji_btn")
+        self.emoji_btn.setMinimumSize(QSize(40, 40))
+        self.emoji_btn.setMaximumSize(QSize(40, 40))
+        self.emoji_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-mood-good.png);")
+
+        self.horizontalLayout.addWidget(self.emoji_btn)
+
+        self.entry_field = QTextEdit(self.entry_frame)
+        self.entry_field.setObjectName(u"entry_field")
+        self.entry_field.setMaximumSize(QSize(16777215, 31))
+        self.entry_field.setFont(font4)
+        self.entry_field.setStyleSheet(u"background-color:transparent;\n"
+"color:white;")
+        self.entry_field.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.entry_field.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        self.entry_field.setLineWrapMode(QTextEdit.WidgetWidth)
+        self.entry_field.setCursorWidth(1)
+
+        self.horizontalLayout.addWidget(self.entry_field)
+
+
+        self.horizontalLayout_2.addWidget(self.entry_frame)
+
+        self.send_btn = QPushButton(self.bottom_frame)
+        self.send_btn.setObjectName(u"send_btn")
+        self.send_btn.setMinimumSize(QSize(40, 40))
+        self.send_btn.setMaximumSize(QSize(40, 40))
+        self.send_btn.setStyleSheet(u"background-image: url(:/svg/svg/icon_send.svg);\n"
+"background-image: url(:/cils/cils/cil-microphone.png);")
+
+        self.horizontalLayout_2.addWidget(self.send_btn)
+
+        self.media_btn.raise_()
+        self.send_btn.raise_()
+        self.entry_frame.raise_()
+
+        self.verticalLayout_7.addWidget(self.bottom_frame)
+
         self.emoji_widget = QWidget(self.chat_page)
         self.emoji_widget.setObjectName(u"emoji_widget")
         self.emoji_widget.setMinimumSize(QSize(0, 180))
@@ -2894,7 +2960,7 @@ class Ui_MainWindow(object):
         self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 591, 107))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 546, 107))
         self.emoji_grid_layout = QGridLayout(self.scrollAreaWidgetContents_2)
         self.emoji_grid_layout.setSpacing(1)
         self.emoji_grid_layout.setObjectName(u"emoji_grid_layout")
@@ -3036,74 +3102,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.emoji_widget)
 
-        self.bottom_frame = QWidget(self.chat_page)
-        self.bottom_frame.setObjectName(u"bottom_frame")
-        self.bottom_frame.setMinimumSize(QSize(551, 61))
-        self.bottom_frame.setMaximumSize(QSize(16777215, 61))
-        self.bottom_frame.setStyleSheet(u"QWidget.QPushButton{\n"
-"border-radius:20px;}")
-        self.horizontalLayout_2 = QHBoxLayout(self.bottom_frame)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(-1, 0, -1, 0)
-        self.media_btn = QPushButton(self.bottom_frame)
-        self.media_btn.setObjectName(u"media_btn")
-        self.media_btn.setMinimumSize(QSize(40, 40))
-        self.media_btn.setMaximumSize(QSize(40, 40))
-        self.media_btn.setStyleSheet(u"/*background-image: url(:/icons/icons/plus.png);*/\n"
-"background-image: url(:/cils/cils/cil-plus.png);")
-
-        self.horizontalLayout_2.addWidget(self.media_btn)
-
-        self.entry_frame = QWidget(self.bottom_frame)
-        self.entry_frame.setObjectName(u"entry_frame")
-        sizePolicy.setHeightForWidth(self.entry_frame.sizePolicy().hasHeightForWidth())
-        self.entry_frame.setSizePolicy(sizePolicy)
-        self.entry_frame.setMinimumSize(QSize(431, 51))
-        self.entry_frame.setMaximumSize(QSize(16777215, 51))
-        self.entry_frame.setStyleSheet(u"")
-        self.horizontalLayout = QHBoxLayout(self.entry_frame)
-        self.horizontalLayout.setSpacing(0)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(9, 0, 0, 0)
-        self.emoji_btn = QPushButton(self.entry_frame)
-        self.emoji_btn.setObjectName(u"emoji_btn")
-        self.emoji_btn.setMinimumSize(QSize(40, 40))
-        self.emoji_btn.setMaximumSize(QSize(40, 40))
-        self.emoji_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-mood-good.png);")
-
-        self.horizontalLayout.addWidget(self.emoji_btn)
-
-        self.entry_field = QTextEdit(self.entry_frame)
-        self.entry_field.setObjectName(u"entry_field")
-        self.entry_field.setMaximumSize(QSize(16777215, 31))
-        self.entry_field.setFont(font4)
-        self.entry_field.setStyleSheet(u"background-color:transparent;\n"
-"color:white;")
-        self.entry_field.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.entry_field.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-        self.entry_field.setLineWrapMode(QTextEdit.WidgetWidth)
-        self.entry_field.setCursorWidth(1)
-
-        self.horizontalLayout.addWidget(self.entry_field)
-
-
-        self.horizontalLayout_2.addWidget(self.entry_frame)
-
-        self.send_btn = QPushButton(self.bottom_frame)
-        self.send_btn.setObjectName(u"send_btn")
-        self.send_btn.setMinimumSize(QSize(40, 40))
-        self.send_btn.setMaximumSize(QSize(40, 40))
-        self.send_btn.setStyleSheet(u"background-image: url(:/svg/svg/icon_send.svg);\n"
-"background-image: url(:/cils/cils/cil-microphone.png);")
-
-        self.horizontalLayout_2.addWidget(self.send_btn)
-
-        self.media_btn.raise_()
-        self.send_btn.raise_()
-        self.entry_frame.raise_()
-
-        self.verticalLayout_7.addWidget(self.bottom_frame)
-
         self.chat_stacked_widget.addWidget(self.chat_page)
 
         self.horizontalLayout_7.addWidget(self.chat_stacked_widget)
@@ -3111,7 +3109,7 @@ class Ui_MainWindow(object):
         self.right_stacked_widget = QStackedWidget(self.right_side_container)
         self.right_stacked_widget.setObjectName(u"right_stacked_widget")
         self.right_stacked_widget.setMinimumSize(QSize(251, 581))
-        self.right_stacked_widget.setMaximumSize(QSize(251, 16777215))
+        self.right_stacked_widget.setMaximumSize(QSize(0, 16777215))
         self.right_stacked_widget.setStyleSheet(u"\n"
 "QStackedWidget > QWidget {\n"
 "	border-left:3px solid rgb(30,32,33);\n"
@@ -3557,19 +3555,18 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_9.addLayout(self.horizontalLayout_7)
 
-        self.label_4 = QLabel(self.right_side_container)
-        self.label_4.setObjectName(u"label_4")
-        self.label_4.setMinimumSize(QSize(831, 20))
-        self.label_4.setMaximumSize(QSize(16777215, 20))
-        self.label_4.setStyleSheet(u"background:transparent;\n"
+        self.status_bar = QLabel(self.right_side_container)
+        self.status_bar.setObjectName(u"status_bar")
+        self.status_bar.setMaximumSize(QSize(16777215, 20))
+        self.status_bar.setStyleSheet(u"background:transparent;\n"
 "color:rgb(75, 77, 79);\n"
 "padding-right:20px;\n"
 "background-image: url(:/cils/cils/cil-size-grip.png);\n"
 "background-repeat:no-repeat;\n"
 "background-position:right;")
-        self.label_4.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.status_bar.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.verticalLayout_9.addWidget(self.label_4)
+        self.verticalLayout_9.addWidget(self.status_bar)
 
 
         self.horizontalLayout_8.addWidget(self.right_side_container)
@@ -3597,12 +3594,12 @@ class Ui_MainWindow(object):
         self.actionAide.setText(QCoreApplication.translate("MainWindow", u"Aide", None))
         self.actionQuitter.setText(QCoreApplication.translate("MainWindow", u"Quitter", None))
         self.app_name.setText(QCoreApplication.translate("MainWindow", u"AR Intercom", None))
-        self.menu_bt.setText(QCoreApplication.translate("MainWindow", u"Hide menu", None))
-        self.home_bt.setText(QCoreApplication.translate("MainWindow", u"Home", None))
-        self.scan_bt.setText(QCoreApplication.translate("MainWindow", u"Scan network", None))
+        self.menu_btn.setText(QCoreApplication.translate("MainWindow", u"Hide menu", None))
+        self.home_btn.setText(QCoreApplication.translate("MainWindow", u"Home", None))
+        self.scan_btn.setText(QCoreApplication.translate("MainWindow", u"Scan network", None))
         self.contacts_bt.setText(QCoreApplication.translate("MainWindow", u"Chat", None))
-        self.about_bt_2.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
-        self.about_bt.setText(QCoreApplication.translate("MainWindow", u"About", None))
+        self.settings_btn_2.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
+        self.about_btn.setText(QCoreApplication.translate("MainWindow", u"About", None))
         self.me_online_toast.setText("")
         self.me_status.setText(QCoreApplication.translate("MainWindow", u"Coding...", None))
         self.me_username.setText(QCoreApplication.translate("MainWindow", u"Antares", None))
@@ -3687,6 +3684,10 @@ class Ui_MainWindow(object):
         self.title_2.setText(QCoreApplication.translate("MainWindow", u"ARV-20062021-1200.arv", None))
         self.elapsed_time_2.setText(QCoreApplication.translate("MainWindow", u"00:00", None))
         self.total_time_2.setText(QCoreApplication.translate("MainWindow", u"00:00", None))
+        self.media_btn.setText("")
+        self.emoji_btn.setText("")
+        self.entry_field.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Type your message ...", None))
+        self.send_btn.setText("")
         self.emoji_widget_title.setText(QCoreApplication.translate("MainWindow", u"Emojis", None))
         self.close_emoji_btn.setText("")
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_smilies), QCoreApplication.translate("MainWindow", u"Sm", None))
@@ -3697,10 +3698,6 @@ class Ui_MainWindow(object):
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_objects), QCoreApplication.translate("MainWindow", u"Ob", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_symbols), QCoreApplication.translate("MainWindow", u"Sy", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_flags), QCoreApplication.translate("MainWindow", u"Fl", None))
-        self.media_btn.setText("")
-        self.emoji_btn.setText("")
-        self.entry_field.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Type your message ...", None))
-        self.send_btn.setText("")
         self.label_17.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
         self.label_18.setText(QCoreApplication.translate("MainWindow", u"Settings > Account", None))
         self.checkBox.setText(QCoreApplication.translate("MainWindow", u"Mode clair", None))
@@ -3729,6 +3726,6 @@ class Ui_MainWindow(object):
         self.label_25.setText(QCoreApplication.translate("MainWindow", u"New password again", None))
         self.label_27.setText(QCoreApplication.translate("MainWindow", u"Incorrect password", None))
         self.save_password_btn.setText(QCoreApplication.translate("MainWindow", u"Update password", None))
-        self.label_4.setText(QCoreApplication.translate("MainWindow", u"Creative Mind", None))
+        self.status_bar.setText(QCoreApplication.translate("MainWindow", u"Creative Mind", None))
     # retranslateUi
 

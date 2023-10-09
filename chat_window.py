@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from functools import partial
 
 import emojis
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale, QEasingCurve,
                             QMetaObject, QObject, QPoint, QRect,
                             QSize, QTime, QUrl, Qt, Slot, QTimer, QPropertyAnimation)
 from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
@@ -57,6 +57,8 @@ class ChatWindow(QMainWindow):
         QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+
 
         # SHOW USERS / CONVERSATION LIST
         self.show_user_widget()
@@ -118,27 +120,65 @@ class ChatWindow(QMainWindow):
         # ///////////////////////
 
 
-    # SIGNALS AND SLOTS
+    # UI FUNCTIONS
+
         self.ui.left_menu.setFixedWidth(50)
-
-        # self.ui.right_stacked_widget.setMinimumWidth(0)
         self.ui.right_stacked_widget.setFixedWidth(0)
-        self.ui.settings_btn.clicked.connect(self.show_settings)
+        self.ui.emoji_widget.setFixedHeight(0)
 
-    def show_settings(self):
-        # ANIMATION LEFT BOX
-        self.left_box = QPropertyAnimation(self.ui.extraLeftBox, b"minimumWidth")
-        self.left_box.setDuration(200)
-        self.left_box.setStartValue(0)
-        self.left_box.setEndValue(251)
-        self.left_box.setEasingCurve(QEasingCurve.InOutQuart)
+        self.ui.menu_btn.clicked.connect(self.toggle_menu)
+        self.ui.settings_btn.clicked.connect(self.toggle_settings)
+        self.ui.settings_btn_2.clicked.connect(self.toggle_settings)
+        self.ui.emoji_btn.clicked.connect(self.toggle_emojis)
+        self.ui.close_emoji_btn.clicked.connect(self.toggle_emojis)
+
+    def toggle_settings(self):
+        if self.ui.right_stacked_widget.width() == 0:
+            start_value = 0
+            end_value = 251
+        else:
+            start_value = 251
+            end_value = 0
+
+        # ANIMATION SETTINGS BOX
+        self.left_box = QPropertyAnimation(self.ui.right_stacked_widget, b"minimumWidth")
+        self.left_box.setDuration(300)
+        self.left_box.setStartValue(start_value)
+        self.left_box.setEndValue(end_value)
+        self.left_box.setEasingCurve(QEasingCurve.Type.Linear)
         self.left_box.start()
 
-        # self.ui.right_stacked_widget.setMinimumWidth(0)
-        # self.ui.right_stacked_widget.setFixedWidth(251)
+    def toggle_menu(self):
+        if self.ui.left_menu.width() == 50:
+            start_value = 50
+            end_value = 168
+        else:
+            start_value = 168
+            end_value = 50
 
+        # ANIMATION SETTINGS BOX
+        self.left_box = QPropertyAnimation(self.ui.left_menu, b"minimumWidth")
+        self.left_box.setDuration(300)
+        self.left_box.setStartValue(start_value)
+        self.left_box.setEndValue(end_value)
+        self.left_box.setEasingCurve(QEasingCurve.Type.Linear)
+        self.left_box.start()
 
+    def toggle_emojis(self):
+        if self.ui.emoji_widget.height() == 0:
+            start_value = 0
+            end_value = 180
+        else:
+            start_value = 180
+            end_value = 0
 
+        # ANIMATION SETTINGS BOX
+        self.left_box = QPropertyAnimation(self.ui.emoji_widget, b"minimumHeight")
+        self.left_box.setDuration(200)
+        self.left_box.setStartValue(start_value)
+        self.left_box.setEndValue(end_value)
+        self.left_box.setEasingCurve(QEasingCurve.Type.Linear)
+        self.left_box.start()
 
 
 
