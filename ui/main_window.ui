@@ -593,7 +593,7 @@ background-color:red;}
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="menu_bt">
+           <widget class="QPushButton" name="menu_btn">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -623,7 +623,7 @@ background-image: url(:/cils/cils/cil-menu.png);
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="home_bt">
+           <widget class="QPushButton" name="home_btn">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -651,7 +651,7 @@ background-image: url(:/cils/cils/cil-menu.png);
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="scan_bt">
+           <widget class="QPushButton" name="scan_btn">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -720,7 +720,7 @@ background-image: url(:/cils/cils/cil-menu.png);
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="about_bt_2">
+           <widget class="QPushButton" name="settings_btn_2">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -747,7 +747,7 @@ background-image: url(:/cils/cils/cil-menu.png);
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="about_bt">
+           <widget class="QPushButton" name="about_btn">
             <property name="minimumSize">
              <size>
               <width>0</width>

@@ -117,6 +117,15 @@ class ChatWindow(QMainWindow):
             self.ui.me_picture.setStyleSheet(f"background-color={color}")
         # ///////////////////////
 
+
+    # SIGNALS AND SLOTS
+
+
+
+
+
+
+
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
 
     def show_emojis(self):
