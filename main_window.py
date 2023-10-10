@@ -11,7 +11,7 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
 from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QCheckBox, QFrame, QGraphicsDropShadowEffect,
-    QGridLayout, QHBoxLayout, QLabel, QLineEdit,
+    QGridLayout, QHBoxLayout, QLabel, QLineEdit, QMessageBox,
     QMainWindow, QPushButton, QScrollArea, QSizePolicy,
     QSlider, QSpacerItem, QStackedWidget, QTabWidget,
     QTextEdit, QVBoxLayout, QWidget)
@@ -31,8 +31,9 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # REMOVE DEFAULT WINDOW FRAME
-        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
-        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        # self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        # self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        self.ui.app_margins.setContentsMargins(0, 0, 0, 0)
 
         # DROP SHADOW
         self.shadow = QGraphicsDropShadowEffect(self)
@@ -55,7 +56,9 @@ class MainWindow(QMainWindow):
         self.ui.close_emoji_btn.clicked.connect(self.toggle_emojis)
 
         # System buttons
+        self.ui.redius_btn.clicked.connect(self.showMinimized)
         self.ui.min_max_btn.clicked.connect(self.maximize_restore)
+        self.ui.close_app_btn.clicked.connect(self.close)
 
         # Menus
         self.ui.home_btn.clicked.connect(self.menu_click)
@@ -64,18 +67,28 @@ class MainWindow(QMainWindow):
         self.ui.about_btn.clicked.connect(self.menu_click)
 
         # Start on home page
-        self.ui.home_btn.clicked.emit()
+        # self.ui.home_btn.clicked.emit()
+
+    def closeEvent(self, event) -> None:
+        pass
+        # messagebox = QMessageBox.question(self, "Close", "Do you really want to close the application ?",
+        #                                   QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        # if messagebox == QMessageBox.StandardButton.Yes:
+        #     print("Close")
+        # else:
+        #     print("Don't close")
 
     def maximize_restore(self):
 
         if not self.WINDOW_MAXIMIZED:
             self.showMaximized()
             self.WINDOW_MAXIMIZED = True
+            self.ui.min_max_btn.setStatusTip("Restore")
 
         else:
             self.showNormal()
             self.WINDOW_MAXIMIZED = False
-            # self.resize(self.width()+1, self.height()+1)
+            self.ui.min_max_btn.setStatusTip("Maximize")
 
 
     @Slot()

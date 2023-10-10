@@ -236,7 +236,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 
 </string>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <layout class="QVBoxLayout" name="app_margins">
     <item>
      <widget class="QWidget" name="bg_app" native="true">
       <property name="styleSheet">
@@ -1871,6 +1871,9 @@ background-repeat:none;</string>
                         <height>28</height>
                        </size>
                       </property>
+                      <property name="statusTip">
+                       <string>Minimize</string>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">background-image: url(:/cils/cils/icon_minimize.png);
 backgorund-position:bottom;</string>
@@ -1894,6 +1897,9 @@ backgorund-position:bottom;</string>
                         <height>28</height>
                        </size>
                       </property>
+                      <property name="statusTip">
+                       <string>Maximize</string>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">background-image: url(:/cils/cils/icon_maximize.png);</string>
                       </property>
@@ -1915,6 +1921,9 @@ backgorund-position:bottom;</string>
                         <width>28</width>
                         <height>28</height>
                        </size>
+                      </property>
+                      <property name="statusTip">
+                       <string>Close</string>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">background-image: url(:/cils/cils/icon_close.png);

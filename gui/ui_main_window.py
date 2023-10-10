@@ -251,8 +251,8 @@ class Ui_MainWindow(object):
 " }\n"
 "\n"
 "")
-        self.verticalLayout_3 = QVBoxLayout(self.stylesheet)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.app_margins = QVBoxLayout(self.stylesheet)
+        self.app_margins.setObjectName(u"app_margins")
         self.bg_app = QWidget(self.stylesheet)
         self.bg_app.setObjectName(u"bg_app")
         self.bg_app.setStyleSheet(u"\n"
@@ -3567,7 +3567,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_8.addWidget(self.right_side_container)
 
 
-        self.verticalLayout_3.addWidget(self.bg_app)
+        self.app_margins.addWidget(self.bg_app)
 
         MainWindow.setCentralWidget(self.stylesheet)
 
@@ -3622,8 +3622,17 @@ class Ui_MainWindow(object):
         self.pushButton_11.setText(QCoreApplication.translate("MainWindow", u"Donate", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>AR Intercom <span style=\" font-weight:400; color:#878787;\">Entreprise</span></p></body></html>", None))
         self.settings_btn.setText("")
+#if QT_CONFIG(statustip)
+        self.redius_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Minimize", None))
+#endif // QT_CONFIG(statustip)
         self.redius_btn.setText("")
+#if QT_CONFIG(statustip)
+        self.min_max_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Maximize", None))
+#endif // QT_CONFIG(statustip)
         self.min_max_btn.setText("")
+#if QT_CONFIG(statustip)
+        self.close_app_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Close", None))
+#endif // QT_CONFIG(statustip)
         self.close_app_btn.setText("")
         self.left_bubble_3.setText(QCoreApplication.translate("MainWindow", u"Bonjour !", None))
         self.time_3.setText(QCoreApplication.translate("MainWindow", u"23:35", None))
