@@ -2,10 +2,13 @@
 
 from PySide6.QtWidgets import QPushButton
 from PySide6.QtGui import QFont
-from PySide6.QtCore import QSize
+from PySide6.QtCore import QSize, Signal
 
 
 class EmojiButton(QPushButton):
+
+    emojiClicked = Signal(str)
+
     def __init__(self, emoji):
         QPushButton.__init__(self)
 
@@ -20,3 +23,5 @@ class EmojiButton(QPushButton):
         self.setStyleSheet(u"QPushButton{border:none;background-color:#333;}"
                            u"QPushButton:hover{background-color:#444;}")
         self.setText(self.emoji)
+
+        self.clicked.connect(lambda : self.emojiClicked.emit(self.text))

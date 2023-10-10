@@ -38,10 +38,7 @@ from notification import NotificationWidget
 import utils
 
 from ui.main_window import Ui_MainWindow
-from widgets.client_widget import ClientWidget
-from widgets.bubbles import Bubble
-from widgets.date_label import DateLabel
-from widgets.emoji_btn import EmojiButton
+from widgets import Bubble, ClientWidget, DateLabel, EmojiButton
 
 # Global variables for recorder time counter
 seconds = minutes = 0
@@ -112,11 +109,7 @@ class ChatWindow(QMainWindow):
             profile_picture = utils.create_rounded_image(profile_path,  self.ui.me_picture.width())
             self.ui.me_picture.setPixmap(profile_picture)
         else:
-            colors = ["blue", "green", "orange", "purple", "violet"]
             self.ui.me_picture.setText(user.get_user_name()[0])
-            choice = random.randrange(0, 5)
-            color = colors[choice]
-            self.ui.me_picture.setStyleSheet(f"background-color={color}")
         # ///////////////////////
 
 
@@ -238,11 +231,7 @@ class ChatWindow(QMainWindow):
             profile_picture = utils.create_rounded_image(profile_path, self.ui.active_client_picture.width())
             self.ui.active_client_picture.setPixmap(profile_picture)
         else:
-            colors = ["blue", "green", "orange", "purple", "violet"]
             self.ui.active_client_picture.setText(user.get_user_name()[0])
-            choice = random.randrange(0, 5)
-            color = colors[choice]
-            self.ui.active_client_picture.setStyleSheet(f"background-color:{color};border-radius:25px;")
 
 
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
