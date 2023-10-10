@@ -265,7 +265,7 @@ class Ui_MainWindow(object):
 "\n"
 "/* App name near logo top */\n"
 "#app_logo_and_name{\n"
-"	border-bottom:1px dashed rgb(55, 56, 57);	\n"
+"	border-bottom:1px dashed rgb(55, 56, 57);\n"
 "}\n"
 "#app_name {\n"
 "	color:white;\n"
@@ -290,8 +290,8 @@ class Ui_MainWindow(object):
 "#system_menu #close_app_btn:hover { background-color: rgb(255, 0, 100); }\n"
 "#system_menu #close_app_btn:pressed { background-color: rgb(255, 0, 0); }\n"
 "\n"
-"#settings_btn{background-position: cen"
-                        "ter;\n"
+"#settings_btn{background-position: cent"
+                        "er;\n"
 "    background-repeat: no-repeat;\n"
 "	border: none;\n"
 "	outline: none;\n"
@@ -311,10 +311,9 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "#left_menu QPushButton{\n"
-"\n"
 "	text-align:left;\n"
-"	padding-left:52px;\n"
-"	border: none;\n"
+"	padding-left:42px;\n"
+"	border-left:16px solid transparent;\n"
 "	border-radius: 0px;\n"
 "	background-repeat:none;\n"
 "	background-position:center left;	\n"
@@ -324,7 +323,7 @@ class Ui_MainWindow(object):
 "	background-color: rgb(21, 22, 23);\n"
 "}\n"
 "#left_menu QPushButton:pressed {\n"
-"	background-color: rgb(172, 229, 0);\n"
+"	background-color: rgb(40, 42, 43);\n"
 "}\n"
 "#left_side_container QWidget{\n"
 "	background-color:rgb(21, 22, 23);\n"
@@ -334,10 +333,10 @@ class Ui_MainWindow(object):
 "#p_user {\n"
 "	background-color: rgb(21, 22, 23);\n"
 "	border: none;\n"
-"	border-bottom: 1px dashed rgb(47, 48, 50);\n"
+"	border-bottom: 1px dashed rgb(47, 4"
+                        "8, 50);\n"
 "}\n"
-""
-                        "\n"
+"\n"
 "#p_user #p_username{\n"
 "	color: rgba(255, 255, 255, 0.9);\n"
 "}\n"
@@ -375,8 +374,8 @@ class Ui_MainWindow(object):
 "} \n"
 "\n"
 "#left_scroll QScrollArea , #left_scroll QWidget{\n"
-"	background-colo"
-                        "r:rgb(21, 22, 23);\n"
+""
+                        "	background-color:rgb(21, 22, 23);\n"
 "}\n"
 "\n"
 "\n"
@@ -427,11 +426,11 @@ class Ui_MainWindow(object):
 "#contact_image {\n"
 "	border: 1px solid rgb(30, 32, 33);\n"
 "	background-color: rgb(47, 48, 50);\n"
-"	border-radius: 25px;\n"
+"	border-radius: 25px;"
+                        "\n"
 "}\n"
 "\n"
-""
-                        "#chat_stacked_widget {\n"
+"#chat_stacked_widget {\n"
 "	border-right:5px solid red;\n"
 "}\n"
 "\n"
@@ -478,8 +477,8 @@ class Ui_MainWindow(object):
 "	}\n"
 "#media_bg{\n"
 "	border-radius:23px;\n"
-"	background:"
-                        "transparent;\n"
+""
+                        "	background:transparent;\n"
 "}\n"
 "#media_bg QPushButton{\n"
 "	border-radius:20px;\n"
@@ -497,17 +496,13 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "\n"
-"#emoji_btn{\n"
-"background-color:red;}\n"
-"#send_btn{}\n"
-"\n"
 "\n"
 "\n"
 "")
         self.horizontalLayout_8 = QHBoxLayout(self.bg_app)
         self.horizontalLayout_8.setSpacing(0)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.horizontalLayout_8.setContentsMargins(-1, 3, 6, 3)
+        self.horizontalLayout_8.setContentsMargins(0, 3, 6, 3)
         self.left_menu = QFrame(self.bg_app)
         self.left_menu.setObjectName(u"left_menu")
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
@@ -515,7 +510,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.left_menu.sizePolicy().hasHeightForWidth())
         self.left_menu.setSizePolicy(sizePolicy)
-        self.left_menu.setMaximumSize(QSize(168, 16777215))
+        self.left_menu.setMaximumSize(QSize(172, 16777215))
         self.left_menu.setStyleSheet(u"")
         self.verticalLayout_2 = QVBoxLayout(self.left_menu)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -526,14 +521,14 @@ class Ui_MainWindow(object):
         self.app_logo_and_name.setMaximumSize(QSize(16777215, 61))
         self.top_logo = QFrame(self.app_logo_and_name)
         self.top_logo.setObjectName(u"top_logo")
-        self.top_logo.setGeometry(QRect(0, 4, 41, 41))
+        self.top_logo.setGeometry(QRect(9, 4, 41, 41))
         self.top_logo.setStyleSheet(u"image: url(:/icons/icons/ARsoftlogo.png);\n"
 "")
         self.top_logo.setFrameShape(QFrame.StyledPanel)
         self.top_logo.setFrameShadow(QFrame.Raised)
         self.app_name = QLabel(self.app_logo_and_name)
         self.app_name.setObjectName(u"app_name")
-        self.app_name.setGeometry(QRect(52, 1, 101, 51))
+        self.app_name.setGeometry(QRect(60, 1, 101, 51))
         font = QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -2206,7 +2201,7 @@ class Ui_MainWindow(object):
         self.chat_scroll.setWidgetResizable(True)
         self.chat_scroll_widget = QWidget()
         self.chat_scroll_widget.setObjectName(u"chat_scroll_widget")
-        self.chat_scroll_widget.setGeometry(QRect(0, 0, 550, 453))
+        self.chat_scroll_widget.setGeometry(QRect(0, 0, 559, 453))
         self.chat_scroll_layout = QVBoxLayout(self.chat_scroll_widget)
         self.chat_scroll_layout.setSpacing(9)
         self.chat_scroll_layout.setObjectName(u"chat_scroll_layout")
@@ -2960,7 +2955,7 @@ class Ui_MainWindow(object):
         self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 546, 132))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 555, 132))
         self.emoji_grid_layout = QGridLayout(self.scrollAreaWidgetContents_2)
         self.emoji_grid_layout.setSpacing(1)
         self.emoji_grid_layout.setObjectName(u"emoji_grid_layout")

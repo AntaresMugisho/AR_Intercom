@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # HIDE MENU TEXT AND SETTINGS PANEL ON START
-        self.ui.left_menu.setFixedWidth(50)
+        self.ui.left_menu.setFixedWidth(60)
         self.ui.right_stacked_widget.setFixedWidth(0)
         self.ui.emoji_widget.setFixedHeight(0)
 
@@ -45,10 +45,14 @@ class MainWindow(QMainWindow):
         self.ui.contact_btn.clicked.connect(self.menu_click)
         self.ui.about_btn.clicked.connect(self.menu_click)
 
+        # Start on home page
+        self.ui.home_btn.clicked.emit()
+
     @Slot()
     def menu_click(self):
-        menu_clicked: QPushButton = self.sender()
-        menu = menu_clicked.objectName()
+        menu_btn: QPushButton = self.sender()
+        menu = menu_btn.objectName()
+        self.set_as_active(menu)
 
         if menu == "home_btn":
             self.ui.left_side_container.setCurrentWidget(self.ui.about_page)
@@ -64,6 +68,26 @@ class MainWindow(QMainWindow):
 
         elif menu == "about_btn":
             self.ui.left_side_container.setCurrentWidget(self.ui.about_page)
+
+    def set_as_active(self, menu):
+        selected_menu_style = """
+            text-align:left;
+            padding-left:42px;
+            border-left:16px solid transparent;
+            border-radius: 0px;
+            background-repeat:none;
+            background-position:center left;		
+            border-left: 16px solid qlineargradient(spread:pad, x1:0.034, y1:0, x2:0.216, y2:0, stop:0.699 rgba(255, 200, 200, 255), stop:0.7 rgba(0, 0, 0, 0));
+            background-color: rgb(40, 42, 43);
+        """
+
+        for btn in self.ui.left_menu.findChildren(QPushButton):
+            if btn.objectName() == menu:
+                btn.setStyleSheet(btn.styleSheet() + selected_menu_style)
+            else:
+                reset_style = btn.styleSheet().replace(selected_menu_style, "")
+                btn.setStyleSheet(reset_style)
+
 
     def start_animation(self, widget, min, max):
         if widget.width() == min:
@@ -87,7 +111,7 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def toggle_menu(self):
-        self.start_animation(self.ui.left_menu, 50, 168)
+        self.start_animation(self.ui.left_menu, 60, 168)
 
     @Slot()
     def toggle_emojis(self):

@@ -250,7 +250,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 
 /* App name near logo top */
 #app_logo_and_name{
-	border-bottom:1px dashed rgb(55, 56, 57);	
+	border-bottom:1px dashed rgb(55, 56, 57);
 }
 #app_name {
 	color:white;
@@ -295,10 +295,9 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 }
 
 #left_menu QPushButton{
-
 	text-align:left;
-	padding-left:52px;
-	border: none;
+	padding-left:42px;
+	border-left:16px solid transparent;
 	border-radius: 0px;
 	background-repeat:none;
 	background-position:center left;	
@@ -308,7 +307,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 	background-color: rgb(21, 22, 23);
 }
 #left_menu QPushButton:pressed {
-	background-color: rgb(172, 229, 0);
+	background-color: rgb(40, 42, 43);
 }
 #left_side_container QWidget{
 	background-color:rgb(21, 22, 23);
@@ -477,16 +476,15 @@ border-radius: 10px;
 }
 
 
-#emoji_btn{
-background-color:red;}
-#send_btn{}
-
 
 
 </string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_8">
        <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
         <number>0</number>
        </property>
        <property name="topMargin">
@@ -508,7 +506,7 @@ background-color:red;}
          </property>
          <property name="maximumSize">
           <size>
-           <width>168</width>
+           <width>172</width>
            <height>16777215</height>
           </size>
          </property>
@@ -545,7 +543,7 @@ background-color:red;}
             <widget class="QFrame" name="top_logo">
              <property name="geometry">
               <rect>
-               <x>0</x>
+               <x>9</x>
                <y>4</y>
                <width>41</width>
                <height>41</height>
@@ -565,7 +563,7 @@ background-color:red;}
             <widget class="QLabel" name="app_name">
              <property name="geometry">
               <rect>
-               <x>52</x>
+               <x>60</x>
                <y>1</y>
                <width>101</width>
                <height>51</height>
@@ -4619,7 +4617,7 @@ QPushButton:pressed{
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>550</width>
+                     <width>559</width>
                      <height>453</height>
                     </rect>
                    </property>
@@ -6348,7 +6346,7 @@ background-color:#111;
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>546</width>
+                            <width>555</width>
                             <height>132</height>
                            </rect>
                           </property>
