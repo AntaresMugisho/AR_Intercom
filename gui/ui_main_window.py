@@ -576,15 +576,15 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.scan_btn)
 
-        self.contacts_bt = QPushButton(self.left_menu)
-        self.contacts_bt.setObjectName(u"contacts_bt")
-        self.contacts_bt.setMinimumSize(QSize(0, 40))
-        self.contacts_bt.setMaximumSize(QSize(16777215, 40))
-        self.contacts_bt.setFont(font1)
-        self.contacts_bt.setStyleSheet(u"background-image: url(:/cils/cils/cil-people.png);\n"
+        self.contact_btn = QPushButton(self.left_menu)
+        self.contact_btn.setObjectName(u"contact_btn")
+        self.contact_btn.setMinimumSize(QSize(0, 40))
+        self.contact_btn.setMaximumSize(QSize(16777215, 40))
+        self.contact_btn.setFont(font1)
+        self.contact_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-people.png);\n"
 "")
 
-        self.verticalLayout_2.addWidget(self.contacts_bt)
+        self.verticalLayout_2.addWidget(self.contact_btn)
 
         self.verticalSpacer = QSpacerItem(20, 296, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -615,13 +615,13 @@ class Ui_MainWindow(object):
         self.left_side_container.setObjectName(u"left_side_container")
         self.left_side_container.setMaximumSize(QSize(290, 16777215))
         self.left_side_container.setStyleSheet(u"")
-        self.page_1 = QWidget()
-        self.page_1.setObjectName(u"page_1")
-        self.verticalLayout_5 = QVBoxLayout(self.page_1)
+        self.contact_page = QWidget()
+        self.contact_page.setObjectName(u"contact_page")
+        self.verticalLayout_5 = QVBoxLayout(self.contact_page)
         self.verticalLayout_5.setSpacing(1)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.p_user = QWidget(self.page_1)
+        self.p_user = QWidget(self.contact_page)
         self.p_user.setObjectName(u"p_user")
         self.p_user.setMinimumSize(QSize(291, 132))
         self.p_user.setMaximumSize(QSize(291, 140))
@@ -666,18 +666,18 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_5.addWidget(self.p_user)
 
-        self.contacts_stack = QStackedWidget(self.page_1)
+        self.contacts_stack = QStackedWidget(self.contact_page)
         self.contacts_stack.setObjectName(u"contacts_stack")
         self.contacts_stack.setMinimumSize(QSize(291, 491))
         self.contacts_stack.setMaximumSize(QSize(291, 16777215))
         self.contacts_stack.setStyleSheet(u"")
-        self.conact_page = QWidget()
-        self.conact_page.setObjectName(u"conact_page")
-        self.conact_page.setStyleSheet(u"")
-        self.verticalLayout_4 = QVBoxLayout(self.conact_page)
+        self.chat_list_page = QWidget()
+        self.chat_list_page.setObjectName(u"chat_list_page")
+        self.chat_list_page.setStyleSheet(u"")
+        self.verticalLayout_4 = QVBoxLayout(self.chat_list_page)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.left_scroll = QScrollArea(self.conact_page)
+        self.left_scroll = QScrollArea(self.chat_list_page)
         self.left_scroll.setObjectName(u"left_scroll")
         self.left_scroll.setMinimumSize(QSize(291, 491))
         self.left_scroll.setMaximumSize(QSize(291, 16777215))
@@ -881,7 +881,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_4.addWidget(self.left_scroll)
 
-        self.contacts_stack.addWidget(self.conact_page)
+        self.contacts_stack.addWidget(self.chat_list_page)
         self.scan_page = QWidget()
         self.scan_page.setObjectName(u"scan_page")
         self.scan_page.setStyleSheet(u"background:transparent;")
@@ -956,7 +956,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_5.addWidget(self.contacts_stack)
 
-        self.server_signal = QWidget(self.page_1)
+        self.server_signal = QWidget(self.contact_page)
         self.server_signal.setObjectName(u"server_signal")
         self.server_signal.setMinimumSize(QSize(291, 41))
         self.server_signal.setMaximumSize(QSize(291, 41))
@@ -978,16 +978,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_5.addWidget(self.server_signal)
 
-        self.left_side_container.addWidget(self.page_1)
-        self.page_2 = QWidget()
-        self.page_2.setObjectName(u"page_2")
-        self.label_8 = QLabel(self.page_2)
+        self.left_side_container.addWidget(self.contact_page)
+        self.about_page = QWidget()
+        self.about_page.setObjectName(u"about_page")
+        self.label_8 = QLabel(self.about_page)
         self.label_8.setObjectName(u"label_8")
         self.label_8.setGeometry(QRect(60, 590, 181, 20))
-        self.pushButton_11 = QPushButton(self.page_2)
+        self.pushButton_11 = QPushButton(self.about_page)
         self.pushButton_11.setObjectName(u"pushButton_11")
         self.pushButton_11.setGeometry(QRect(60, 650, 161, 41))
-        self.left_side_container.addWidget(self.page_2)
+        self.left_side_container.addWidget(self.about_page)
 
         self.horizontalLayout_8.addWidget(self.left_side_container)
 
@@ -2960,7 +2960,7 @@ class Ui_MainWindow(object):
         self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 546, 130))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 546, 132))
         self.emoji_grid_layout = QGridLayout(self.scrollAreaWidgetContents_2)
         self.emoji_grid_layout.setSpacing(1)
         self.emoji_grid_layout.setObjectName(u"emoji_grid_layout")
@@ -3597,7 +3597,7 @@ class Ui_MainWindow(object):
         self.menu_btn.setText(QCoreApplication.translate("MainWindow", u"Hide menu", None))
         self.home_btn.setText(QCoreApplication.translate("MainWindow", u"Home", None))
         self.scan_btn.setText(QCoreApplication.translate("MainWindow", u"Scan network", None))
-        self.contacts_bt.setText(QCoreApplication.translate("MainWindow", u"Chat", None))
+        self.contact_btn.setText(QCoreApplication.translate("MainWindow", u"Chat", None))
         self.settings_btn_2.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
         self.about_btn.setText(QCoreApplication.translate("MainWindow", u"About", None))
         self.me_online_toast.setText("")

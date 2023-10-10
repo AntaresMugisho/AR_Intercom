@@ -27,54 +27,69 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        # UI FUNCTIONS
-
+        # HIDE MENU TEXT AND SETTINGS PANEL ON START
         self.ui.left_menu.setFixedWidth(50)
         self.ui.right_stacked_widget.setFixedWidth(0)
         self.ui.emoji_widget.setFixedHeight(0)
-        # self.ui.emoji_widget.setFixedWidth(0)
 
+        # CONNECT BUTTONS
         self.ui.menu_btn.clicked.connect(self.toggle_menu)
         self.ui.settings_btn.clicked.connect(self.toggle_settings)
         self.ui.settings_btn_2.clicked.connect(self.toggle_settings)
         self.ui.emoji_btn.clicked.connect(self.toggle_emojis)
         self.ui.close_emoji_btn.clicked.connect(self.toggle_emojis)
 
+        # Menus
+        self.ui.home_btn.clicked.connect(self.menu_click)
+        self.ui.scan_btn.clicked.connect(self.menu_click)
+        self.ui.contact_btn.clicked.connect(self.menu_click)
+        self.ui.about_btn.clicked.connect(self.menu_click)
 
-    def toggle_settings(self):
-        if self.ui.right_stacked_widget.width() == 0:
-            start_value = 0
-            end_value = 251
+    @Slot()
+    def menu_click(self):
+        menu_clicked: QPushButton = self.sender()
+        menu = menu_clicked.objectName()
+
+        if menu == "home_btn":
+            self.ui.left_side_container.setCurrentWidget(self.ui.about_page)
+            self.ui.chat_stacked_widget.setCurrentWidget(self.ui.home_page)
+
+        elif menu == "scan_btn":
+            self.ui.left_side_container.setCurrentWidget(self.ui.contact_page)
+            self.ui.contacts_stack.setCurrentWidget(self.ui.scan_page)
+
+        elif menu == "contact_btn":
+            self.ui.left_side_container.setCurrentWidget(self.ui.contact_page)
+            self.ui.contacts_stack.setCurrentWidget(self.ui.chat_list_page)
+
+        elif menu == "about_btn":
+            self.ui.left_side_container.setCurrentWidget(self.ui.about_page)
+
+    def start_animation(self, widget, min, max):
+        if widget.width() == min:
+            start_value = min
+            end_value = max
         else:
-            start_value = 251
-            end_value = 0
+            start_value = max
+            end_value = min
 
         # ANIMATION SETTINGS BOX
-        self.animation = QPropertyAnimation(self.ui.right_stacked_widget, b"minimumWidth")
+        self.animation = QPropertyAnimation(widget, b"minimumWidth")
         self.animation.setDuration(300)
         self.animation.setStartValue(start_value)
         self.animation.setEndValue(end_value)
         self.animation.setEasingCurve(QEasingCurve.Type.Linear)
         self.animation.start()
 
+    @Slot()
+    def toggle_settings(self):
+        self.start_animation(self.ui.right_stacked_widget, 0, 251)
 
+    @Slot()
     def toggle_menu(self):
-        if self.ui.left_menu.width() == 50:
-            start_value = 50
-            end_value = 168
-        else:
-            start_value = 168
-            end_value = 50
+        self.start_animation(self.ui.left_menu, 50, 168)
 
-        # ANIMATION MENU BOX
-        self.animation = QPropertyAnimation(self.ui.left_menu, b"minimumWidth")
-        self.animation.setDuration(300)
-        self.animation.setStartValue(start_value)
-        self.animation.setEndValue(end_value)
-        self.animation.setEasingCurve(QEasingCurve.Type.Linear)
-        self.animation.start()
-
-
+    @Slot()
     def toggle_emojis(self):
         if self.ui.emoji_widget.height() == 0:
             self.ui.emoji_widget.setFixedHeight(206)

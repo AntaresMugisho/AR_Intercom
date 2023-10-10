@@ -673,7 +673,7 @@ background-image: url(:/cils/cils/cil-menu.png);
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="contacts_bt">
+           <widget class="QPushButton" name="contact_btn">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -784,7 +784,7 @@ background-image: url(:/cils/cils/cil-menu.png);
          <property name="currentIndex">
           <number>0</number>
          </property>
-         <widget class="QWidget" name="page_1">
+         <widget class="QWidget" name="contact_page">
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <property name="spacing">
             <number>1</number>
@@ -953,7 +953,7 @@ background-size: 50px;*/</string>
              <property name="currentIndex">
               <number>0</number>
              </property>
-             <widget class="QWidget" name="conact_page">
+             <widget class="QWidget" name="chat_list_page">
               <property name="styleSheet">
                <string notr="true"/>
               </property>
@@ -1674,7 +1674,7 @@ background-position: left center;</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="page_2">
+         <widget class="QWidget" name="about_page">
           <widget class="QLabel" name="label_8">
            <property name="geometry">
             <rect>
@@ -6349,7 +6349,7 @@ background-color:#111;
                             <x>0</x>
                             <y>0</y>
                             <width>546</width>
-                            <height>130</height>
+                            <height>132</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="emoji_grid_layout">
