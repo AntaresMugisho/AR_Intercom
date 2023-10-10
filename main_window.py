@@ -10,7 +10,7 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QCheckBox, QFrame,
+from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QCheckBox, QFrame, QGraphicsDropShadowEffect,
     QGridLayout, QHBoxLayout, QLabel, QLineEdit,
     QMainWindow, QPushButton, QScrollArea, QSizePolicy,
     QSlider, QSpacerItem, QStackedWidget, QTabWidget,
@@ -22,10 +22,25 @@ class MainWindow(QMainWindow):
     """
     Main window
     """
+
+    WINDOW_MAXIMIZED = False
+
     def __init__(self):
         QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        # REMOVE DEFAULT WINDOW FRAME
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+
+        # DROP SHADOW
+        self.shadow = QGraphicsDropShadowEffect(self)
+        self.shadow.setBlurRadius(17)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0, 0, 0, 150))
+        self.ui.bg_app.setGraphicsEffect(self.shadow)
 
         # HIDE MENU TEXT AND SETTINGS PANEL ON START
         self.ui.left_menu.setFixedWidth(60)
@@ -39,6 +54,9 @@ class MainWindow(QMainWindow):
         self.ui.emoji_btn.clicked.connect(self.toggle_emojis)
         self.ui.close_emoji_btn.clicked.connect(self.toggle_emojis)
 
+        # System buttons
+        self.ui.min_max_btn.clicked.connect(self.maximize_restore)
+
         # Menus
         self.ui.home_btn.clicked.connect(self.menu_click)
         self.ui.scan_btn.clicked.connect(self.menu_click)
@@ -47,6 +65,18 @@ class MainWindow(QMainWindow):
 
         # Start on home page
         self.ui.home_btn.clicked.emit()
+
+    def maximize_restore(self):
+
+        if not self.WINDOW_MAXIMIZED:
+            self.showMaximized()
+            self.WINDOW_MAXIMIZED = True
+
+        else:
+            self.showNormal()
+            self.WINDOW_MAXIMIZED = False
+            # self.resize(self.width()+1, self.height()+1)
+
 
     @Slot()
     def menu_click(self):
