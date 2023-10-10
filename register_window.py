@@ -10,7 +10,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QFileDialog, QPushButton, Q
 from PySide6.QtGui import QColor, QPixmap
 from PySide6.QtCore import Qt, QTimer, QPoint
 
-from ui.register_window import Ui_SigninWindow
+from gui.register_window import Ui_SigninWindow
 from styles import LineEdit, ComboBox, Features
 from user import User
 from main_window import MainWindow

@@ -6,7 +6,7 @@ import hashlib
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QLineEdit
 from PySide6.QtCore import QObject, Qt, Signal, Slot
 
-from ui.login_window import Ui_LoginWindow
+from gui.login_window import Ui_LoginWindow
 from styles import LineEdit
 from user import User
 

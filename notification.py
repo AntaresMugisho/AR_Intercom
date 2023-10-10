@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QWidget, QApplication, QGraphicsDropShadowEffect
 from PySide6.QtGui import QGuiApplication, QIcon, QPixmap, QColor
 from PySide6.QtCore import QTimer, Qt
 
-from ui.popup_window import Ui_NotificationWidget
+from gui.popup_window import Ui_NotificationWidget
 from player import Player
 
 class NotificationWidget(QWidget):

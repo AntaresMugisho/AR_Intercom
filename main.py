@@ -7,11 +7,7 @@ from PySide6.QtWidgets import QApplication, QWidget
 from PySide6.QtGui import QColor
 from PySide6.QtCore import Qt, Slot
 
-from ui.splash import Ui_SplashScreen
-from register_window import RegisterWindow
-from main_window import MainWindow
-from login_window import LoginWindow
-from chat_window import ChatWindow
+from gui import Ui_SplashScreen
 from user import User
 import utils
 
@@ -99,8 +95,8 @@ class SplashScreen(QWidget):
 
             # SHOW REGISTER WINDOW OR LOGIN WINDOW
             if not User.find(1):
-                self.register_window = RegisterWindow()
-                self.register_window.show()
+                # self.register_window = RegisterWindow()
+                # self.register_window.show()
             else:
                 self.main_window = MainWindow()
                 self.main_window.show()

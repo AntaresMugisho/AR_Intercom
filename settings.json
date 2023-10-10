@@ -3,12 +3,12 @@
     "custom_title_bar": true,
     "dark_theme": true,
     "startup_size": {
-        "width": 1400,
-        "height": 800
+        "width": 1202,
+        "height": 840
     },
     "minimum_size": {
-        "width": 1400,
-        "height": 800
+        "width": 1024,
+        "height": 720
     },
     "left_menu": {
         "color": "#FF000000",
