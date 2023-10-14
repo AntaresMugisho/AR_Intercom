@@ -283,16 +283,16 @@ class Ui_MainWindow(object):
 "#system_menu .QPushButton:hover { background-color: rgb(21, 22, 23); }\n"
 "#system_menu .QPushButton:pressed { background-color: rgb(172, 229, 0); }\n"
 "\n"
-"#system_menu #redius_btn:pressed { background-color: yellow; }\n"
+"#system_menu #minimize_btn:pressed { background-color: yellow; }\n"
 "\n"
 "#system_menu #min_max_btn:pressed { background-color: rgb(0, 255, 0); }\n"
 "\n"
-"#system_menu #close_app_btn:hover { background-color: rgb(255, 0, 100); }\n"
-"#system_menu #close_app_btn:pressed { background-color: rgb(255, 0, 0); }\n"
+"#system_menu #close_btn:hover { background-color: rgb(255, 0, 100); }\n"
+"#system_menu #close_btn:pressed { background-color: rgb(255, 0, 0); }\n"
 "\n"
-"#settings_btn{background-position: cent"
-                        "er;\n"
-"    background-repeat: no-repeat;\n"
+"#settings_btn{background-position: center;\n"
+""
+                        "    background-repeat: no-repeat;\n"
 "	border: none;\n"
 "	outline: none;\n"
 "	border-radius: 8px;}\n"
@@ -333,9 +333,9 @@ class Ui_MainWindow(object):
 "#p_user {\n"
 "	background-color: rgb(21, 22, 23);\n"
 "	border: none;\n"
-"	border-bottom: 1px dashed rgb(47, 4"
-                        "8, 50);\n"
-"}\n"
+"	border-bottom: 1px dashed rgb(47, 48, 50);\n"
+""
+                        "}\n"
 "\n"
 "#p_user #p_username{\n"
 "	color: rgba(255, 255, 255, 0.9);\n"
@@ -374,8 +374,8 @@ class Ui_MainWindow(object):
 "} \n"
 "\n"
 "#left_scroll QScrollArea , #left_scroll QWidget{\n"
-""
-                        "	background-color:rgb(21, 22, 23);\n"
+"	backgroun"
+                        "d-color:rgb(21, 22, 23);\n"
 "}\n"
 "\n"
 "\n"
@@ -426,10 +426,10 @@ class Ui_MainWindow(object):
 "#contact_image {\n"
 "	border: 1px solid rgb(30, 32, 33);\n"
 "	background-color: rgb(47, 48, 50);\n"
-"	border-radius: 25px;"
-                        "\n"
+"	border-radius: 25px;\n"
 "}\n"
-"\n"
+""
+                        "\n"
 "#chat_stacked_widget {\n"
 "	border-right:5px solid red;\n"
 "}\n"
@@ -477,8 +477,8 @@ class Ui_MainWindow(object):
 "	}\n"
 "#media_bg{\n"
 "	border-radius:23px;\n"
-""
-                        "	background:transparent;\n"
+"	backgr"
+                        "ound:transparent;\n"
 "}\n"
 "#media_bg QPushButton{\n"
 "	border-radius:20px;\n"
@@ -1043,14 +1043,14 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setSpacing(0)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.redius_btn = QPushButton(self.system_menu)
-        self.redius_btn.setObjectName(u"redius_btn")
-        self.redius_btn.setMinimumSize(QSize(28, 28))
-        self.redius_btn.setMaximumSize(QSize(28, 28))
-        self.redius_btn.setStyleSheet(u"background-image: url(:/cils/cils/icon_minimize.png);\n"
+        self.minimize_btn = QPushButton(self.system_menu)
+        self.minimize_btn.setObjectName(u"minimize_btn")
+        self.minimize_btn.setMinimumSize(QSize(28, 28))
+        self.minimize_btn.setMaximumSize(QSize(28, 28))
+        self.minimize_btn.setStyleSheet(u"background-image: url(:/cils/cils/icon_minimize.png);\n"
 "backgorund-position:bottom;")
 
-        self.horizontalLayout_5.addWidget(self.redius_btn)
+        self.horizontalLayout_5.addWidget(self.minimize_btn)
 
         self.min_max_btn = QPushButton(self.system_menu)
         self.min_max_btn.setObjectName(u"min_max_btn")
@@ -1060,14 +1060,14 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5.addWidget(self.min_max_btn)
 
-        self.close_app_btn = QPushButton(self.system_menu)
-        self.close_app_btn.setObjectName(u"close_app_btn")
-        self.close_app_btn.setMinimumSize(QSize(28, 28))
-        self.close_app_btn.setMaximumSize(QSize(28, 28))
-        self.close_app_btn.setStyleSheet(u"background-image: url(:/cils/cils/icon_close.png);\n"
+        self.close_btn = QPushButton(self.system_menu)
+        self.close_btn.setObjectName(u"close_btn")
+        self.close_btn.setMinimumSize(QSize(28, 28))
+        self.close_btn.setMaximumSize(QSize(28, 28))
+        self.close_btn.setStyleSheet(u"background-image: url(:/cils/cils/icon_close.png);\n"
 "")
 
-        self.horizontalLayout_5.addWidget(self.close_app_btn)
+        self.horizontalLayout_5.addWidget(self.close_btn)
 
 
         self.horizontalLayout_4.addWidget(self.system_menu)
@@ -3623,17 +3623,17 @@ class Ui_MainWindow(object):
         self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>AR Intercom <span style=\" font-weight:400; color:#878787;\">Entreprise</span></p></body></html>", None))
         self.settings_btn.setText("")
 #if QT_CONFIG(statustip)
-        self.redius_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Minimize", None))
+        self.minimize_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Minimize", None))
 #endif // QT_CONFIG(statustip)
-        self.redius_btn.setText("")
+        self.minimize_btn.setText("")
 #if QT_CONFIG(statustip)
         self.min_max_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Maximize", None))
 #endif // QT_CONFIG(statustip)
         self.min_max_btn.setText("")
 #if QT_CONFIG(statustip)
-        self.close_app_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Close", None))
+        self.close_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Close", None))
 #endif // QT_CONFIG(statustip)
-        self.close_app_btn.setText("")
+        self.close_btn.setText("")
         self.left_bubble_3.setText(QCoreApplication.translate("MainWindow", u"Bonjour !", None))
         self.time_3.setText(QCoreApplication.translate("MainWindow", u"23:35", None))
         self.ticks_3.setText("")

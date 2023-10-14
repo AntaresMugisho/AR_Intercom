@@ -28,270 +28,88 @@
   </property>
   <widget class="QWidget" name="stylesheet">
    <property name="styleSheet">
-    <string notr="true">/* DEFAULT */
+    <string notr="true">/*  DEFAULT */
 QWidget {
-
-	color: rgb(230, 230, 230);
-	selection-background-color: rgb(86, 115, 0);
+	color: rgb(250, 250, 250);
+	selection-background-color: rgba(0, 150, 200, 50);
 }
 
-/* Left Menu */
-#left_menu {
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
-}
-
-/* App name near logo top*/
-#app_name {
-color:#FFFFFF;}
-	
-
-/* Buttons */
-#left_menu QPushButton {
-	border: none;	
-	background-color: transparent;
-	border-radius: 10px;
-	background-repeat: none;
-	background-position: center;
-}
-#left_menu QPushButton:hover {
-	background-color: rgb(21, 22, 23);
-}
-#left_menu QPushButton:pressed {
-	background-color: rgb(172, 229, 0);
-}
-#add_user_btn {	
-	background-image: url(:/icons_svg/images/icons_svg/icon_add_user.svg);
-}
-#settings_btn {	
-	background-image: url(:/icons_svg/images/icons_svg/icon_settings.svg);
-}
-
-/* Left Messages
-#left_messages {
-	background-color: rgb(21, 22, 23);
-	border: none;
-	border-left: 3px solid rgb(30, 32, 33);
-} 
-*/
-
-/* Top 
-#top_messages {
-	border: none;
-	border-bottom: 1px solid rgb(47, 48, 50);
-}*/
-
-/* Search Message */
-#search_sms_frame .QLineEdit {
-	border: 2px solid rgb(47, 48, 50);
-	border-radius: 8px;
-	background-color: rgb(47, 48, 50);
-	color: rgb(121, 121, 121);
-	padding-left: 30px;
-	padding-right: 10px;
-	background-image: url(:/icons_svg/images/icons_svg/icon_search.svg);
-	background-repeat: none;
-	background-position: left center;
-}
-#search_sms_frame .QLineEdit:hover {
-	color: rgb(230, 230, 230);
-	border: 2px solid rgb(62, 63, 66);
-}
-#search_sms_frame .QLineEdit:focus {
-	color: rgb(230, 230, 230);
-	border: 2px solid rgb(53, 54, 56);
-	background-color: rgb(14, 14, 15);
-}
-
-/* Menus Scroll Area */
-#left_messages_scroll, #messages_scroll {
-	background-color: transparent;
-}
-
-/* Bottom / Signal */
-#bottom_messages {	
-	background-color: rgb(30, 32, 33);
-}
-
-#label_top{	
-	color: rgb(189, 255, 0);
-}
-#label_bottom {	
-	color: rgb(166, 166, 166);
-}
-
-/* Right Content */
-#right_content {
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-}
-
-/* Top Bar */
-#top_bar {
-	border-top-right-radius: 10px;
-}
-
-/* Title Bar */
-#title_bar {
-	background-image: url(:/images_svg/images/images_svg/text_logo.svg);
-	background-repeat: no-repeat;
-	background-position: left center;
-	border-left: 15px solid transparent;
-}
-
-/* Top BTNs */
-#system_menu {  }
-#system_menu .QPushButton {	
-	background-position: center;
-    background-repeat: no-repeat;
+QPushButton{
+	background-repeat:no-repeat;
+	background-position:center;
 	border: none;
 	outline: none;
-	border-radius: 8px;
-	text-align: left;
 }
-#system_menu .QPushButton:hover { background-color: rgb(21, 22, 23); }
-#system_menu .QPushButton:pressed { background-color: rgb(172, 229, 0); }
-#system_menu #close_app_btn:hover { background-color: rgb(255, 0, 127); }
-#system_menu #close_app_btn:pressed { background-color: rgb(172, 229, 0); }
 
-/* Content / Pages */
-#app_pages {
-	background-color: transparent;
+QPushButton:hover {
+	background-color: rgb(31, 32, 33);
 }
-/* /////////////////////////////////////////////////////////////////////////////////////////////////
-ScrollBars */
-QScrollBar:horizontal {
-    border: none;
-    background: rgb(52, 59, 72);
-    height: 8px;
-    margin: 0px 21px 0 21px;
-	border-radius: 0px;
-}
-QScrollBar::handle:horizontal {
-    background: rgb(47, 48, 50);
-    min-width: 25px;
-	border-radius: 4px
-}
-QScrollBar::add-line:horizontal {
-    border: none;
-    background: rgb(55, 63, 77);
-    width: 20px;
-	border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-    subcontrol-position: right;
-    subcontrol-origin: margin;
-}
-QScrollBar::sub-line:horizontal {
-    border: none;
-    background: rgb(55, 63, 77);
-    width: 20px;
-	border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-    subcontrol-position: left;
-    subcontrol-origin: margin;
-}
-QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal
-{
-     background: none;
-}
-QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
-{
-     background: none;
-}
- QScrollBar:vertical {
-	border: none;
-    background: rgb(52, 59, 72);
-    width: 8px;
-    margin: 21px 0 21px 0;
-	border-radius: 0px;
- }
- QScrollBar::handle:vertical {	
-	background: rgb(47, 48, 50);
-    min-height: 25px;
-	border-radius: 4px
- }
- QScrollBar::add-line:vertical {
-     border: none;
-    background: transparent;
-     height: 10px;
-    border-radius: 4px;
-     subcontrol-position: bottom;
-     subcontrol-origin: margin;
- }
- QScrollBar::sub-line:vertical {
-	border: none;
-    background: transparent;
-    height: 10px;
-    border-radius: 4px;
-     subcontrol-position: top;
-     subcontrol-origin: margin;
- }
- QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
-     background: none;
- }
 
- QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-     background: none;
- }
+QPushButton:pressed {
+	background-color: rgb(51, 52, 53);
+}
 
-</string>
-   </property>
-   <layout class="QVBoxLayout" name="app_margins">
-    <item>
-     <widget class="QWidget" name="bg_app" native="true">
-      <property name="styleSheet">
-       <string notr="true">
-/* Bg App*/
-#bg_app {	
-	background-color: #000;
-	border: 2px solid rgb(30, 32, 33);
+#app_bg {
+	background-color: #111;
+	border: 2px solid #000;
 	border-radius:10px;
-} 
+}
 
-/* App name near logo top */
-#app_logo_and_name{
+/* TITLE BAR */
+#app_brand{
 	border-bottom:1px dashed rgb(55, 56, 57);
 }
-#app_name {
-	color:white;
+
+#title_bar{
+	border-bottom: 2px dotted rgb(30, 32, 33);
 }
 
-/* Top BTNs */
-#system_menu {  }
-#system_menu .QPushButton {	
-	background-position: center;
-    background-repeat: no-repeat;
-	border: none;
-	outline: none;
+#settings_btn{
+	border-radius: 8px
+}
+
+#settings_btn:hover { 
+	background-color: rgb(31, 32, 33); 
+}
+
+#settings_btn:pressed { 
+	background-color: rgb(51, 52, 53); 
+}
+
+/*SYSTEM MENU*/
+#system_menu{
+    background-color:rgb(31, 32, 33);
+    border-bottom-left-radius:10px;
+	border-top-right-radius:6px;
+}
+
+#system_menu .QPushButton {
 	border-radius: 14px;
 }
-#system_menu .QPushButton:hover { background-color: rgb(21, 22, 23); }
-#system_menu .QPushButton:pressed { background-color: rgb(172, 229, 0); }
 
-#system_menu #redius_btn:pressed { background-color: yellow; }
+#system_menu .QPushButton:hover { 
+	background-color: rgb(11, 12, 13); 
+}
 
-#system_menu #min_max_btn:pressed { background-color: rgb(0, 255, 0); }
+#system_menu #reduce_btn:pressed {
+	background-color: #fff000;
+}
 
-#system_menu #close_app_btn:hover { background-color: rgb(255, 0, 100); }
-#system_menu #close_app_btn:pressed { background-color: rgb(255, 0, 0); }
+#system_menu #min_max_btn:pressed{
+	background-color: #00ee00;
+}
 
-#settings_btn{background-position: center;
-    background-repeat: no-repeat;
-	border: none;
-	outline: none;
-	border-radius: 8px;}
-
-#settings_btn:hover { background-color: rgb(31, 32, 33); }
-#settings_btn:pressed { background-color: rgb(51, 52, 53); }
+#system_menu #close_btn:hover { 
+	background-color: #ff0000;
+ }
 
 
-
-/*Menu  Buttons */
+/*ASIDE MENU BAR */
 
 #left_menu {
 	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
-	border-right:2px solid rgb(30,32,33)
+	border-right:2px solid rgb(30,32,33);
 }
 
 #left_menu QPushButton{
@@ -299,40 +117,39 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 	padding-left:42px;
 	border-left:16px solid transparent;
 	border-radius: 0px;
-	background-repeat:none;
-	background-position:center left;	
-	}
+	background-position:center left;
+}
 
-#left_menu QPushButton:hover {
-	background-color: rgb(21, 22, 23);
-}
-#left_menu QPushButton:pressed {
-	background-color: rgb(40, 42, 43);
-}
+
+/* LEFT SIDE - CHAT LIST */
+
 #left_side_container QWidget{
 	background-color:rgb(21, 22, 23);
 }
 
-/* Top User*/
-#p_user {
+/* Authenticated user info*/
+#auth_user_container {
 	background-color: rgb(21, 22, 23);
 	border: none;
 	border-bottom: 1px dashed rgb(47, 48, 50);
 }
 
-#p_user #p_username{
-	color: rgba(255, 255, 255, 0.9);
+#me_picture{
+	border-radius:30px;
 }
 
-#p_user #p_user_status{
+#me_username{
+	color:rgba(255, 255, 255, 0.8);
+}
+
+#me_status{
 	color:rgba(255, 255, 255, 0.4);
 }
 
-/* Search Message */
-#search_sms.QLineEdit {
+/* Search bar */
+#search_bar {
 	border: 2px solid rgb(47, 48, 50);
 	border-radius: 15px;
-	background-color: rgb(47, 48, 50);
 	color: rgb(121, 121, 121);
 	padding-left: 30px;
 	padding-right: 10px;
@@ -340,122 +157,111 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 	background-repeat: none;
 	background-position: left center;
 }
-#search_sms.QLineEdit:hover {
+
+#search_bar:hover {
 	color: rgb(230, 230, 230);
-	border: 2px solid rgb(62, 63, 66);
+	border-color: rgb(62, 63, 66);
 }
-#search_sms.QLineEdit:focus {
-	color: rgb(230, 230, 230);
-	border: 2px solid rgb(53, 54, 56);
+
+#search_bar:focus {
+	border-color: rgb(53, 54, 56);
 	background-color: rgb(14, 14, 15);}
 
-/* Contacts stack*/
-#contacts_stack {
-	background-color: rgb(21, 22, 23);
-	border: none;
-	border-bottom: 2px dashed rgb(30, 32, 33);
-} 
-
-#left_scroll QScrollArea , #left_scroll QWidget{
-	background-color:rgb(21, 22, 23);
+/* Network signal indicator*/
+#signal_status_container{
+	border-top: 2px dotted rgb(30, 32, 33);
 }
 
-
-
-
-
-
-
-#server_signal {}
-#signal_icon { 
+#signal_icon {
 	background-repeat: no-repeat;
 	background-position: left center;
 }
 
+#signal_text{
+	color: rgb(255, 255, 127);
+}
 
 
-/*ACTIVE CONTACT FRAME*/
-#active_client_frame{
+/* CHAT */
+
+#chat_stacked_widget &gt; QWidget{
+	background-color:#111;
+}
+
+/* Header */
+#active_chat_header{
 	background-color:rgb(30, 32, 33);
 	border-radius: 10px;
 }
 
-#active_client_frame QPushButton {
+#active_chat_header QPushButton {
 	background-color: rgb(47, 48, 50);
-	border-radius: 20px;
+	border-radius: 18px;
 	background-repeat: no-repeat;
 	background-position: center;
 }
-#active_client_frame QPushButton:hover {
+
+#active_chat_header QPushButton:hover {
 	background-color: rgb(61, 62, 65);
 }
-#active_client_frame QPushButton:pressed {
+
+#active_chat_header QPushButton:pressed {
 	background-color: rgb(16, 17, 18);
 }
 
-#contact_name{ 
-	color: rgb(179, 179, 179);
+#active_client_picture{
+	border-radius:25px;
+	background-color:rgb(20,21,22);
 }
 
-#contact_status{
-	color: rgb(179, 179, 179);
+#active_client_status{
+	color: rgb(170, 170, 170);
 }
 
 #last_seen{
-	color: rgb(179, 179, 179);
-
-}
-#contact_image {
-	border: 1px solid rgb(30, 32, 33);
-	background-color: rgb(47, 48, 50);
-	border-radius: 25px;
-}
-
-#chat_stacked_widget {
-	border-right:5px solid red;
-}
-
-#chat_stacked_widget #chat_page{
-	background-color:transparent;
+	color: rgb(170, 170, 170);
 }
 
 /*Chat scroll*/
 #chat_scroll, #chat_scroll_widget{
-background:transparent;
-border-radius: 10px;
+	background:transparent;
+	border:none;
 }
 
-/*Bottom Frame*/
-#bottom_frame{
+
+/* Footer - Typing zone*/
+#footer{
 	background-color:rgb(30, 32, 33);
 	border-radius: 10px;
 }
 
-#bottom_frame QPushButton {
+#footer QPushButton {
 	background-color: rgb(47, 48, 50);
 	border-radius: 20px;
 	background-repeat: no-repeat;
 	background-position: center;
 }
-#bottom_frame QPushButton:hover {
+
+#footer QPushButton:hover {
 	background-color: rgb(61, 62, 65);
 }
-#bottom_frame QPushButton:pressed {
+
+#footer QPushButton:pressed {
 	background-color: rgb(16, 17, 18);
 }
-#entry_frame{
+
+#input_container{
 	border-radius:25px;
 	background-color:rgb(47, 48, 50);
-
 }
-#entry_field{
+
+#input{
 	border:none;
 	background:transparent;
-	padding-left:10px;	
-	padding-right:10px;
+	color:white;
 }
-#media_btn{
-	}
+
+/*Media buttons */
 #media_bg{
 	border-radius:23px;
 	background:transparent;
@@ -475,23 +281,142 @@ border-radius: 10px;
 	background-color:rgb(16, 17, 18);
 }
 
+/*Emoji widget*/
+#emoji_widget{
+		background-color: rgb(30,32,33);
+		border-radius:8px;
+}
+
+#emoji_widget QTabWidget::pane {
+	background-color:#000;
+}
+
+#emoji_tab_widget QTabBar::tab{
+    background-color:#222;
+	width:35px;
+	height:35px;
+}
+
+#emoji_tab_widget QTabBar::tab:hover{
+    background-color:#666;
+}
+
+#emoji_tab_widget QTabBar::tab:selected{
+	border-bottom:4px solid #111;
+}
+
+#emoji_tab_widget QTabBar::tab:!selected{
+	border-bottom:4px solid #222;
+}
+
+#emoji_tab_widget QWidget{
+	background-color:#111;
+}
 
 
+/*SCROLL BARS*/
 
+QScrollBar:horizontal {
+    border: none;
+    background: rgb(52, 59, 72);
+    height: 8px;
+    margin: 0px 21px 0 21px;
+	border-radius: 0px;
+}
+QScrollBar::handle:horizontal {
+    background: rgb(47, 48, 50);
+    min-width: 25px;
+	border-radius: 4px
+}
+
+QScrollBar::add-line:horizontal {
+    border: none;
+    background: rgb(55, 63, 77);
+    width: 20px;
+	border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+    border: none;
+    background: rgb(55, 63, 77);
+    width: 20px;
+	border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal
+{
+     background: none;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
+{
+     background: none;
+}
+
+ QScrollBar:vertical {
+	border:none;
+    background:rgb(52, 59, 72);
+    width: 8px;
+    margin: 18px 0 18px 0;
+ }
+
+ QScrollBar::handle:vertical {
+	background: rgb(47, 48, 50);
+    min-height: 25px;
+ }
+
+ QScrollBar::add-line:vertical {
+     border: none;
+     background: rgb(47, 48, 50);
+     height: 16px;
+     border-bottom-left-radius:4px;
+     border-bottom-right-radius:4px;
+     subcontrol-position: bottom;
+     subcontrol-origin: margin;
+ }
+
+ QScrollBar::sub-line:vertical {
+	border: none;
+    background: rgb(47, 48, 50);
+    height: 16px;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+ }
+ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+     background: none;
+ }
+
+ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+     background: none;
+ }
 </string>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QWidget" name="app_bg" native="true">
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <layout class="QHBoxLayout" name="app_layout">
        <property name="spacing">
         <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>3</number>
        </property>
        <property name="topMargin">
         <number>3</number>
        </property>
        <property name="rightMargin">
-        <number>6</number>
+        <number>3</number>
        </property>
        <property name="bottomMargin">
         <number>3</number>
@@ -527,7 +452,7 @@ border-radius: 10px;
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="app_logo_and_name" native="true">
+           <widget class="QWidget" name="app_brand" native="true">
             <property name="minimumSize">
              <size>
               <width>161</width>
@@ -540,26 +465,6 @@ border-radius: 10px;
               <height>61</height>
              </size>
             </property>
-            <widget class="QFrame" name="top_logo">
-             <property name="geometry">
-              <rect>
-               <x>9</x>
-               <y>4</y>
-               <width>41</width>
-               <height>41</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">image: url(:/icons/icons/ARsoftlogo.png);
-</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-            </widget>
             <widget class="QLabel" name="app_name">
              <property name="geometry">
               <rect>
@@ -580,6 +485,23 @@ border-radius: 10px;
              </property>
              <property name="text">
               <string>AR Intercom</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="app_logo">
+             <property name="geometry">
+              <rect>
+               <x>9</x>
+               <y>4</y>
+               <width>41</width>
+               <height>41</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">image: url(:/icons/icons/ARsoftlogo.png);
+</string>
+             </property>
+             <property name="text">
+              <string/>
              </property>
             </widget>
            </widget>
@@ -800,7 +722,7 @@ background-image: url(:/cils/cils/cil-menu.png);
             <number>0</number>
            </property>
            <item>
-            <widget class="QWidget" name="p_user" native="true">
+            <widget class="QWidget" name="auth_user_container" native="true">
              <property name="minimumSize">
               <size>
                <width>291</width>
@@ -816,7 +738,7 @@ background-image: url(:/cils/cils/cil-menu.png);
              <property name="styleSheet">
               <string notr="true"/>
              </property>
-             <widget class="QWidget" name="p_user_box" native="true">
+             <widget class="QWidget" name="auth_user_box" native="true">
               <property name="geometry">
                <rect>
                 <x>3</x>
@@ -831,20 +753,15 @@ background-image: url(:/cils/cils/cil-menu.png);
               <widget class="QLabel" name="me_picture">
                <property name="geometry">
                 <rect>
-                 <x>4</x>
-                 <y>8</y>
+                 <x>3</x>
+                 <y>4</y>
                  <width>61</width>
                  <height>61</height>
                 </rect>
                </property>
                <property name="styleSheet">
-                <string notr="true">QLabel{
-	border-radius:30px;
-	border-image:url(:/icons/icons/avatar.png);}
-
-/*background-repeat:no-repeat;
-background-position:center;
-background-size: 50px;*/</string>
+                <string notr="true">border-image:url(:/icons/icons/avatar.png);
+</string>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -853,8 +770,8 @@ background-size: 50px;*/</string>
               <widget class="QLabel" name="me_online_toast">
                <property name="geometry">
                 <rect>
-                 <x>52</x>
-                 <y>50</y>
+                 <x>50</x>
+                 <y>47</y>
                  <width>16</width>
                  <height>16</height>
                 </rect>
@@ -876,7 +793,7 @@ background-size: 50px;*/</string>
                <property name="geometry">
                 <rect>
                  <x>79</x>
-                 <y>48</y>
+                 <y>46</y>
                  <width>191</width>
                  <height>21</height>
                 </rect>
@@ -886,6 +803,9 @@ background-size: 50px;*/</string>
                  <italic>true</italic>
                 </font>
                </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <property name="text">
                 <string>Coding...</string>
                </property>
@@ -894,7 +814,7 @@ background-size: 50px;*/</string>
                <property name="geometry">
                 <rect>
                  <x>80</x>
-                 <y>20</y>
+                 <y>27</y>
                  <width>191</width>
                  <height>21</height>
                 </rect>
@@ -913,7 +833,7 @@ background-size: 50px;*/</string>
                </property>
               </widget>
              </widget>
-             <widget class="QLineEdit" name="search_sms">
+             <widget class="QLineEdit" name="search_bar">
               <property name="geometry">
                <rect>
                 <x>9</x>
@@ -922,11 +842,11 @@ background-size: 50px;*/</string>
                 <height>31</height>
                </rect>
               </property>
-              <property name="text">
-               <string>Search user, message</string>
+              <property name="styleSheet">
+               <string notr="true"/>
               </property>
               <property name="placeholderText">
-               <string>Rechercher un contact</string>
+               <string>Search chat, message, ...</string>
               </property>
              </widget>
             </widget>
@@ -969,7 +889,7 @@ background-size: 50px;*/</string>
                 <number>0</number>
                </property>
                <item>
-                <widget class="QScrollArea" name="left_scroll">
+                <widget class="QScrollArea" name="chat_list_scroll">
                  <property name="minimumSize">
                   <size>
                    <width>291</width>
@@ -997,7 +917,7 @@ background-size: 50px;*/</string>
                     <x>0</x>
                     <y>0</y>
                     <width>291</width>
-                    <height>639</height>
+                    <height>641</height>
                    </rect>
                   </property>
                   <property name="styleSheet">
@@ -1452,6 +1372,165 @@ border-radius:28px;</string>
                      </property>
                     </spacer>
                    </item>
+                   <item>
+                    <widget class="QWidget" name="media_bg" native="true">
+                     <property name="minimumSize">
+                      <size>
+                       <width>46</width>
+                       <height>191</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>46</width>
+                       <height>191</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true"/>
+                     </property>
+                     <layout class="QVBoxLayout" name="verticalLayout">
+                      <property name="spacing">
+                       <number>6</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>3</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>3</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QPushButton" name="media_doc">
+                        <property name="minimumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">QPushButton{
+	background-image: url(:/cils/cils/cil-paperclip.png);
+	background-color: rgb(0, 0, 127);}
+
+QPushButton:hover{
+	background-color: rgb(61, 62, 63);}
+
+QPushButton:pressed{
+	background-color: rgb(31, 32, 34);}</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="media_audio">
+                        <property name="minimumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">QPushButton{
+	background-image: url(:/cils/cils/blacks/cil-music-note.png);
+	background-color: rgb(255, 170, 0);
+}
+
+QPushButton:hover{
+	background-color: rgb(201, 202, 203);}
+
+QPushButton:pressed{
+	background-color: rgb(101, 102, 103);}</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="media_image">
+                        <property name="minimumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">QPushButton{
+	background-image: url(:/cils/cils/cil-image1.png);
+	background-color: rgb(156, 0, 0);
+}
+
+QPushButton:hover{
+	background-color: rgb(61, 62, 63);}
+
+QPushButton:pressed{
+	background-color: rgb(31, 32, 34);}</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="media_video">
+                        <property name="minimumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">QPushButton{
+	background-image: url(:/cils/cils/blacks/cil-movie.png);
+	background-color: rgb(0, 105, 255);
+}
+
+QPushButton:hover{
+	background-color: rgb(201, 202, 203);}
+
+QPushButton:pressed{
+	background-color: rgb(101, 102, 103);}</string>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
                   </layout>
                  </widget>
                 </widget>
@@ -1462,7 +1541,7 @@ border-radius:28px;</string>
               <property name="styleSheet">
                <string notr="true">background:transparent;</string>
               </property>
-              <widget class="QScrollArea" name="scrollArea">
+              <widget class="QScrollArea" name="scan_scroll">
                <property name="geometry">
                 <rect>
                  <x>0</x>
@@ -1477,7 +1556,7 @@ border-radius:28px;</string>
                <property name="widgetResizable">
                 <bool>true</bool>
                </property>
-               <widget class="QWidget" name="scrollAreaWidgetContents">
+               <widget class="QWidget" name="scan_widget">
                 <property name="geometry">
                  <rect>
                   <x>0</x>
@@ -1613,7 +1692,7 @@ border-radius:28px;</string>
             </widget>
            </item>
            <item>
-            <widget class="QWidget" name="server_signal" native="true">
+            <widget class="QFrame" name="signal_status_container">
              <property name="minimumSize">
               <size>
                <width>291</width>
@@ -1650,7 +1729,7 @@ background-position: left center;</string>
                <enum>QFrame::Raised</enum>
               </property>
              </widget>
-             <widget class="QLabel" name="label_top">
+             <widget class="QLabel" name="signal_text">
               <property name="geometry">
                <rect>
                 <x>39</x>
@@ -1730,7 +1809,7 @@ background-position: left center;</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="widget_5" native="true">
+           <widget class="QWidget" name="title_bar" native="true">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -1748,7 +1827,7 @@ background-position: left center;</string>
 	border-bottom:1px dashed rgb(55, 56, 57);	
 }</string>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <layout class="QHBoxLayout" name="title_bar_layout">
              <property name="leftMargin">
               <number>12</number>
              </property>
@@ -1756,13 +1835,13 @@ background-position: left center;</string>
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>6</number>
+              <number>0</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
-              <widget class="QLabel" name="label">
+              <widget class="QLabel" name="app_title">
                <property name="font">
                 <font>
                  <pointsize>14</pointsize>
@@ -1778,7 +1857,7 @@ background-position: left center;</string>
               </widget>
              </item>
              <item>
-              <spacer name="horizontalSpacer">
+              <spacer name="title_bar_spacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1796,7 +1875,7 @@ background-position: left center;</string>
                 <number>0</number>
                </property>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <layout class="QHBoxLayout" name="systel_menu_layout">
                  <property name="spacing">
                   <number>18</number>
                  </property>
@@ -1839,7 +1918,7 @@ background-repeat:none;</string>
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">#system_menu .QPushButton:hoover{background-color:red;}</string>
+                    <string notr="true"/>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_5">
                     <property name="spacing">
@@ -1858,7 +1937,7 @@ background-repeat:none;</string>
                      <number>0</number>
                     </property>
                     <item>
-                     <widget class="QPushButton" name="redius_btn">
+                     <widget class="QPushButton" name="reduce_btn">
                       <property name="minimumSize">
                        <size>
                         <width>28</width>
@@ -1909,7 +1988,7 @@ backgorund-position:bottom;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="close_app_btn">
+                     <widget class="QPushButton" name="close_btn">
                       <property name="minimumSize">
                        <size>
                         <width>28</width>
@@ -1980,8 +2059,8 @@ backgorund-position:bottom;</string>
                <widget class="QFrame" name="bubble_container_2">
                 <property name="geometry">
                  <rect>
-                  <x>20</x>
-                  <y>90</y>
+                  <x>120</x>
+                  <y>20</y>
                   <width>120</width>
                   <height>71</height>
                  </rect>
@@ -2228,7 +2307,7 @@ padding:1px;</string>
                <widget class="QFrame" name="left_msg_frame_2">
                 <property name="geometry">
                  <rect>
-                  <x>20</x>
+                  <x>10</x>
                   <y>10</y>
                   <width>120</width>
                   <height>71</height>
@@ -2434,8 +2513,8 @@ border-radius:7px;
                <widget class="QFrame" name="left_msg_frame_5">
                 <property name="geometry">
                  <rect>
-                  <x>20</x>
-                  <y>170</y>
+                  <x>10</x>
+                  <y>100</y>
                   <width>320</width>
                   <height>111</height>
                  </rect>
@@ -2773,8 +2852,8 @@ QPushButton::pressed{
                <widget class="QFrame" name="left_msg_frame_6">
                 <property name="geometry">
                  <rect>
-                  <x>20</x>
-                  <y>290</y>
+                  <x>30</x>
+                  <y>230</y>
                   <width>320</width>
                   <height>111</height>
                  </rect>
@@ -3146,8 +3225,8 @@ QPushButton::pressed{
                <widget class="QFrame" name="document_bubble_frame">
                 <property name="geometry">
                  <rect>
-                  <x>380</x>
-                  <y>180</y>
+                  <x>350</x>
+                  <y>110</y>
                   <width>201</width>
                   <height>101</height>
                  </rect>
@@ -3436,8 +3515,8 @@ border-radius:7px;
                <widget class="QFrame" name="left_msg_frame_8">
                 <property name="geometry">
                  <rect>
-                  <x>380</x>
-                  <y>300</y>
+                  <x>370</x>
+                  <y>220</y>
                   <width>201</width>
                   <height>101</height>
                  </rect>
@@ -3764,8 +3843,8 @@ padding:1px;</string>
                <widget class="QFrame" name="left_msg_frame_9">
                 <property name="geometry">
                  <rect>
-                  <x>260</x>
-                  <y>410</y>
+                  <x>290</x>
+                  <y>350</y>
                   <width>221</width>
                   <height>221</height>
                  </rect>
@@ -3995,8 +4074,8 @@ padding:1px;</string>
                <widget class="QFrame" name="image_bubble_frame">
                 <property name="geometry">
                  <rect>
-                  <x>20</x>
-                  <y>410</y>
+                  <x>30</x>
+                  <y>350</y>
                   <width>221</width>
                   <height>241</height>
                  </rect>
@@ -4200,8 +4279,8 @@ border-radius:7px;
                <widget class="QLabel" name="label_2">
                 <property name="geometry">
                  <rect>
-                  <x>20</x>
-                  <y>680</y>
+                  <x>260</x>
+                  <y>10</y>
                   <width>120</width>
                   <height>20</height>
                  </rect>
@@ -4225,171 +4304,6 @@ border-radius:4px;</string>
                  <set>Qt::AlignCenter</set>
                 </property>
                </widget>
-               <widget class="QWidget" name="media_bg" native="true">
-                <property name="geometry">
-                 <rect>
-                  <x>490</x>
-                  <y>410</y>
-                  <width>46</width>
-                  <height>191</height>
-                 </rect>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>46</width>
-                  <height>191</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>46</width>
-                  <height>191</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout">
-                 <property name="spacing">
-                  <number>6</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>3</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>3</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QPushButton" name="media_doc">
-                   <property name="minimumSize">
-                    <size>
-                     <width>40</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>40</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">QPushButton{
-	background-image: url(:/cils/cils/cil-paperclip.png);
-	background-color: rgb(0, 0, 127);}
-
-QPushButton:hover{
-	background-color: rgb(61, 62, 63);}
-
-QPushButton:pressed{
-	background-color: rgb(31, 32, 34);}</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="media_audio">
-                   <property name="minimumSize">
-                    <size>
-                     <width>40</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>40</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">QPushButton{
-	background-image: url(:/cils/cils/blacks/cil-music-note.png);
-	background-color: rgb(255, 170, 0);
-}
-
-QPushButton:hover{
-	background-color: rgb(201, 202, 203);}
-
-QPushButton:pressed{
-	background-color: rgb(101, 102, 103);}</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="media_image">
-                   <property name="minimumSize">
-                    <size>
-                     <width>40</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>40</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">QPushButton{
-	background-image: url(:/cils/cils/cil-image1.png);
-	background-color: rgb(156, 0, 0);
-}
-
-QPushButton:hover{
-	background-color: rgb(61, 62, 63);}
-
-QPushButton:pressed{
-	background-color: rgb(31, 32, 34);}</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="media_video">
-                   <property name="minimumSize">
-                    <size>
-                     <width>40</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>40</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">QPushButton{
-	background-image: url(:/cils/cils/blacks/cil-movie.png);
-	background-color: rgb(0, 105, 255);
-}
-
-QPushButton:hover{
-	background-color: rgb(201, 202, 203);}
-
-QPushButton:pressed{
-	background-color: rgb(101, 102, 103);}</string>
-                   </property>
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
               </widget>
               <widget class="QWidget" name="chat_page">
                <property name="styleSheet">
@@ -4412,7 +4326,7 @@ QPushButton:pressed{
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QWidget" name="active_client_frame" native="true">
+                 <widget class="QWidget" name="active_chat_header" native="true">
                   <property name="minimumSize">
                    <size>
                     <width>551</width>
@@ -4428,7 +4342,7 @@ QPushButton:pressed{
                   <property name="styleSheet">
                    <string notr="true"/>
                   </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_3">
+                  <layout class="QHBoxLayout" name="active_chat_header_layout">
                    <property name="leftMargin">
                     <number>9</number>
                    </property>
@@ -4462,7 +4376,7 @@ QPushButton:pressed{
                       </font>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">border-radius:25px;background-color:rgb(20,21,22);</string>
+                      <string notr="true"/>
                      </property>
                      <property name="text">
                       <string>A</string>
@@ -4473,7 +4387,7 @@ QPushButton:pressed{
                     </widget>
                    </item>
                    <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_6">
+                    <layout class="QVBoxLayout" name="client_info_layout">
                      <property name="spacing">
                       <number>0</number>
                      </property>
@@ -4524,7 +4438,7 @@ QPushButton:pressed{
                         </font>
                        </property>
                        <property name="styleSheet">
-                        <string notr="true">color:#888;</string>
+                        <string notr="true"/>
                        </property>
                        <property name="text">
                         <string>Hello, i'm using AR Intercom !</string>
@@ -4548,8 +4462,7 @@ QPushButton:pressed{
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">color:rgb(255, 128, 0);
-</string>
+                      <string notr="true"/>
                      </property>
                      <property name="text">
                       <string>online 27 min ago</string>
@@ -4563,14 +4476,14 @@ QPushButton:pressed{
                     <widget class="QPushButton" name="attachment_btn">
                      <property name="minimumSize">
                       <size>
-                       <width>40</width>
-                       <height>40</height>
+                       <width>36</width>
+                       <height>36</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>40</width>
-                       <height>40</height>
+                       <width>36</width>
+                       <height>36</height>
                       </size>
                      </property>
                      <property name="styleSheet">
@@ -4588,14 +4501,14 @@ QPushButton:pressed{
                     <widget class="QPushButton" name="delete_btn">
                      <property name="minimumSize">
                       <size>
-                       <width>40</width>
-                       <height>40</height>
+                       <width>36</width>
+                       <height>36</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>40</width>
-                       <height>40</height>
+                       <width>36</width>
+                       <height>36</height>
                       </size>
                      </property>
                      <property name="styleSheet">
@@ -5997,7 +5910,136 @@ QPushButton::pressed{
                  </widget>
                 </item>
                 <item>
-                 <widget class="QWidget" name="bottom_frame" native="true">
+                 <widget class="QWidget" name="emoji_widget" native="true">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>196</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <widget class="QTabWidget" name="emoji_tab_widget">
+                   <property name="geometry">
+                    <rect>
+                     <x>3</x>
+                     <y>3</y>
+                     <width>561</width>
+                     <height>190</height>
+                    </rect>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="tabPosition">
+                    <enum>QTabWidget::North</enum>
+                   </property>
+                   <property name="tabShape">
+                    <enum>QTabWidget::Rounded</enum>
+                   </property>
+                   <property name="currentIndex">
+                    <number>1</number>
+                   </property>
+                   <property name="tabsClosable">
+                    <bool>false</bool>
+                   </property>
+                   <widget class="QWidget" name="tab_smilies">
+                    <attribute name="title">
+                     <string>Sm</string>
+                    </attribute>
+                    <layout class="QVBoxLayout" name="verticalLayout_12">
+                     <property name="spacing">
+                      <number>3</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>3</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>3</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>3</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>3</number>
+                     </property>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="tab_animals">
+                    <attribute name="title">
+                     <string>An</string>
+                    </attribute>
+                   </widget>
+                   <widget class="QWidget" name="tab_foods">
+                    <attribute name="title">
+                     <string>Fo</string>
+                    </attribute>
+                   </widget>
+                   <widget class="QWidget" name="tab_travels">
+                    <attribute name="title">
+                     <string>Tr</string>
+                    </attribute>
+                   </widget>
+                   <widget class="QWidget" name="tab_activities">
+                    <attribute name="title">
+                     <string>Ac</string>
+                    </attribute>
+                   </widget>
+                   <widget class="QWidget" name="tab_objects">
+                    <attribute name="title">
+                     <string>Ob</string>
+                    </attribute>
+                   </widget>
+                   <widget class="QWidget" name="tab_symbols">
+                    <attribute name="title">
+                     <string>Sy</string>
+                    </attribute>
+                   </widget>
+                   <widget class="QWidget" name="tab_flags">
+                    <attribute name="title">
+                     <string>Fl</string>
+                    </attribute>
+                   </widget>
+                  </widget>
+                  <widget class="QPushButton" name="close_emoji_btn">
+                   <property name="geometry">
+                    <rect>
+                     <x>544</x>
+                     <y>6</y>
+                     <width>20</width>
+                     <height>20</height>
+                    </rect>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>20</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+
+background-color:#111;
+border:none;
+border-radius:10px;
+image: url(:/cils/cils/cil-x.png);
+padding:4px;
+
+}
+
+QPushButton:hover{
+background-color:red;
+}</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="footer" native="true">
                   <property name="minimumSize">
                    <size>
                     <width>551</width>
@@ -6036,8 +6078,7 @@ border-radius:20px;}</string>
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">/*background-image: url(:/icons/icons/plus.png);*/
-background-image: url(:/cils/cils/cil-plus.png);</string>
+                      <string notr="true">background-image: url(:/cils/cils/cil-plus.png);</string>
                      </property>
                      <property name="text">
                       <string/>
@@ -6045,13 +6086,7 @@ background-image: url(:/cils/cils/cil-plus.png);</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QWidget" name="entry_frame" native="true">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
+                    <widget class="QWidget" name="input_container" native="true">
                      <property name="minimumSize">
                       <size>
                        <width>431</width>
@@ -6067,7 +6102,7 @@ background-image: url(:/cils/cils/cil-plus.png);</string>
                      <property name="styleSheet">
                       <string notr="true"/>
                      </property>
-                     <layout class="QHBoxLayout" name="horizontalLayout">
+                     <layout class="QHBoxLayout" name="input_container_layout">
                       <property name="spacing">
                        <number>0</number>
                       </property>
@@ -6075,13 +6110,13 @@ background-image: url(:/cils/cils/cil-plus.png);</string>
                        <number>9</number>
                       </property>
                       <property name="topMargin">
-                       <number>0</number>
+                       <number>3</number>
                       </property>
                       <property name="rightMargin">
-                       <number>0</number>
+                       <number>16</number>
                       </property>
                       <property name="bottomMargin">
-                       <number>0</number>
+                       <number>3</number>
                       </property>
                       <item>
                        <widget class="QPushButton" name="emoji_btn">
@@ -6106,11 +6141,11 @@ background-image: url(:/cils/cils/cil-plus.png);</string>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QTextEdit" name="entry_field">
+                       <widget class="QTextEdit" name="input">
                         <property name="maximumSize">
                          <size>
                           <width>16777215</width>
-                          <height>31</height>
+                          <height>30</height>
                          </size>
                         </property>
                         <property name="font">
@@ -6119,8 +6154,10 @@ background-image: url(:/cils/cils/cil-plus.png);</string>
                          </font>
                         </property>
                         <property name="styleSheet">
-                         <string notr="true">background-color:transparent;
-color:white;</string>
+                         <string notr="true"/>
+                        </property>
+                        <property name="verticalScrollBarPolicy">
+                         <enum>Qt::ScrollBarAlwaysOff</enum>
                         </property>
                         <property name="horizontalScrollBarPolicy">
                          <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -6157,8 +6194,7 @@ color:white;</string>
                       </size>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background-image: url(:/svg/svg/icon_send.svg);
-background-image: url(:/cils/cils/cil-microphone.png);</string>
+                      <string notr="true">background-image: url(:/cils/cils/cil-microphone.png);</string>
                      </property>
                      <property name="text">
                       <string/>
@@ -6168,600 +6204,7 @@ background-image: url(:/cils/cils/cil-microphone.png);</string>
                   </layout>
                   <zorder>media_btn</zorder>
                   <zorder>send_btn</zorder>
-                  <zorder>entry_frame</zorder>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QWidget" name="emoji_widget" native="true">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>180</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QWidget#emoji_widget{
-	background-color: rgb(30,32,33);
-	border-radius:10px;
-}</string>
-                  </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_11">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>3</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>3</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>3</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>3</number>
-                   </property>
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_17">
-                     <item>
-                      <widget class="QLabel" name="emoji_widget_title">
-                       <property name="font">
-                        <font>
-                         <pointsize>10</pointsize>
-                        </font>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">color:#aaa;</string>
-                       </property>
-                       <property name="text">
-                        <string>Emojis</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacer_10">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="close_emoji_btn">
-                       <property name="maximumSize">
-                        <size>
-                         <width>20</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">QPushButton{
-
-background-color:#111;
-border:none;
-border-radius:4px;
-image: url(:/cils/cils/cil-x.png);
-padding:4px;
-
-}
-
-QPushButton:hover{
-background-color:red;
-}</string>
-                       </property>
-                       <property name="text">
-                        <string/>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <widget class="QTabWidget" name="emoji_tab_widget">
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>140</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">QTabWidget::pane {
-background-color:#000;
-}
-
-QTabWidget::tab-bar {
-}
-
-QTabBar::tab{
-    background-color:#222;
-	width:35px;
-	height:35px;
-}
-
-QTabBar::tab:hover{
-    background-color:#666;
-}
-
-QTabBar::tab:selected{
-	border-bottom:4px solid #111;
-}
-QTabBar::tab:!selected{
-	border-bottom:4px solid #222;
-}
-
-QTabWidget QWidget{
-background-color:#111;
-}</string>
-                     </property>
-                     <property name="tabPosition">
-                      <enum>QTabWidget::North</enum>
-                     </property>
-                     <property name="tabShape">
-                      <enum>QTabWidget::Rounded</enum>
-                     </property>
-                     <property name="currentIndex">
-                      <number>0</number>
-                     </property>
-                     <property name="tabsClosable">
-                      <bool>false</bool>
-                     </property>
-                     <widget class="QWidget" name="tab_smilies">
-                      <attribute name="title">
-                       <string>Sm</string>
-                      </attribute>
-                      <layout class="QVBoxLayout" name="verticalLayout_12">
-                       <property name="spacing">
-                        <number>3</number>
-                       </property>
-                       <property name="leftMargin">
-                        <number>3</number>
-                       </property>
-                       <property name="topMargin">
-                        <number>3</number>
-                       </property>
-                       <property name="rightMargin">
-                        <number>3</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>3</number>
-                       </property>
-                       <item>
-                        <widget class="QScrollArea" name="emoji_scroll_area">
-                         <property name="minimumSize">
-                          <size>
-                           <width>546</width>
-                           <height>127</height>
-                          </size>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">border:none;</string>
-                         </property>
-                         <property name="horizontalScrollBarPolicy">
-                          <enum>Qt::ScrollBarAlwaysOff</enum>
-                         </property>
-                         <property name="widgetResizable">
-                          <bool>true</bool>
-                         </property>
-                         <property name="alignment">
-                          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                         </property>
-                         <widget class="QWidget" name="scrollAreaWidgetContents_2">
-                          <property name="geometry">
-                           <rect>
-                            <x>0</x>
-                            <y>0</y>
-                            <width>555</width>
-                            <height>132</height>
-                           </rect>
-                          </property>
-                          <layout class="QGridLayout" name="emoji_grid_layout">
-                           <property name="leftMargin">
-                            <number>0</number>
-                           </property>
-                           <property name="topMargin">
-                            <number>0</number>
-                           </property>
-                           <property name="rightMargin">
-                            <number>0</number>
-                           </property>
-                           <property name="bottomMargin">
-                            <number>0</number>
-                           </property>
-                           <property name="spacing">
-                            <number>1</number>
-                           </property>
-                          </layout>
-                         </widget>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                     <widget class="QWidget" name="tab_animals">
-                      <attribute name="title">
-                       <string>An</string>
-                      </attribute>
-                      <widget class="QScrollArea" name="emoji_scroll_area_2">
-                       <property name="geometry">
-                        <rect>
-                         <x>0</x>
-                         <y>0</y>
-                         <width>567</width>
-                         <height>83</height>
-                        </rect>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">border:none;</string>
-                       </property>
-                       <property name="horizontalScrollBarPolicy">
-                        <enum>Qt::ScrollBarAlwaysOff</enum>
-                       </property>
-                       <property name="widgetResizable">
-                        <bool>true</bool>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                       </property>
-                       <widget class="QWidget" name="scrollAreaWidgetContents_3">
-                        <property name="geometry">
-                         <rect>
-                          <x>0</x>
-                          <y>0</y>
-                          <width>567</width>
-                          <height>83</height>
-                         </rect>
-                        </property>
-                        <layout class="QGridLayout" name="emoji_grid_layout_2">
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="spacing">
-                          <number>1</number>
-                         </property>
-                        </layout>
-                       </widget>
-                      </widget>
-                     </widget>
-                     <widget class="QWidget" name="tab_foods">
-                      <attribute name="title">
-                       <string>Fo</string>
-                      </attribute>
-                      <widget class="QScrollArea" name="emoji_scroll_area_3">
-                       <property name="geometry">
-                        <rect>
-                         <x>0</x>
-                         <y>0</y>
-                         <width>567</width>
-                         <height>83</height>
-                        </rect>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">border:none;</string>
-                       </property>
-                       <property name="horizontalScrollBarPolicy">
-                        <enum>Qt::ScrollBarAlwaysOff</enum>
-                       </property>
-                       <property name="widgetResizable">
-                        <bool>true</bool>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                       </property>
-                       <widget class="QWidget" name="scrollAreaWidgetContents_4">
-                        <property name="geometry">
-                         <rect>
-                          <x>0</x>
-                          <y>0</y>
-                          <width>567</width>
-                          <height>83</height>
-                         </rect>
-                        </property>
-                        <layout class="QGridLayout" name="emoji_grid_layout_3">
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="spacing">
-                          <number>1</number>
-                         </property>
-                        </layout>
-                       </widget>
-                      </widget>
-                     </widget>
-                     <widget class="QWidget" name="tab_travels">
-                      <attribute name="title">
-                       <string>Tr</string>
-                      </attribute>
-                      <widget class="QScrollArea" name="emoji_scroll_area_4">
-                       <property name="geometry">
-                        <rect>
-                         <x>0</x>
-                         <y>0</y>
-                         <width>567</width>
-                         <height>83</height>
-                        </rect>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">border:none;</string>
-                       </property>
-                       <property name="horizontalScrollBarPolicy">
-                        <enum>Qt::ScrollBarAlwaysOff</enum>
-                       </property>
-                       <property name="widgetResizable">
-                        <bool>true</bool>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                       </property>
-                       <widget class="QWidget" name="scrollAreaWidgetContents_5">
-                        <property name="geometry">
-                         <rect>
-                          <x>0</x>
-                          <y>0</y>
-                          <width>567</width>
-                          <height>83</height>
-                         </rect>
-                        </property>
-                        <layout class="QGridLayout" name="emoji_grid_layout_4">
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="spacing">
-                          <number>1</number>
-                         </property>
-                        </layout>
-                       </widget>
-                      </widget>
-                     </widget>
-                     <widget class="QWidget" name="tab_activities">
-                      <attribute name="title">
-                       <string>Ac</string>
-                      </attribute>
-                      <widget class="QScrollArea" name="emoji_scroll_area_5">
-                       <property name="geometry">
-                        <rect>
-                         <x>0</x>
-                         <y>0</y>
-                         <width>567</width>
-                         <height>83</height>
-                        </rect>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">border:none;</string>
-                       </property>
-                       <property name="horizontalScrollBarPolicy">
-                        <enum>Qt::ScrollBarAlwaysOff</enum>
-                       </property>
-                       <property name="widgetResizable">
-                        <bool>true</bool>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                       </property>
-                       <widget class="QWidget" name="scrollAreaWidgetContents_6">
-                        <property name="geometry">
-                         <rect>
-                          <x>0</x>
-                          <y>0</y>
-                          <width>567</width>
-                          <height>83</height>
-                         </rect>
-                        </property>
-                        <layout class="QGridLayout" name="emoji_grid_layout_5">
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="spacing">
-                          <number>1</number>
-                         </property>
-                        </layout>
-                       </widget>
-                      </widget>
-                     </widget>
-                     <widget class="QWidget" name="tab_objects">
-                      <attribute name="title">
-                       <string>Ob</string>
-                      </attribute>
-                      <widget class="QScrollArea" name="emoji_scroll_area_6">
-                       <property name="geometry">
-                        <rect>
-                         <x>0</x>
-                         <y>0</y>
-                         <width>567</width>
-                         <height>83</height>
-                        </rect>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">border:none;</string>
-                       </property>
-                       <property name="horizontalScrollBarPolicy">
-                        <enum>Qt::ScrollBarAlwaysOff</enum>
-                       </property>
-                       <property name="widgetResizable">
-                        <bool>true</bool>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                       </property>
-                       <widget class="QWidget" name="scrollAreaWidgetContents_7">
-                        <property name="geometry">
-                         <rect>
-                          <x>0</x>
-                          <y>0</y>
-                          <width>567</width>
-                          <height>83</height>
-                         </rect>
-                        </property>
-                        <layout class="QGridLayout" name="emoji_grid_layout_6">
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="spacing">
-                          <number>1</number>
-                         </property>
-                        </layout>
-                       </widget>
-                      </widget>
-                     </widget>
-                     <widget class="QWidget" name="tab_symbols">
-                      <attribute name="title">
-                       <string>Sy</string>
-                      </attribute>
-                      <widget class="QScrollArea" name="emoji_scroll_area_7">
-                       <property name="geometry">
-                        <rect>
-                         <x>0</x>
-                         <y>0</y>
-                         <width>567</width>
-                         <height>83</height>
-                        </rect>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">border:none;</string>
-                       </property>
-                       <property name="horizontalScrollBarPolicy">
-                        <enum>Qt::ScrollBarAlwaysOff</enum>
-                       </property>
-                       <property name="widgetResizable">
-                        <bool>true</bool>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                       </property>
-                       <widget class="QWidget" name="scrollAreaWidgetContents_8">
-                        <property name="geometry">
-                         <rect>
-                          <x>0</x>
-                          <y>0</y>
-                          <width>567</width>
-                          <height>83</height>
-                         </rect>
-                        </property>
-                        <layout class="QGridLayout" name="emoji_grid_layout_7">
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="spacing">
-                          <number>1</number>
-                         </property>
-                        </layout>
-                       </widget>
-                      </widget>
-                     </widget>
-                     <widget class="QWidget" name="tab_flags">
-                      <attribute name="title">
-                       <string>Fl</string>
-                      </attribute>
-                      <widget class="QScrollArea" name="emoji_scroll_area_8">
-                       <property name="geometry">
-                        <rect>
-                         <x>0</x>
-                         <y>0</y>
-                         <width>567</width>
-                         <height>83</height>
-                        </rect>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">border:none;</string>
-                       </property>
-                       <property name="horizontalScrollBarPolicy">
-                        <enum>Qt::ScrollBarAlwaysOff</enum>
-                       </property>
-                       <property name="widgetResizable">
-                        <bool>true</bool>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                       </property>
-                       <widget class="QWidget" name="scrollAreaWidgetContents_9">
-                        <property name="geometry">
-                         <rect>
-                          <x>0</x>
-                          <y>0</y>
-                          <width>567</width>
-                          <height>83</height>
-                         </rect>
-                        </property>
-                        <layout class="QGridLayout" name="emoji_grid_layout_8">
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="spacing">
-                          <number>1</number>
-                         </property>
-                        </layout>
-                       </widget>
-                      </widget>
-                     </widget>
-                    </widget>
-                   </item>
-                  </layout>
+                  <zorder>input_container</zorder>
                  </widget>
                 </item>
                </layout>

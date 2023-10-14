@@ -56,9 +56,9 @@ class MainWindow(QMainWindow):
         self.ui.close_emoji_btn.clicked.connect(self.toggle_emojis)
 
         # System buttons
-        self.ui.redius_btn.clicked.connect(self.showMinimized)
+        self.ui.minimize_btn.clicked.connect(self.showMinimized)
         self.ui.min_max_btn.clicked.connect(self.maximize_restore)
-        self.ui.close_app_btn.clicked.connect(self.close)
+        self.ui.close_btn.clicked.connect(self.close)
 
         # Menus
         self.ui.home_btn.clicked.connect(self.menu_click)
