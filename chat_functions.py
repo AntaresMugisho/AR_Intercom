@@ -30,19 +30,19 @@ from notification import NotificationWidget
 seconds = minutes = 0
 
 
-class ChatFunctions(QMainWindow):
+class ChatFunctions: #(QMainWindow):
     """
     Initialize chat window to show conversations and start chatting
     """
 
     DATE = None
 
-    def __init__(self):
-        QMainWindow.__init__(self)
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-
-        self.initialize()
+    # def __init__(self):
+    #     QMainWindow.__init__(self)
+    #     self.ui = Ui_MainWindow()
+    #     self.ui.setupUi(self)
+    #
+    #     self.initialize()
 
     def initialize(self):
         # SHOW USERS / CONVERSATION LIST
@@ -163,6 +163,7 @@ class ChatFunctions(QMainWindow):
             user_status = "Hello, i'm using AR Intercom !"
 
         # SET NAME AND STATUS TO THE ACTIVE CLIENT LABEL
+        self.ui.chat_stacked_widget.setCurrentWidget(self.ui.chat_page)
         self.ui.active_client_name.setText(user_name)
         self.ui.active_client_name.setObjectName(user_uuid)
         self.ui.active_client_status.setText(user_status)
@@ -227,9 +228,11 @@ class ChatFunctions(QMainWindow):
         # SHOW BUBBLE
         if message.get_sender_id() == 1:
             bubble = Bubble(message, "right")
+            self.ui.chat_scroll_layout.addWidget(bubble, 0, Qt.AlignmentFlag.AlignRight)
         else:
             bubble = Bubble(message, "left")
-        self.ui.chat_scroll_layout.addWidget(bubble)
+            self.ui.chat_scroll_layout.addWidget(bubble)
+
 
         # Connect play button if the bubble is of type voice:
         if message.get_kind() in ["voice", "audio", "video"]:

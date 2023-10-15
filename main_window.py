@@ -62,18 +62,18 @@ class MainWindow(QMainWindow, ChatFunctions):
         self.ui.chat_scroll_layout.itemAt(1).spacerItem()
 
         # Start on home page
-        # self.ui.home_btn.clicked.emit()
+        self.ui.home_btn.clicked.emit()
 
         ChatFunctions.initialize(self)
 
-    def closeEvent(self, event) -> None:
-        pass
-        # messagebox = QMessageBox.question(self, "Close", "Do you really want to close the application ?",
-        #                                   QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
-        # if messagebox == QMessageBox.StandardButton.Yes:
-        #     print("Close")
-        # else:
-        #     print("Don't close")
+    # def closeEvent(self, event) -> None:
+    #     pass
+    #     # messagebox = QMessageBox.question(self, "Close", "Do you really want to close the application ?",
+    #     #                                   QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+    #     # if messagebox == QMessageBox.StandardButton.Yes:
+    #     #     print("Close")
+    #     # else:
+    #     #     print("Don't close")
 
     def maximize_restore(self):
         if not self.WINDOW_MAXIMIZED:
