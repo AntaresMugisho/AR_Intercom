@@ -39,317 +39,166 @@ class Ui_MainWindow(object):
         self.actionQuitter.setObjectName(u"actionQuitter")
         self.stylesheet = QWidget(MainWindow)
         self.stylesheet.setObjectName(u"stylesheet")
-        self.stylesheet.setStyleSheet(u"/* DEFAULT */\n"
+        self.stylesheet.setStyleSheet(u"/*  DEFAULT */\n"
 "QWidget {\n"
-"\n"
-"	color: rgb(230, 230, 230);\n"
-"	selection-background-color: rgb(86, 115, 0);\n"
+"	color: rgb(250, 250, 250);\n"
+"	selection-background-color: rgba(0, 150, 200, 50);\n"
 "}\n"
 "\n"
-"/* Left Menu */\n"
-"#left_menu {\n"
-"	border-top-left-radius: 10px;\n"
-"	border-bottom-left-radius: 10px;\n"
-"}\n"
-"\n"
-"/* App name near logo top*/\n"
-"#app_name {\n"
-"color:#FFFFFF;}\n"
-"	\n"
-"\n"
-"/* Buttons */\n"
-"#left_menu QPushButton {\n"
-"	border: none;	\n"
-"	background-color: transparent;\n"
-"	border-radius: 10px;\n"
-"	background-repeat: none;\n"
-"	background-position: center;\n"
-"}\n"
-"#left_menu QPushButton:hover {\n"
-"	background-color: rgb(21, 22, 23);\n"
-"}\n"
-"#left_menu QPushButton:pressed {\n"
-"	background-color: rgb(172, 229, 0);\n"
-"}\n"
-"#add_user_btn {	\n"
-"	background-image: url(:/icons_svg/images/icons_svg/icon_add_user.svg);\n"
-"}\n"
-"#settings_btn {	\n"
-"	background-image: url(:/icons_svg/images/icons_svg/icon_settings.svg);\n"
-"}\n"
-"\n"
-"/* Left Messages\n"
-"#left_messages {\n"
-"	background-color: rgb(21, 22, 23);\n"
-"	border: none;\n"
-"	border-left: 3px s"
-                        "olid rgb(30, 32, 33);\n"
-"} \n"
-"*/\n"
-"\n"
-"/* Top \n"
-"#top_messages {\n"
-"	border: none;\n"
-"	border-bottom: 1px solid rgb(47, 48, 50);\n"
-"}*/\n"
-"\n"
-"/* Search Message */\n"
-"#search_sms_frame .QLineEdit {\n"
-"	border: 2px solid rgb(47, 48, 50);\n"
-"	border-radius: 8px;\n"
-"	background-color: rgb(47, 48, 50);\n"
-"	color: rgb(121, 121, 121);\n"
-"	padding-left: 30px;\n"
-"	padding-right: 10px;\n"
-"	background-image: url(:/icons_svg/images/icons_svg/icon_search.svg);\n"
-"	background-repeat: none;\n"
-"	background-position: left center;\n"
-"}\n"
-"#search_sms_frame .QLineEdit:hover {\n"
-"	color: rgb(230, 230, 230);\n"
-"	border: 2px solid rgb(62, 63, 66);\n"
-"}\n"
-"#search_sms_frame .QLineEdit:focus {\n"
-"	color: rgb(230, 230, 230);\n"
-"	border: 2px solid rgb(53, 54, 56);\n"
-"	background-color: rgb(14, 14, 15);\n"
-"}\n"
-"\n"
-"/* Menus Scroll Area */\n"
-"#left_messages_scroll, #messages_scroll {\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"/* Bottom / Signal */\n"
-"#bottom_messages {	\n"
-"	background-color:"
-                        " rgb(30, 32, 33);\n"
-"}\n"
-"\n"
-"#label_top{	\n"
-"	color: rgb(189, 255, 0);\n"
-"}\n"
-"#label_bottom {	\n"
-"	color: rgb(166, 166, 166);\n"
-"}\n"
-"\n"
-"/* Right Content */\n"
-"#right_content {\n"
-"	border-top-right-radius: 10px;\n"
-"	border-bottom-right-radius: 10px;\n"
-"}\n"
-"\n"
-"/* Top Bar */\n"
-"#top_bar {\n"
-"	border-top-right-radius: 10px;\n"
-"}\n"
-"\n"
-"/* Title Bar */\n"
-"#title_bar {\n"
-"	background-image: url(:/images_svg/images/images_svg/text_logo.svg);\n"
-"	background-repeat: no-repeat;\n"
-"	background-position: left center;\n"
-"	border-left: 15px solid transparent;\n"
-"}\n"
-"\n"
-"/* Top BTNs */\n"
-"#system_menu {  }\n"
-"#system_menu .QPushButton {	\n"
-"	background-position: center;\n"
-"    background-repeat: no-repeat;\n"
+"QPushButton{\n"
+"	background-repeat:no-repeat;\n"
+"	background-position:center;\n"
 "	border: none;\n"
 "	outline: none;\n"
-"	border-radius: 8px;\n"
-"	text-align: left;\n"
 "}\n"
-"#system_menu .QPushButton:hover { background-color: rgb(21, 22, 23); }\n"
-"#system_menu .QPushButton:pressed { background-color: rgb(172, 229, 0); }\n"
-"#system_menu #close_app_btn:hover "
-                        "{ background-color: rgb(255, 0, 127); }\n"
-"#system_menu #close_app_btn:pressed { background-color: rgb(172, 229, 0); }\n"
 "\n"
-"/* Content / Pages */\n"
-"#app_pages {\n"
-"	background-color: transparent;\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(31, 32, 33);\n"
 "}\n"
-"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
-"ScrollBars */\n"
-"QScrollBar:horizontal {\n"
-"    border: none;\n"
-"    background: rgb(52, 59, 72);\n"
-"    height: 8px;\n"
-"    margin: 0px 21px 0 21px;\n"
-"	border-radius: 0px;\n"
-"}\n"
-"QScrollBar::handle:horizontal {\n"
-"    background: rgb(47, 48, 50);\n"
-"    min-width: 25px;\n"
-"	border-radius: 4px\n"
-"}\n"
-"QScrollBar::add-line:horizontal {\n"
-"    border: none;\n"
-"    background: rgb(55, 63, 77);\n"
-"    width: 20px;\n"
-"	border-top-right-radius: 4px;\n"
-"    border-bottom-right-radius: 4px;\n"
-"    subcontrol-position: right;\n"
-"    subcontrol-origin: margin;\n"
-"}\n"
-"QScrollBar::sub-line:horizontal {\n"
-"    border: none;\n"
-"    background: rgb(55, 63, 77);\n"
-"    width: 20px;\n"
-""
-                        "	border-top-left-radius: 4px;\n"
-"    border-bottom-left-radius: 4px;\n"
-"    subcontrol-position: left;\n"
-"    subcontrol-origin: margin;\n"
-"}\n"
-"QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal\n"
-"{\n"
-"     background: none;\n"
-"}\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal\n"
-"{\n"
-"     background: none;\n"
-"}\n"
-" QScrollBar:vertical {\n"
-"	border: none;\n"
-"    background: rgb(52, 59, 72);\n"
-"    width: 8px;\n"
-"    margin: 21px 0 21px 0;\n"
-"	border-radius: 0px;\n"
-" }\n"
-" QScrollBar::handle:vertical {	\n"
-"	background: rgb(47, 48, 50);\n"
-"    min-height: 25px;\n"
-"	border-radius: 4px\n"
-" }\n"
-" QScrollBar::add-line:vertical {\n"
-"     border: none;\n"
-"    background: transparent;\n"
-"     height: 10px;\n"
-"    border-radius: 4px;\n"
-"     subcontrol-position: bottom;\n"
-"     subcontrol-origin: margin;\n"
-" }\n"
-" QScrollBar::sub-line:vertical {\n"
-"	border: none;\n"
-"    background: transparent;\n"
-"    height: 10px;\n"
-"    border-radius: 4px;\n"
-""
-                        "     subcontrol-position: top;\n"
-"     subcontrol-origin: margin;\n"
-" }\n"
-" QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
-"     background: none;\n"
-" }\n"
 "\n"
-" QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-"     background: none;\n"
-" }\n"
+"QPushButton:pressed {\n"
+"	background-color: rgb(51, 52, 53);\n"
+"}\n"
 "\n"
-"")
-        self.app_margins = QVBoxLayout(self.stylesheet)
-        self.app_margins.setObjectName(u"app_margins")
-        self.bg_app = QWidget(self.stylesheet)
-        self.bg_app.setObjectName(u"bg_app")
-        self.bg_app.setStyleSheet(u"\n"
-"/* Bg App*/\n"
-"#bg_app {	\n"
-"	background-color: #000;\n"
-"	border: 2px solid rgb(30, 32, 33);\n"
+"#app_bg {\n"
+"	background-color: #111;\n"
+"	border: 2px solid #000;\n"
 "	border-radius:10px;\n"
-"} \n"
+"}\n"
 "\n"
-"/* App name near logo top */\n"
-"#app_logo_and_name{\n"
+"/* TITLE BAR */\n"
+"#app_brand{\n"
 "	border-bottom:1px dashed rgb(55, 56, 57);\n"
 "}\n"
-"#app_name {\n"
-"	color:white;\n"
+"\n"
+"#title_bar{\n"
+"	border-bottom: 2px dotted rgb(30, 32, 33);\n"
 "}\n"
 "\n"
-"/* Top BTNs */\n"
-"#system_menu {  }\n"
-"#system_menu .QPushButton {	\n"
-"	background-position: center;\n"
-"    background-repeat: no-repeat;\n"
-"	border: none;\n"
-"	outline: none;\n"
+"#settings_btn{\n"
+"	background-image:url(:/cils/cils/icon_settings.png);\n"
+"	border-radius: 8px\n"
+"}\n"
+"\n"
+"#settings_btn:hover { \n"
+"	background-color: rgb(31, 32, 33); \n"
+"}\n"
+"\n"
+"#settings_btn:pressed { \n"
+"	background-color: rgb(51, 52, 53); \n"
+"}\n"
+"\n"
+"/*SYSTEM MENU*/\n"
+"#system_menu{\n"
+"    background-color"
+                        ":rgb(31, 32, 33);\n"
+"    border-bottom-left-radius:10px;\n"
+"	border-top-right-radius:6px;\n"
+"}\n"
+"\n"
+"#system_menu .QPushButton {\n"
 "	border-radius: 14px;\n"
 "}\n"
-"#system_menu .QPushButton:hover { background-color: rgb(21, 22, 23); }\n"
-"#system_menu .QPushButton:pressed { background-color: rgb(172, 229, 0); }\n"
 "\n"
-"#system_menu #minimize_btn:pressed { background-color: yellow; }\n"
+"#system_menu .QPushButton:hover { \n"
+"	background-color: rgb(11, 12, 13); \n"
+"}\n"
 "\n"
-"#system_menu #min_max_btn:pressed { background-color: rgb(0, 255, 0); }\n"
+"#system_menu #minimize_btn{\n"
+"	background-image: url(:/cils/cils/icon_minimize.png);\n"
+"}\n"
 "\n"
-"#system_menu #close_btn:hover { background-color: rgb(255, 0, 100); }\n"
-"#system_menu #close_btn:pressed { background-color: rgb(255, 0, 0); }\n"
+"#system_menu #minimize_btn:pressed{\n"
+"	background-color:#fff000\n"
+"}\n"
 "\n"
-"#settings_btn{background-position: center;\n"
-""
-                        "    background-repeat: no-repeat;\n"
-"	border: none;\n"
-"	outline: none;\n"
-"	border-radius: 8px;}\n"
+"#system_menu #maximize_restore_btn{\n"
+"	background-image: url(:/cils/cils/icon_maximize.png);\n"
+"}\n"
 "\n"
-"#settings_btn:hover { background-color: rgb(31, 32, 33); }\n"
-"#settings_btn:pressed { background-color: rgb(51, 52, 53); }\n"
+"#system_menu #maximize_restore_btn:pressed{\n"
+"	background-color: #00dd00;\n"
+"}\n"
+"\n"
+"#system_menu #close_btn{\n"
+"	background-image: url(:/cils/cils/icon_close.png);\n"
+"}\n"
+"\n"
+"#system_menu #close_btn:hover { \n"
+"	background-color: #ff0000;\n"
+"}\n"
 "\n"
 "\n"
-"\n"
-"/*Menu  Buttons */\n"
+"/*ASIDE MENU BAR */\n"
 "\n"
 "#left_menu {\n"
 "	border-top-left-radius: 10px;\n"
 "	border-bottom-left-radius: 10px;\n"
-"	border-right:2px solid rgb(30,32,33)\n"
+"	border-right:2px solid rgb(30,32,33);\n"
 "}\n"
 "\n"
-"#left_menu QPushButton{\n"
+"#left_menu QPushButt"
+                        "on{\n"
 "	text-align:left;\n"
 "	padding-left:42px;\n"
 "	border-left:16px solid transparent;\n"
 "	border-radius: 0px;\n"
-"	background-repeat:none;\n"
-"	background-position:center left;	\n"
-"	}\n"
+"	background-position:center left;\n"
+"}\n"
+"#menu_btn{\n"
+"	background-image: url(:/cils/cils/cil-list.png);\n"
+"}\n"
 "\n"
-"#left_menu QPushButton:hover {\n"
-"	background-color: rgb(21, 22, 23);\n"
+"#home_btn{\n"
+"	background-image: url(:/cils/cils/cil-home.png);\n"
 "}\n"
-"#left_menu QPushButton:pressed {\n"
-"	background-color: rgb(40, 42, 43);\n"
+"\n"
+"#scan_btn{\n"
+"	background-image: url(:/svg/svg/icon_signal.svg);\n"
 "}\n"
+"\n"
+"#chat_btn{\n"
+"	background-image: url(:/cils/cils/cil-chat-bubble.png);\n"
+"}\n"
+"\n"
+"#settings_btn_2{\n"
+"    background-image:url(:/cils/cils/cil-settings.png);\n"
+"}\n"
+"\n"
+"#about_btn{\n"
+"	background-image: url(:/cils/cils/cil-at.png);\n"
+"}\n"
+"\n"
+"/* LEFT SIDE - CHAT LIST */\n"
+"\n"
 "#left_side_container QWidget{\n"
 "	background-color:rgb(21, 22, 23);\n"
 "}\n"
 "\n"
-"/* Top User*/\n"
-"#p_user {\n"
+"/* Authenticated user info*/\n"
+"#auth_user_container {\n"
 "	background-color: rgb(21, 22, 23);\n"
 "	border: none;\n"
 "	border-bottom: 1px dashed rgb(47, 48, 50);\n"
-""
-                        "}\n"
-"\n"
-"#p_user #p_username{\n"
-"	color: rgba(255, 255, 255, 0.9);\n"
 "}\n"
 "\n"
-"#p_user #p_user_status{\n"
+"#me_picture{\n"
+"	border-radius:30px;\n"
+"}\n"
+"\n"
+"#me_userna"
+                        "me{\n"
+"	color:rgba(255, 255, 255, 0.8);\n"
+"}\n"
+"\n"
+"#me_status{\n"
 "	color:rgba(255, 255, 255, 0.4);\n"
 "}\n"
 "\n"
-"/* Search Message */\n"
-"#search_sms.QLineEdit {\n"
+"/* Search bar */\n"
+"#search_bar {\n"
 "	border: 2px solid rgb(47, 48, 50);\n"
 "	border-radius: 15px;\n"
-"	background-color: rgb(47, 48, 50);\n"
 "	color: rgb(121, 121, 121);\n"
 "	padding-left: 30px;\n"
 "	padding-right: 10px;\n"
@@ -357,128 +206,116 @@ class Ui_MainWindow(object):
 "	background-repeat: none;\n"
 "	background-position: left center;\n"
 "}\n"
-"#search_sms.QLineEdit:hover {\n"
+"\n"
+"#search_bar:hover {\n"
 "	color: rgb(230, 230, 230);\n"
-"	border: 2px solid rgb(62, 63, 66);\n"
+"	border-color: rgb(62, 63, 66);\n"
 "}\n"
-"#search_sms.QLineEdit:focus {\n"
-"	color: rgb(230, 230, 230);\n"
-"	border: 2px solid rgb(53, 54, 56);\n"
+"\n"
+"#search_bar:focus {\n"
+"	border-color: rgb(53, 54, 56);\n"
 "	background-color: rgb(14, 14, 15);}\n"
 "\n"
-"/* Contacts stack*/\n"
-"#contacts_stack {\n"
-"	background-color: rgb(21, 22, 23);\n"
-"	border: none;\n"
-"	border-bottom: 2px dashed rgb(30, 32, 33);\n"
-"} \n"
-"\n"
-"#left_scroll QScrollArea , #left_scroll QWidget{\n"
-"	backgroun"
-                        "d-color:rgb(21, 22, 23);\n"
+"/* Network signal indicator*/\n"
+"#signal_status_container{\n"
+"	border-top: 2px dotted rgb(30, 32, 33);\n"
 "}\n"
 "\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"#server_signal {}\n"
-"#signal_icon { \n"
+"#signal_icon {\n"
 "	background-repeat: no-repeat;\n"
 "	background-position: left center;\n"
 "}\n"
 "\n"
+"#signal_text{\n"
+"	color: rgb(255, 255, 127);\n"
+"}\n"
 "\n"
 "\n"
-"/*ACTIVE CONTACT FRAME*/\n"
-"#active_client_frame{\n"
+"/* CHAT */\n"
+"\n"
+"#chat_stacked_widget > QWidget{\n"
+"	background-color:#111;\n"
+""
+                        "}\n"
+"\n"
+"/* Header */\n"
+"#active_chat_header{\n"
 "	background-color:rgb(30, 32, 33);\n"
 "	border-radius: 10px;\n"
 "}\n"
 "\n"
-"#active_client_frame QPushButton {\n"
+"#active_chat_header QPushButton {\n"
 "	background-color: rgb(47, 48, 50);\n"
-"	border-radius: 20px;\n"
+"	border-radius: 18px;\n"
 "	background-repeat: no-repeat;\n"
 "	background-position: center;\n"
 "}\n"
-"#active_client_frame QPushButton:hover {\n"
+"\n"
+"#active_chat_header QPushButton:hover {\n"
 "	background-color: rgb(61, 62, 65);\n"
 "}\n"
-"#active_client_frame QPushButton:pressed {\n"
+"\n"
+"#active_chat_header QPushButton:pressed {\n"
 "	background-color: rgb(16, 17, 18);\n"
 "}\n"
 "\n"
-"#contact_name{ \n"
-"	color: rgb(179, 179, 179);\n"
+"#active_client_picture{\n"
+"	border-radius:25px;\n"
+"	background-color:rgb(20,21,22);\n"
 "}\n"
 "\n"
-"#contact_status{\n"
-"	color: rgb(179, 179, 179);\n"
+"#active_client_status{\n"
+"	color: rgb(170, 170, 170);\n"
 "}\n"
 "\n"
 "#last_seen{\n"
-"	color: rgb(179, 179, 179);\n"
-"\n"
-"}\n"
-"#contact_image {\n"
-"	border: 1px solid rgb(30, 32, 33);\n"
-"	background-color: rgb(47, 48, 50);\n"
-"	border-radius: 25px;\n"
-"}\n"
-""
-                        "\n"
-"#chat_stacked_widget {\n"
-"	border-right:5px solid red;\n"
-"}\n"
-"\n"
-"#chat_stacked_widget #chat_page{\n"
-"	background-color:transparent;\n"
+"	color: rgb(170, 170, 170);\n"
 "}\n"
 "\n"
 "/*Chat scroll*/\n"
 "#chat_scroll, #chat_scroll_widget{\n"
-"background:transparent;\n"
-"border-radius: 10px;\n"
+"	background:transparent;\n"
+"	border:none;\n"
 "}\n"
 "\n"
-"/*Bottom Frame*/\n"
-"#bottom_frame{\n"
+"\n"
+"/* Footer - Typing zone*/\n"
+"#footer{\n"
 "	background-color:rgb(30, 32, 33);\n"
 "	border-radius: 10px;\n"
 "}\n"
 "\n"
-"#bottom_frame QPushButton {\n"
-"	background-color: rgb(47, 48, 50);\n"
+"#footer QPushButton {\n"
+"	background-color: rgb("
+                        "47, 48, 50);\n"
 "	border-radius: 20px;\n"
 "	background-repeat: no-repeat;\n"
 "	background-position: center;\n"
 "}\n"
-"#bottom_frame QPushButton:hover {\n"
+"\n"
+"#footer QPushButton:hover {\n"
 "	background-color: rgb(61, 62, 65);\n"
 "}\n"
-"#bottom_frame QPushButton:pressed {\n"
+"\n"
+"#footer QPushButton:pressed {\n"
 "	background-color: rgb(16, 17, 18);\n"
 "}\n"
-"#entry_frame{\n"
+"\n"
+"#input_container{\n"
 "	border-radius:25px;\n"
 "	background-color:rgb(47, 48, 50);\n"
-"\n"
 "}\n"
-"#entry_field{\n"
+"\n"
+"#input{\n"
 "	border:none;\n"
 "	background:transparent;\n"
-"	padding-left:10px;	\n"
-"	padding-right:10px;\n"
+"	color:white;\n"
 "}\n"
-"#media_btn{\n"
-"	}\n"
+"\n"
+"/*Media buttons */\n"
 "#media_bg{\n"
 "	border-radius:23px;\n"
-"	backgr"
-                        "ound:transparent;\n"
+"	background:transparent;\n"
 "}\n"
 "#media_bg QPushButton{\n"
 "	border-radius:20px;\n"
@@ -495,15 +332,136 @@ class Ui_MainWindow(object):
 "	background-color:rgb(16, 17, 18);\n"
 "}\n"
 "\n"
+"/*Emoji widget*/\n"
+"#emoji_widget{\n"
+"		background-color: rgb(30,32,33);\n"
+"		border-radius:8px;\n"
+"}\n"
+"\n"
+""
+                        "#emoji_widget QTabWidget::pane {\n"
+"	background-color:#000;\n"
+"}\n"
+"\n"
+"#emoji_tab_widget QTabBar::tab{\n"
+"    background-color:#222;\n"
+"	width:35px;\n"
+"	height:35px;\n"
+"}\n"
+"\n"
+"#emoji_tab_widget QTabBar::tab:hover{\n"
+"    background-color:#666;\n"
+"}\n"
+"\n"
+"#emoji_tab_widget QTabBar::tab:selected{\n"
+"	border-bottom:4px solid #111;\n"
+"}\n"
+"\n"
+"#emoji_tab_widget QTabBar::tab:!selected{\n"
+"	border-bottom:4px solid #222;\n"
+"}\n"
+"\n"
+"#emoji_tab_widget QWidget{\n"
+"	background-color:#111;\n"
+"}\n"
 "\n"
 "\n"
+"/*SCROLL BARS*/\n"
 "\n"
+"QScrollBar:horizontal {\n"
+"    border: none;\n"
+"    background: rgb(52, 59, 72);\n"
+"    height: 8px;\n"
+"    margin: 0px 21px 0 21px;\n"
+"	border-radius: 0px;\n"
+"}\n"
+"QScrollBar::handle:horizontal {\n"
+"    background: rgb(47, 48, 50);\n"
+"    min-width: 25px;\n"
+"	border-radius: 4px\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"    border: none;\n"
+"    background: rgb(55, 63, 77);\n"
+"    width: 20px;\n"
+"	border-top-right-radius: 4px;\n"
+"    border-"
+                        "bottom-right-radius: 4px;\n"
+"    subcontrol-position: right;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"    border: none;\n"
+"    background: rgb(55, 63, 77);\n"
+"    width: 20px;\n"
+"	border-top-left-radius: 4px;\n"
+"    border-bottom-left-radius: 4px;\n"
+"    subcontrol-position: left;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal\n"
+"{\n"
+"     background: none;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal\n"
+"{\n"
+"     background: none;\n"
+"}\n"
+"\n"
+" QScrollBar:vertical {\n"
+"	border:none;\n"
+"    background:rgb(52, 59, 72);\n"
+"    width: 8px;\n"
+"    margin: 18px 0 18px 0;\n"
+" }\n"
+"\n"
+" QScrollBar::handle:vertical {\n"
+"	background: rgb(47, 48, 50);\n"
+"    min-height: 25px;\n"
+" }\n"
+"\n"
+" QScrollBar::add-line:vertical {\n"
+"     border: none;\n"
+"     background: rgb(47, 48, 50);\n"
+"     height: 16px;\n"
+"     border-bottom-left-radius:4px;\n"
+""
+                        "     border-bottom-right-radius:4px;\n"
+"     subcontrol-position: bottom;\n"
+"     subcontrol-origin: margin;\n"
+" }\n"
+"\n"
+" QScrollBar::sub-line:vertical {\n"
+"	border: none;\n"
+"    background: rgb(47, 48, 50);\n"
+"    height: 16px;\n"
+"    border-top-left-radius:4px;\n"
+"    border-top-right-radius:4px;\n"
+"    subcontrol-position: top;\n"
+"    subcontrol-origin: margin;\n"
+" }\n"
+" QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
+"     background: none;\n"
+" }\n"
+"\n"
+" QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"     background: none;\n"
+" }\n"
 "")
-        self.horizontalLayout_8 = QHBoxLayout(self.bg_app)
-        self.horizontalLayout_8.setSpacing(0)
-        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.horizontalLayout_8.setContentsMargins(0, 3, 6, 3)
-        self.left_menu = QFrame(self.bg_app)
+        self.app_margins = QHBoxLayout(self.stylesheet)
+        self.app_margins.setObjectName(u"app_margins")
+        self.app_bg = QWidget(self.stylesheet)
+        self.app_bg.setObjectName(u"app_bg")
+        self.app_bg.setStyleSheet(u"")
+        self.app_layout = QHBoxLayout(self.app_bg)
+        self.app_layout.setSpacing(0)
+        self.app_layout.setObjectName(u"app_layout")
+        self.app_layout.setContentsMargins(3, 3, 3, 3)
+        self.left_menu = QFrame(self.app_bg)
         self.left_menu.setObjectName(u"left_menu")
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -513,20 +471,14 @@ class Ui_MainWindow(object):
         self.left_menu.setMaximumSize(QSize(172, 16777215))
         self.left_menu.setStyleSheet(u"")
         self.verticalLayout_2 = QVBoxLayout(self.left_menu)
+        self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.app_logo_and_name = QWidget(self.left_menu)
-        self.app_logo_and_name.setObjectName(u"app_logo_and_name")
-        self.app_logo_and_name.setMinimumSize(QSize(161, 60))
-        self.app_logo_and_name.setMaximumSize(QSize(16777215, 61))
-        self.top_logo = QFrame(self.app_logo_and_name)
-        self.top_logo.setObjectName(u"top_logo")
-        self.top_logo.setGeometry(QRect(9, 4, 41, 41))
-        self.top_logo.setStyleSheet(u"image: url(:/icons/icons/ARsoftlogo.png);\n"
-"")
-        self.top_logo.setFrameShape(QFrame.StyledPanel)
-        self.top_logo.setFrameShadow(QFrame.Raised)
-        self.app_name = QLabel(self.app_logo_and_name)
+        self.app_brand = QWidget(self.left_menu)
+        self.app_brand.setObjectName(u"app_brand")
+        self.app_brand.setMinimumSize(QSize(161, 60))
+        self.app_brand.setMaximumSize(QSize(16777215, 61))
+        self.app_name = QLabel(self.app_brand)
         self.app_name.setObjectName(u"app_name")
         self.app_name.setGeometry(QRect(60, 1, 101, 51))
         font = QFont()
@@ -534,52 +486,51 @@ class Ui_MainWindow(object):
         font.setBold(True)
         self.app_name.setFont(font)
         self.app_name.setStyleSheet(u"")
+        self.app_logo = QLabel(self.app_brand)
+        self.app_logo.setObjectName(u"app_logo")
+        self.app_logo.setGeometry(QRect(9, 4, 41, 41))
+        self.app_logo.setStyleSheet(u"image: url(:/icons/icons/ARsoftlogo.png);\n"
+"")
 
-        self.verticalLayout_2.addWidget(self.app_logo_and_name)
+        self.verticalLayout_2.addWidget(self.app_brand)
 
         self.menu_btn = QPushButton(self.left_menu)
         self.menu_btn.setObjectName(u"menu_btn")
-        self.menu_btn.setMinimumSize(QSize(0, 40))
-        self.menu_btn.setMaximumSize(QSize(16777215, 40))
+        self.menu_btn.setMinimumSize(QSize(0, 50))
+        self.menu_btn.setMaximumSize(QSize(16777215, 50))
         font1 = QFont()
         font1.setPointSize(10)
         self.menu_btn.setFont(font1)
-        self.menu_btn.setStyleSheet(u"\n"
-"background-image: url(:/cils/cils/cil-menu.png);\n"
-"\n"
-"")
+        self.menu_btn.setStyleSheet(u"")
 
         self.verticalLayout_2.addWidget(self.menu_btn)
 
         self.home_btn = QPushButton(self.left_menu)
         self.home_btn.setObjectName(u"home_btn")
-        self.home_btn.setMinimumSize(QSize(0, 40))
-        self.home_btn.setMaximumSize(QSize(16777215, 40))
+        self.home_btn.setMinimumSize(QSize(0, 50))
+        self.home_btn.setMaximumSize(QSize(16777215, 50))
         self.home_btn.setFont(font1)
-        self.home_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-home.png);\n"
-"")
+        self.home_btn.setStyleSheet(u"")
 
         self.verticalLayout_2.addWidget(self.home_btn)
 
         self.scan_btn = QPushButton(self.left_menu)
         self.scan_btn.setObjectName(u"scan_btn")
-        self.scan_btn.setMinimumSize(QSize(0, 40))
-        self.scan_btn.setMaximumSize(QSize(16777215, 40))
+        self.scan_btn.setMinimumSize(QSize(0, 50))
+        self.scan_btn.setMaximumSize(QSize(16777215, 50))
         self.scan_btn.setFont(font1)
-        self.scan_btn.setStyleSheet(u"background-image: url(:/svg/svg/icon_signal.svg);\n"
-"")
+        self.scan_btn.setStyleSheet(u"")
 
         self.verticalLayout_2.addWidget(self.scan_btn)
 
-        self.contact_btn = QPushButton(self.left_menu)
-        self.contact_btn.setObjectName(u"contact_btn")
-        self.contact_btn.setMinimumSize(QSize(0, 40))
-        self.contact_btn.setMaximumSize(QSize(16777215, 40))
-        self.contact_btn.setFont(font1)
-        self.contact_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-people.png);\n"
-"")
+        self.chat_btn = QPushButton(self.left_menu)
+        self.chat_btn.setObjectName(u"chat_btn")
+        self.chat_btn.setMinimumSize(QSize(0, 50))
+        self.chat_btn.setMaximumSize(QSize(16777215, 50))
+        self.chat_btn.setFont(font1)
+        self.chat_btn.setStyleSheet(u"")
 
-        self.verticalLayout_2.addWidget(self.contact_btn)
+        self.verticalLayout_2.addWidget(self.chat_btn)
 
         self.verticalSpacer = QSpacerItem(20, 296, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -590,7 +541,7 @@ class Ui_MainWindow(object):
         self.settings_btn_2.setMinimumSize(QSize(0, 40))
         self.settings_btn_2.setMaximumSize(QSize(16777215, 40))
         self.settings_btn_2.setFont(font1)
-        self.settings_btn_2.setStyleSheet(u"background-image: url(:/cils/cils/cil-equalizer.png);")
+        self.settings_btn_2.setStyleSheet(u"")
 
         self.verticalLayout_2.addWidget(self.settings_btn_2)
 
@@ -599,14 +550,14 @@ class Ui_MainWindow(object):
         self.about_btn.setMinimumSize(QSize(0, 40))
         self.about_btn.setMaximumSize(QSize(16777215, 40))
         self.about_btn.setFont(font1)
-        self.about_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-at.png);")
+        self.about_btn.setStyleSheet(u"")
 
         self.verticalLayout_2.addWidget(self.about_btn)
 
 
-        self.horizontalLayout_8.addWidget(self.left_menu)
+        self.app_layout.addWidget(self.left_menu)
 
-        self.left_side_container = QStackedWidget(self.bg_app)
+        self.left_side_container = QStackedWidget(self.app_bg)
         self.left_side_container.setObjectName(u"left_side_container")
         self.left_side_container.setMaximumSize(QSize(290, 16777215))
         self.left_side_container.setStyleSheet(u"")
@@ -616,50 +567,47 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setSpacing(1)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.p_user = QWidget(self.contact_page)
-        self.p_user.setObjectName(u"p_user")
-        self.p_user.setMinimumSize(QSize(291, 132))
-        self.p_user.setMaximumSize(QSize(291, 140))
-        self.p_user.setStyleSheet(u"")
-        self.p_user_box = QWidget(self.p_user)
-        self.p_user_box.setObjectName(u"p_user_box")
-        self.p_user_box.setGeometry(QRect(3, 4, 281, 71))
-        self.p_user_box.setStyleSheet(u"")
-        self.me_picture = QLabel(self.p_user_box)
+        self.auth_user_container = QWidget(self.contact_page)
+        self.auth_user_container.setObjectName(u"auth_user_container")
+        self.auth_user_container.setMinimumSize(QSize(291, 132))
+        self.auth_user_container.setMaximumSize(QSize(291, 140))
+        self.auth_user_container.setStyleSheet(u"")
+        self.auth_user_box = QWidget(self.auth_user_container)
+        self.auth_user_box.setObjectName(u"auth_user_box")
+        self.auth_user_box.setGeometry(QRect(3, 4, 281, 71))
+        self.auth_user_box.setStyleSheet(u"")
+        self.me_picture = QLabel(self.auth_user_box)
         self.me_picture.setObjectName(u"me_picture")
-        self.me_picture.setGeometry(QRect(4, 8, 61, 61))
-        self.me_picture.setStyleSheet(u"QLabel{\n"
-"	border-radius:30px;\n"
-"	border-image:url(:/icons/icons/avatar.png);}\n"
-"\n"
-"/*background-repeat:no-repeat;\n"
-"background-position:center;\n"
-"background-size: 50px;*/")
+        self.me_picture.setGeometry(QRect(3, 4, 61, 61))
+        self.me_picture.setStyleSheet(u"border-image:url(:/icons/icons/avatar.png);\n"
+"")
         self.me_picture.setScaledContents(True)
-        self.me_online_toast = QLabel(self.p_user_box)
+        self.me_online_toast = QLabel(self.auth_user_box)
         self.me_online_toast.setObjectName(u"me_online_toast")
-        self.me_online_toast.setGeometry(QRect(52, 50, 16, 16))
+        self.me_online_toast.setGeometry(QRect(50, 47, 16, 16))
         self.me_online_toast.setStyleSheet(u"QLabel{\n"
 "	border-radius:8px;\n"
 "	background-color: #00ff00;\n"
 "}")
         self.me_online_toast.setFrameShadow(QFrame.Raised)
-        self.me_status = QLabel(self.p_user_box)
+        self.me_status = QLabel(self.auth_user_box)
         self.me_status.setObjectName(u"me_status")
-        self.me_status.setGeometry(QRect(79, 48, 191, 21))
+        self.me_status.setGeometry(QRect(79, 46, 191, 21))
         font2 = QFont()
         font2.setItalic(True)
         self.me_status.setFont(font2)
-        self.me_username = QLabel(self.p_user_box)
+        self.me_status.setStyleSheet(u"")
+        self.me_username = QLabel(self.auth_user_box)
         self.me_username.setObjectName(u"me_username")
-        self.me_username.setGeometry(QRect(80, 20, 191, 21))
+        self.me_username.setGeometry(QRect(80, 27, 191, 21))
         self.me_username.setFont(font)
         self.me_username.setStyleSheet(u"")
-        self.search_sms = QLineEdit(self.p_user)
-        self.search_sms.setObjectName(u"search_sms")
-        self.search_sms.setGeometry(QRect(9, 89, 271, 31))
+        self.search_bar = QLineEdit(self.auth_user_container)
+        self.search_bar.setObjectName(u"search_bar")
+        self.search_bar.setGeometry(QRect(9, 89, 271, 31))
+        self.search_bar.setStyleSheet(u"")
 
-        self.verticalLayout_5.addWidget(self.p_user)
+        self.verticalLayout_5.addWidget(self.auth_user_container)
 
         self.contacts_stack = QStackedWidget(self.contact_page)
         self.contacts_stack.setObjectName(u"contacts_stack")
@@ -672,16 +620,16 @@ class Ui_MainWindow(object):
         self.verticalLayout_4 = QVBoxLayout(self.chat_list_page)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.left_scroll = QScrollArea(self.chat_list_page)
-        self.left_scroll.setObjectName(u"left_scroll")
-        self.left_scroll.setMinimumSize(QSize(291, 491))
-        self.left_scroll.setMaximumSize(QSize(291, 16777215))
-        self.left_scroll.setStyleSheet(u"border:none;")
-        self.left_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.left_scroll.setWidgetResizable(True)
+        self.chat_list_scroll = QScrollArea(self.chat_list_page)
+        self.chat_list_scroll.setObjectName(u"chat_list_scroll")
+        self.chat_list_scroll.setMinimumSize(QSize(291, 491))
+        self.chat_list_scroll.setMaximumSize(QSize(291, 16777215))
+        self.chat_list_scroll.setStyleSheet(u"border:none;")
+        self.chat_list_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.chat_list_scroll.setWidgetResizable(True)
         self.chat_list_widget = QWidget()
         self.chat_list_widget.setObjectName(u"chat_list_widget")
-        self.chat_list_widget.setGeometry(QRect(0, 0, 291, 639))
+        self.chat_list_widget.setGeometry(QRect(0, 0, 291, 641))
         self.chat_list_widget.setStyleSheet(u"")
         self.chat_list_layout = QVBoxLayout(self.chat_list_widget)
         self.chat_list_layout.setObjectName(u"chat_list_layout")
@@ -872,23 +820,23 @@ class Ui_MainWindow(object):
 
         self.chat_list_layout.addItem(self.verticalSpacer_2)
 
-        self.left_scroll.setWidget(self.chat_list_widget)
+        self.chat_list_scroll.setWidget(self.chat_list_widget)
 
-        self.verticalLayout_4.addWidget(self.left_scroll)
+        self.verticalLayout_4.addWidget(self.chat_list_scroll)
 
         self.contacts_stack.addWidget(self.chat_list_page)
         self.scan_page = QWidget()
         self.scan_page.setObjectName(u"scan_page")
         self.scan_page.setStyleSheet(u"background:transparent;")
-        self.scrollArea = QScrollArea(self.scan_page)
-        self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setGeometry(QRect(0, 0, 281, 601))
-        self.scrollArea.setStyleSheet(u"QScrollArea{border:none;}")
-        self.scrollArea.setWidgetResizable(True)
-        self.scrollAreaWidgetContents = QWidget()
-        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 281, 601))
-        self.socket_info = QWidget(self.scrollAreaWidgetContents)
+        self.scan_scroll = QScrollArea(self.scan_page)
+        self.scan_scroll.setObjectName(u"scan_scroll")
+        self.scan_scroll.setGeometry(QRect(0, 0, 281, 601))
+        self.scan_scroll.setStyleSheet(u"QScrollArea{border:none;}")
+        self.scan_scroll.setWidgetResizable(True)
+        self.scan_widget = QWidget()
+        self.scan_widget.setObjectName(u"scan_widget")
+        self.scan_widget.setGeometry(QRect(0, 0, 281, 601))
+        self.socket_info = QWidget(self.scan_widget)
         self.socket_info.setObjectName(u"socket_info")
         self.socket_info.setGeometry(QRect(7, 9, 281, 51))
         self.socket_info.setStyleSheet(u"#socket_info{background-color:rgb(16, 17, 18);\n"
@@ -946,17 +894,17 @@ class Ui_MainWindow(object):
         self.socket_adress.raise_()
         self.add_to_contact_btn.raise_()
         self.device_icon.raise_()
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.scan_scroll.setWidget(self.scan_widget)
         self.contacts_stack.addWidget(self.scan_page)
 
         self.verticalLayout_5.addWidget(self.contacts_stack)
 
-        self.server_signal = QWidget(self.contact_page)
-        self.server_signal.setObjectName(u"server_signal")
-        self.server_signal.setMinimumSize(QSize(291, 41))
-        self.server_signal.setMaximumSize(QSize(291, 41))
-        self.server_signal.setStyleSheet(u"")
-        self.signal_icon = QFrame(self.server_signal)
+        self.signal_status_container = QFrame(self.contact_page)
+        self.signal_status_container.setObjectName(u"signal_status_container")
+        self.signal_status_container.setMinimumSize(QSize(291, 41))
+        self.signal_status_container.setMaximumSize(QSize(291, 41))
+        self.signal_status_container.setStyleSheet(u"")
+        self.signal_icon = QFrame(self.signal_status_container)
         self.signal_icon.setObjectName(u"signal_icon")
         self.signal_icon.setGeometry(QRect(10, 7, 21, 31))
         self.signal_icon.setStyleSheet(u"background-image: url(:/cils/cils/cil-rss.png);\n"
@@ -964,14 +912,14 @@ class Ui_MainWindow(object):
 "background-position: left center;")
         self.signal_icon.setFrameShape(QFrame.StyledPanel)
         self.signal_icon.setFrameShadow(QFrame.Raised)
-        self.label_top = QLabel(self.server_signal)
-        self.label_top.setObjectName(u"label_top")
-        self.label_top.setGeometry(QRect(39, 11, 241, 23))
+        self.signal_text = QLabel(self.signal_status_container)
+        self.signal_text.setObjectName(u"signal_text")
+        self.signal_text.setGeometry(QRect(39, 11, 241, 23))
         font6 = QFont()
         font6.setBold(True)
-        self.label_top.setFont(font6)
+        self.signal_text.setFont(font6)
 
-        self.verticalLayout_5.addWidget(self.server_signal)
+        self.verticalLayout_5.addWidget(self.signal_status_container)
 
         self.left_side_container.addWidget(self.contact_page)
         self.about_page = QWidget()
@@ -984,9 +932,9 @@ class Ui_MainWindow(object):
         self.pushButton_11.setGeometry(QRect(60, 650, 161, 41))
         self.left_side_container.addWidget(self.about_page)
 
-        self.horizontalLayout_8.addWidget(self.left_side_container)
+        self.app_layout.addWidget(self.left_side_container)
 
-        self.right_side_container = QWidget(self.bg_app)
+        self.right_side_container = QWidget(self.app_bg)
         self.right_side_container.setObjectName(u"right_side_container")
         self.right_side_container.setMinimumSize(QSize(651, 696))
         self.right_side_container.setStyleSheet(u"")
@@ -994,51 +942,49 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.setSpacing(0)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
-        self.widget_5 = QWidget(self.right_side_container)
-        self.widget_5.setObjectName(u"widget_5")
-        self.widget_5.setMinimumSize(QSize(0, 61))
-        self.widget_5.setMaximumSize(QSize(16777215, 61))
-        self.widget_5.setStyleSheet(u"#widget_5{\n"
+        self.title_bar = QWidget(self.right_side_container)
+        self.title_bar.setObjectName(u"title_bar")
+        self.title_bar.setMinimumSize(QSize(0, 61))
+        self.title_bar.setMaximumSize(QSize(16777215, 61))
+        self.title_bar.setStyleSheet(u"#widget_5{\n"
 "	border-bottom:1px dashed rgb(55, 56, 57);	\n"
 "}")
-        self.horizontalLayout_6 = QHBoxLayout(self.widget_5)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.horizontalLayout_6.setContentsMargins(12, 0, 6, 0)
-        self.label = QLabel(self.widget_5)
-        self.label.setObjectName(u"label")
+        self.title_bar_layout = QHBoxLayout(self.title_bar)
+        self.title_bar_layout.setObjectName(u"title_bar_layout")
+        self.title_bar_layout.setContentsMargins(12, 0, 0, 0)
+        self.app_title = QLabel(self.title_bar)
+        self.app_title.setObjectName(u"app_title")
         font7 = QFont()
         font7.setPointSize(14)
         font7.setBold(True)
-        self.label.setFont(font7)
-        self.label.setStyleSheet(u"")
+        self.app_title.setFont(font7)
+        self.app_title.setStyleSheet(u"")
 
-        self.horizontalLayout_6.addWidget(self.label)
+        self.title_bar_layout.addWidget(self.app_title)
 
-        self.horizontalSpacer = QSpacerItem(2, 2, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.title_bar_spacer = QSpacerItem(2, 2, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_6.addItem(self.horizontalSpacer)
+        self.title_bar_layout.addItem(self.title_bar_spacer)
 
         self.verticalLayout_8 = QVBoxLayout()
         self.verticalLayout_8.setSpacing(0)
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
-        self.horizontalLayout_4 = QHBoxLayout()
-        self.horizontalLayout_4.setSpacing(18)
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.settings_btn = QPushButton(self.widget_5)
+        self.systel_menu_layout = QHBoxLayout()
+        self.systel_menu_layout.setSpacing(18)
+        self.systel_menu_layout.setObjectName(u"systel_menu_layout")
+        self.settings_btn = QPushButton(self.title_bar)
         self.settings_btn.setObjectName(u"settings_btn")
         self.settings_btn.setMinimumSize(QSize(28, 28))
         self.settings_btn.setMaximumSize(QSize(28, 28))
-        self.settings_btn.setStyleSheet(u"background-image:url(:/cils/cils/icon_settings.png);\n"
-"background-positioon:center;\n"
-"background-repeat:none;")
+        self.settings_btn.setStyleSheet(u"")
 
-        self.horizontalLayout_4.addWidget(self.settings_btn)
+        self.systel_menu_layout.addWidget(self.settings_btn)
 
-        self.system_menu = QWidget(self.widget_5)
+        self.system_menu = QWidget(self.title_bar)
         self.system_menu.setObjectName(u"system_menu")
         self.system_menu.setMinimumSize(QSize(92, 31))
         self.system_menu.setMaximumSize(QSize(92, 31))
-        self.system_menu.setStyleSheet(u"#system_menu .QPushButton:hoover{background-color:red;}")
+        self.system_menu.setStyleSheet(u"")
         self.horizontalLayout_5 = QHBoxLayout(self.system_menu)
         self.horizontalLayout_5.setSpacing(0)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
@@ -1047,43 +993,41 @@ class Ui_MainWindow(object):
         self.minimize_btn.setObjectName(u"minimize_btn")
         self.minimize_btn.setMinimumSize(QSize(28, 28))
         self.minimize_btn.setMaximumSize(QSize(28, 28))
-        self.minimize_btn.setStyleSheet(u"background-image: url(:/cils/cils/icon_minimize.png);\n"
-"backgorund-position:bottom;")
+        self.minimize_btn.setStyleSheet(u"")
 
         self.horizontalLayout_5.addWidget(self.minimize_btn)
 
-        self.min_max_btn = QPushButton(self.system_menu)
-        self.min_max_btn.setObjectName(u"min_max_btn")
-        self.min_max_btn.setMinimumSize(QSize(28, 28))
-        self.min_max_btn.setMaximumSize(QSize(28, 28))
-        self.min_max_btn.setStyleSheet(u"background-image: url(:/cils/cils/icon_maximize.png);")
+        self.maximize_restore_btn = QPushButton(self.system_menu)
+        self.maximize_restore_btn.setObjectName(u"maximize_restore_btn")
+        self.maximize_restore_btn.setMinimumSize(QSize(28, 28))
+        self.maximize_restore_btn.setMaximumSize(QSize(28, 28))
+        self.maximize_restore_btn.setStyleSheet(u"")
 
-        self.horizontalLayout_5.addWidget(self.min_max_btn)
+        self.horizontalLayout_5.addWidget(self.maximize_restore_btn)
 
         self.close_btn = QPushButton(self.system_menu)
         self.close_btn.setObjectName(u"close_btn")
         self.close_btn.setMinimumSize(QSize(28, 28))
         self.close_btn.setMaximumSize(QSize(28, 28))
-        self.close_btn.setStyleSheet(u"background-image: url(:/cils/cils/icon_close.png);\n"
-"")
+        self.close_btn.setStyleSheet(u"")
 
         self.horizontalLayout_5.addWidget(self.close_btn)
 
 
-        self.horizontalLayout_4.addWidget(self.system_menu)
+        self.systel_menu_layout.addWidget(self.system_menu)
 
 
-        self.verticalLayout_8.addLayout(self.horizontalLayout_4)
+        self.verticalLayout_8.addLayout(self.systel_menu_layout)
 
         self.verticalSpacer_3 = QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_8.addItem(self.verticalSpacer_3)
 
 
-        self.horizontalLayout_6.addLayout(self.verticalLayout_8)
+        self.title_bar_layout.addLayout(self.verticalLayout_8)
 
 
-        self.verticalLayout_9.addWidget(self.widget_5)
+        self.verticalLayout_9.addWidget(self.title_bar)
 
         self.horizontalLayout_7 = QHBoxLayout()
         self.horizontalLayout_7.setSpacing(0)
@@ -1096,7 +1040,7 @@ class Ui_MainWindow(object):
         self.home_page.setObjectName(u"home_page")
         self.bubble_container_2 = QFrame(self.home_page)
         self.bubble_container_2.setObjectName(u"bubble_container_2")
-        self.bubble_container_2.setGeometry(QRect(20, 90, 120, 71))
+        self.bubble_container_2.setGeometry(QRect(120, 20, 120, 71))
         sizePolicy.setHeightForWidth(self.bubble_container_2.sizePolicy().hasHeightForWidth())
         self.bubble_container_2.setSizePolicy(sizePolicy)
         self.bubble_container_2.setMinimumSize(QSize(120, 71))
@@ -1199,7 +1143,7 @@ class Ui_MainWindow(object):
 
         self.left_msg_frame_2 = QFrame(self.home_page)
         self.left_msg_frame_2.setObjectName(u"left_msg_frame_2")
-        self.left_msg_frame_2.setGeometry(QRect(20, 10, 120, 71))
+        self.left_msg_frame_2.setGeometry(QRect(10, 10, 120, 71))
         self.left_msg_frame_2.setMinimumSize(QSize(120, 71))
         self.left_msg_frame_2.setStyleSheet(u"")
         self.left_msg_frame_2.setFrameShape(QFrame.StyledPanel)
@@ -1276,7 +1220,7 @@ class Ui_MainWindow(object):
 
         self.left_msg_frame_5 = QFrame(self.home_page)
         self.left_msg_frame_5.setObjectName(u"left_msg_frame_5")
-        self.left_msg_frame_5.setGeometry(QRect(20, 170, 320, 111))
+        self.left_msg_frame_5.setGeometry(QRect(10, 100, 320, 111))
         self.left_msg_frame_5.setMinimumSize(QSize(320, 111))
         self.left_msg_frame_5.setStyleSheet(u"")
         self.left_msg_frame_5.setFrameShape(QFrame.StyledPanel)
@@ -1425,7 +1369,7 @@ class Ui_MainWindow(object):
 
         self.left_msg_frame_6 = QFrame(self.home_page)
         self.left_msg_frame_6.setObjectName(u"left_msg_frame_6")
-        self.left_msg_frame_6.setGeometry(QRect(20, 290, 320, 111))
+        self.left_msg_frame_6.setGeometry(QRect(30, 230, 320, 111))
         self.left_msg_frame_6.setMinimumSize(QSize(320, 111))
         self.left_msg_frame_6.setStyleSheet(u"")
         self.left_msg_frame_6.setFrameShape(QFrame.StyledPanel)
@@ -1589,7 +1533,7 @@ class Ui_MainWindow(object):
 
         self.document_bubble_frame = QFrame(self.home_page)
         self.document_bubble_frame.setObjectName(u"document_bubble_frame")
-        self.document_bubble_frame.setGeometry(QRect(380, 180, 201, 101))
+        self.document_bubble_frame.setGeometry(QRect(350, 110, 201, 101))
         self.document_bubble_frame.setMinimumSize(QSize(201, 101))
         self.document_bubble_frame.setStyleSheet(u"")
         self.document_bubble_frame.setFrameShape(QFrame.StyledPanel)
@@ -1711,7 +1655,7 @@ class Ui_MainWindow(object):
 
         self.left_msg_frame_8 = QFrame(self.home_page)
         self.left_msg_frame_8.setObjectName(u"left_msg_frame_8")
-        self.left_msg_frame_8.setGeometry(QRect(380, 300, 201, 101))
+        self.left_msg_frame_8.setGeometry(QRect(370, 220, 201, 101))
         self.left_msg_frame_8.setStyleSheet(u"")
         self.left_msg_frame_8.setFrameShape(QFrame.StyledPanel)
         self.left_msg_frame_8.setFrameShadow(QFrame.Raised)
@@ -1852,7 +1796,7 @@ class Ui_MainWindow(object):
 
         self.left_msg_frame_9 = QFrame(self.home_page)
         self.left_msg_frame_9.setObjectName(u"left_msg_frame_9")
-        self.left_msg_frame_9.setGeometry(QRect(260, 410, 221, 221))
+        self.left_msg_frame_9.setGeometry(QRect(290, 350, 221, 221))
         self.left_msg_frame_9.setStyleSheet(u"")
         self.left_msg_frame_9.setFrameShape(QFrame.StyledPanel)
         self.left_msg_frame_9.setFrameShadow(QFrame.Raised)
@@ -1947,7 +1891,7 @@ class Ui_MainWindow(object):
 
         self.image_bubble_frame = QFrame(self.home_page)
         self.image_bubble_frame.setObjectName(u"image_bubble_frame")
-        self.image_bubble_frame.setGeometry(QRect(20, 410, 221, 241))
+        self.image_bubble_frame.setGeometry(QRect(30, 350, 221, 241))
         self.image_bubble_frame.setMinimumSize(QSize(201, 101))
         self.image_bubble_frame.setStyleSheet(u"")
         self.image_bubble_frame.setFrameShape(QFrame.StyledPanel)
@@ -2021,107 +1965,30 @@ class Ui_MainWindow(object):
 
         self.label_2 = QLabel(self.home_page)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(20, 680, 120, 20))
+        self.label_2.setGeometry(QRect(260, 10, 120, 20))
         self.label_2.setMaximumSize(QSize(120, 20))
         self.label_2.setStyleSheet(u"background-color: rgb(255, 255, 127);\n"
 "color:black;\n"
 "padding:4px;\n"
 "border-radius:4px;")
         self.label_2.setAlignment(Qt.AlignCenter)
-        self.media_bg = QWidget(self.home_page)
-        self.media_bg.setObjectName(u"media_bg")
-        self.media_bg.setGeometry(QRect(490, 410, 46, 191))
-        self.media_bg.setMinimumSize(QSize(46, 191))
-        self.media_bg.setMaximumSize(QSize(46, 191))
-        self.media_bg.setStyleSheet(u"")
-        self.verticalLayout = QVBoxLayout(self.media_bg)
-        self.verticalLayout.setSpacing(6)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(3, 0, 3, 0)
-        self.media_doc = QPushButton(self.media_bg)
-        self.media_doc.setObjectName(u"media_doc")
-        self.media_doc.setMinimumSize(QSize(40, 40))
-        self.media_doc.setMaximumSize(QSize(40, 40))
-        self.media_doc.setStyleSheet(u"QPushButton{\n"
-"	background-image: url(:/cils/cils/cil-paperclip.png);\n"
-"	background-color: rgb(0, 0, 127);}\n"
-"\n"
-"QPushButton:hover{\n"
-"	background-color: rgb(61, 62, 63);}\n"
-"\n"
-"QPushButton:pressed{\n"
-"	background-color: rgb(31, 32, 34);}")
-
-        self.verticalLayout.addWidget(self.media_doc)
-
-        self.media_audio = QPushButton(self.media_bg)
-        self.media_audio.setObjectName(u"media_audio")
-        self.media_audio.setMinimumSize(QSize(40, 40))
-        self.media_audio.setMaximumSize(QSize(40, 40))
-        self.media_audio.setStyleSheet(u"QPushButton{\n"
-"	background-image: url(:/cils/cils/blacks/cil-music-note.png);\n"
-"	background-color: rgb(255, 170, 0);\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	background-color: rgb(201, 202, 203);}\n"
-"\n"
-"QPushButton:pressed{\n"
-"	background-color: rgb(101, 102, 103);}")
-
-        self.verticalLayout.addWidget(self.media_audio)
-
-        self.media_image = QPushButton(self.media_bg)
-        self.media_image.setObjectName(u"media_image")
-        self.media_image.setMinimumSize(QSize(40, 40))
-        self.media_image.setMaximumSize(QSize(40, 40))
-        self.media_image.setStyleSheet(u"QPushButton{\n"
-"	background-image: url(:/cils/cils/cil-image1.png);\n"
-"	background-color: rgb(156, 0, 0);\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	background-color: rgb(61, 62, 63);}\n"
-"\n"
-"QPushButton:pressed{\n"
-"	background-color: rgb(31, 32, 34);}")
-
-        self.verticalLayout.addWidget(self.media_image)
-
-        self.media_video = QPushButton(self.media_bg)
-        self.media_video.setObjectName(u"media_video")
-        self.media_video.setMinimumSize(QSize(40, 40))
-        self.media_video.setMaximumSize(QSize(40, 40))
-        self.media_video.setStyleSheet(u"QPushButton{\n"
-"	background-image: url(:/cils/cils/blacks/cil-movie.png);\n"
-"	background-color: rgb(0, 105, 255);\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	background-color: rgb(201, 202, 203);}\n"
-"\n"
-"QPushButton:pressed{\n"
-"	background-color: rgb(101, 102, 103);}")
-
-        self.verticalLayout.addWidget(self.media_video)
-
         self.chat_stacked_widget.addWidget(self.home_page)
         self.chat_page = QWidget()
         self.chat_page.setObjectName(u"chat_page")
         self.chat_page.setStyleSheet(u"")
-        self.verticalLayout_7 = QVBoxLayout(self.chat_page)
-        self.verticalLayout_7.setSpacing(6)
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.verticalLayout_7.setContentsMargins(9, 9, 9, 0)
-        self.active_client_frame = QWidget(self.chat_page)
-        self.active_client_frame.setObjectName(u"active_client_frame")
-        self.active_client_frame.setMinimumSize(QSize(551, 61))
-        self.active_client_frame.setMaximumSize(QSize(16777215, 61))
-        self.active_client_frame.setStyleSheet(u"")
-        self.horizontalLayout_3 = QHBoxLayout(self.active_client_frame)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.horizontalLayout_3.setContentsMargins(9, 6, 9, 6)
-        self.active_client_picture = QLabel(self.active_client_frame)
+        self.chat_page_layout = QVBoxLayout(self.chat_page)
+        self.chat_page_layout.setSpacing(6)
+        self.chat_page_layout.setObjectName(u"chat_page_layout")
+        self.chat_page_layout.setContentsMargins(9, 9, 9, 0)
+        self.active_chat_header = QWidget(self.chat_page)
+        self.active_chat_header.setObjectName(u"active_chat_header")
+        self.active_chat_header.setMinimumSize(QSize(551, 61))
+        self.active_chat_header.setMaximumSize(QSize(16777215, 61))
+        self.active_chat_header.setStyleSheet(u"")
+        self.active_chat_header_layout = QHBoxLayout(self.active_chat_header)
+        self.active_chat_header_layout.setObjectName(u"active_chat_header_layout")
+        self.active_chat_header_layout.setContentsMargins(9, 6, 9, 6)
+        self.active_client_picture = QLabel(self.active_chat_header)
         self.active_client_picture.setObjectName(u"active_client_picture")
         self.active_client_picture.setMinimumSize(QSize(50, 50))
         self.active_client_picture.setMaximumSize(QSize(50, 50))
@@ -2129,15 +1996,15 @@ class Ui_MainWindow(object):
         font11.setPointSize(26)
         font11.setBold(True)
         self.active_client_picture.setFont(font11)
-        self.active_client_picture.setStyleSheet(u"border-radius:25px;background-color:rgb(20,21,22);")
+        self.active_client_picture.setStyleSheet(u"")
         self.active_client_picture.setAlignment(Qt.AlignHCenter|Qt.AlignTop)
 
-        self.horizontalLayout_3.addWidget(self.active_client_picture)
+        self.active_chat_header_layout.addWidget(self.active_client_picture)
 
-        self.verticalLayout_6 = QVBoxLayout()
-        self.verticalLayout_6.setSpacing(0)
-        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.active_client_name = QLabel(self.active_client_frame)
+        self.client_info_layout = QVBoxLayout()
+        self.client_info_layout.setSpacing(0)
+        self.client_info_layout.setObjectName(u"client_info_layout")
+        self.active_client_name = QLabel(self.active_chat_header)
         self.active_client_name.setObjectName(u"active_client_name")
         self.active_client_name.setMinimumSize(QSize(251, 31))
         self.active_client_name.setMaximumSize(QSize(16777215, 31))
@@ -2148,52 +2015,51 @@ class Ui_MainWindow(object):
         font12.setItalic(False)
         self.active_client_name.setFont(font12)
 
-        self.verticalLayout_6.addWidget(self.active_client_name)
+        self.client_info_layout.addWidget(self.active_client_name)
 
-        self.active_client_status = QLabel(self.active_client_frame)
+        self.active_client_status = QLabel(self.active_chat_header)
         self.active_client_status.setObjectName(u"active_client_status")
         self.active_client_status.setMinimumSize(QSize(251, 20))
         self.active_client_status.setMaximumSize(QSize(16777215, 20))
         self.active_client_status.setFont(font2)
-        self.active_client_status.setStyleSheet(u"color:#888;")
+        self.active_client_status.setStyleSheet(u"")
 
-        self.verticalLayout_6.addWidget(self.active_client_status)
+        self.client_info_layout.addWidget(self.active_client_status)
 
 
-        self.horizontalLayout_3.addLayout(self.verticalLayout_6)
+        self.active_chat_header_layout.addLayout(self.client_info_layout)
 
-        self.last_seen = QLabel(self.active_client_frame)
+        self.last_seen = QLabel(self.active_chat_header)
         self.last_seen.setObjectName(u"last_seen")
         self.last_seen.setMinimumSize(QSize(131, 20))
         self.last_seen.setMaximumSize(QSize(16777215, 20))
-        self.last_seen.setStyleSheet(u"color:rgb(255, 128, 0);\n"
-"")
+        self.last_seen.setStyleSheet(u"")
         self.last_seen.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
-        self.horizontalLayout_3.addWidget(self.last_seen)
+        self.active_chat_header_layout.addWidget(self.last_seen)
 
-        self.attachment_btn = QPushButton(self.active_client_frame)
+        self.attachment_btn = QPushButton(self.active_chat_header)
         self.attachment_btn.setObjectName(u"attachment_btn")
-        self.attachment_btn.setMinimumSize(QSize(40, 40))
-        self.attachment_btn.setMaximumSize(QSize(40, 40))
+        self.attachment_btn.setMinimumSize(QSize(36, 36))
+        self.attachment_btn.setMaximumSize(QSize(36, 36))
         self.attachment_btn.setStyleSheet(u"#attachment_btn {	\n"
 "	background-image: url(:/svg/svg//icon_attachment.svg);\n"
 "}\n"
 "")
 
-        self.horizontalLayout_3.addWidget(self.attachment_btn)
+        self.active_chat_header_layout.addWidget(self.attachment_btn)
 
-        self.delete_btn = QPushButton(self.active_client_frame)
+        self.delete_btn = QPushButton(self.active_chat_header)
         self.delete_btn.setObjectName(u"delete_btn")
-        self.delete_btn.setMinimumSize(QSize(40, 40))
-        self.delete_btn.setMaximumSize(QSize(40, 40))
+        self.delete_btn.setMinimumSize(QSize(36, 36))
+        self.delete_btn.setMaximumSize(QSize(36, 36))
         self.delete_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-trash.png);\n"
 "")
 
-        self.horizontalLayout_3.addWidget(self.delete_btn)
+        self.active_chat_header_layout.addWidget(self.delete_btn)
 
 
-        self.verticalLayout_7.addWidget(self.active_client_frame)
+        self.chat_page_layout.addWidget(self.active_chat_header)
 
         self.chat_scroll = QScrollArea(self.chat_page)
         self.chat_scroll.setObjectName(u"chat_scroll")
@@ -2201,15 +2067,11 @@ class Ui_MainWindow(object):
         self.chat_scroll.setWidgetResizable(True)
         self.chat_scroll_widget = QWidget()
         self.chat_scroll_widget.setObjectName(u"chat_scroll_widget")
-        self.chat_scroll_widget.setGeometry(QRect(0, 0, 559, 453))
+        self.chat_scroll_widget.setGeometry(QRect(0, 0, 559, 444))
         self.chat_scroll_layout = QVBoxLayout(self.chat_scroll_widget)
         self.chat_scroll_layout.setSpacing(9)
         self.chat_scroll_layout.setObjectName(u"chat_scroll_layout")
         self.chat_scroll_layout.setContentsMargins(6, 12, 6, 12)
-        self.verticalSpacer_4 = QSpacerItem(20, 48, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.chat_scroll_layout.addItem(self.verticalSpacer_4)
-
         self.date_label = QLabel(self.chat_scroll_widget)
         self.date_label.setObjectName(u"date_label")
         self.date_label.setMaximumSize(QSize(120, 20))
@@ -2219,18 +2081,12 @@ class Ui_MainWindow(object):
 "border-radius:4px;")
         self.date_label.setAlignment(Qt.AlignCenter)
 
-        self.chat_scroll_layout.addWidget(self.date_label)
+        self.chat_scroll_layout.addWidget(self.date_label, 0, Qt.AlignHCenter)
 
-        self.bubble_container_widget = QWidget(self.chat_scroll_widget)
-        self.bubble_container_widget.setObjectName(u"bubble_container_widget")
-        self.bubble_container_widget.setStyleSheet(u"")
-        self.horizontalLayout_11 = QHBoxLayout(self.bubble_container_widget)
-        self.horizontalLayout_11.setSpacing(0)
-        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
-        self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.bubble_frame = QFrame(self.bubble_container_widget)
+        self.bubble_frame = QFrame(self.chat_scroll_widget)
         self.bubble_frame.setObjectName(u"bubble_frame")
         self.bubble_frame.setMinimumSize(QSize(120, 71))
+        self.bubble_frame.setMaximumSize(QSize(200, 16777215))
         self.bubble_frame.setStyleSheet(u"")
         self.bubble_frame.setFrameShape(QFrame.StyledPanel)
         self.bubble_frame.setFrameShadow(QFrame.Raised)
@@ -2309,32 +2165,14 @@ class Ui_MainWindow(object):
         self.frame_2.raise_()
         self.frame.raise_()
 
-        self.horizontalLayout_11.addWidget(self.bubble_frame)
+        self.chat_scroll_layout.addWidget(self.bubble_frame)
 
-        self.spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_11.addItem(self.spacer)
-
-
-        self.chat_scroll_layout.addWidget(self.bubble_container_widget)
-
-        self.widget_2 = QWidget(self.chat_scroll_widget)
-        self.widget_2.setObjectName(u"widget_2")
-        self.widget_2.setLayoutDirection(Qt.LeftToRight)
-        self.widget_2.setStyleSheet(u"")
-        self.horizontalLayout_14 = QHBoxLayout(self.widget_2)
-        self.horizontalLayout_14.setSpacing(0)
-        self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
-        self.horizontalLayout_14.setContentsMargins(0, 0, 0, 0)
-        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_14.addItem(self.horizontalSpacer_4)
-
-        self.bubble_container = QFrame(self.widget_2)
+        self.bubble_container = QFrame(self.chat_scroll_widget)
         self.bubble_container.setObjectName(u"bubble_container")
         sizePolicy.setHeightForWidth(self.bubble_container.sizePolicy().hasHeightForWidth())
         self.bubble_container.setSizePolicy(sizePolicy)
         self.bubble_container.setMinimumSize(QSize(120, 71))
+        self.bubble_container.setMaximumSize(QSize(200, 16777215))
         self.bubble_container.setStyleSheet(u"")
         self.bubble_container.setFrameShape(QFrame.StyledPanel)
         self.bubble_container.setFrameShadow(QFrame.Raised)
@@ -2429,19 +2267,9 @@ class Ui_MainWindow(object):
         self.frame_5.raise_()
         self.frame_4.raise_()
 
-        self.horizontalLayout_14.addWidget(self.bubble_container)
+        self.chat_scroll_layout.addWidget(self.bubble_container, 0, Qt.AlignRight)
 
-
-        self.chat_scroll_layout.addWidget(self.widget_2)
-
-        self.widget_3 = QWidget(self.chat_scroll_widget)
-        self.widget_3.setObjectName(u"widget_3")
-        self.widget_3.setStyleSheet(u"")
-        self.horizontalLayout_15 = QHBoxLayout(self.widget_3)
-        self.horizontalLayout_15.setSpacing(0)
-        self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
-        self.horizontalLayout_15.setContentsMargins(0, 0, 0, 0)
-        self.voice_bubble_frame = QFrame(self.widget_3)
+        self.voice_bubble_frame = QFrame(self.chat_scroll_widget)
         self.voice_bubble_frame.setObjectName(u"voice_bubble_frame")
         self.voice_bubble_frame.setMinimumSize(QSize(320, 111))
         self.voice_bubble_frame.setStyleSheet(u"")
@@ -2596,27 +2424,9 @@ class Ui_MainWindow(object):
         self.frame_12.raise_()
         self.frame_11.raise_()
 
-        self.horizontalLayout_15.addWidget(self.voice_bubble_frame)
+        self.chat_scroll_layout.addWidget(self.voice_bubble_frame)
 
-        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_15.addItem(self.horizontalSpacer_7)
-
-
-        self.chat_scroll_layout.addWidget(self.widget_3)
-
-        self.widget_4 = QWidget(self.chat_scroll_widget)
-        self.widget_4.setObjectName(u"widget_4")
-        self.widget_4.setStyleSheet(u"")
-        self.horizontalLayout_16 = QHBoxLayout(self.widget_4)
-        self.horizontalLayout_16.setSpacing(0)
-        self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
-        self.horizontalLayout_16.setContentsMargins(0, 0, 0, 0)
-        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_16.addItem(self.horizontalSpacer_8)
-
-        self.left_msg_frame_4 = QFrame(self.widget_4)
+        self.left_msg_frame_4 = QFrame(self.chat_scroll_widget)
         self.left_msg_frame_4.setObjectName(u"left_msg_frame_4")
         self.left_msg_frame_4.setMinimumSize(QSize(320, 111))
         self.left_msg_frame_4.setStyleSheet(u"")
@@ -2784,159 +2594,23 @@ class Ui_MainWindow(object):
         self.frame_15.raise_()
         self.frame_13.raise_()
 
-        self.horizontalLayout_16.addWidget(self.left_msg_frame_4)
-
-
-        self.chat_scroll_layout.addWidget(self.widget_4)
+        self.chat_scroll_layout.addWidget(self.left_msg_frame_4, 0, Qt.AlignRight)
 
         self.chat_scroll.setWidget(self.chat_scroll_widget)
 
-        self.verticalLayout_7.addWidget(self.chat_scroll)
-
-        self.bottom_frame = QWidget(self.chat_page)
-        self.bottom_frame.setObjectName(u"bottom_frame")
-        self.bottom_frame.setMinimumSize(QSize(551, 61))
-        self.bottom_frame.setMaximumSize(QSize(16777215, 61))
-        self.bottom_frame.setStyleSheet(u"QWidget.QPushButton{\n"
-"border-radius:20px;}")
-        self.horizontalLayout_2 = QHBoxLayout(self.bottom_frame)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(-1, 0, -1, 0)
-        self.media_btn = QPushButton(self.bottom_frame)
-        self.media_btn.setObjectName(u"media_btn")
-        self.media_btn.setMinimumSize(QSize(40, 40))
-        self.media_btn.setMaximumSize(QSize(40, 40))
-        self.media_btn.setStyleSheet(u"/*background-image: url(:/icons/icons/plus.png);*/\n"
-"background-image: url(:/cils/cils/cil-plus.png);")
-
-        self.horizontalLayout_2.addWidget(self.media_btn)
-
-        self.entry_frame = QWidget(self.bottom_frame)
-        self.entry_frame.setObjectName(u"entry_frame")
-        sizePolicy.setHeightForWidth(self.entry_frame.sizePolicy().hasHeightForWidth())
-        self.entry_frame.setSizePolicy(sizePolicy)
-        self.entry_frame.setMinimumSize(QSize(431, 51))
-        self.entry_frame.setMaximumSize(QSize(16777215, 51))
-        self.entry_frame.setStyleSheet(u"")
-        self.horizontalLayout = QHBoxLayout(self.entry_frame)
-        self.horizontalLayout.setSpacing(0)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(9, 0, 0, 0)
-        self.emoji_btn = QPushButton(self.entry_frame)
-        self.emoji_btn.setObjectName(u"emoji_btn")
-        self.emoji_btn.setMinimumSize(QSize(40, 40))
-        self.emoji_btn.setMaximumSize(QSize(40, 40))
-        self.emoji_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-mood-good.png);")
-
-        self.horizontalLayout.addWidget(self.emoji_btn)
-
-        self.entry_field = QTextEdit(self.entry_frame)
-        self.entry_field.setObjectName(u"entry_field")
-        self.entry_field.setMaximumSize(QSize(16777215, 31))
-        self.entry_field.setFont(font4)
-        self.entry_field.setStyleSheet(u"background-color:transparent;\n"
-"color:white;")
-        self.entry_field.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.entry_field.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-        self.entry_field.setLineWrapMode(QTextEdit.WidgetWidth)
-        self.entry_field.setCursorWidth(1)
-
-        self.horizontalLayout.addWidget(self.entry_field)
-
-
-        self.horizontalLayout_2.addWidget(self.entry_frame)
-
-        self.send_btn = QPushButton(self.bottom_frame)
-        self.send_btn.setObjectName(u"send_btn")
-        self.send_btn.setMinimumSize(QSize(40, 40))
-        self.send_btn.setMaximumSize(QSize(40, 40))
-        self.send_btn.setStyleSheet(u"background-image: url(:/svg/svg/icon_send.svg);\n"
-"background-image: url(:/cils/cils/cil-microphone.png);")
-
-        self.horizontalLayout_2.addWidget(self.send_btn)
-
-        self.media_btn.raise_()
-        self.send_btn.raise_()
-        self.entry_frame.raise_()
-
-        self.verticalLayout_7.addWidget(self.bottom_frame)
+        self.chat_page_layout.addWidget(self.chat_scroll)
 
         self.emoji_widget = QWidget(self.chat_page)
         self.emoji_widget.setObjectName(u"emoji_widget")
-        self.emoji_widget.setMinimumSize(QSize(0, 180))
-        self.emoji_widget.setStyleSheet(u"QWidget#emoji_widget{\n"
-"	background-color: rgb(30,32,33);\n"
-"	border-radius:10px;\n"
-"}")
-        self.verticalLayout_11 = QVBoxLayout(self.emoji_widget)
-        self.verticalLayout_11.setSpacing(0)
-        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
-        self.verticalLayout_11.setContentsMargins(3, 3, 3, 3)
-        self.horizontalLayout_17 = QHBoxLayout()
-        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
-        self.emoji_widget_title = QLabel(self.emoji_widget)
-        self.emoji_widget_title.setObjectName(u"emoji_widget_title")
-        self.emoji_widget_title.setFont(font1)
-        self.emoji_widget_title.setStyleSheet(u"color:#aaa;")
-
-        self.horizontalLayout_17.addWidget(self.emoji_widget_title)
-
-        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_17.addItem(self.horizontalSpacer_10)
-
-        self.close_emoji_btn = QPushButton(self.emoji_widget)
-        self.close_emoji_btn.setObjectName(u"close_emoji_btn")
-        self.close_emoji_btn.setMaximumSize(QSize(20, 20))
-        self.close_emoji_btn.setStyleSheet(u"QPushButton{\n"
-"\n"
-"background-color:#111;\n"
-"border:none;\n"
-"border-radius:4px;\n"
-"image: url(:/cils/cils/cil-x.png);\n"
-"padding:4px;\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"background-color:red;\n"
-"}")
-
-        self.horizontalLayout_17.addWidget(self.close_emoji_btn)
-
-
-        self.verticalLayout_11.addLayout(self.horizontalLayout_17)
-
+        self.emoji_widget.setMaximumSize(QSize(16777215, 190))
+        self.emoji_widget.setStyleSheet(u"")
+        self.horizontalLayout_3 = QHBoxLayout(self.emoji_widget)
+        self.horizontalLayout_3.setSpacing(0)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(3, 3, 3, 3)
         self.emoji_tab_widget = QTabWidget(self.emoji_widget)
         self.emoji_tab_widget.setObjectName(u"emoji_tab_widget")
-        self.emoji_tab_widget.setMinimumSize(QSize(0, 140))
-        self.emoji_tab_widget.setStyleSheet(u"QTabWidget::pane {\n"
-"background-color:#000;\n"
-"}\n"
-"\n"
-"QTabWidget::tab-bar {\n"
-"}\n"
-"\n"
-"QTabBar::tab{\n"
-"    background-color:#222;\n"
-"	width:35px;\n"
-"	height:35px;\n"
-"}\n"
-"\n"
-"QTabBar::tab:hover{\n"
-"    background-color:#666;\n"
-"}\n"
-"\n"
-"QTabBar::tab:selected{\n"
-"	border-bottom:4px solid #111;\n"
-"}\n"
-"QTabBar::tab:!selected{\n"
-"	border-bottom:4px solid #222;\n"
-"}\n"
-"\n"
-"QTabWidget QWidget{\n"
-"background-color:#111;\n"
-"}")
+        self.emoji_tab_widget.setStyleSheet(u"")
         self.emoji_tab_widget.setTabPosition(QTabWidget.North)
         self.emoji_tab_widget.setTabShape(QTabWidget.Rounded)
         self.emoji_tab_widget.setTabsClosable(False)
@@ -2946,156 +2620,194 @@ class Ui_MainWindow(object):
         self.verticalLayout_12.setSpacing(3)
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
         self.verticalLayout_12.setContentsMargins(3, 3, 3, 3)
-        self.emoji_scroll_area = QScrollArea(self.tab_smilies)
-        self.emoji_scroll_area.setObjectName(u"emoji_scroll_area")
-        self.emoji_scroll_area.setMinimumSize(QSize(546, 127))
-        self.emoji_scroll_area.setStyleSheet(u"border:none;")
-        self.emoji_scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.emoji_scroll_area.setWidgetResizable(True)
-        self.emoji_scroll_area.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.scrollAreaWidgetContents_2 = QWidget()
-        self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 555, 132))
-        self.emoji_grid_layout = QGridLayout(self.scrollAreaWidgetContents_2)
-        self.emoji_grid_layout.setSpacing(1)
-        self.emoji_grid_layout.setObjectName(u"emoji_grid_layout")
-        self.emoji_grid_layout.setContentsMargins(0, 0, 0, 0)
-        self.emoji_scroll_area.setWidget(self.scrollAreaWidgetContents_2)
-
-        self.verticalLayout_12.addWidget(self.emoji_scroll_area)
-
         self.emoji_tab_widget.addTab(self.tab_smilies, "")
         self.tab_animals = QWidget()
         self.tab_animals.setObjectName(u"tab_animals")
-        self.emoji_scroll_area_2 = QScrollArea(self.tab_animals)
-        self.emoji_scroll_area_2.setObjectName(u"emoji_scroll_area_2")
-        self.emoji_scroll_area_2.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_scroll_area_2.setStyleSheet(u"border:none;")
-        self.emoji_scroll_area_2.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.emoji_scroll_area_2.setWidgetResizable(True)
-        self.emoji_scroll_area_2.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.scrollAreaWidgetContents_3 = QWidget()
-        self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_grid_layout_2 = QGridLayout(self.scrollAreaWidgetContents_3)
-        self.emoji_grid_layout_2.setSpacing(1)
-        self.emoji_grid_layout_2.setObjectName(u"emoji_grid_layout_2")
-        self.emoji_grid_layout_2.setContentsMargins(0, 0, 0, 0)
-        self.emoji_scroll_area_2.setWidget(self.scrollAreaWidgetContents_3)
         self.emoji_tab_widget.addTab(self.tab_animals, "")
         self.tab_foods = QWidget()
         self.tab_foods.setObjectName(u"tab_foods")
-        self.emoji_scroll_area_3 = QScrollArea(self.tab_foods)
-        self.emoji_scroll_area_3.setObjectName(u"emoji_scroll_area_3")
-        self.emoji_scroll_area_3.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_scroll_area_3.setStyleSheet(u"border:none;")
-        self.emoji_scroll_area_3.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.emoji_scroll_area_3.setWidgetResizable(True)
-        self.emoji_scroll_area_3.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.scrollAreaWidgetContents_4 = QWidget()
-        self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_grid_layout_3 = QGridLayout(self.scrollAreaWidgetContents_4)
-        self.emoji_grid_layout_3.setSpacing(1)
-        self.emoji_grid_layout_3.setObjectName(u"emoji_grid_layout_3")
-        self.emoji_grid_layout_3.setContentsMargins(0, 0, 0, 0)
-        self.emoji_scroll_area_3.setWidget(self.scrollAreaWidgetContents_4)
         self.emoji_tab_widget.addTab(self.tab_foods, "")
         self.tab_travels = QWidget()
         self.tab_travels.setObjectName(u"tab_travels")
-        self.emoji_scroll_area_4 = QScrollArea(self.tab_travels)
-        self.emoji_scroll_area_4.setObjectName(u"emoji_scroll_area_4")
-        self.emoji_scroll_area_4.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_scroll_area_4.setStyleSheet(u"border:none;")
-        self.emoji_scroll_area_4.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.emoji_scroll_area_4.setWidgetResizable(True)
-        self.emoji_scroll_area_4.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.scrollAreaWidgetContents_5 = QWidget()
-        self.scrollAreaWidgetContents_5.setObjectName(u"scrollAreaWidgetContents_5")
-        self.scrollAreaWidgetContents_5.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_grid_layout_4 = QGridLayout(self.scrollAreaWidgetContents_5)
-        self.emoji_grid_layout_4.setSpacing(1)
-        self.emoji_grid_layout_4.setObjectName(u"emoji_grid_layout_4")
-        self.emoji_grid_layout_4.setContentsMargins(0, 0, 0, 0)
-        self.emoji_scroll_area_4.setWidget(self.scrollAreaWidgetContents_5)
         self.emoji_tab_widget.addTab(self.tab_travels, "")
         self.tab_activities = QWidget()
         self.tab_activities.setObjectName(u"tab_activities")
-        self.emoji_scroll_area_5 = QScrollArea(self.tab_activities)
-        self.emoji_scroll_area_5.setObjectName(u"emoji_scroll_area_5")
-        self.emoji_scroll_area_5.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_scroll_area_5.setStyleSheet(u"border:none;")
-        self.emoji_scroll_area_5.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.emoji_scroll_area_5.setWidgetResizable(True)
-        self.emoji_scroll_area_5.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.scrollAreaWidgetContents_6 = QWidget()
-        self.scrollAreaWidgetContents_6.setObjectName(u"scrollAreaWidgetContents_6")
-        self.scrollAreaWidgetContents_6.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_grid_layout_5 = QGridLayout(self.scrollAreaWidgetContents_6)
-        self.emoji_grid_layout_5.setSpacing(1)
-        self.emoji_grid_layout_5.setObjectName(u"emoji_grid_layout_5")
-        self.emoji_grid_layout_5.setContentsMargins(0, 0, 0, 0)
-        self.emoji_scroll_area_5.setWidget(self.scrollAreaWidgetContents_6)
         self.emoji_tab_widget.addTab(self.tab_activities, "")
         self.tab_objects = QWidget()
         self.tab_objects.setObjectName(u"tab_objects")
-        self.emoji_scroll_area_6 = QScrollArea(self.tab_objects)
-        self.emoji_scroll_area_6.setObjectName(u"emoji_scroll_area_6")
-        self.emoji_scroll_area_6.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_scroll_area_6.setStyleSheet(u"border:none;")
-        self.emoji_scroll_area_6.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.emoji_scroll_area_6.setWidgetResizable(True)
-        self.emoji_scroll_area_6.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.scrollAreaWidgetContents_7 = QWidget()
-        self.scrollAreaWidgetContents_7.setObjectName(u"scrollAreaWidgetContents_7")
-        self.scrollAreaWidgetContents_7.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_grid_layout_6 = QGridLayout(self.scrollAreaWidgetContents_7)
-        self.emoji_grid_layout_6.setSpacing(1)
-        self.emoji_grid_layout_6.setObjectName(u"emoji_grid_layout_6")
-        self.emoji_grid_layout_6.setContentsMargins(0, 0, 0, 0)
-        self.emoji_scroll_area_6.setWidget(self.scrollAreaWidgetContents_7)
         self.emoji_tab_widget.addTab(self.tab_objects, "")
         self.tab_symbols = QWidget()
         self.tab_symbols.setObjectName(u"tab_symbols")
-        self.emoji_scroll_area_7 = QScrollArea(self.tab_symbols)
-        self.emoji_scroll_area_7.setObjectName(u"emoji_scroll_area_7")
-        self.emoji_scroll_area_7.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_scroll_area_7.setStyleSheet(u"border:none;")
-        self.emoji_scroll_area_7.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.emoji_scroll_area_7.setWidgetResizable(True)
-        self.emoji_scroll_area_7.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.scrollAreaWidgetContents_8 = QWidget()
-        self.scrollAreaWidgetContents_8.setObjectName(u"scrollAreaWidgetContents_8")
-        self.scrollAreaWidgetContents_8.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_grid_layout_7 = QGridLayout(self.scrollAreaWidgetContents_8)
-        self.emoji_grid_layout_7.setSpacing(1)
-        self.emoji_grid_layout_7.setObjectName(u"emoji_grid_layout_7")
-        self.emoji_grid_layout_7.setContentsMargins(0, 0, 0, 0)
-        self.emoji_scroll_area_7.setWidget(self.scrollAreaWidgetContents_8)
         self.emoji_tab_widget.addTab(self.tab_symbols, "")
         self.tab_flags = QWidget()
         self.tab_flags.setObjectName(u"tab_flags")
-        self.emoji_scroll_area_8 = QScrollArea(self.tab_flags)
-        self.emoji_scroll_area_8.setObjectName(u"emoji_scroll_area_8")
-        self.emoji_scroll_area_8.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_scroll_area_8.setStyleSheet(u"border:none;")
-        self.emoji_scroll_area_8.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.emoji_scroll_area_8.setWidgetResizable(True)
-        self.emoji_scroll_area_8.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.scrollAreaWidgetContents_9 = QWidget()
-        self.scrollAreaWidgetContents_9.setObjectName(u"scrollAreaWidgetContents_9")
-        self.scrollAreaWidgetContents_9.setGeometry(QRect(0, 0, 567, 83))
-        self.emoji_grid_layout_8 = QGridLayout(self.scrollAreaWidgetContents_9)
-        self.emoji_grid_layout_8.setSpacing(1)
-        self.emoji_grid_layout_8.setObjectName(u"emoji_grid_layout_8")
-        self.emoji_grid_layout_8.setContentsMargins(0, 0, 0, 0)
-        self.emoji_scroll_area_8.setWidget(self.scrollAreaWidgetContents_9)
         self.emoji_tab_widget.addTab(self.tab_flags, "")
 
-        self.verticalLayout_11.addWidget(self.emoji_tab_widget)
+        self.horizontalLayout_3.addWidget(self.emoji_tab_widget)
+
+        self.close_emoji_btn = QPushButton(self.emoji_widget)
+        self.close_emoji_btn.setObjectName(u"close_emoji_btn")
+        self.close_emoji_btn.setMaximumSize(QSize(20, 20))
+        self.close_emoji_btn.setStyleSheet(u"QPushButton{\n"
+"\n"
+"background-color:#111;\n"
+"border:none;\n"
+"border-radius:10px;\n"
+"image: url(:/cils/cils/cil-x.png);\n"
+"padding:4px;\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"background-color:red;\n"
+"}")
+
+        self.horizontalLayout_3.addWidget(self.close_emoji_btn, 0, Qt.AlignTop)
 
 
-        self.verticalLayout_7.addWidget(self.emoji_widget)
+        self.chat_page_layout.addWidget(self.emoji_widget)
+
+        self.media_bg = QWidget(self.chat_page)
+        self.media_bg.setObjectName(u"media_bg")
+        self.media_bg.setMaximumSize(QSize(46, 190))
+        self.media_bg.setStyleSheet(u"")
+        self.verticalLayout = QVBoxLayout(self.media_bg)
+        self.verticalLayout.setSpacing(6)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(3, 0, 3, 0)
+        self.media_doc = QPushButton(self.media_bg)
+        self.media_doc.setObjectName(u"media_doc")
+        self.media_doc.setMinimumSize(QSize(40, 40))
+        self.media_doc.setMaximumSize(QSize(40, 40))
+        self.media_doc.setStyleSheet(u"QPushButton{\n"
+"	background-image: url(:/cils/cils/cil-paperclip.png);\n"
+"	background-color: rgb(0, 0, 127);}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color: rgb(61, 62, 63);}\n"
+"\n"
+"QPushButton:pressed{\n"
+"	background-color: rgb(31, 32, 34);}")
+
+        self.verticalLayout.addWidget(self.media_doc)
+
+        self.media_audio = QPushButton(self.media_bg)
+        self.media_audio.setObjectName(u"media_audio")
+        self.media_audio.setMinimumSize(QSize(40, 40))
+        self.media_audio.setMaximumSize(QSize(40, 40))
+        self.media_audio.setStyleSheet(u"QPushButton{\n"
+"	background-image: url(:/cils/cils/blacks/cil-music-note.png);\n"
+"	background-color: rgb(255, 170, 0);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color: rgb(201, 202, 203);}\n"
+"\n"
+"QPushButton:pressed{\n"
+"	background-color: rgb(101, 102, 103);}")
+
+        self.verticalLayout.addWidget(self.media_audio)
+
+        self.media_image = QPushButton(self.media_bg)
+        self.media_image.setObjectName(u"media_image")
+        self.media_image.setMinimumSize(QSize(40, 40))
+        self.media_image.setMaximumSize(QSize(40, 40))
+        self.media_image.setStyleSheet(u"QPushButton{\n"
+"	background-image: url(:/cils/cils/cil-image1.png);\n"
+"	background-color: rgb(156, 0, 0);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color: rgb(61, 62, 63);}\n"
+"\n"
+"QPushButton:pressed{\n"
+"	background-color: rgb(31, 32, 34);}")
+
+        self.verticalLayout.addWidget(self.media_image)
+
+        self.media_video = QPushButton(self.media_bg)
+        self.media_video.setObjectName(u"media_video")
+        self.media_video.setMinimumSize(QSize(40, 40))
+        self.media_video.setMaximumSize(QSize(40, 40))
+        self.media_video.setStyleSheet(u"QPushButton{\n"
+"	background-image: url(:/cils/cils/blacks/cil-movie.png);\n"
+"	background-color: rgb(0, 105, 255);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color: rgb(201, 202, 203);}\n"
+"\n"
+"QPushButton:pressed{\n"
+"	background-color: rgb(101, 102, 103);}")
+
+        self.verticalLayout.addWidget(self.media_video)
+
+
+        self.chat_page_layout.addWidget(self.media_bg)
+
+        self.footer = QWidget(self.chat_page)
+        self.footer.setObjectName(u"footer")
+        self.footer.setMinimumSize(QSize(551, 61))
+        self.footer.setMaximumSize(QSize(16777215, 61))
+        self.footer.setStyleSheet(u"QWidget.QPushButton{\n"
+"border-radius:20px;}")
+        self.horizontalLayout_2 = QHBoxLayout(self.footer)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(-1, 0, -1, 0)
+        self.media_btn = QPushButton(self.footer)
+        self.media_btn.setObjectName(u"media_btn")
+        self.media_btn.setMinimumSize(QSize(40, 40))
+        self.media_btn.setMaximumSize(QSize(40, 40))
+        self.media_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-plus.png);")
+
+        self.horizontalLayout_2.addWidget(self.media_btn)
+
+        self.input_container = QWidget(self.footer)
+        self.input_container.setObjectName(u"input_container")
+        self.input_container.setMinimumSize(QSize(431, 51))
+        self.input_container.setMaximumSize(QSize(16777215, 51))
+        self.input_container.setStyleSheet(u"")
+        self.input_container_layout = QHBoxLayout(self.input_container)
+        self.input_container_layout.setSpacing(0)
+        self.input_container_layout.setObjectName(u"input_container_layout")
+        self.input_container_layout.setContentsMargins(9, 3, 16, 3)
+        self.emoji_btn = QPushButton(self.input_container)
+        self.emoji_btn.setObjectName(u"emoji_btn")
+        self.emoji_btn.setMinimumSize(QSize(40, 40))
+        self.emoji_btn.setMaximumSize(QSize(40, 40))
+        self.emoji_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-mood-good.png);")
+
+        self.input_container_layout.addWidget(self.emoji_btn)
+
+        self.input = QTextEdit(self.input_container)
+        self.input.setObjectName(u"input")
+        self.input.setMaximumSize(QSize(16777215, 30))
+        self.input.setFont(font4)
+        self.input.setStyleSheet(u"")
+        self.input.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.input.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.input.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        self.input.setLineWrapMode(QTextEdit.WidgetWidth)
+        self.input.setCursorWidth(1)
+
+        self.input_container_layout.addWidget(self.input)
+
+
+        self.horizontalLayout_2.addWidget(self.input_container)
+
+        self.send_btn = QPushButton(self.footer)
+        self.send_btn.setObjectName(u"send_btn")
+        self.send_btn.setMinimumSize(QSize(40, 40))
+        self.send_btn.setMaximumSize(QSize(40, 40))
+        self.send_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-microphone.png);")
+
+        self.horizontalLayout_2.addWidget(self.send_btn)
+
+        self.media_btn.raise_()
+        self.send_btn.raise_()
+        self.input_container.raise_()
+
+        self.chat_page_layout.addWidget(self.footer)
 
         self.chat_stacked_widget.addWidget(self.chat_page)
 
@@ -3111,22 +2823,22 @@ class Ui_MainWindow(object):
 "	background-color:rgb(21,22,23);\n"
 "\n"
 "}")
-        self.page_5 = QWidget()
-        self.page_5.setObjectName(u"page_5")
-        self.label_17 = QLabel(self.page_5)
-        self.label_17.setObjectName(u"label_17")
-        self.label_17.setGeometry(QRect(10, 10, 171, 31))
-        self.label_17.setFont(font)
-        self.label_18 = QLabel(self.page_5)
-        self.label_18.setObjectName(u"label_18")
-        self.label_18.setGeometry(QRect(10, 40, 231, 21))
-        self.label_18.setMaximumSize(QSize(16777215, 24))
-        self.label_18.setFont(font5)
-        self.label_18.setStyleSheet(u"padding-bottom:4px;\n"
+        self.page_1 = QWidget()
+        self.page_1.setObjectName(u"page_1")
+        self.settings_title = QLabel(self.page_1)
+        self.settings_title.setObjectName(u"settings_title")
+        self.settings_title.setGeometry(QRect(10, 10, 171, 31))
+        self.settings_title.setFont(font)
+        self.breadcrumb = QLabel(self.page_1)
+        self.breadcrumb.setObjectName(u"breadcrumb")
+        self.breadcrumb.setGeometry(QRect(10, 40, 231, 21))
+        self.breadcrumb.setMaximumSize(QSize(16777215, 24))
+        self.breadcrumb.setFont(font5)
+        self.breadcrumb.setStyleSheet(u"padding-bottom:4px;\n"
 "color:gray;\n"
 "border-bottom:3px solid red;\n"
 "")
-        self.settings_stacked_widget = QStackedWidget(self.page_5)
+        self.settings_stacked_widget = QStackedWidget(self.page_1)
         self.settings_stacked_widget.setObjectName(u"settings_stacked_widget")
         self.settings_stacked_widget.setGeometry(QRect(0, 65, 241, 671))
         self.settings_stacked_widget.setMinimumSize(QSize(241, 571))
@@ -3183,13 +2895,13 @@ class Ui_MainWindow(object):
         self.profile_form_layout.setSpacing(4)
         self.profile_form_layout.setObjectName(u"profile_form_layout")
         self.profile_form_layout.setContentsMargins(0, 0, 0, 0)
-        self.profile_label = QLabel(self.layoutWidget)
-        self.profile_label.setObjectName(u"profile_label")
-        self.profile_label.setMaximumSize(QSize(16777215, 26))
-        self.profile_label.setFont(font)
-        self.profile_label.setStyleSheet(u"")
+        self.set_profile_label = QLabel(self.layoutWidget)
+        self.set_profile_label.setObjectName(u"set_profile_label")
+        self.set_profile_label.setMaximumSize(QSize(16777215, 26))
+        self.set_profile_label.setFont(font)
+        self.set_profile_label.setStyleSheet(u"")
 
-        self.profile_form_layout.addWidget(self.profile_label)
+        self.profile_form_layout.addWidget(self.set_profile_label)
 
         self.name_layout = QGridLayout()
         self.name_layout.setObjectName(u"name_layout")
@@ -3410,13 +3122,13 @@ class Ui_MainWindow(object):
         self.password_form_layout.setSpacing(4)
         self.password_form_layout.setObjectName(u"password_form_layout")
         self.password_form_layout.setContentsMargins(0, 0, 0, 0)
-        self.password_label = QLabel(self.layoutWidget1)
-        self.password_label.setObjectName(u"password_label")
-        self.password_label.setMaximumSize(QSize(16777215, 26))
-        self.password_label.setFont(font)
-        self.password_label.setStyleSheet(u"")
+        self.set_password_title = QLabel(self.layoutWidget1)
+        self.set_password_title.setObjectName(u"set_password_title")
+        self.set_password_title.setMaximumSize(QSize(16777215, 26))
+        self.set_password_title.setFont(font)
+        self.set_password_title.setStyleSheet(u"")
 
-        self.password_form_layout.addWidget(self.password_label)
+        self.password_form_layout.addWidget(self.set_password_title)
 
         self.verticalLayout_14 = QVBoxLayout()
         self.verticalLayout_14.setSpacing(0)
@@ -3510,14 +3222,14 @@ class Ui_MainWindow(object):
 
         self.password_form_layout.addLayout(self.verticalLayout_16)
 
-        self.label_27 = QLabel(self.layoutWidget1)
-        self.label_27.setObjectName(u"label_27")
-        self.label_27.setMaximumSize(QSize(16777215, 16))
-        self.label_27.setFont(font5)
-        self.label_27.setStyleSheet(u"color:red;\n"
+        self.error_label = QLabel(self.layoutWidget1)
+        self.error_label.setObjectName(u"error_label")
+        self.error_label.setMaximumSize(QSize(16777215, 16))
+        self.error_label.setFont(font5)
+        self.error_label.setStyleSheet(u"color:red;\n"
 "padding-left:4px;")
 
-        self.password_form_layout.addWidget(self.label_27)
+        self.password_form_layout.addWidget(self.error_label)
 
         self.save_password_btn = QPushButton(self.layoutWidget1)
         self.save_password_btn.setObjectName(u"save_password_btn")
@@ -3537,10 +3249,10 @@ class Ui_MainWindow(object):
         self.page_3 = QWidget()
         self.page_3.setObjectName(u"page_3")
         self.settings_stacked_widget.addWidget(self.page_3)
-        self.right_stacked_widget.addWidget(self.page_5)
-        self.label_17.raise_()
+        self.right_stacked_widget.addWidget(self.page_1)
+        self.settings_title.raise_()
         self.settings_stacked_widget.raise_()
-        self.label_18.raise_()
+        self.breadcrumb.raise_()
         self.page_6 = QWidget()
         self.page_6.setObjectName(u"page_6")
         self.right_stacked_widget.addWidget(self.page_6)
@@ -3564,10 +3276,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.addWidget(self.status_bar)
 
 
-        self.horizontalLayout_8.addWidget(self.right_side_container)
+        self.app_layout.addWidget(self.right_side_container)
 
 
-        self.app_margins.addWidget(self.bg_app)
+        self.app_margins.addWidget(self.app_bg)
 
         MainWindow.setCentralWidget(self.stylesheet)
 
@@ -3576,7 +3288,7 @@ class Ui_MainWindow(object):
         self.left_side_container.setCurrentIndex(0)
         self.contacts_stack.setCurrentIndex(0)
         self.chat_stacked_widget.setCurrentIndex(1)
-        self.emoji_tab_widget.setCurrentIndex(0)
+        self.emoji_tab_widget.setCurrentIndex(1)
         self.right_stacked_widget.setCurrentIndex(0)
         self.settings_stacked_widget.setCurrentIndex(1)
 
@@ -3589,17 +3301,17 @@ class Ui_MainWindow(object):
         self.actionAide.setText(QCoreApplication.translate("MainWindow", u"Aide", None))
         self.actionQuitter.setText(QCoreApplication.translate("MainWindow", u"Quitter", None))
         self.app_name.setText(QCoreApplication.translate("MainWindow", u"AR Intercom", None))
+        self.app_logo.setText("")
         self.menu_btn.setText(QCoreApplication.translate("MainWindow", u"Hide menu", None))
         self.home_btn.setText(QCoreApplication.translate("MainWindow", u"Home", None))
         self.scan_btn.setText(QCoreApplication.translate("MainWindow", u"Scan network", None))
-        self.contact_btn.setText(QCoreApplication.translate("MainWindow", u"Chat", None))
+        self.chat_btn.setText(QCoreApplication.translate("MainWindow", u"Chat", None))
         self.settings_btn_2.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
         self.about_btn.setText(QCoreApplication.translate("MainWindow", u"About", None))
         self.me_online_toast.setText("")
         self.me_status.setText(QCoreApplication.translate("MainWindow", u"Coding...", None))
         self.me_username.setText(QCoreApplication.translate("MainWindow", u"Antares", None))
-        self.search_sms.setText(QCoreApplication.translate("MainWindow", u"Search user, message", None))
-        self.search_sms.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Rechercher un contact", None))
+        self.search_bar.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Search chat, message, ...", None))
         self.msg_countrer.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-weight:400;\">1</span></p></body></html>", None))
         self.client_picture.setText("")
         self.online_toast.setText("")
@@ -3617,19 +3329,19 @@ class Ui_MainWindow(object):
         self.socket_adress.setText(QCoreApplication.translate("MainWindow", u"192.168.1.100", None))
         self.socket_name.setText(QCoreApplication.translate("MainWindow", u"DESKTOP-LKJOK-KJL", None))
         self.add_to_contact_btn.setText("")
-        self.label_top.setText(QCoreApplication.translate("MainWindow", u"You're connected !", None))
+        self.signal_text.setText(QCoreApplication.translate("MainWindow", u"You're connected !", None))
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"About AR Intercom", None))
         self.pushButton_11.setText(QCoreApplication.translate("MainWindow", u"Donate", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>AR Intercom <span style=\" font-weight:400; color:#878787;\">Entreprise</span></p></body></html>", None))
+        self.app_title.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>AR Intercom <span style=\" font-weight:400; color:#878787;\">Entreprise</span></p></body></html>", None))
         self.settings_btn.setText("")
 #if QT_CONFIG(statustip)
         self.minimize_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Minimize", None))
 #endif // QT_CONFIG(statustip)
         self.minimize_btn.setText("")
 #if QT_CONFIG(statustip)
-        self.min_max_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Maximize", None))
+        self.maximize_restore_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Maximize", None))
 #endif // QT_CONFIG(statustip)
-        self.min_max_btn.setText("")
+        self.maximize_restore_btn.setText("")
 #if QT_CONFIG(statustip)
         self.close_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Close", None))
 #endif // QT_CONFIG(statustip)
@@ -3663,10 +3375,6 @@ class Ui_MainWindow(object):
         self.image.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" color:#848484;\">1.2Mb</span> \u2022 Image.ext</p></body></html>", None))
         self.time_13.setText(QCoreApplication.translate("MainWindow", u"23:36", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"23 SEPTEMBRE 2023", None))
-        self.media_doc.setText("")
-        self.media_audio.setText("")
-        self.media_image.setText("")
-        self.media_video.setText("")
         self.active_client_picture.setText(QCoreApplication.translate("MainWindow", u"A", None))
         self.active_client_name.setText(QCoreApplication.translate("MainWindow", u"Alpha", None))
         self.active_client_status.setText(QCoreApplication.translate("MainWindow", u"Hello, i'm using AR Intercom !", None))
@@ -3688,12 +3396,6 @@ class Ui_MainWindow(object):
         self.title_2.setText(QCoreApplication.translate("MainWindow", u"ARV-20062021-1200.arv", None))
         self.elapsed_time_2.setText(QCoreApplication.translate("MainWindow", u"00:00", None))
         self.total_time_2.setText(QCoreApplication.translate("MainWindow", u"00:00", None))
-        self.media_btn.setText("")
-        self.emoji_btn.setText("")
-        self.entry_field.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Type your message ...", None))
-        self.send_btn.setText("")
-        self.emoji_widget_title.setText(QCoreApplication.translate("MainWindow", u"Emojis", None))
-        self.close_emoji_btn.setText("")
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_smilies), QCoreApplication.translate("MainWindow", u"Sm", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_animals), QCoreApplication.translate("MainWindow", u"An", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_foods), QCoreApplication.translate("MainWindow", u"Fo", None))
@@ -3702,13 +3404,22 @@ class Ui_MainWindow(object):
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_objects), QCoreApplication.translate("MainWindow", u"Ob", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_symbols), QCoreApplication.translate("MainWindow", u"Sy", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_flags), QCoreApplication.translate("MainWindow", u"Fl", None))
-        self.label_17.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
-        self.label_18.setText(QCoreApplication.translate("MainWindow", u"Settings > Account", None))
+        self.close_emoji_btn.setText("")
+        self.media_doc.setText("")
+        self.media_audio.setText("")
+        self.media_image.setText("")
+        self.media_video.setText("")
+        self.media_btn.setText("")
+        self.emoji_btn.setText("")
+        self.input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Type your message ...", None))
+        self.send_btn.setText("")
+        self.settings_title.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
+        self.breadcrumb.setText(QCoreApplication.translate("MainWindow", u"Settings > Account", None))
         self.checkBox.setText(QCoreApplication.translate("MainWindow", u"Mode clair", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Mon compte", None))
         self.edit_profile_picture_btn.setText("")
         self.user_profile_picture.setText("")
-        self.profile_label.setText(QCoreApplication.translate("MainWindow", u"Profile", None))
+        self.set_profile_label.setText(QCoreApplication.translate("MainWindow", u"Profile", None))
         self.username.setText(QCoreApplication.translate("MainWindow", u"Antares", None))
         self.username_btn.setText("")
         self.label_19.setText(QCoreApplication.translate("MainWindow", u"Name", None))
@@ -3724,11 +3435,11 @@ class Ui_MainWindow(object):
         self.label_29.setText(QCoreApplication.translate("MainWindow", u"Department", None))
         self.user_department.setText(QCoreApplication.translate("MainWindow", u"AR Software", None))
         self.user_department_btn.setText("")
-        self.password_label.setText(QCoreApplication.translate("MainWindow", u"Change password", None))
+        self.set_password_title.setText(QCoreApplication.translate("MainWindow", u"Change password", None))
         self.label_23.setText(QCoreApplication.translate("MainWindow", u"Actual password", None))
         self.label_24.setText(QCoreApplication.translate("MainWindow", u"New password", None))
         self.label_25.setText(QCoreApplication.translate("MainWindow", u"New password again", None))
-        self.label_27.setText(QCoreApplication.translate("MainWindow", u"Incorrect password", None))
+        self.error_label.setText(QCoreApplication.translate("MainWindow", u"Incorrect password", None))
         self.save_password_btn.setText(QCoreApplication.translate("MainWindow", u"Update password", None))
         self.status_bar.setText(QCoreApplication.translate("MainWindow", u"Creative Mind", None))
     # retranslateUi

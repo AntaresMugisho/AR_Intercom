@@ -41,12 +41,14 @@ class MainWindow(QMainWindow):
         self.shadow.setXOffset(0)
         self.shadow.setYOffset(0)
         self.shadow.setColor(QColor(0, 0, 0, 150))
-        self.ui.bg_app.setGraphicsEffect(self.shadow)
+        self.ui.app_bg.setGraphicsEffect(self.shadow)
 
-        # HIDE MENU TEXT AND SETTINGS PANEL ON START
+        # HIDE ASIDE MENU TEXT, SETTINGS PANEL, EMOJI WIDGET AND MEDIA BUTTONS ON START UP
         self.ui.left_menu.setFixedWidth(60)
         self.ui.right_stacked_widget.setFixedWidth(0)
         self.ui.emoji_widget.setFixedHeight(0)
+        self.ui.media_bg.setFixedHeight(0)
+        self.ui.chat_page_layout.removeWidget(self.ui.media_bg)
 
         # CONNECT BUTTONS
         self.ui.menu_btn.clicked.connect(self.toggle_menu)
@@ -54,16 +56,17 @@ class MainWindow(QMainWindow):
         self.ui.settings_btn_2.clicked.connect(self.toggle_settings)
         self.ui.emoji_btn.clicked.connect(self.toggle_emojis)
         self.ui.close_emoji_btn.clicked.connect(self.toggle_emojis)
+        self.ui.media_btn.clicked.connect(self.toggle_media)
 
         # System buttons
         self.ui.minimize_btn.clicked.connect(self.showMinimized)
-        self.ui.min_max_btn.clicked.connect(self.maximize_restore)
+        self.ui.maximize_restore_btn.clicked.connect(self.maximize_restore)
         self.ui.close_btn.clicked.connect(self.close)
 
         # Menus
         self.ui.home_btn.clicked.connect(self.menu_click)
         self.ui.scan_btn.clicked.connect(self.menu_click)
-        self.ui.contact_btn.clicked.connect(self.menu_click)
+        self.ui.chat_btn.clicked.connect(self.menu_click)
         self.ui.about_btn.clicked.connect(self.menu_click)
 
         # Start on home page
@@ -79,16 +82,19 @@ class MainWindow(QMainWindow):
         #     print("Don't close")
 
     def maximize_restore(self):
-
         if not self.WINDOW_MAXIMIZED:
             self.showMaximized()
             self.WINDOW_MAXIMIZED = True
-            self.ui.min_max_btn.setStatusTip("Restore")
+            self.ui.maximize_restore_btn.setStatusTip("Restore")
+            self.ui.maximize_restore_btn.setStyleSheet("background-image:url(:/cils/cils/icon_restore.png);")
 
         else:
             self.showNormal()
             self.WINDOW_MAXIMIZED = False
-            self.ui.min_max_btn.setStatusTip("Maximize")
+            self.ui.maximize_restore_btn.setStatusTip("Maximize")
+            self.ui.maximize_restore_btn.setStyleSheet("background-image:url(:/cils/cils/icon_maximize.png);")
+
+
 
 
     @Slot()
@@ -105,7 +111,7 @@ class MainWindow(QMainWindow):
             self.ui.left_side_container.setCurrentWidget(self.ui.contact_page)
             self.ui.contacts_stack.setCurrentWidget(self.ui.scan_page)
 
-        elif menu == "contact_btn":
+        elif menu == "chat_btn":
             self.ui.left_side_container.setCurrentWidget(self.ui.contact_page)
             self.ui.contacts_stack.setCurrentWidget(self.ui.chat_list_page)
 
@@ -159,9 +165,24 @@ class MainWindow(QMainWindow):
     @Slot()
     def toggle_emojis(self):
         if self.ui.emoji_widget.height() == 0:
-            self.ui.emoji_widget.setFixedHeight(206)
+            self.ui.emoji_widget.setFixedHeight(196)
         else:
             self.ui.emoji_widget.setFixedHeight(0)
+
+    @Slot()
+    def toggle_media(self):
+        if self.ui.media_bg.height() == 0:
+            self.ui.media_bg.move(QPoint(12, self.ui.chat_page.height() - 260))
+            self.ui.media_bg.setFixedHeight(190)
+
+        else:
+            self.ui.media_bg.setFixedHeight(0)
+            # self.ui.chat_page_layout.addWidget(self.ui.media_bg)
+
+
+
+
+
 
 
 if __name__ == "__main__":
