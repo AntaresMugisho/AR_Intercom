@@ -39,17 +39,17 @@ class Bubble(QFrame):
             self.show_text_bubble()
 
         elif self.message_kind == "voice":
-            # self.show_voice_bubble()
-            pass
+            self.show_voice_bubble()
+
         elif self.message_kind == "image":
             # self.show_image_bubble()
             pass
+
         elif self.message_kind == "document":
             # self.show_document_bubble()
             pass
         elif self.message_kind == "video":
             pass
-            # self.show_video_bubble()
 
         elif self.message_kind == "audio":
             pass
@@ -64,13 +64,6 @@ class Bubble(QFrame):
 
         # Bubble : background
         self.bubble = QFrame(self)
-        self.bubble.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        if self.on_left:
-            self.bubble.move(12, 12)
-            self.bubble.setStyleSheet(self.left_style)
-        else:
-            self.bubble.move(0, 12)
-            self.bubble.setStyleSheet(self.right_style)
 
         # Message Label
         self.message_label = QLabel(self.bubble)
@@ -94,17 +87,16 @@ class Bubble(QFrame):
         # Add message label and time
         self.create_time_label(self.bubble, self.message_label)
 
-        self.size_hint = self.bubble.sizeHint() + QSize(12, 12)
-
-
         # Render the widget
-        self.render_bubble()
+
+        self.render_bubble(self.bubble)
 
 
-    def render_bubble(self):
+    def render_bubble(self, bubble):
 
-        self.setMinimumSize(self.size_hint)
-        self.setMaximumSize(self.size_hint)
+        size_hint = bubble.sizeHint() + QSize(12, 12)
+        self.setMinimumSize(size_hint)
+        self.setMaximumSize(size_hint)
 
         # Small decoration frames
         self.large_ellipse = QFrame(self)
@@ -115,6 +107,9 @@ class Bubble(QFrame):
             self.small_ellipse.setStyleSheet(u"background-color: rgb(40, 40, 43);border-radius:4px;")
             self.large_ellipse.setGeometry(QRect(5, 6, 14, 14))
             self.large_ellipse.setStyleSheet(u"background-color: rgba(40, 40, 43, 0.7);border-radius:7px;")
+
+            bubble.move(12, 12)
+            bubble.setStyleSheet(self.left_style)
         else:
             bubble_width = self.width()
 
@@ -122,6 +117,8 @@ class Bubble(QFrame):
             self.small_ellipse.setStyleSheet(u"background-color: rgb(14, 14, 15);border-radius:4px;")
             self.large_ellipse.setGeometry(QRect(bubble_width - 14 - 5, 6, 14, 14))
             self.large_ellipse.setStyleSheet(u"background-color: rgba(14, 14, 15, 0.7);border-radius:7px;")
+            bubble.move(0, 12)
+            bubble.setStyleSheet(self.right_style)
 
         return self
 
@@ -169,30 +166,20 @@ class Bubble(QFrame):
 
 
     def show_voice_bubble(self):
-        # self.voice_bubble_frame = QFrame(self)
-        # self.voice_bubble_frame.setObjectName(u"voice_bubble_frame")
-        # self.voice_bubble_frame.setFixedSize(QSize(320, 111))
 
-
+        # Bubble background
         self.voice_bubble = QFrame(self)
-        self.voice_bubble.setObjectName(u"frame_12")
-        self.voice_bubble.setGeometry(QRect(17, 17, 304, 91))
-        self.voice_bubble.setMaximumWidth(304)
-        if self.on_left:
-            self.voice_bubble.setStyleSheet(self.left_style)
-        else:
-            self.voice_bubble.setStyleSheet(self.right_style)
+        self.voice_bubble.setFixedSize(304, 96)
 
+        # Frame
         self.arv_bubble = QFrame(self.voice_bubble)
         self.arv_bubble.setObjectName(u"arv_bubble")
-        self.arv_bubble.setMinimumSize(QSize(300, 70))
-        self.arv_bubble.setMaximumSize(QSize(300, 70))
-        self.arv_bubble.setStyleSheet(u"QFrame{\n"
-                                      "	background-color:#88FFFFFF;\n"
-                                      "	border-radius:10px;\n"
-                                      "\n"
-                                      "}")
+        self.arv_bubble.setFixedSize(QSize(300, 70))
+        self.arv_bubble.setStyleSheet(u"QFrame{background-color:#88FFFFFF;border-radius:10px;}")
 
+        # Voice note title
+        path = self.message_body
+        filename = os.path.splitext(os.path.basename(path))[0] + ".arv"
 
         self.title = QLabel(self.arv_bubble)
         self.title.setObjectName(u"title")
@@ -200,35 +187,25 @@ class Bubble(QFrame):
         self.title.setStyleSheet(u"QLabel{	background:#44FFFFFF;color:#000;}")
         self.title.setAlignment(Qt.AlignCenter)
         self.title.setTextInteractionFlags(Qt.TextSelectableByMouse)
-
-        path = self.message_body
-        filename = os.path.splitext(os.path.basename(path))[0] + ".arv"
         self.title.setText(filename)
         self.title.setObjectName(f"path|{path}")
 
-
+        # Time indicators
         self.elapsed_time = QLabel(self.arv_bubble)
         self.elapsed_time.setObjectName(u"elapsed_time")
         self.elapsed_time.setGeometry(QRect(52, 49, 51, 16))
-        self.elapsed_time.setStyleSheet(u"QLabel{\n"
-                                        "	background:#44FFFFFF;\n"
-                                        "    color:#333;\n"
-                                        "	border-radius:8px;\n"
-                                        "}")
+        self.elapsed_time.setStyleSheet(u"QLabel{background:#44FFFFFF;color:#333;border-radius:8px;}")
         self.elapsed_time.setAlignment(Qt.AlignCenter)
         self.elapsed_time.setText("00:00")
 
         self.total_time = QLabel(self.arv_bubble)
         self.total_time.setObjectName(u"total_time")
         self.total_time.setGeometry(QRect(241, 49, 51, 16))
-        self.total_time.setStyleSheet(u"QLabel{\n"
-                                      "	background:#44FFFFFF;\n"
-                                      "    color:#333;\n"
-                                      "	border-radius:8px;\n"
-                                      "}")
+        self.total_time.setStyleSheet(u"QLabel{background:#44FFFFFF;color:#333;border-radius:8px;}")
         self.total_time.setAlignment(Qt.AlignCenter)
         self.total_time.setText("--:--")
 
+        # Slider -> progress bar
         self.slider = QSlider(self.arv_bubble)
         self.slider.setObjectName(u"slider")
         self.slider.setGeometry(QRect(52, 30, 241, 12))
@@ -258,6 +235,7 @@ class Bubble(QFrame):
         QSlider::sub-page:horizontal{
             background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
             stop:0 rgba(0, 52, 93, 255), stop:1 rgba(0, 121, 215, 255));}""")
+
         self.slider.setMaximum(100)
         self.slider.setValue(0)
         self.slider.setOrientation(Qt.Horizontal)
@@ -281,14 +259,13 @@ class Bubble(QFrame):
                                        "}")
 
 
-
         self.play_button.clicked.connect(self.play)
 
         # Add message label and time
         self.create_time_label(self.voice_bubble, self.arv_bubble)
 
         # Add frame on the widget
-        self.render_bubble()
+        self.render_bubble(self.voice_bubble)
 
     def play(self):
         print("Play ...")
@@ -297,27 +274,14 @@ class Bubble(QFrame):
 
     def show_document_bubble(self):
 
-        # self.document_bubble_frame = QFrame(self)
-        # self.document_bubble_frame.setObjectName(u"document_bubble_frame")
-        # self.document_bubble_frame.setGeometry(QRect(380, 180, 201, 101))
-        # self.document_bubble_frame.setMinimumSize(QSize(201, 101))
-
         self.document_bubble = QFrame(self)
         self.document_bubble.setObjectName(u"document_bubble")
-        self.document_bubble.setGeometry(QRect(17, 17, 181, 71))
+        self.document_bubble.setGeometry(0, 0, 181, 71)
         self.document_bubble.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        if self.on_left:
-            self.document_bubble.setStyleSheet(self.left_style)
-        else:
-            self.document_bubble.setStyleSheet(self.right_style)
 
         self.document = QFrame(self.document_bubble)
         self.document.setObjectName(u"document")
-        self.document.setStyleSheet(u".QFrame{\n"
-                                    "	background-color:#88FFFFFF;\n"
-                                    "	border-radius:10px;\n"
-                                    "\n"
-                                    "}")
+        self.document.setStyleSheet(u".QFrame{background-color:#88FFFFFF;border-radius:10px;}")
         self.horizontalLayout_23 = QHBoxLayout(self.document)
         self.horizontalLayout_23.setSpacing(6)
         self.horizontalLayout_23.setObjectName(u"horizontalLayout_23")
@@ -357,16 +321,12 @@ class Bubble(QFrame):
         self.document_title.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
         self.document_title.setTextInteractionFlags(Qt.TextSelectableByMouse)
         self.document_title.setText(os.path.basename(path))
-        # self.document_title.setWordWrap(True)
 
         self.document_title_size_layout.addWidget(self.document_title)
 
         self.document_size = QLabel(self.document)
         self.document_size.setObjectName(u"document_size")
-        self.document_size.setStyleSheet(u"QLabel{\n"
-                                         "	background:transparent;\n"
-                                         "    color:#333;\n"
-                                         "}")
+        self.document_size.setStyleSheet(u"QLabel{background:transparent;color:#333;}")
         self.document_size.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
         self.document_size.setTextInteractionFlags(Qt.TextSelectableByMouse)
         size = round((os.path.getsize(path) / 1024 / 1024), 2)
@@ -380,7 +340,7 @@ class Bubble(QFrame):
         self.create_time_label(self.document_bubble, self.document)
 
         # Add frame on the widget
-        self.render_bubble()
+        self.render_bubble(self.document_bubble)
 
     def show_image_bubble(self):
         font10 = QFont()
@@ -399,10 +359,6 @@ class Bubble(QFrame):
         self.image_bubble.setObjectName(u"image_bubble")
         self.image_bubble.setGeometry(QRect(17, 17, 191, 201))
         self.image_bubble.setMaximumWidth(280)
-        if self.on_left:
-            self.image_bubble.setStyleSheet(self.left_style)
-        else:
-            self.image_bubble.setStyleSheet(self.right_style)
 
         # Label displaying image
         self.image = QLabel(self.image_bubble)
@@ -422,7 +378,7 @@ class Bubble(QFrame):
         self.create_time_label(self.image_bubble, self.image)
 
         # Add frame on the widget
-        self.render_bubble()
+        self.render_bubble(self.image_bubble)
 
     def show_video_bubble(self):
         # Collect image metadata
