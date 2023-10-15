@@ -35,6 +35,7 @@ QPushButton:pressed {
 }
 
 #settings_btn{
+	background-image:url(:/cils/cils/icon_settings.png);
 	border-radius: 8px
 }
 
@@ -61,17 +62,29 @@ QPushButton:pressed {
 	background-color: rgb(11, 12, 13);
 }
 
-#system_menu #reduce_btn:pressed {
-	background-color: #fff000;
+#system_menu #minimize_btn{
+	background-image: url(:/cils/cils/icon_minimize.png);
 }
 
-#system_menu #min_max_btn:pressed{
-	background-color: #00ee00;
+#system_menu #minimize_btn:pressed{
+	background-color:#fff000
+}
+
+#system_menu #maximize_restore_btn{
+	background-image: url(:/cils/cils/icon_maximize.png);
+}
+
+#system_menu #maximize_restore_btn:pressed{
+	background-color: #00dd00;
+}
+
+#system_menu #close_btn{
+	background-image: url(:/cils/cils/icon_close.png);
 }
 
 #system_menu #close_btn:hover {
 	background-color: #ff0000;
- }
+}
 
 
 /*ASIDE MENU BAR */
@@ -89,7 +102,29 @@ QPushButton:pressed {
 	border-radius: 0px;
 	background-position:center left;
 }
+#menu_btn{
+	background-image: url(:/cils/cils/cil-list.png);
+}
 
+#home_btn{
+	background-image: url(:/cils/cils/cil-home.png);
+}
+
+#scan_btn{
+	background-image: url(:/svg/svg/icon_signal.svg);
+}
+
+#chat_btn{
+	background-image: url(:/cils/cils/cil-chat-bubble.png);
+}
+
+#settings_btn_2{
+    background-image:url(:/cils/cils/cil-settings.png);
+}
+
+#about_btn{
+	background-image: url(:/cils/cils/cil-at.png);
+}
 
 /* LEFT SIDE - CHAT LIST */
 
