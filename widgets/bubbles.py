@@ -64,9 +64,7 @@ class Bubble(QFrame):
 
         # Bubble : background
         self.bubble = QFrame(self)
-        self.bubble.setMaximumWidth(316)
         self.bubble.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-
         if self.on_left:
             self.bubble.move(12, 12)
             self.bubble.setStyleSheet(self.left_style)
@@ -83,6 +81,11 @@ class Bubble(QFrame):
             Qt.LinksAccessibleByKeyboard | Qt.LinksAccessibleByMouse | Qt.TextBrowserInteraction | Qt.TextSelectableByKeyboard | Qt.TextSelectableByMouse)
         self.message_label.setText(self.message_body)
 
+        label_width = self.message_label.fontMetrics().boundingRect(self.message_label.text()).width()
+        self.message_label.setMaximumWidth(400)
+        if label_width > self.message_label.maximumWidth():
+            self.message_label.setMinimumWidth(self.message_label.maximumWidth())
+
         if self.on_left:
             self.message_label.setStyleSheet(u"QLabel{color: #ccc;background-color:transparent;padding:4px 4px 0px;}")
         else:
@@ -91,16 +94,18 @@ class Bubble(QFrame):
         # Add message label and time
         self.create_time_label(self.bubble, self.message_label)
 
-        size_hint = self.bubble.sizeHint() + QSize(12, 12)
-        self.setMinimumSize(size_hint)
-        self.setMaximumSize(size_hint)
-        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.size_hint = self.bubble.sizeHint() + QSize(12, 12)
 
-        # Add frame on the widget
+
+        # Render the widget
         self.render_bubble()
 
 
     def render_bubble(self):
+
+        self.setMinimumSize(self.size_hint)
+        self.setMaximumSize(self.size_hint)
+
         # Small decoration frames
         self.large_ellipse = QFrame(self)
         self.small_ellipse = QFrame(self)

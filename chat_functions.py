@@ -85,7 +85,7 @@ class ChatFunctions: #(QMainWindow):
         # self.ui.playButtonPressed.connect(self.play)
 
         # Just for testing
-        self.show_emojis()
+        #self.show_emojis()
 
         user = User.find(1)
         self.ui.me_username.setText(user.get_user_name())

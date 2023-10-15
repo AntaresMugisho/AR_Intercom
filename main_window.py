@@ -43,7 +43,6 @@ class MainWindow(QMainWindow, ChatFunctions):
         # CONNECT BUTTONS
         self.ui.menu_btn.clicked.connect(self.toggle_menu)
         self.ui.settings_btn.clicked.connect(self.toggle_settings)
-        self.ui.settings_btn_2.clicked.connect(self.toggle_settings)
         self.ui.emoji_btn.clicked.connect(self.toggle_emojis)
         self.ui.close_emoji_btn.clicked.connect(self.toggle_emojis)
         self.ui.media_btn.clicked.connect(self.toggle_media)
