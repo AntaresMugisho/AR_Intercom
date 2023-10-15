@@ -1,24 +1,14 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 import sys
-import os
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale, QEasingCurve,
-                            QMetaObject, QObject, QPoint, QRect,
-                            QSize, QTime, QUrl, Qt, Slot, QTimer, QPropertyAnimation)
-from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
-    QCursor, QFont, QFontDatabase, QGradient,
-    QIcon, QImage, QKeySequence, QLinearGradient,
-    QPainter, QPalette, QPixmap, QRadialGradient,
-    QTransform)
-from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QCheckBox, QFrame, QGraphicsDropShadowEffect,
-    QGridLayout, QHBoxLayout, QLabel, QLineEdit, QMessageBox,
-    QMainWindow, QPushButton, QScrollArea, QSizePolicy,
-    QSlider, QSpacerItem, QStackedWidget, QTabWidget,
-    QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QPushButton
+from PySide6.QtGui import QColor
+from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot
 
 from gui import Ui_MainWindow
+from chat_functions import ChatFunctions
 
-class MainWindow(QMainWindow):
+class MainWindow(QMainWindow, ChatFunctions):
     """
     Main window
     """
@@ -69,8 +59,12 @@ class MainWindow(QMainWindow):
         self.ui.chat_btn.clicked.connect(self.menu_click)
         self.ui.about_btn.clicked.connect(self.menu_click)
 
+        self.ui.chat_scroll_layout.itemAt(1).spacerItem()
+
         # Start on home page
         # self.ui.home_btn.clicked.emit()
+
+        ChatFunctions.initialize(self)
 
     def closeEvent(self, event) -> None:
         pass

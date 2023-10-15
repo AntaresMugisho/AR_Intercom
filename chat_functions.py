@@ -1,49 +1,36 @@
 # -*- This python file uses the following encoding : utf-8 -*-
-import random
+
 import sys
 import os
-import time
 import threading
 from datetime import datetime, timedelta
 from functools import partial
 
 import emojis
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale, QEasingCurve,
-                            QMetaObject, QObject, QPoint, QRect,
-                            QSize, QTime, QUrl, Qt, Slot, QTimer, QPropertyAnimation)
-from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
-    QCursor, QFont, QFontDatabase, QGradient,
-    QIcon, QImage, QKeySequence, QLinearGradient,
-    QPainter, QPalette, QPixmap, QRadialGradient,
-    QTransform)
-from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QCheckBox, QFrame,
-    QGridLayout, QHBoxLayout, QLabel, QLineEdit,
-    QMainWindow, QPushButton, QScrollArea, QSizePolicy,
-    QSlider, QSpacerItem, QStackedWidget, QTabWidget,
-    QTextEdit, QVBoxLayout, QWidget)
 
 from PySide6.QtMultimedia import QMediaRecorder
+from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel
+from PySide6.QtGui import QColor
+from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt
 
-from gui.chat_window import Ui_ChatWindow
+import utils
+from widgets import Bubble, ClientWidget, DateLabel, EmojiButton
 from styles import Clients, SendButton, Player as PlayerStyle
+from gui import Ui_MainWindow
 from server import Server
 from client import Client
-
 from user import User
 from message import Message
 from recorder import Recorder
 from player import Player
 from netscanner import NetScanner
 from notification import NotificationWidget
-import utils
-
-from gui.main_window import Ui_MainWindow
-from widgets import Bubble, ClientWidget, DateLabel, EmojiButton
 
 # Global variables for recorder time counter
 seconds = minutes = 0
 
-class ChatWindow(QMainWindow):
+
+class ChatFunctions(QMainWindow):
     """
     Initialize chat window to show conversations and start chatting
     """
@@ -55,15 +42,14 @@ class ChatWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        self.initialize()
 
-
+    def initialize(self):
         # SHOW USERS / CONVERSATION LIST
         self.show_user_widget()
 
-
-
         # CONNECT SEND BUTTON
-        self.ui.entry_field.textChanged.connect(self.change_send_style)
+        self.ui.input.textChanged.connect(self.change_send_style)
         self.ui.send_btn.clicked.connect(self.send_text_or_record)
 
         # START SERVER
@@ -132,20 +118,32 @@ class ChatWindow(QMainWindow):
                     row += 1
                     column = 0
                 btn = EmojiButton(emoji.emoji)
-                layout.addWidget(btn, row, column)
-
+                # layout.addWidget(btn, row, column)
 
     def show_user_widget(self):
         """
         Load users conversation list from users who are registered in database
         """
+        # Save spacer item
+        chat_list_layout_count = self.ui.chat_list_layout.count()
+        spacer = self.ui.chat_list_layout.itemAt(chat_list_layout_count - 1)
+
+        # Remove old list
+        for i in reversed(range(chat_list_layout_count - 1)):
+            widget = self.ui.chat_list_layout.itemAt(i).widget()
+            widget.deleteLater()
+            self.ui.chat_list_layout.removeWidget(widget)
+
+        # Add new user's list
         users = User.where("id", ">=", 1)
         for user in users:
             widget = ClientWidget(user)
             last_index = self.ui.chat_list_layout.count() - 1
-            self.ui.chat_list_layout.insertWidget(last_index, widget, Qt.AlignmentFlag.AlignCenter,
-                                                  Qt.AlignmentFlag.AlignTop)
+            self.ui.chat_list_layout.insertWidget(last_index, widget, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
             widget.clicked.connect(self.show_conversations)
+
+        # Add spacer
+        self.ui.chat_list_layout.addItem(spacer)
 
     @Slot(str)
     def show_conversations(self, button_object_name: str = "356a192b7913b04c54574d18c28d46e6395428ac"):
@@ -189,7 +187,7 @@ class ChatWindow(QMainWindow):
             print(e)
 
         # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
-        message_counter = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_counter")
+        message_counter = self.ui.chat_list_scroll.findChild(QLabel, f"{user_uuid}_counter")
         message_counter.setText("0")
         message_counter.hide()
 
@@ -273,8 +271,8 @@ class ChatWindow(QMainWindow):
         Changes send button style, and disable media button so that a user can not send media message and text message
         at a time.
         """
-        if self.ui.entry_field.toPlainText():
-            print(self.ui.entry_field.toPlainText())
+        if self.ui.input.toPlainText():
+            print(self.ui.input.toPlainText())
             # Change send button style
             self.ui.send_btn.setStyleSheet(SendButton.style_send)
             # Disable media button
@@ -294,7 +292,7 @@ class ChatWindow(QMainWindow):
         #                         "Veuillez sélectionner d'abord votre destinataire !",
         #                         QMessageBox.StandardButton.Ok)
 
-        text_message = self.ui.entry_field.toPlainText()
+        text_message = self.ui.input.toPlainText()
 
         # SEND TEXT MESSAGE
         if text_message:
@@ -320,7 +318,7 @@ class ChatWindow(QMainWindow):
             self.show_bubble(message)
 
             # Reset some ui states
-            self.ui.entry_field.setText(None)
+            self.ui.input.setText(None)
             self.ui.send_btn.setStyleSheet(SendButton.style_record)
             self.ui.media_btn.setEnabled(True)
 
@@ -612,13 +610,12 @@ class ChatWindow(QMainWindow):
             user.set_image_path()
             user.save()
 
-            self.ui.show_user_widget(user, online=True)
-
+            self.show_user_widget(user, online=True)
 
 if __name__ == "__main__":
     app = QApplication.instance()
     if not app:
         app = QApplication(sys.argv)
-    chat_window = ChatWindow()
+    chat_window = ChatFunctions()
     chat_window.show()
     sys.exit(app.exec())
