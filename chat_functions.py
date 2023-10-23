@@ -6,10 +6,11 @@ import threading
 from datetime import datetime, timedelta
 from functools import partial
 
-import emojis
+import EmojiStore
 
 from PySide6.QtMultimedia import QMediaRecorder
-from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel
+from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel, \
+    QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget
 from PySide6.QtGui import QColor
 from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt
 
@@ -30,7 +31,7 @@ from notification import NotificationWidget
 seconds = minutes = 0
 
 
-class ChatFunctions: #(QMainWindow):
+class ChatFunctions:
     """
     Initialize chat window to show conversations and start chatting
     """
@@ -38,11 +39,12 @@ class ChatFunctions: #(QMainWindow):
     DATE = None
 
     # def __init__(self):
-    #     QMainWindow.__init__(self)
+    #     super(ChatFunctions, self).__init__()
+    #     print(self)
     #     self.ui = Ui_MainWindow()
     #     self.ui.setupUi(self)
-    #
-    #     self.initialize()
+
+        # self.initialize()
 
     def initialize(self):
         # SHOW USERS / CONVERSATION LIST
@@ -85,7 +87,7 @@ class ChatFunctions: #(QMainWindow):
         # self.ui.playButtonPressed.connect(self.play)
 
         # Just for testing
-        #self.show_emojis()
+        self.show_emojis()
 
         user = User.find(1)
         self.ui.me_username.setText(user.get_user_name())
@@ -98,27 +100,31 @@ class ChatFunctions: #(QMainWindow):
             self.ui.me_picture.setText(user.get_user_name()[0])
         # ///////////////////////
 
-
-
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
 
     def show_emojis(self):
-        categories = ["Smileys & Emotion", "Animals & Nature", "Food & Drink", "Travel & Places", "Activities", "Objects", "Symbols", "Flags"]
+        categories = ['smileys_and_people', 'animals_and_nature', 'food_and_drink', 'travel_and_places', 'activities',
+                      'objects', 'symbols', 'flags']
+
         for i, category in enumerate(categories):
-            tab = self.ui.emoji_tab_widget.widget(i)
-            for widget in tab.findChildren(QWidget):
-                if widget.objectName().startswith("scrollAreaWidgetContents"):
-                    layout = widget.layout()
+            tab: QTabWidget = self.ui.emoji_tab_widget.widget(i)
+            scroll_area: QScrollArea = tab.findChild(QScrollArea)
+            layout: QGridLayout = scroll_area.widget().layout()
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.setSpacing(2)
+
+            # Delete default button from the layout
+            layout.itemAtPosition(0, 0).widget().deleteLater()
 
             row = 0
             column = -1
-            for emoji in emojis.db.get_emojis_by_category(category):
+            for emoji in EmojiStore.get_by_category(category):
                 column += 1
-                if column % 15 == 0:
+                if column % 24 == 0:
                     row += 1
                     column = 0
                 btn = EmojiButton(emoji.emoji)
-                # layout.addWidget(btn, row, column)
+                layout.addWidget(btn, row, column)
 
     def show_user_widget(self):
         """
@@ -620,5 +626,4 @@ if __name__ == "__main__":
     if not app:
         app = QApplication(sys.argv)
     chat_window = ChatFunctions()
-    chat_window.show()
     sys.exit(app.exec())

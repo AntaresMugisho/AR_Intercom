@@ -346,6 +346,7 @@ QPushButton:pressed {
 
 #emoji_tab_widget QWidget{
 	background-color:#111;
+	border:none;
 }
 
 
@@ -434,13 +435,13 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
  }
 </string>
    </property>
-   <layout class="QHBoxLayout" name="app_margins">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
      <widget class="QWidget" name="app_bg" native="true">
       <property name="styleSheet">
        <string notr="true"/>
       </property>
-      <layout class="QHBoxLayout" name="app_layout">
+      <layout class="QHBoxLayout" name="app_margins">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -564,8 +565,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">
-</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>Hide menu</string>
@@ -665,33 +665,6 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
              </size>
             </property>
            </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="settings_btn_2">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="text">
-             <string>Settings</string>
-            </property>
-           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="about_btn">
@@ -1393,14 +1366,14 @@ border-radius:28px;</string>
                     </widget>
                    </item>
                    <item>
-                    <spacer name="verticalSpacer_2">
+                    <spacer name="verticalSpacer_4">
                      <property name="orientation">
                       <enum>Qt::Vertical</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
                        <width>1</width>
-                       <height>309</height>
+                       <height>800</height>
                       </size>
                      </property>
                     </spacer>
@@ -5629,10 +5602,16 @@ QPushButton::pressed{
                 </item>
                 <item>
                  <widget class="QWidget" name="emoji_widget" native="true">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>100</height>
+                   </size>
+                  </property>
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
-                    <height>190</height>
+                    <height>196</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -5666,67 +5645,415 @@ QPushButton::pressed{
                       <enum>QTabWidget::Rounded</enum>
                      </property>
                      <property name="currentIndex">
-                      <number>1</number>
+                      <number>0</number>
                      </property>
                      <property name="tabsClosable">
                       <bool>false</bool>
                      </property>
-                     <widget class="QWidget" name="tab_smilies">
+                     <widget class="QWidget" name="tab_smileys">
                       <attribute name="title">
                        <string>Sm</string>
                       </attribute>
                       <layout class="QVBoxLayout" name="verticalLayout_12">
                        <property name="spacing">
-                        <number>3</number>
+                        <number>0</number>
                        </property>
                        <property name="leftMargin">
-                        <number>3</number>
+                        <number>0</number>
                        </property>
                        <property name="topMargin">
-                        <number>3</number>
+                        <number>0</number>
                        </property>
                        <property name="rightMargin">
-                        <number>3</number>
+                        <number>0</number>
                        </property>
                        <property name="bottomMargin">
-                        <number>3</number>
+                        <number>0</number>
                        </property>
+                       <item>
+                        <widget class="QScrollArea" name="scrollArea">
+                         <property name="widgetResizable">
+                          <bool>true</bool>
+                         </property>
+                         <widget class="QWidget" name="scrollAreaWidgetContents">
+                          <property name="geometry">
+                           <rect>
+                            <x>0</x>
+                            <y>0</y>
+                            <width>541</width>
+                            <height>55</height>
+                           </rect>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout">
+                           <item row="0" column="0">
+                            <widget class="QPushButton" name="pushButton">
+                             <property name="maximumSize">
+                              <size>
+                               <width>35</width>
+                               <height>35</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string>:)</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </widget>
+                       </item>
                       </layout>
                      </widget>
                      <widget class="QWidget" name="tab_animals">
                       <attribute name="title">
                        <string>An</string>
                       </attribute>
+                      <layout class="QVBoxLayout" name="verticalLayout_6">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QScrollArea" name="scrollArea_2">
+                         <property name="widgetResizable">
+                          <bool>true</bool>
+                         </property>
+                         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+                          <property name="geometry">
+                           <rect>
+                            <x>0</x>
+                            <y>0</y>
+                            <width>541</width>
+                            <height>55</height>
+                           </rect>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_15">
+                           <item row="0" column="0">
+                            <widget class="QPushButton" name="pushButton_2">
+                             <property name="text">
+                              <string>PushButton</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                      <widget class="QWidget" name="tab_foods">
                       <attribute name="title">
                        <string>Fo</string>
                       </attribute>
+                      <layout class="QVBoxLayout" name="verticalLayout_7">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QScrollArea" name="scrollArea_3">
+                         <property name="widgetResizable">
+                          <bool>true</bool>
+                         </property>
+                         <widget class="QWidget" name="scrollAreaWidgetContents_3">
+                          <property name="geometry">
+                           <rect>
+                            <x>0</x>
+                            <y>0</y>
+                            <width>541</width>
+                            <height>55</height>
+                           </rect>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_14">
+                           <property name="leftMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="horizontalSpacing">
+                            <number>3</number>
+                           </property>
+                           <item row="0" column="0">
+                            <widget class="QPushButton" name="pushButton_3">
+                             <property name="text">
+                              <string>PushButton</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                      <widget class="QWidget" name="tab_travels">
                       <attribute name="title">
                        <string>Tr</string>
                       </attribute>
+                      <layout class="QVBoxLayout" name="verticalLayout_10">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QScrollArea" name="scrollArea_4">
+                         <property name="widgetResizable">
+                          <bool>true</bool>
+                         </property>
+                         <widget class="QWidget" name="scrollAreaWidgetContents_4">
+                          <property name="geometry">
+                           <rect>
+                            <x>0</x>
+                            <y>0</y>
+                            <width>541</width>
+                            <height>55</height>
+                           </rect>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_13">
+                           <item row="0" column="0">
+                            <widget class="QPushButton" name="pushButton_4">
+                             <property name="text">
+                              <string>PushButton</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                      <widget class="QWidget" name="tab_activities">
                       <attribute name="title">
                        <string>Ac</string>
                       </attribute>
+                      <layout class="QVBoxLayout" name="verticalLayout_11">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QScrollArea" name="scrollArea_6">
+                         <property name="widgetResizable">
+                          <bool>true</bool>
+                         </property>
+                         <widget class="QWidget" name="scrollAreaWidgetContents_6">
+                          <property name="geometry">
+                           <rect>
+                            <x>0</x>
+                            <y>0</y>
+                            <width>541</width>
+                            <height>55</height>
+                           </rect>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_12">
+                           <item row="0" column="0">
+                            <widget class="QPushButton" name="pushButton_5">
+                             <property name="text">
+                              <string>PushButton</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                      <widget class="QWidget" name="tab_objects">
                       <attribute name="title">
                        <string>Ob</string>
                       </attribute>
+                      <layout class="QVBoxLayout" name="verticalLayout_24">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QScrollArea" name="scrollArea_7">
+                         <property name="widgetResizable">
+                          <bool>true</bool>
+                         </property>
+                         <widget class="QWidget" name="scrollAreaWidgetContents_7">
+                          <property name="geometry">
+                           <rect>
+                            <x>0</x>
+                            <y>0</y>
+                            <width>541</width>
+                            <height>55</height>
+                           </rect>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_11">
+                           <item row="0" column="0">
+                            <widget class="QPushButton" name="pushButton_6">
+                             <property name="text">
+                              <string>PushButton</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                      <widget class="QWidget" name="tab_symbols">
                       <attribute name="title">
                        <string>Sy</string>
                       </attribute>
+                      <layout class="QVBoxLayout" name="verticalLayout_20">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QScrollArea" name="scrollArea_8">
+                         <property name="widgetResizable">
+                          <bool>true</bool>
+                         </property>
+                         <widget class="QWidget" name="scrollAreaWidgetContents_8">
+                          <property name="geometry">
+                           <rect>
+                            <x>0</x>
+                            <y>0</y>
+                            <width>541</width>
+                            <height>55</height>
+                           </rect>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_10">
+                           <item row="0" column="0">
+                            <widget class="QPushButton" name="pushButton_7">
+                             <property name="text">
+                              <string>PushButton</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                      <widget class="QWidget" name="tab_flags">
                       <attribute name="title">
                        <string>Fl</string>
                       </attribute>
+                      <layout class="QVBoxLayout" name="verticalLayout_13">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QScrollArea" name="scrollArea_9">
+                         <property name="widgetResizable">
+                          <bool>true</bool>
+                         </property>
+                         <widget class="QWidget" name="scrollAreaWidgetContents_9">
+                          <property name="geometry">
+                           <rect>
+                            <x>0</x>
+                            <y>0</y>
+                            <width>541</width>
+                            <height>55</height>
+                           </rect>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_3">
+                           <item row="0" column="0">
+                            <widget class="QPushButton" name="pushButton_8">
+                             <property name="text">
+                              <string>PushButton</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                     </widget>
                    </item>

@@ -15,8 +15,7 @@ class EmojiButton(QPushButton):
         self.emoji = emoji
 
         self.setObjectName(u"select_emoji_btn")
-        self.setMinimumSize(QSize(35, 35))
-        self.setMaximumSize(QSize(35, 35))
+        self.setFixedSize(35, 35)
         font12 = QFont()
         font12.setPointSize(16)
         self.setFont(font12)
@@ -24,4 +23,4 @@ class EmojiButton(QPushButton):
                            u"QPushButton:hover{background-color:#444;}")
         self.setText(self.emoji)
 
-        self.clicked.connect(lambda : self.emojiClicked.emit(self.text))
+        self.clicked.connect(lambda : print(self.text()))

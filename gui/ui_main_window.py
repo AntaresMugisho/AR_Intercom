@@ -363,6 +363,7 @@ class Ui_MainWindow(object):
 "\n"
 "#emoji_tab_widget QWidget{\n"
 "	background-color:#111;\n"
+"	border:none;\n"
 "}\n"
 "\n"
 "\n"
@@ -385,9 +386,9 @@ class Ui_MainWindow(object):
 "    border: none;\n"
 "    background: rgb(55, 63, 77);\n"
 "    width: 20px;\n"
-"	border-top-right-radius: 4px;\n"
-"    border-"
-                        "bottom-right-radius: 4px;\n"
+"	border-top-right-radius: 4p"
+                        "x;\n"
+"    border-bottom-right-radius: 4px;\n"
 "    subcontrol-position: right;\n"
 "    subcontrol-origin: margin;\n"
 "}\n"
@@ -428,9 +429,9 @@ class Ui_MainWindow(object):
 "     border: none;\n"
 "     background: rgb(47, 48, 50);\n"
 "     height: 16px;\n"
-"     border-bottom-left-radius:4px;\n"
-""
-                        "     border-bottom-right-radius:4px;\n"
+"     border-bottom-lef"
+                        "t-radius:4px;\n"
+"     border-bottom-right-radius:4px;\n"
 "     subcontrol-position: bottom;\n"
 "     subcontrol-origin: margin;\n"
 " }\n"
@@ -452,15 +453,15 @@ class Ui_MainWindow(object):
 "     background: none;\n"
 " }\n"
 "")
-        self.app_margins = QHBoxLayout(self.stylesheet)
-        self.app_margins.setObjectName(u"app_margins")
+        self.verticalLayout_3 = QVBoxLayout(self.stylesheet)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.app_bg = QWidget(self.stylesheet)
         self.app_bg.setObjectName(u"app_bg")
         self.app_bg.setStyleSheet(u"")
-        self.app_layout = QHBoxLayout(self.app_bg)
-        self.app_layout.setSpacing(0)
-        self.app_layout.setObjectName(u"app_layout")
-        self.app_layout.setContentsMargins(3, 3, 3, 3)
+        self.app_margins = QHBoxLayout(self.app_bg)
+        self.app_margins.setSpacing(0)
+        self.app_margins.setObjectName(u"app_margins")
+        self.app_margins.setContentsMargins(3, 3, 3, 3)
         self.left_menu = QFrame(self.app_bg)
         self.left_menu.setObjectName(u"left_menu")
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
@@ -536,15 +537,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
 
-        self.settings_btn_2 = QPushButton(self.left_menu)
-        self.settings_btn_2.setObjectName(u"settings_btn_2")
-        self.settings_btn_2.setMinimumSize(QSize(0, 40))
-        self.settings_btn_2.setMaximumSize(QSize(16777215, 40))
-        self.settings_btn_2.setFont(font1)
-        self.settings_btn_2.setStyleSheet(u"")
-
-        self.verticalLayout_2.addWidget(self.settings_btn_2)
-
         self.about_btn = QPushButton(self.left_menu)
         self.about_btn.setObjectName(u"about_btn")
         self.about_btn.setMinimumSize(QSize(0, 40))
@@ -555,7 +547,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.about_btn)
 
 
-        self.app_layout.addWidget(self.left_menu)
+        self.app_margins.addWidget(self.left_menu)
 
         self.left_side_container = QStackedWidget(self.app_bg)
         self.left_side_container.setObjectName(u"left_side_container")
@@ -816,9 +808,9 @@ class Ui_MainWindow(object):
 
         self.chat_list_layout.addWidget(self.client_info_2)
 
-        self.verticalSpacer_2 = QSpacerItem(1, 309, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_4 = QSpacerItem(1, 800, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.chat_list_layout.addItem(self.verticalSpacer_2)
+        self.chat_list_layout.addItem(self.verticalSpacer_4)
 
         self.chat_list_scroll.setWidget(self.chat_list_widget)
 
@@ -932,7 +924,7 @@ class Ui_MainWindow(object):
         self.pushButton_11.setGeometry(QRect(60, 650, 161, 41))
         self.left_side_container.addWidget(self.about_page)
 
-        self.app_layout.addWidget(self.left_side_container)
+        self.app_margins.addWidget(self.left_side_container)
 
         self.right_side_container = QWidget(self.app_bg)
         self.right_side_container.setObjectName(u"right_side_container")
@@ -2602,7 +2594,8 @@ class Ui_MainWindow(object):
 
         self.emoji_widget = QWidget(self.chat_page)
         self.emoji_widget.setObjectName(u"emoji_widget")
-        self.emoji_widget.setMaximumSize(QSize(16777215, 190))
+        self.emoji_widget.setMinimumSize(QSize(0, 100))
+        self.emoji_widget.setMaximumSize(QSize(16777215, 196))
         self.emoji_widget.setStyleSheet(u"")
         self.horizontalLayout_3 = QHBoxLayout(self.emoji_widget)
         self.horizontalLayout_3.setSpacing(0)
@@ -2614,33 +2607,200 @@ class Ui_MainWindow(object):
         self.emoji_tab_widget.setTabPosition(QTabWidget.North)
         self.emoji_tab_widget.setTabShape(QTabWidget.Rounded)
         self.emoji_tab_widget.setTabsClosable(False)
-        self.tab_smilies = QWidget()
-        self.tab_smilies.setObjectName(u"tab_smilies")
-        self.verticalLayout_12 = QVBoxLayout(self.tab_smilies)
-        self.verticalLayout_12.setSpacing(3)
+        self.tab_smileys = QWidget()
+        self.tab_smileys.setObjectName(u"tab_smileys")
+        self.verticalLayout_12 = QVBoxLayout(self.tab_smileys)
+        self.verticalLayout_12.setSpacing(0)
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
-        self.verticalLayout_12.setContentsMargins(3, 3, 3, 3)
-        self.emoji_tab_widget.addTab(self.tab_smilies, "")
+        self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
+        self.scrollArea = QScrollArea(self.tab_smileys)
+        self.scrollArea.setObjectName(u"scrollArea")
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollAreaWidgetContents = QWidget()
+        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 541, 55))
+        self.gridLayout = QGridLayout(self.scrollAreaWidgetContents)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.pushButton = QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setMaximumSize(QSize(35, 35))
+
+        self.gridLayout.addWidget(self.pushButton, 0, 0, 1, 1)
+
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+
+        self.verticalLayout_12.addWidget(self.scrollArea)
+
+        self.emoji_tab_widget.addTab(self.tab_smileys, "")
         self.tab_animals = QWidget()
         self.tab_animals.setObjectName(u"tab_animals")
+        self.verticalLayout_6 = QVBoxLayout(self.tab_animals)
+        self.verticalLayout_6.setSpacing(0)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.scrollArea_2 = QScrollArea(self.tab_animals)
+        self.scrollArea_2.setObjectName(u"scrollArea_2")
+        self.scrollArea_2.setWidgetResizable(True)
+        self.scrollAreaWidgetContents_2 = QWidget()
+        self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 541, 55))
+        self.gridLayout_15 = QGridLayout(self.scrollAreaWidgetContents_2)
+        self.gridLayout_15.setObjectName(u"gridLayout_15")
+        self.pushButton_2 = QPushButton(self.scrollAreaWidgetContents_2)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+
+        self.gridLayout_15.addWidget(self.pushButton_2, 0, 0, 1, 1)
+
+        self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
+
+        self.verticalLayout_6.addWidget(self.scrollArea_2)
+
         self.emoji_tab_widget.addTab(self.tab_animals, "")
         self.tab_foods = QWidget()
         self.tab_foods.setObjectName(u"tab_foods")
+        self.verticalLayout_7 = QVBoxLayout(self.tab_foods)
+        self.verticalLayout_7.setSpacing(0)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.scrollArea_3 = QScrollArea(self.tab_foods)
+        self.scrollArea_3.setObjectName(u"scrollArea_3")
+        self.scrollArea_3.setWidgetResizable(True)
+        self.scrollAreaWidgetContents_3 = QWidget()
+        self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 541, 55))
+        self.gridLayout_14 = QGridLayout(self.scrollAreaWidgetContents_3)
+        self.gridLayout_14.setObjectName(u"gridLayout_14")
+        self.gridLayout_14.setHorizontalSpacing(3)
+        self.gridLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.pushButton_3 = QPushButton(self.scrollAreaWidgetContents_3)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+
+        self.gridLayout_14.addWidget(self.pushButton_3, 0, 0, 1, 1)
+
+        self.scrollArea_3.setWidget(self.scrollAreaWidgetContents_3)
+
+        self.verticalLayout_7.addWidget(self.scrollArea_3)
+
         self.emoji_tab_widget.addTab(self.tab_foods, "")
         self.tab_travels = QWidget()
         self.tab_travels.setObjectName(u"tab_travels")
+        self.verticalLayout_10 = QVBoxLayout(self.tab_travels)
+        self.verticalLayout_10.setSpacing(0)
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
+        self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.scrollArea_4 = QScrollArea(self.tab_travels)
+        self.scrollArea_4.setObjectName(u"scrollArea_4")
+        self.scrollArea_4.setWidgetResizable(True)
+        self.scrollAreaWidgetContents_4 = QWidget()
+        self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 541, 55))
+        self.gridLayout_13 = QGridLayout(self.scrollAreaWidgetContents_4)
+        self.gridLayout_13.setObjectName(u"gridLayout_13")
+        self.pushButton_4 = QPushButton(self.scrollAreaWidgetContents_4)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+
+        self.gridLayout_13.addWidget(self.pushButton_4, 0, 0, 1, 1)
+
+        self.scrollArea_4.setWidget(self.scrollAreaWidgetContents_4)
+
+        self.verticalLayout_10.addWidget(self.scrollArea_4)
+
         self.emoji_tab_widget.addTab(self.tab_travels, "")
         self.tab_activities = QWidget()
         self.tab_activities.setObjectName(u"tab_activities")
+        self.verticalLayout_11 = QVBoxLayout(self.tab_activities)
+        self.verticalLayout_11.setSpacing(0)
+        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+        self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
+        self.scrollArea_6 = QScrollArea(self.tab_activities)
+        self.scrollArea_6.setObjectName(u"scrollArea_6")
+        self.scrollArea_6.setWidgetResizable(True)
+        self.scrollAreaWidgetContents_6 = QWidget()
+        self.scrollAreaWidgetContents_6.setObjectName(u"scrollAreaWidgetContents_6")
+        self.scrollAreaWidgetContents_6.setGeometry(QRect(0, 0, 541, 55))
+        self.gridLayout_12 = QGridLayout(self.scrollAreaWidgetContents_6)
+        self.gridLayout_12.setObjectName(u"gridLayout_12")
+        self.pushButton_5 = QPushButton(self.scrollAreaWidgetContents_6)
+        self.pushButton_5.setObjectName(u"pushButton_5")
+
+        self.gridLayout_12.addWidget(self.pushButton_5, 0, 0, 1, 1)
+
+        self.scrollArea_6.setWidget(self.scrollAreaWidgetContents_6)
+
+        self.verticalLayout_11.addWidget(self.scrollArea_6)
+
         self.emoji_tab_widget.addTab(self.tab_activities, "")
         self.tab_objects = QWidget()
         self.tab_objects.setObjectName(u"tab_objects")
+        self.verticalLayout_24 = QVBoxLayout(self.tab_objects)
+        self.verticalLayout_24.setSpacing(0)
+        self.verticalLayout_24.setObjectName(u"verticalLayout_24")
+        self.verticalLayout_24.setContentsMargins(0, 0, 0, 0)
+        self.scrollArea_7 = QScrollArea(self.tab_objects)
+        self.scrollArea_7.setObjectName(u"scrollArea_7")
+        self.scrollArea_7.setWidgetResizable(True)
+        self.scrollAreaWidgetContents_7 = QWidget()
+        self.scrollAreaWidgetContents_7.setObjectName(u"scrollAreaWidgetContents_7")
+        self.scrollAreaWidgetContents_7.setGeometry(QRect(0, 0, 541, 55))
+        self.gridLayout_11 = QGridLayout(self.scrollAreaWidgetContents_7)
+        self.gridLayout_11.setObjectName(u"gridLayout_11")
+        self.pushButton_6 = QPushButton(self.scrollAreaWidgetContents_7)
+        self.pushButton_6.setObjectName(u"pushButton_6")
+
+        self.gridLayout_11.addWidget(self.pushButton_6, 0, 0, 1, 1)
+
+        self.scrollArea_7.setWidget(self.scrollAreaWidgetContents_7)
+
+        self.verticalLayout_24.addWidget(self.scrollArea_7)
+
         self.emoji_tab_widget.addTab(self.tab_objects, "")
         self.tab_symbols = QWidget()
         self.tab_symbols.setObjectName(u"tab_symbols")
+        self.verticalLayout_20 = QVBoxLayout(self.tab_symbols)
+        self.verticalLayout_20.setSpacing(0)
+        self.verticalLayout_20.setObjectName(u"verticalLayout_20")
+        self.verticalLayout_20.setContentsMargins(0, 0, 0, 0)
+        self.scrollArea_8 = QScrollArea(self.tab_symbols)
+        self.scrollArea_8.setObjectName(u"scrollArea_8")
+        self.scrollArea_8.setWidgetResizable(True)
+        self.scrollAreaWidgetContents_8 = QWidget()
+        self.scrollAreaWidgetContents_8.setObjectName(u"scrollAreaWidgetContents_8")
+        self.scrollAreaWidgetContents_8.setGeometry(QRect(0, 0, 541, 55))
+        self.gridLayout_10 = QGridLayout(self.scrollAreaWidgetContents_8)
+        self.gridLayout_10.setObjectName(u"gridLayout_10")
+        self.pushButton_7 = QPushButton(self.scrollAreaWidgetContents_8)
+        self.pushButton_7.setObjectName(u"pushButton_7")
+
+        self.gridLayout_10.addWidget(self.pushButton_7, 0, 0, 1, 1)
+
+        self.scrollArea_8.setWidget(self.scrollAreaWidgetContents_8)
+
+        self.verticalLayout_20.addWidget(self.scrollArea_8)
+
         self.emoji_tab_widget.addTab(self.tab_symbols, "")
         self.tab_flags = QWidget()
         self.tab_flags.setObjectName(u"tab_flags")
+        self.verticalLayout_13 = QVBoxLayout(self.tab_flags)
+        self.verticalLayout_13.setSpacing(0)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.scrollArea_9 = QScrollArea(self.tab_flags)
+        self.scrollArea_9.setObjectName(u"scrollArea_9")
+        self.scrollArea_9.setWidgetResizable(True)
+        self.scrollAreaWidgetContents_9 = QWidget()
+        self.scrollAreaWidgetContents_9.setObjectName(u"scrollAreaWidgetContents_9")
+        self.scrollAreaWidgetContents_9.setGeometry(QRect(0, 0, 541, 55))
+        self.gridLayout_3 = QGridLayout(self.scrollAreaWidgetContents_9)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.pushButton_8 = QPushButton(self.scrollAreaWidgetContents_9)
+        self.pushButton_8.setObjectName(u"pushButton_8")
+
+        self.gridLayout_3.addWidget(self.pushButton_8, 0, 0, 1, 1)
+
+        self.scrollArea_9.setWidget(self.scrollAreaWidgetContents_9)
+
+        self.verticalLayout_13.addWidget(self.scrollArea_9)
+
         self.emoji_tab_widget.addTab(self.tab_flags, "")
 
         self.horizontalLayout_3.addWidget(self.emoji_tab_widget)
@@ -3276,10 +3436,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.addWidget(self.status_bar)
 
 
-        self.app_layout.addWidget(self.right_side_container)
+        self.app_margins.addWidget(self.right_side_container)
 
 
-        self.app_margins.addWidget(self.app_bg)
+        self.verticalLayout_3.addWidget(self.app_bg)
 
         MainWindow.setCentralWidget(self.stylesheet)
 
@@ -3288,7 +3448,7 @@ class Ui_MainWindow(object):
         self.left_side_container.setCurrentIndex(0)
         self.contacts_stack.setCurrentIndex(0)
         self.chat_stacked_widget.setCurrentIndex(1)
-        self.emoji_tab_widget.setCurrentIndex(1)
+        self.emoji_tab_widget.setCurrentIndex(0)
         self.right_stacked_widget.setCurrentIndex(0)
         self.settings_stacked_widget.setCurrentIndex(1)
 
@@ -3306,7 +3466,6 @@ class Ui_MainWindow(object):
         self.home_btn.setText(QCoreApplication.translate("MainWindow", u"Home", None))
         self.scan_btn.setText(QCoreApplication.translate("MainWindow", u"Scan network", None))
         self.chat_btn.setText(QCoreApplication.translate("MainWindow", u"Chat", None))
-        self.settings_btn_2.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
         self.about_btn.setText(QCoreApplication.translate("MainWindow", u"About", None))
         self.me_online_toast.setText("")
         self.me_status.setText(QCoreApplication.translate("MainWindow", u"Coding...", None))
@@ -3396,13 +3555,21 @@ class Ui_MainWindow(object):
         self.title_2.setText(QCoreApplication.translate("MainWindow", u"ARV-20062021-1200.arv", None))
         self.elapsed_time_2.setText(QCoreApplication.translate("MainWindow", u"00:00", None))
         self.total_time_2.setText(QCoreApplication.translate("MainWindow", u"00:00", None))
-        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_smilies), QCoreApplication.translate("MainWindow", u"Sm", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u":)", None))
+        self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_smileys), QCoreApplication.translate("MainWindow", u"Sm", None))
+        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_animals), QCoreApplication.translate("MainWindow", u"An", None))
+        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_foods), QCoreApplication.translate("MainWindow", u"Fo", None))
+        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_travels), QCoreApplication.translate("MainWindow", u"Tr", None))
+        self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_activities), QCoreApplication.translate("MainWindow", u"Ac", None))
+        self.pushButton_6.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_objects), QCoreApplication.translate("MainWindow", u"Ob", None))
+        self.pushButton_7.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_symbols), QCoreApplication.translate("MainWindow", u"Sy", None))
+        self.pushButton_8.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
         self.emoji_tab_widget.setTabText(self.emoji_tab_widget.indexOf(self.tab_flags), QCoreApplication.translate("MainWindow", u"Fl", None))
         self.close_emoji_btn.setText("")
         self.media_doc.setText("")
