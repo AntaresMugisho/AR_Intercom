@@ -25,6 +25,7 @@ from recorder import Recorder
 from player import Player
 from netscanner import NetScanner
 from notification import NotificationWidget
+from gui import Ui_MainWindow
 
 # Global variables for recorder time counter
 seconds = minutes = 0
@@ -37,18 +38,18 @@ class ChatFunctions:
 
     DATE = None
 
-    def __init__(self, parent=None):
-        print("Starting Chat functions")
-        self.main_window = parent
-        self.initialize()
+    def __init__(self):
+        super(ChatFunctions, self).__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
 
     def initialize(self):
         # SHOW USERS / CONVERSATION LIST
         self.show_user_widget()
 
         # CONNECT SEND BUTTON
-        self.main_window.ui.input.textChanged.connect(self.change_send_style)
-        self.main_window.ui.send_btn.clicked.connect(self.send_text_or_record)
+        self.ui.input.textChanged.connect(self.change_send_style)
+        self.ui.send_btn.clicked.connect(self.send_text_or_record)
 
         # START SERVER
         # self.server = Server()
@@ -80,20 +81,20 @@ class ChatFunctions:
         self.player = Player()
         self.player.errorOccurred.connect(lambda error: print(error))
 
-        # self.main_window.ui.playButtonPressed.connect(self.play)
+        # self.ui.playButtonPressed.connect(self.play)
 
         # Just for testing
         self.show_emojis()
 
         user = User.find(1)
-        self.main_window.ui.me_username.setText(user.get_user_name())
-        self.main_window.ui.me_status.setText(user.get_user_status())
+        self.ui.me_username.setText(user.get_user_name())
+        self.ui.me_status.setText(user.get_user_status())
         profile_path = user.get_image_path()
         if profile_path != "user/default.png":
-            profile_picture = utils.create_rounded_image(profile_path,  self.main_window.ui.me_picture.width())
-            self.main_window.ui.me_picture.setPixmap(profile_picture)
+            profile_picture = utils.create_rounded_image(profile_path,  self.ui.me_picture.width())
+            self.ui.me_picture.setPixmap(profile_picture)
         else:
-            self.main_window.ui.me_picture.setText(user.get_user_name()[0])
+            self.ui.me_picture.setText(user.get_user_name()[0])
         # ///////////////////////
 
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
@@ -103,7 +104,7 @@ class ChatFunctions:
                       'objects', 'symbols', 'flags']
 
         for i, category in enumerate(categories):
-            tab: QTabWidget = self.main_window.ui.emoji_tab_widget.widget(i)
+            tab: QTabWidget = self.ui.emoji_tab_widget.widget(i)
             scroll_area: QScrollArea = tab.findChild(QScrollArea)
             layout: QGridLayout = scroll_area.widget().layout()
             layout.setContentsMargins(0, 0, 0, 0)
@@ -122,30 +123,31 @@ class ChatFunctions:
                 btn = EmojiButton(emoji.emoji)
                 layout.addWidget(btn, row, column)
 
+
     def show_user_widget(self):
         """
         Load users conversation list from users who are registered in database
         """
         # Save spacer item
-        chat_list_layout_count = self.main_window.ui.chat_list_layout.count()
-        spacer = self.main_window.ui.chat_list_layout.itemAt(chat_list_layout_count - 1)
+        chat_list_layout_count = self.ui.chat_list_layout.count()
+        spacer = self.ui.chat_list_layout.itemAt(chat_list_layout_count - 1)
 
         # Remove old list
         for i in reversed(range(chat_list_layout_count - 1)):
-            widget = self.main_window.ui.chat_list_layout.itemAt(i).widget()
+            widget = self.ui.chat_list_layout.itemAt(i).widget()
             widget.deleteLater()
-            self.main_window.ui.chat_list_layout.removeWidget(widget)
+            self.ui.chat_list_layout.removeWidget(widget)
 
         # Add new user's list
         users = User.where("id", ">=", 1)
         for user in users:
             widget = ClientWidget(user)
-            last_index = self.main_window.ui.chat_list_layout.count() - 1
-            self.main_window.ui.chat_list_layout.insertWidget(last_index, widget, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
-            widget.clicked.connect(self.show_conversations)
+            last_index = self.ui.chat_list_layout.count() - 1
+            self.ui.chat_list_layout.insertWidget(last_index, widget, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
+            widget.clicked.connect(self.show_conversations(self))
 
         # Add spacer
-        self.main_window.ui.chat_list_layout.addItem(spacer)
+        self.ui.chat_list_layout.addItem(spacer)
 
     @Slot(str)
     def show_conversations(self, button_object_name: str = "356a192b7913b04c54574d18c28d46e6395428ac"):
@@ -165,32 +167,32 @@ class ChatFunctions:
             user_status = "Hello, i'm using AR Intercom !"
 
         # SET NAME AND STATUS TO THE ACTIVE CLIENT LABEL
-        self.main_window.ui.chat_stacked_widget.setCurrentWidget(self.main_window.ui.chat_page)
-        self.main_window.ui.active_client_name.setText(user_name)
-        self.main_window.ui.active_client_name.setObjectName(user_uuid)
-        self.main_window.ui.active_client_status.setText(user_status)
-        # picture = utils.create_rounded_image(user.get_image_path(), self.main_window.ui.active_client_picture.width())
-        # self.main_window.ui.active_client_picture.setPixmap(picture)
+        self.ui.chat_stacked_widget.setCurrentWidget(self.ui.chat_page)
+        self.ui.active_client_name.setText(user_name)
+        self.ui.active_client_name.setObjectName(user_uuid)
+        self.ui.active_client_status.setText(user_status)
+        # picture = utils.create_rounded_image(user.get_image_path(), self.ui.active_client_picture.width())
+        # self.ui.active_client_picture.setPixmap(picture)
 
         profile_path = user.get_image_path()
         if profile_path != "user/default.png":
-            profile_picture = utils.create_rounded_image(profile_path, self.main_window.ui.active_client_picture.width())
-            self.main_window.ui.active_client_picture.setPixmap(profile_picture)
+            profile_picture = utils.create_rounded_image(profile_path, self.ui.active_client_picture.width())
+            self.ui.active_client_picture.setPixmap(profile_picture)
         else:
-            self.main_window.ui.active_client_picture.setText(user.get_user_name()[0])
+            self.ui.active_client_picture.setText(user.get_user_name()[0])
 
 
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
         try:
-            for index in reversed(range(1, self.main_window.ui.chat_scroll_layout.count())):
-                self.main_window.ui.chat_scroll_layout.itemAt(index).widget().deleteLater()
+            for index in reversed(range(1, self.ui.chat_scroll_layout.count())):
+                self.ui.chat_scroll_layout.itemAt(index).widget().deleteLater()
                 # The widget at index 0 is a layout spacer, we don't need to delete it
                 # That's why we end with index 1
         except Exception as e:  # If chat field was not visible or is empty
             print(e)
 
         # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
-        message_counter = self.main_window.ui.chat_list_scroll.findChild(QLabel, f"{user_uuid}_counter")
+        message_counter = self.ui.chat_list_scroll.findChild(QLabel, f"{user_uuid}_counter")
         message_counter.setText("0")
         message_counter.hide()
 
@@ -206,7 +208,7 @@ class ChatFunctions:
         # message_counter.parent().setStyleSheet(Clients.frame_normal)
 
         # Connect delete messages button
-        # self.main_window.ui.delete_btn.clicked.connect(self.delete_messages)
+        # self.ui.delete_btn.clicked.connect(self.delete_messages)
 
     def show_bubble(self, message: Message):
 
@@ -225,15 +227,15 @@ class ChatFunctions:
         if text != self.DATE:
             self.DATE = text
             date_label = DateLabel(self.DATE.upper())
-            self.main_window.ui.chat_scroll_layout.addWidget(date_label, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignCenter)
+            self.ui.chat_scroll_layout.addWidget(date_label, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignCenter)
 
         # SHOW BUBBLE
         if message.get_sender_id() == 1:
             bubble = Bubble(message, "right")
-            self.main_window.ui.chat_scroll_layout.addWidget(bubble, 0, Qt.AlignmentFlag.AlignRight)
+            self.ui.chat_scroll_layout.addWidget(bubble, 0, Qt.AlignmentFlag.AlignRight)
         else:
             bubble = Bubble(message, "left")
-            self.main_window.ui.chat_scroll_layout.addWidget(bubble)
+            self.ui.chat_scroll_layout.addWidget(bubble)
 
 
         # Connect play button if the bubble is of type voice:
@@ -241,7 +243,7 @@ class ChatFunctions:
             bubble.playButtonClicked.connect(lambda x: print(x))
 
         # UPDATE SCROLL POSITION
-        vertical_scroll = self.main_window.ui.chat_scroll.verticalScrollBar()
+        vertical_scroll = self.ui.chat_scroll.verticalScrollBar()
         QTimer.singleShot(500, lambda: vertical_scroll.setValue(vertical_scroll.maximum()))
 
 
@@ -253,7 +255,7 @@ class ChatFunctions:
         message = Message.find(id)
         user = User.find(message.get_sender_id())
 
-        if self.main_window.ui.active_client_name.isVisible() and self.main_window.ui.active_client_name.objectName() == user.get_uuid():
+        if self.ui.active_client_name.isVisible() and self.ui.active_client_name.objectName() == user.get_uuid():
             # Show message in the bubble
             self.show_bubble(message)
         else:
@@ -262,7 +264,7 @@ class ChatFunctions:
             self.notification_widget.show()
 
             # Increase the unread message counter badge
-            message_count = self.main_window.ui.left_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
+            message_count = self.ui.left_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
             unread_msg = int(message_count.text())
             unread_msg += 1
             message_count.setText(f"{unread_msg}")
@@ -276,32 +278,32 @@ class ChatFunctions:
         Changes send button style, and disable media button so that a user can not send media message and text message
         at a time.
         """
-        if self.main_window.ui.input.toPlainText():
-            print(self.main_window.ui.input.toPlainText())
+        if self.ui.input.toPlainText():
+            print(self.ui.input.toPlainText())
             # Change send button style
-            self.main_window.ui.send_btn.setStyleSheet(SendButton.style_send)
+            self.ui.send_btn.setStyleSheet(SendButton.style_send)
             # Disable media button
-            self.main_window.ui.media_btn.setEnabled(False)
+            self.ui.media_btn.setEnabled(False)
 
         else:
-            self.main_window.ui.send_btn.setStyleSheet(SendButton.style_record)
-            self.main_window.ui.media_btn.setEnabled(True)
+            self.ui.send_btn.setStyleSheet(SendButton.style_record)
+            self.ui.media_btn.setEnabled(True)
 
     @Slot()
     def send_text_or_record(self):
         """
         According to the send button style, send text message or record a voice
         """
-        # if not self.main_window.ui.active_client_name.show_text_bubble():
+        # if not self.ui.active_client_name.show_text_bubble():
         #     QMessageBox.warning(self, "Destinataire non défini",
         #                         "Veuillez sélectionner d'abord votre destinataire !",
         #                         QMessageBox.StandardButton.Ok)
 
-        text_message = self.main_window.ui.input.toPlainText()
+        text_message = self.ui.input.toPlainText()
 
         # SEND TEXT MESSAGE
         if text_message:
-            receiver = User.first_where("uuid", "=", self.main_window.ui.active_client_name.objectName())
+            receiver = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
             receiver_id = receiver.get_id()
 
             message = Message()
@@ -323,14 +325,14 @@ class ChatFunctions:
             self.show_bubble(message)
 
             # Reset some ui states
-            self.main_window.ui.input.setText(None)
-            self.main_window.ui.send_btn.setStyleSheet(SendButton.style_record)
-            self.main_window.ui.media_btn.setEnabled(True)
+            self.ui.input.setText(None)
+            self.ui.send_btn.setStyleSheet(SendButton.style_record)
+            self.ui.media_btn.setEnabled(True)
 
         # RECORD VOICE MESSAGE
         else:
-            self.main_window.ui.media_btn.setEnabled(False)
-            self.main_window.ui.send_btn.setEnabled(False)
+            self.ui.media_btn.setEnabled(False)
+            self.ui.send_btn.setEnabled(False)
             self.record_voice()
 
     @Slot(str, str)
@@ -338,7 +340,7 @@ class ChatFunctions:
         """
         Sends the media message and shows bubble
         """
-        receiver = User.first_where("uuid", "=", self.main_window.ui.active_client_name.objectName())
+        receiver = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
         receiver_id = receiver.get_id()
 
         message = Message()
@@ -382,12 +384,12 @@ class ChatFunctions:
 
     @Slot()
     def delete_messages(self):
-        user = User.first_where("uuid", "=", self.main_window.ui.active_client_name.objectName())
+        user = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
         messages = user.messages()
 
         print("Deleting conversation of you with", user.get_user_name())
-        for index in reversed(range(1, self.main_window.ui.chat_scroll_layout.count())):
-            self.main_window.ui.chat_scroll_layout.itemAt(index).widget().deleteLater()
+        for index in reversed(range(1, self.ui.chat_scroll_layout.count())):
+            self.ui.chat_scroll_layout.itemAt(index).widget().deleteLater()
 
         for message in messages:
             if message.get_kind() != "text":
@@ -407,8 +409,8 @@ class ChatFunctions:
         """
         # SHOW RECORD WIDGET INDICATOR AND CONNECT ACTION BUTTONS
         # self.show_record_widget()
-        # self.main_window.ui.end_record.clicked.connect(self.recorder._stop)
-        # self.main_window.ui.cancel_record.clicked.connect(self.recorder.cancel)
+        # self.ui.end_record.clicked.connect(self.recorder._stop)
+        # self.ui.cancel_record.clicked.connect(self.recorder.cancel)
 
         self.recorder._record()
         self.record_timer.start(1000)
@@ -426,7 +428,7 @@ class ChatFunctions:
 
         time_counter = "%02d:%02d" % (minutes, seconds)
         print(time_counter)
-        # self.main_window.ui.record_time.setText(time_counter)
+        # self.ui.record_time.setText(time_counter)
 
     def recorder_state_changed(self):
         """
@@ -436,10 +438,10 @@ class ChatFunctions:
 
         if self.recorder.recorderState() == QMediaRecorder.StoppedState:
             self.record_timer.stop()
-            # self.main_window.ui.record_tip.deleteLater()
+            # self.ui.record_tip.deleteLater()
             seconds = minutes = 0
-            self.main_window.ui.media_btn.setEnabled(True)
-            self.main_window.ui.send_btn.setEnabled(True)
+            self.ui.media_btn.setEnabled(True)
+            self.ui.send_btn.setEnabled(True)
 
     # MEDIA PLAYER ----------------------------------------------------------------------
 
@@ -582,7 +584,7 @@ class ChatFunctions:
             # Show green online toast cause the client is online
             if user:
                 user_uuid = user.get_uuid()
-                online_toast = self.main_window.ui.left_scroll.findChild(QLabel, f"{user_uuid}_toast")
+                online_toast = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_toast")
 
                 if client.online:
                     print(f"[+] {client.server_host} online")
@@ -616,10 +618,3 @@ class ChatFunctions:
             user.save()
 
             self.show_user_widget(user, online=True)
-
-if __name__ == "__main__":
-    app = QApplication.instance()
-    if not app:
-        app = QApplication(sys.argv)
-    chat_window = ChatFunctions()
-    sys.exit(app.exec())

@@ -15,7 +15,6 @@ from PySide6.QtGui import QColor
 from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt
 
 import utils
-from gui import Ui_MainWindow
 from widgets import Bubble, ClientWidget, DateLabel, EmojiButton
 from styles import Clients, SendButton, Player as PlayerStyle
 from server import Server
@@ -26,6 +25,21 @@ from recorder import Recorder
 from player import Player
 from netscanner import NetScanner
 from notification import NotificationWidget
+from gui import Ui_MainWindow
+
+
+
+
+import sys
+
+from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel, \
+    QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget
+from PySide6.QtGui import QColor
+from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt
+
+import chat_functions
+from gui import Ui_MainWindow
+from chat_functions import ChatFunctions
 
 # Global variables for recorder time counter
 seconds = minutes = 0
@@ -87,21 +101,25 @@ class MainWindow(QMainWindow):
         # Start on home page
         self.ui.home_btn.clicked.emit()
 
-        # Add emojis
-        self.show_emojis()
-
         # Initialize chat functions
-        self.initialize_chat()
+        chat_functions.ChatFunctions.initialize(self)
+
+
+
+        # SHOW MAIN WINDOW
+        self.show()
+
 
 
     # MAIN UI FUNCTIONS ################################################################################################
 
     def closeEvent(self, event) -> None:
-        try:
-            self.player.stop()
-            self.recorder.stop()
-        except Exception as e:
-            print(f"Error while closing : ", e)
+        pass
+        # try:
+        #     self.player.stop()
+        #     self.recorder.stop()
+        # except Exception as e:
+        #     print(f"Error while closing : ", e)
 
     def maximize_restore(self):
         """
@@ -224,9 +242,12 @@ class MainWindow(QMainWindow):
             self.ui.media_bg.setFixedHeight(0)
             # self.ui.chat_page_layout.addWidget(self.ui.media_bg)
 
-    def initialize_chat(self):
+
+
+
+    def initialize(self):
         # SHOW USERS / CONVERSATION LIST
-        self.show_user_widget()
+        self.show_user_widget(self)
 
         # CONNECT SEND BUTTON
         self.ui.input.textChanged.connect(self.change_send_style)
@@ -246,23 +267,26 @@ class MainWindow(QMainWindow):
         # QTimer().singleShot(60_000, self.scan_network)
 
         # Scan network to refresh active servers
-        # self.net_scanner = QTimer()
-        # self.net_scanner.timeout.connect(self.scan_network)
+        self.net_scanner = QTimer()
+        self.net_scanner.timeout.connect(self.scan_network)
         # self.net_scanner.start(300_000)
 
         # CREATE RECORDER INSTANCE AND ASSOCIATED TIME COUNTER
         self.recorder = Recorder()
-        # self.record_timer = QTimer()
-        # self.record_timer.timeout.connect(self.time_counter)
+        self.record_timer = QTimer()
+        self.record_timer.timeout.connect(self.time_counter)
 
-        # self.recorder.recorderStateChanged.connect(self.recorder_state_changed)
-        # self.recorder.recordConfirmed.connect(self.send_media)
+        self.recorder.recorderStateChanged.connect(self.recorder_state_changed)
+        self.recorder.recordConfirmed.connect(self.send_media)
 
         # PLAYER SETUP
         self.player = Player()
-        # self.player.errorOccurred.connect(lambda error: print(error))
-        #
+        self.player.errorOccurred.connect(lambda error: print(error))
+
         # self.ui.playButtonPressed.connect(self.play)
+
+        # Just for testing
+        self.show_emojis()
 
         user = User.find(1)
         self.ui.me_username.setText(user.get_user_name())
@@ -300,6 +324,7 @@ class MainWindow(QMainWindow):
                     column = 0
                 btn = EmojiButton(emoji.emoji)
                 layout.addWidget(btn, row, column)
+
 
     def show_user_widget(self):
         """
@@ -798,13 +823,9 @@ class MainWindow(QMainWindow):
 
 
 
-
-
-
 if __name__ == "__main__":
     app = QApplication.instance()
     if not app:
         app = QApplication(sys.argv)
     main_window = MainWindow()
-    main_window.show()
     sys.exit(app.exec())
