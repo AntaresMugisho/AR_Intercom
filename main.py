@@ -13,7 +13,7 @@ import utils
 
 try:
     from ctypes import windll
-    app_id = "com.artrevolutionlabel.software.arintercom.v2.1"
+    app_id = "com.artrevolutionlabel.intercom"
     windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
 except ImportError:
     pass
@@ -95,7 +95,7 @@ class SplashScreen(QWidget):
 
             # SHOW REGISTER WINDOW OR LOGIN WINDOW
             if not User.find(1):
-                # self.register_window = RegisterWindow()
+                self.register_window = RegisterWindow()
                 # self.register_window.show()
             else:
                 self.main_window = MainWindow()

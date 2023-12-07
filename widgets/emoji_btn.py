@@ -23,4 +23,5 @@ class EmojiButton(QPushButton):
                            u"QPushButton:hover{background-color:#444;}")
         self.setText(self.emoji)
 
-        self.clicked.connect(lambda : print(self.text()))
+        # self.clicked.connect(lambda: print(self.text()))
+        self.clicked.connect(lambda: self.emojiClicked.emit(self.text()))
