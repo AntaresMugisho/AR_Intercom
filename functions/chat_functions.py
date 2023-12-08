@@ -1,49 +1,25 @@
-# -*- This python file uses the following encoding : utf-8 -*-
 
-import sys
-import os
-import threading
-from datetime import datetime, timedelta
-from functools import partial
 
-import EmojiStore
 
-from PySide6.QtMultimedia import QMediaRecorder
-from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel, \
-    QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget
-from PySide6.QtGui import QColor
-from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt
 
-import utils
-from widgets import Bubble, ClientWidget, DateLabel, EmojiButton
-from styles import Clients, SendButton, Player as PlayerStyle
-from server import Server
-from client import Client
-from user import User
-from message import Message
-from recorder import Recorder
-from player import Player
-from netscanner import NetScanner
-from notification import NotificationWidget
+# from main_window import *
 from gui import Ui_MainWindow
+
+# Global variables for recorder time counter
+seconds = minutes = 0
 
 
 class ChatFunctions:
     """
     Initialize chat window to show conversations and start chatting
     """
-
     DATE = None
 
     def __init__(self):
-        super(ChatFunctions, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
     def initialize(self):
-        # SHOW USERS / CONVERSATION LIST
-        self.show_user_widget()
-
         # CONNECT SEND BUTTON
         self.ui.input.textChanged.connect(self.change_send_style)
         self.ui.send_btn.clicked.connect(self.send_text_or_record)
@@ -95,32 +71,6 @@ class ChatFunctions:
         # ///////////////////////
 
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
-
-
-    def show_user_widget(self):
-        """
-        Load users conversation list from users who are registered in database
-        """
-        # Save spacer item
-        chat_list_layout_count = self.ui.chat_list_layout.count()
-        spacer = self.ui.chat_list_layout.itemAt(chat_list_layout_count - 1)
-
-        # Remove old list
-        for i in reversed(range(chat_list_layout_count - 1)):
-            widget = self.ui.chat_list_layout.itemAt(i).widget()
-            widget.deleteLater()
-            self.ui.chat_list_layout.removeWidget(widget)
-
-        # Add new user's list
-        users = User.where("id", ">=", 1)
-        for user in users:
-            widget = ClientWidget(user)
-            last_index = self.ui.chat_list_layout.count() - 1
-            self.ui.chat_list_layout.insertWidget(last_index, widget, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
-            widget.clicked.connect(self.show_conversations(self))
-
-        # Add spacer
-        self.ui.chat_list_layout.addItem(spacer)
 
     @Slot(str)
     def show_conversations(self, button_object_name: str = "356a192b7913b04c54574d18c28d46e6395428ac"):
