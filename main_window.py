@@ -56,9 +56,9 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # REMOVE DEFAULT WINDOW FRAME
+        self.ui.app_margins.setContentsMargins(0, 0, 0, 0)
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-        self.ui.app_margins.setContentsMargins(0, 0, 0, 0)
 
         # DROP SHADOW
         self.shadow = QGraphicsDropShadowEffect(self)
@@ -103,6 +103,7 @@ class MainWindow(QMainWindow):
         self.ui.send_btn.clicked.connect(self.send_text_or_record)
 
         # Load / show components
+        self.load_auth_user_details()
         self.load_user_list()
         self.load_emojis()
 
@@ -112,15 +113,17 @@ class MainWindow(QMainWindow):
         # SHOW MAIN WINDOW
         self.show()
 
-
     # MAIN UI FUNCTIONS ################################################################################################
 
-    # def closeEvent(self, event) -> None:
-    #     pass
-        # try:
-        #     ...
-        # except Exception as e:
-        #     print(f"Error while closing : ", e)
+    def closeEvent(self, event) -> None:
+        try:
+            self.server.stop()
+            self.player.stop()
+            self.recorder.stop()
+        except Exception as e:
+            print(f"Error while closing : ", e)
+        finally:
+            self.close()
 
     def maximize_restore(self):
         """
@@ -274,6 +277,17 @@ class MainWindow(QMainWindow):
                 btn = EmojiButton(emoji.emoji)
                 layout.addWidget(btn, row, column)
 
+    def load_auth_user_details(self):
+        user = User.find(1)
+        self.ui.me_username.setText(user.get_user_name())
+        self.ui.me_status.setText(user.get_user_status())
+        profile_path = user.get_image_path()
+        if profile_path != "user/default.png":
+            profile_picture = utils.create_rounded_image(profile_path, self.ui.me_picture.width())
+            self.ui.me_picture.setPixmap(profile_picture)
+        else:
+            self.ui.me_picture.setText(user.get_user_name()[0])
+
     def load_user_list(self):
         """
         Load users conversation list from users who are registered in database
@@ -301,11 +315,11 @@ class MainWindow(QMainWindow):
 
     def initialize_chat(self):
         # START SERVER
-        # self.server = Server()
-        # self.server.start()
+        self.server = Server()
+        self.server.start()
 
         # LISTEN FOR MESSAGE SIGNALS
-        # self.server.messageReceived.connect(self.show_incoming_message)
+        self.server.messageReceived.connect(self.show_incoming_message)
 
         # SCAN NETWORK TO FIND CONNECTED DEVICES
         self.server_hosts = {}
@@ -326,19 +340,8 @@ class MainWindow(QMainWindow):
         self.recorder.recorderStateChanged.connect(self.recorder_state_changed)
         self.recorder.recordConfirmed.connect(self.send_media)
 
-        # PLAYER SETUP
+        # Create a Player instance
         self.player = Player()
-
-        user = User.find(1)
-        self.ui.me_username.setText(user.get_user_name())
-        self.ui.me_status.setText(user.get_user_status())
-        profile_path = user.get_image_path()
-        if profile_path != "user/default.png":
-            profile_picture = utils.create_rounded_image(profile_path, self.ui.me_picture.width())
-            self.ui.me_picture.setPixmap(profile_picture)
-        else:
-            self.ui.me_picture.setText(user.get_user_name()[0])
-
 
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
 

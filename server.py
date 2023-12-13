@@ -67,7 +67,7 @@ class Server(QObject):
         Close socket server.
         """
         self.sock.close()
-        print("[!] Server closed.")
+        print("[i] Server closed.")
 
     def receive_massages(self):
         """
