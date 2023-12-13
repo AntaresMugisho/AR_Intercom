@@ -337,7 +337,7 @@ class MediaButton:
 class SendButton:
     style_send = """
         QPushButton{
-            image: url(:/icons/icons/send.png); 
+            background-image: url(:/svg/svg/icon_send.svg); 
             border:none;
             border-radius:20px;}
         
@@ -347,7 +347,7 @@ class SendButton:
 
     style_record = """
         QPushButton{
-            image: url(:/icons/icons/record.png); 
+            image: url(:/cils/cils/cil-microphone.png); 
             border-radius:20px;}
 
         QPushButton:hover{

@@ -591,3 +591,5 @@ class ChatFunctions:
             user.save()
 
             self.show_user_widget(user, online=True)
+
+

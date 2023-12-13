@@ -1,5 +1,30 @@
 
+import sys
+import os
+import threading
+from datetime import datetime, timedelta
+from functools import partial
 
+import EmojiStore
+
+from PySide6.QtMultimedia import QMediaRecorder
+from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel, \
+    QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget
+from PySide6.QtGui import QColor
+from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt
+
+import utils
+from widgets import Bubble, ClientWidget, DateLabel, EmojiButton
+from styles import Clients, SendButton, Player as PlayerStyle
+from server import Server
+from client import Client
+from user import User
+from message import Message
+from recorder import Recorder
+from player import Player
+from netscanner import NetScanner
+from notification import NotificationWidget
+from gui import Ui_MainWindow
 
 
 # from main_window import *
@@ -57,7 +82,7 @@ class ChatFunctions:
         # self.ui.playButtonPressed.connect(self.play)
 
         # Just for testing
-        self.show_emojis()
+        # self.show_emojis()
 
         user = User.find(1)
         self.ui.me_username.setText(user.get_user_name())
@@ -78,7 +103,7 @@ class ChatFunctions:
         Shows conversation bubbles with a specified user
         """
         # TRY TO STOP MEDIA PLAYER
-        self.player.stop()
+        # self.player.stop()
 
         # GET USER UUID
         user_uuid = button_object_name
@@ -116,8 +141,8 @@ class ChatFunctions:
 
         # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
         message_counter = self.ui.chat_list_scroll.findChild(QLabel, f"{user_uuid}_counter")
-        message_counter.setText("0")
-        message_counter.hide()
+        # message_counter.setText("0")
+        # message_counter.hide()
 
         # RESET DATE
         self.DATE = None
@@ -541,3 +566,4 @@ class ChatFunctions:
             user.save()
 
             self.show_user_widget(user, online=True)
+
