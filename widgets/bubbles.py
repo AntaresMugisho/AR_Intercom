@@ -348,7 +348,7 @@ class Bubble(QFrame):
         # Collect image metadata
         path = self.message.get_body()
         filename = os.path.basename(path)
-        size = round((os.path.getsize(path) / 1024 / 1024), 2)
+        size = round((os.path.getsize(path) / 1024 / 1024), 2)  # Size in Mb
 
         image = QImage(path).scaledToWidth(280)
         pixmap = utils.create_rounded_image(path, image.width(), image.height(), radius=10)
@@ -356,8 +356,8 @@ class Bubble(QFrame):
         # Global bubble
         self.image_bubble = QFrame(self)
         self.image_bubble.setObjectName(u"image_bubble")
-        self.image_bubble.setGeometry(QRect(17, 17, 191, 201))
-        self.image_bubble.setMaximumWidth(280)
+        self.image_bubble.setGeometry(QRect(17, 17, image.width(), image.height()))
+        # self.image_bubble.setMaximumWidth(image.width())
 
         # Label displaying image
         self.image = QLabel(self.image_bubble)
