@@ -9,7 +9,7 @@ from functools import partial
 
 import EmojiStore
 
-from PySide6.QtMultimedia import QMediaRecorder
+from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
 from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel, \
     QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget
 from PySide6.QtGui import QColor
@@ -29,10 +29,9 @@ from notification import NotificationWidget
 from gui import Ui_MainWindow
 
 from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel, \
-    QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget
+    QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget, QSlider
 from PySide6.QtGui import QColor
 from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt
-import EmojiStore
 
 from gui import Ui_MainWindow
 from widgets import Bubble, ClientWidget, DateLabel, EmojiButton
@@ -275,6 +274,7 @@ class MainWindow(QMainWindow):
                     row += 1
                     column = 0
                 btn = EmojiButton(emoji.emoji)
+                btn.emojiClicked.connect(self.ui.input.textCursor().insertText)
                 layout.addWidget(btn, row, column)
 
     def load_auth_user_details(self):
@@ -316,7 +316,8 @@ class MainWindow(QMainWindow):
     def initialize_chat(self):
         # START SERVER
         self.server = Server()
-        self.server.start()
+        # self.server.start()
+        QTimer().singleShot(10_000, self.server.start)
 
         # LISTEN FOR MESSAGE SIGNALS
         self.server.messageReceived.connect(self.show_incoming_message)
@@ -351,7 +352,10 @@ class MainWindow(QMainWindow):
         Shows conversation bubbles with a specified user
         """
         # TRY TO STOP MEDIA PLAYER
-        self.player.stop()
+        try:
+            self.player.stop()
+        except AttributeError:
+            pass
 
         # GET USER UUID
         user_uuid = button_object_name
@@ -359,7 +363,7 @@ class MainWindow(QMainWindow):
         user = User.first_where("uuid", "=", user_uuid)
         user_name = user.get_user_name()
         user_status = user.get_user_status()
-        if user_status == "":
+        if not user_status:
             user_status = "Hello, i'm using AR Intercom !"
 
         # SET NAME AND STATUS TO THE ACTIVE CLIENT LABEL
@@ -367,9 +371,8 @@ class MainWindow(QMainWindow):
         self.ui.active_client_name.setText(user_name)
         self.ui.active_client_name.setObjectName(user_uuid)
         self.ui.active_client_status.setText(user_status)
-        # picture = utils.create_rounded_image(user.get_image_path(), self.ui.active_client_picture.width())
-        # self.ui.active_client_picture.setPixmap(picture)
 
+        # DISPLAY PROFILE PICTURE
         profile_path = user.get_image_path()
         if profile_path != "user/default.png":
             profile_picture = utils.create_rounded_image(profile_path, self.ui.active_client_picture.width())
@@ -432,9 +435,9 @@ class MainWindow(QMainWindow):
             bubble = Bubble(message, "left")
             self.ui.chat_scroll_layout.addWidget(bubble)
 
-        # Connect play button if the bubble is of type voice:
+        # Connect play button if the bubble is of playable media type:
         if message.get_kind() in ["voice", "audio", "video"]:
-            bubble.playButtonClicked.connect(lambda x: print(x))
+            bubble.playButtonClicked.connect(self.play)
 
         # UPDATE SCROLL POSITION
         vertical_scroll = self.ui.chat_scroll.verticalScrollBar()
@@ -458,11 +461,11 @@ class MainWindow(QMainWindow):
 
             # Increase the unread message counter badge
             message_count = self.ui.left_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
-            unread_msg = int(message_count.text())
-            unread_msg += 1
+            unread_msg = int(message_count.text()) + 1
             message_count.setText(f"{unread_msg}")
 
             message_count.show()
+            # Changing client frame design may be more user friendly
             # message_count.parent().setStyleSheet(Clients.frame_unread_msg)
 
     @Slot()
@@ -472,7 +475,6 @@ class MainWindow(QMainWindow):
         at a time.
         """
         if self.ui.input.toPlainText():
-            print(self.ui.input.toPlainText())
             # Change send button style
             self.ui.send_btn.setStyleSheet(SendButton.style_send)
             # Disable media button
@@ -487,11 +489,6 @@ class MainWindow(QMainWindow):
         """
         According to the send button style, send text message or record a voice
         """
-        # if not self.ui.active_client_name.show_text_bubble():
-        #     QMessageBox.warning(self, "Destinataire non défini",
-        #                         "Veuillez sélectionner d'abord votre destinataire !",
-        #                         QMessageBox.StandardButton.Ok)
-
         text_message = self.ui.input.toPlainText()
 
         # SEND TEXT MESSAGE
@@ -508,8 +505,8 @@ class MainWindow(QMainWindow):
             # Send message and get it back with the status report modified
             client = Client(receiver.get_host_address())
             message = client.send_message(message)
-            message.set_created_at()  # Now
-            message.set_updated_at()  # Now
+            # message.set_created_at()  # Now
+            # message.set_updated_at()  # Now
 
             # Save text message in database
             message.save()
@@ -657,14 +654,14 @@ class MainWindow(QMainWindow):
             slider = parent.findChild(QSlider)
 
             path = title_label.objectName().split("|")[1]
-            self.player = Player()
+            # self.player = Player()
             self.player._play(path)
 
             # Show GUI indications of playing state
             play_button.setStyleSheet(PlayerStyle.pause)
             play_button.setObjectName("playing")
             slider.setMaximum(self.player.duration())
-            total_time.setText(ChatWindow.hhmmss(self.player.duration()))
+            total_time.setText(MainWindow.hhmmss(self.player.duration()))
 
             # Connect signals
             slider.valueChanged.connect(self.player.setPosition)
@@ -683,7 +680,7 @@ class MainWindow(QMainWindow):
         return ("%02d:%02d:%02d" % (h, m, s)) if h else ("%02d:%02d" % (m, s))
 
     @staticmethod
-    def update_duration(slider: object, total_time: object, duration: int):
+    def update_duration(slider: QSlider, total_time: QLabel, duration: int):
         """
         Update player duration on GUI
         """
@@ -691,15 +688,15 @@ class MainWindow(QMainWindow):
         slider.setMaximum(duration)
 
         # Show total time on label
-        total_time.setText(ChatWindow.hhmmss(duration))
+        total_time.setText(MainWindow.hhmmss(duration))
 
     @staticmethod
-    def update_position(slider: object, elapsed_time: object, position: int):
+    def update_position(slider: QSlider, elapsed_time: QLabel, position: int):
         """
         Update player position on GUI
         """
         # Update time on GUI label
-        elapsed_time.setText(ChatWindow.hhmmss(position))
+        elapsed_time.setText(MainWindow.hhmmss(position))
 
         # Disable slider signals to prevent updating triggering a
         # setPosition signal (can cause stuttering).
@@ -728,6 +725,7 @@ class MainWindow(QMainWindow):
             self.player.stop()
 
     # NETWORKING  ----------------------------------------------------------------------
+
     def scan_network(self):
         """
         Scan network to find connected devices and put them in server_host dictionary.

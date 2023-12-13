@@ -42,11 +42,11 @@ class Bubble(QFrame):
             self.show_voice_bubble()
 
         elif self.message_kind == "image":
-            # self.show_image_bubble()
+            self.show_image_bubble()
             pass
 
         elif self.message_kind == "document":
-            # self.show_document_bubble()
+            self.show_document_bubble()
             pass
         elif self.message_kind == "video":
             pass
@@ -268,7 +268,6 @@ class Bubble(QFrame):
         self.render_bubble(self.voice_bubble)
 
     def play(self):
-        print("Play ...")
         btn = self.sender()
         self.playButtonClicked.emit(btn)
 
