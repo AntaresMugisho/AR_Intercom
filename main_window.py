@@ -759,6 +759,8 @@ class MainWindow(QMainWindow):
         clients = []
         threads = []
 
+        # Hosts
+
         for host_address in hosts.keys():
             client = Client(host_address)
             clients.append(client)
