@@ -11,7 +11,7 @@ import EmojiStore
 
 from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
 from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel, \
-    QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget
+    QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget, QFileDialog
 from PySide6.QtGui import QColor
 from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt
 
@@ -80,6 +80,12 @@ class MainWindow(QMainWindow):
         self.ui.emoji_btn.clicked.connect(self.toggle_emojis)
         self.ui.close_emoji_btn.clicked.connect(self.toggle_emojis)
         self.ui.media_btn.clicked.connect(self.toggle_media)
+
+        # Choose media buttons
+        self.ui.media_doc.clicked.connect(self.choose_media)
+        self.ui.media_audio.clicked.connect(self.choose_media)
+        self.ui.media_image.clicked.connect(self.choose_media)
+        self.ui.media_video.clicked.connect(self.choose_media)
 
         # System buttons
         self.ui.minimize_btn.clicked.connect(self.showMinimized)
@@ -548,6 +554,37 @@ class MainWindow(QMainWindow):
 
         # Show bubble
         self.show_bubble(message)
+
+    def choose_media(self):
+        """
+        Choose files to send
+        """
+        media: QPushButton = self.sender()
+
+        if media.objectName() == "media_audio":
+            kind = "audio"
+            filters = "Audio files (*.mp3 *.m4a *.aac *.wav)"
+
+        elif media.objectName() == "media_video":
+            kind = "video"
+            filters = "Video files (*.mp4 *.avi *.mpeg *.mkv)"
+
+        elif media.objectName() == "media_image":
+            kind = "image"
+            filters = "Image files (*.jpeg *.jpg *.png)"
+
+        else:
+            kind = "document"
+            filters = "Any file (*)"
+
+        paths = QFileDialog.getOpenFileNames(self, "Seletionner le.s fichier.s à envoyer", "", filters)[0]
+
+        # Close media buttons
+        self.toggle_media()
+
+        # Send selected files
+        for path in paths:
+            self.send_media(kind, path)
 
     @Slot()
     def resend_message(self):
