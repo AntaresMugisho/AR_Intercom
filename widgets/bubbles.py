@@ -88,9 +88,7 @@ class Bubble(QFrame):
         self.create_time_label(self.bubble, self.message_label)
 
         # Render the widget
-
         self.render_bubble(self.bubble)
-
 
     def render_bubble(self, bubble):
 
@@ -149,10 +147,12 @@ class Bubble(QFrame):
             self.ticks = QPushButton()
             self.ticks.setFixedSize(QSize(24, 14))
             self.ticks.setFont(font7)
-            self.ticks.setStyleSheet(u"image: url(:/cils/cils/cil-check-circle-green.png);"
+
+            received_icon = "cil-check-circle-green.png" if self.message.received else "cil-reload-red.png"
+            self.ticks.setStyleSheet(f"image: url(:/cils/cils/{received_icon});"
                                      "background-color:rgba(255,255,255,0.1);border-radius:7px;padding:1px;")
             self.time_label_layout.addWidget(self.ticks)
-            if not self.message_received :
+            if not self.message_received:
                 self.ticks.setObjectName(f"error_{self.message.get_id()}")
 
         self.vertical_layout = QVBoxLayout(bubble_widget)
