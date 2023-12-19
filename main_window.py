@@ -56,8 +56,8 @@ class MainWindow(QMainWindow):
 
         # REMOVE DEFAULT WINDOW FRAME
         self.ui.app_margins.setContentsMargins(0, 0, 0, 0)
-        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
-        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        # self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        # self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
 
         # DROP SHADOW
         self.shadow = QGraphicsDropShadowEffect(self)
@@ -101,7 +101,8 @@ class MainWindow(QMainWindow):
         self.ui.chat_scroll_layout.itemAt(1).spacerItem()
 
         # Start on home page
-        self.ui.home_btn.clicked.emit()
+        # self.ui.home_btn.clicked.emit()
+        self.ui.chat_btn.clicked.emit()
 
         # Chat buttons connection
         self.ui.input.textChanged.connect(self.change_send_style)
@@ -323,7 +324,7 @@ class MainWindow(QMainWindow):
         # START SERVER
         self.server = Server()
         # self.server.start()
-        QTimer().singleShot(10_000, self.server.start)
+        # QTimer().singleShot(10_000, self.server.start) # TO be deleted
 
         # LISTEN FOR MESSAGE SIGNALS
         self.server.messageReceived.connect(self.show_incoming_message)
@@ -416,7 +417,7 @@ class MainWindow(QMainWindow):
 
     def show_bubble(self, message: Message):
 
-        # SHOW DATE LABEL
+        # FORMAT DATE LABEL
         date = message.get_created_at()
         today = datetime.today()
         yesterday = datetime.now() - timedelta(days=1)
@@ -439,7 +440,7 @@ class MainWindow(QMainWindow):
             self.ui.chat_scroll_layout.addWidget(bubble, 0, Qt.AlignmentFlag.AlignRight)
         else:
             bubble = Bubble(message, "left")
-            self.ui.chat_scroll_layout.addWidget(bubble)
+            self.ui.chat_scroll_layout.addWidget(bubble, 0, Qt.AlignmentFlag.AlignLeft)
 
         # Connect play button if the bubble is of playable media type:
         if message.get_kind() in ["voice", "audio", "video"]:
