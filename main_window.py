@@ -364,7 +364,7 @@ class MainWindow(QMainWindow):
             self.ui.active_client_picture.setText(user.get_user_name()[0])
 
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
-        utils.clear_layout(self.ui.chat_scroll_layout, start=1)
+        utils.clear_layout(self.ui.chat_scroll_layout, start=2, end=0)
 
         # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
         message_counter = self.ui.chat_list_scroll.findChild(QLabel, f"{user_uuid}_counter")
@@ -444,6 +444,11 @@ class MainWindow(QMainWindow):
             message_count.show()
             # Changing client frame design may be more user friendly
             # message_count.parent().setStyleSheet(Clients.frame_unread_msg)
+
+        # Update user's list
+        user.set_updated_at() # Now
+        user.update()
+        self.load_user_list()
 
     @Slot()
     def change_send_style(self):
@@ -526,6 +531,11 @@ class MainWindow(QMainWindow):
         # Save media message in database
         message.save()
 
+        # Update user's list
+        receiver.set_updated_at()  # Now
+        receiver.update()
+        self.load_user_list()
+
         # Show bubble
         self.show_bubble(message)
 
@@ -588,7 +598,7 @@ class MainWindow(QMainWindow):
         user = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
         messages = user.messages()
 
-        utils.clear_layout(self.ui.chat_scroll_layout, start=1)
+        utils.clear_layout(self.ui.chat_scroll_layout, start=2, end=0)
 
         for message in messages:
             message.soft_delete()

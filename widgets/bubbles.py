@@ -193,14 +193,14 @@ class Bubble(QFrame):
         self.elapsed_time = QLabel(self.arv_bubble)
         self.elapsed_time.setObjectName(u"elapsed_time")
         self.elapsed_time.setGeometry(QRect(52, 49, 51, 16))
-        self.elapsed_time.setStyleSheet(u"QLabel{background:#11FFFFFF;color:#333;border-radius:8px;}")
+        self.elapsed_time.setStyleSheet(u"QLabel{background:#11FFFFFF;color:#000;border-radius:8px;}")
         self.elapsed_time.setAlignment(Qt.AlignCenter)
         self.elapsed_time.setText("00:00")
 
         self.total_time = QLabel(self.arv_bubble)
         self.total_time.setObjectName(u"total_time")
         self.total_time.setGeometry(QRect(241, 49, 51, 16))
-        self.total_time.setStyleSheet(u"QLabel{background:#11FFFFFF;color:#333;border-radius:8px;}")
+        self.total_time.setStyleSheet(u"QLabel{background:#11FFFFFF;color:#000;border-radius:8px;}")
         self.total_time.setAlignment(Qt.AlignCenter)
         self.total_time.setText("--:--")
 

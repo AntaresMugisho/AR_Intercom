@@ -108,22 +108,23 @@ def create_rounded_image(image_path, width, height=None, radius=None):
     return rounded_pixmap
 
 
-def clear_layout(layout: QLayout, start=0, end=1):
+def clear_layout(layout: QLayout, start: int = 0, end: int = 1):
     """
     Remove widgets from a layout
     """
     # Remove old list
     count = layout.count()
+    print("Count: ", count)
     for i in reversed(range(start, count - end)):
+        print(i)
         item = layout.itemAt(i)
         widget = item.widget()
 
         if widget:
-            layout.removeWidget(widget)
-            widget.deleteLater()
+            widget.setParent(None)
         else:
             print("ERR in utils : No widget to remove")
-            # clear_layout(item.layout())
+            clear_layout(item.layout())
 
 
 def get_private_ip():
