@@ -4,12 +4,13 @@ from database import Database
 from datetime import datetime
 
 
-class Controller:
+class Model:
     """
     Database and Model controller !
     """
     db = None
     table_name = None
+    statement = None
 
     def set_id(self, id: int):
         self.id = id
@@ -59,7 +60,7 @@ class Controller:
         return cls.db._fetchall(statement)
 
     @classmethod
-    def with_deletes(cls):
+    def with_trashed(cls):
         """
         Returns all records even those who were soft deleted
         """
@@ -114,8 +115,17 @@ class Controller:
         Return all records responding to the condition
         """
         cls.setup_db()
-        statement = f"SELECT * FROM {cls.table_name} WHERE {field} {operator} '{value}' AND deleted_at ISNULL"
-        return cls.db._fetchall(statement)
+        cls.statement = f"SELECT * FROM {cls.table_name} WHERE {field} {operator} '{value}' AND deleted_at ISNULL"
+        return cls
+
+    @classmethod
+    def order_by(cls, column: str, order: str = "ASC"):
+        cls.statement += f" ORDER BY {column} {order}"
+        return cls
+
+    @classmethod
+    def get(cls):
+        return cls.db._fetchall(cls.statement)
 
     @classmethod
     def first_where(cls, field: str, operator: str, value):

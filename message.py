@@ -1,9 +1,9 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
-from controller import Controller
+from model import Model
 
 
-class Message(Controller):
+class Message(Model):
     """
     Message model class representing a message as stored in database.
     This class contains also some signals that the server can emit on new incoming message

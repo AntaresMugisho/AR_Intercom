@@ -306,11 +306,14 @@ class MainWindow(QMainWindow):
         # Remove old list
         for i in reversed(range(chat_list_layout_count - 1)):
             widget = self.ui.chat_list_layout.itemAt(i).widget()
-            widget.deleteLater()
+            try:
+                widget.deleteLater()
+            except Exception as e :
+                print("ERROR WHILE TRYING TO REMOVE CLIENT LIST WIDGET: ", e)
             self.ui.chat_list_layout.removeWidget(widget)
 
         # Add new user's list
-        users = User.where("id", ">", 1)
+        users = User.where("id", ">", 1).order_by("updated_at").get()
         for user in users:
             widget = ClientWidget(user)
             last_index = self.ui.chat_list_layout.count() - 1
@@ -370,8 +373,6 @@ class MainWindow(QMainWindow):
         user = User.first_where("uuid", "=", user_uuid)
         user_name = user.get_user_name()
         user_status = user.get_user_status()
-        if not user_status:
-            user_status = "Hello, i'm using AR Intercom !"
 
         # SET NAME AND STATUS TO THE ACTIVE CLIENT LABEL
         self.ui.chat_stacked_widget.setCurrentWidget(self.ui.chat_page)
@@ -512,11 +513,14 @@ class MainWindow(QMainWindow):
             # Send message and get it back with the status report modified
             client = Client(receiver.get_host_address())
             message = client.send_message(message)
-            # message.set_created_at()  # Now
-            # message.set_updated_at()  # Now
 
             # Save text message in database
             message.save()
+
+            # Update user's list
+            receiver.set_updated_at()  # Now
+            receiver.update()
+            self.load_user_list()
 
             # Show bubble
             self.show_bubble(message)

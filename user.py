@@ -2,11 +2,11 @@
 
 import hashlib
 
-from controller import Controller
+from model import Model
 from message import Message
 
 
-class User(Controller):
+class User(Model):
     """
     User model class representing a user as stored in database
     """
@@ -72,7 +72,9 @@ class User(Controller):
         return self.user_name
 
     def get_user_status(self):
-        return self.user_status
+        if self.user_status:
+            return self.user_status
+        return "Hello, i'm using AR Intercom !"
 
     def get_password(self):
         return self.password

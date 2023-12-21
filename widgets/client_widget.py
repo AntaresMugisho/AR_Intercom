@@ -1,9 +1,11 @@
 # -*- This python file uses the following encoding : utf-8 -*-
+import os.path
 
 from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton
 from PySide6.QtGui import QFont, QCursor, QMouseEvent
 from PySide6.QtCore import QSize, Qt, QRect, Signal
 
+from message import Message
 from user import User
 import utils
 
@@ -125,9 +127,13 @@ class ClientWidget(QFrame):
                                         "	background-color:transparent;\n"
                                         "	color:rgba(255, 255, 255, 0.5);\n"
                                         "}")
-        last_message = self.messages[-1].get_body()
+        last_message: Message = self.messages[-1]
+        if last_message.get_kind() == "text":
+            last_message_text = last_message.get_body()
+        else:
+            last_message_text = os.path.basename(last_message.get_body())
 
-        self.last_message.setText(last_message if len(last_message) <= 23 else f"{last_message[:20]}...")
+        self.last_message.setText(last_message_text if len(last_message_text) <= 23 else f"{last_message_text[:20]}...")
 
         # MESSAGE COUNTER
         self.messege_number = QLabel(self)
@@ -142,7 +148,6 @@ class ClientWidget(QFrame):
                                           "\n"
                                           "}")
         self.messege_number.setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
-        # self.message_number.hide()
 
         # ENVELOP ICON
         self.envelop_msg = QFrame(self)
