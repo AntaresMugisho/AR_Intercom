@@ -310,7 +310,7 @@ class MainWindow(QMainWindow):
             self.ui.chat_list_layout.removeWidget(widget)
 
         # Add new user's list
-        users = User.where("id", ">=", 1)
+        users = User.where("id", ">", 1)
         for user in users:
             widget = ClientWidget(user)
             last_index = self.ui.chat_list_layout.count() - 1

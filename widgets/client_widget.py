@@ -27,6 +27,8 @@ class ClientWidget(QFrame):
         if self.user_profile_picture_path == "user/default.png":
             self.user_profile_picture_path = ":/icons/icons/avatar.png"
 
+        self.messages = self.user.messages()
+
         # DRAW USER WIDGET
         self.setObjectName(f"{self.user_uuid}")
         self.setMinimumSize(QSize(271, 61))
@@ -81,26 +83,26 @@ class ClientWidget(QFrame):
         self.online_toast.setStyleSheet(u"QLabel{\n"
                                         "	border-radius:6px;\n"
                                         "	border:2px solid rgb(20,20,20);\n"
-                                        "	background-color: #00ff00;	\n"
+                                        "	background-color: #00FF00;	\n"
                                         "}")
-        self.online_toast.setFrameShadow(QFrame.Raised)
-        if not self.online:
+        # if not
+        if self.online:
             self.online_toast.hide()
 
         # LAST SEEN
         self.last_seen_0 = QLabel(self)
         self.last_seen_0.setObjectName(u"last_seen_0")
         self.last_seen_0.setGeometry(QRect(198, 39, 61, 20))
+        color = "#009900" if self.online else "#555"
         self.last_seen_0.setStyleSheet(u"QLabel{\n"
                                        "	background-color:transparent;\n"
-                                       "	color:rgb(0, 255, 0);\n"
+                                       f"	color:{color};\n"
                                        "}")
         self.last_seen_0.setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
         if self.online:
             self.last_seen_0.setText("online")
         else:
-            pass
-            # self.last_seen_0.setText("offline")
+            self.last_seen_0.setText("offline")
 
         # NAME
         self.client_name = QLabel(self)
@@ -113,7 +115,6 @@ class ClientWidget(QFrame):
                                        "	color: white;\n"
                                        "}")
         self.client_name.setText(self.username)
-        # self.client_name.clicked.connect(self.show_conversations)
 
         # LAST MESSAGE
         self.last_message = QLabel(self)
@@ -124,12 +125,14 @@ class ClientWidget(QFrame):
                                         "	background-color:transparent;\n"
                                         "	color:rgba(255, 255, 255, 0.5);\n"
                                         "}")
-        self.last_message.setText("Last message s...")
+        last_message = self.messages[-1].get_body()
+
+        self.last_message.setText(last_message if len(last_message) <= 23 else f"{last_message[:20]}...")
 
         # MESSAGE COUNTER
         self.messege_number = QLabel(self)
         self.messege_number.setGeometry(QRect(213, 23, 30, 20))
-        self.messege_number.setText("20")
+        self.messege_number.setText(str(len(self.messages)))
         font5 = QFont()
         font5.setPointSize(8)
         self.messege_number.setFont(font5)
