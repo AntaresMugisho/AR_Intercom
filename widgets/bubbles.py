@@ -82,9 +82,6 @@ class Bubble(QFrame):
         else:
             self.message_label.setStyleSheet(u"QLabel{color: #eee;background-color:transparent;padding:4px 4px 0px;}")
 
-        # self.bubble.setFixedSize(self.message_label.size())
-        print(self.message_label.size())
-
         # Add message label and time
         self.create_time_label(self.bubble, self.message_label)
 
@@ -93,7 +90,12 @@ class Bubble(QFrame):
 
     def render_bubble(self):
 
-        size = self.bubble.size() + QSize(12, 12)
+        if self.message_kind == "text":
+            size = self.bubble.sizeHint()
+        else:
+            size = self.bubble.size()
+
+        size += QSize(12, 12)
         self.setMinimumSize(size)
         self.setMaximumSize(size)
 
@@ -111,14 +113,14 @@ class Bubble(QFrame):
             self.bubble.setStyleSheet(self.left_style)
 
         else:
-            bubble_width = self.bubble.width()
-            self.small_ellipse.setGeometry(QRect((bubble_width + 12 - 8), 0, 8, 8))
+            bubble_width = self.width()
+            self.small_ellipse.setGeometry(QRect((bubble_width - 8), 0, 8, 8))
             self.small_ellipse.setStyleSheet(u"background-color: rgb(10, 11, 12);border-radius:4px;")
-            self.large_ellipse.setGeometry(QRect((bubble_width + 12 - 14 - 5), 6, 14, 14))
+            self.large_ellipse.setGeometry(QRect((bubble_width - 14 - 5), 6, 14, 14))
             self.large_ellipse.setStyleSheet(u"background-color: rgba(10, 11, 12, 0.7);border-radius:7px;")
 
-            self.bubble.move(0, 12)
             self.bubble.setStyleSheet(self.right_style)
+            self.bubble.move(0, 12)
 
         return self
 
@@ -272,7 +274,7 @@ class Bubble(QFrame):
         self.bubble.setFixedSize(304, 96)
 
         self.document = QFrame(self.bubble)
-        self.document.setStyleSheet(u".QFrame{background-color:#88FFFFFF;border-radius:10px;}")
+        self.document.setStyleSheet(u".QFrame{background-color:#11FFFFFF;border-radius:10px;}")
 
         self.horizontalLayout_23 = QHBoxLayout(self.document)
         self.horizontalLayout_23.setSpacing(6)
@@ -287,7 +289,7 @@ class Bubble(QFrame):
         font9.setBold(True)
 
         self.document_icon.setFont(font9)
-        self.document_icon.setStyleSheet(u"QLabel{background-color: #bbb;border-radius:4px;color:#000;"
+        self.document_icon.setStyleSheet(u"QLabel{background-color: #999;border-radius:4px;color:#000;"
                                          "image: url(:/cils/cils/blacks/cil-file.png);}")
         self.document_icon.setAlignment(Qt.AlignCenter)
         self.document_icon.setTextInteractionFlags(Qt.TextSelectableByMouse)
@@ -306,18 +308,19 @@ class Bubble(QFrame):
         font6.setBold(True)
         self.document_title.setFont(font6)
         self.document_title.setStyleSheet(u"QLabel{\n"
-                                          "    color:#000;\n"
+                                          "    color:#999;\n"
                                           "background-color:transparent;\n"
                                           "}")
         self.document_title.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
         self.document_title.setTextInteractionFlags(Qt.TextSelectableByMouse)
-        self.document_title.setText(os.path.basename(path))
+        title = os.path.basename(path)
+        self.document_title.setText(title if len(title) <= 40 else title[:40] + '...')
 
         self.document_title_size_layout.addWidget(self.document_title)
 
         self.document_size = QLabel(self.document)
         self.document_size.setObjectName(u"document_size")
-        self.document_size.setStyleSheet(u"QLabel{background:transparent;color:#333;}")
+        self.document_size.setStyleSheet(u"QLabel{background:transparent;color:#444;}")
         self.document_size.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
         self.document_size.setTextInteractionFlags(Qt.TextSelectableByMouse)
         size = round((os.path.getsize(path) / 1024 / 1024), 2)
@@ -349,6 +352,8 @@ class Bubble(QFrame):
         self.bubble = QFrame(self)
         self.bubble.setGeometry(QRect(17, 17, image.width(), image.height()))
         # self.image_bubble.setMaximumWidth(image.width())
+        self.bubble.setStyleSheet("background-color:red;")
+
 
         # Label displaying image
         self.image = QLabel(self.bubble)
