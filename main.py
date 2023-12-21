@@ -8,6 +8,7 @@ from PySide6.QtGui import QColor
 from PySide6.QtCore import Qt, Slot
 
 from gui import Ui_SplashScreen
+from main_window import MainWindow
 from user import User
 import utils
 

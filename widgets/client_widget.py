@@ -126,11 +126,14 @@ class ClientWidget(QFrame):
                                         "	background-color:transparent;\n"
                                         "	color:rgba(255, 255, 255, 0.5);\n"
                                         "}")
-        last_message: Message = self.messages[-1]
-        if last_message.get_kind() == "text":
-            last_message_text = last_message.get_body()
+        if self.messages:
+            last_message: Message = self.messages[-1]
+            if last_message.get_kind() == "text":
+                last_message_text = last_message.get_body()
+            else:
+                last_message_text = os.path.basename(last_message.get_body())
         else:
-            last_message_text = os.path.basename(last_message.get_body())
+            last_message_text = "[No message yet]"
 
         self.last_message.setText(last_message_text if len(last_message_text) <= 23 else f"{last_message_text[:20]}...")
 

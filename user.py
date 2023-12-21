@@ -97,7 +97,7 @@ class User(Model):
         Message.setup_db()
         statement = f"""
             SELECT * FROM {Message.table_name} 
-            WHERE (sender_id = {self.get_id()} OR receiver_id = {self.get_id()})
+            WHERE (sender_id = {self.get_id()} OR receiver_id = {self.get_id()}) AND deleted_at ISNULL
         """
         return Message.db._fetchall(statement)
 

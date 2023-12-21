@@ -1,22 +1,18 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
 import sys
-import sys
 import os
 import threading
 from datetime import datetime, timedelta
 from functools import partial
 
 import EmojiStore
-
 from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
-from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel, \
-    QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget, QFileDialog
+from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel, QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget, QFileDialog, QSlider
 from PySide6.QtGui import QColor
 from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt
 
 import utils
-from widgets import Bubble, ClientWidget, DateLabel, EmojiButton
 from styles import Clients, SendButton, Player as PlayerStyle
 from server import Server
 from client import Client
@@ -27,15 +23,7 @@ from player import Player
 from netscanner import NetScanner
 from notification import NotificationWidget
 from gui import Ui_MainWindow
-
-from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel, \
-    QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget, QSlider
-from PySide6.QtGui import QColor
-from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt
-
-from gui import Ui_MainWindow
 from widgets import Bubble, ClientWidget, DateLabel, EmojiButton
-from functions import *
 
 # Global variables for recorder time counter
 seconds = minutes = 0
@@ -67,11 +55,11 @@ class MainWindow(QMainWindow):
         self.shadow.setColor(QColor(0, 0, 0, 150))
         self.ui.app_bg.setGraphicsEffect(self.shadow)
 
-        # HIDE ASIDE MENU TEXT, SETTINGS PANEL, EMOJI WIDGET AND MEDIA BUTTONS ON START UP
-        self.ui.left_menu.setFixedWidth(60)
+        # HIDE SETTINGS PANEL, EMOJI WIDGET, MEDIA BUTTONS AND RECORD WIDGET ON START UP
         self.ui.right_stacked_widget.setFixedWidth(0)
         self.ui.emoji_widget.setFixedHeight(0)
         self.ui.media_bg.setFixedHeight(0)
+        self.ui.record_widget.hide()
         self.ui.chat_page_layout.removeWidget(self.ui.media_bg)
 
         # CONNECT BUTTONS
@@ -101,8 +89,8 @@ class MainWindow(QMainWindow):
         self.ui.chat_scroll_layout.itemAt(1).spacerItem()
 
         # Start on home page
-        # self.ui.home_btn.clicked.emit()
-        self.ui.chat_btn.clicked.emit()
+        self.ui.home_btn.clicked.emit()
+        # self.ui.chat_btn.clicked.emit()
 
         # Chat buttons connection
         self.ui.input.textChanged.connect(self.change_send_style)
@@ -198,7 +186,7 @@ class MainWindow(QMainWindow):
         """
         Animate widget
         """
-        if widget.width() == min:
+        if widget.width() <= min:
             start_value = min
             end_value = max
         else:
@@ -206,7 +194,7 @@ class MainWindow(QMainWindow):
             end_value = min
 
         # ANIMATION SETTINGS BOX
-        self.animation = QPropertyAnimation(widget, b"minimumWidth")
+        self.animation = QPropertyAnimation(widget, b"maximumWidth")
         self.animation.setDuration(300)
         self.animation.setStartValue(start_value)
         self.animation.setEndValue(end_value)
@@ -225,7 +213,7 @@ class MainWindow(QMainWindow):
         """
         Show/Hide menu text
         """
-        self.start_animation(self.ui.left_menu, 60, 168)
+        self.start_animation(self.ui.left_menu, 60, 163)
 
     # CONVERSATION SCREEN FUNCTIONS ####################################################################################
 
@@ -376,14 +364,7 @@ class MainWindow(QMainWindow):
             self.ui.active_client_picture.setText(user.get_user_name()[0])
 
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
-        utils.clear_layout(self.ui.chat_scroll_layout)
-        # try:
-        #     for index in reversed(range(1, self.ui.chat_scroll_layout.count())):
-        #         self.ui.chat_scroll_layout.itemAt(index).widget().deleteLater()
-        #         # The widget at index 0 is a layout spacer, we don't need to delete it
-        #         # That's why we end with index 1
-        # except Exception as e:  # If chat field was not visible or is empty
-        #     print(e)
+        utils.clear_layout(self.ui.chat_scroll_layout, start=1)
 
         # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
         message_counter = self.ui.chat_list_scroll.findChild(QLabel, f"{user_uuid}_counter")
@@ -607,17 +588,12 @@ class MainWindow(QMainWindow):
         user = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
         messages = user.messages()
 
-        print("Deleting conversation of you with", user.get_user_name())
-        utils.clear_layout(self.ui.chat_scroll_layout)
+        utils.clear_layout(self.ui.chat_scroll_layout, start=1)
 
         for message in messages:
-            if message.get_kind() == "voice":
-                try:
-                    os.remove(message.get_body())
-                except Exception as e:
-                    print("Error while deleting file: ", e)
+            message.soft_delete()
 
-            message.delete()
+        self.show_conversations(user.get_uuid())
 
     # MEDIA RECORDER -----------------------------------------------------------------
 
@@ -627,9 +603,9 @@ class MainWindow(QMainWindow):
         Starts recording voice message
         """
         # SHOW RECORD WIDGET INDICATOR AND CONNECT ACTION BUTTONS
-        # self.show_record_widget()
-        # self.ui.end_record.clicked.connect(self.recorder._stop)
-        # self.ui.cancel_record.clicked.connect(self.recorder.cancel)
+        self.ui.record_widget.show()
+        self.ui.end.clicked.connect(self.recorder._stop)
+        self.ui.cancel.clicked.connect(self.recorder.cancel)
 
         self.recorder._record()
         self.record_timer.start(1000)
@@ -646,8 +622,7 @@ class MainWindow(QMainWindow):
             seconds = 0
 
         time_counter = "%02d:%02d" % (minutes, seconds)
-        print(time_counter)
-        # self.ui.record_time.setText(time_counter)
+        self.ui.time.setText(time_counter)
 
     def recorder_state_changed(self):
         """
@@ -655,9 +630,9 @@ class MainWindow(QMainWindow):
         """
         global seconds, minutes
 
-        if self.recorder.recorderState() == QMediaRecorder.StoppedState:
+        if self.recorder.recorderState() == QMediaRecorder.RecorderState.StoppedState:
             self.record_timer.stop()
-            # self.ui.record_tip.deleteLater()
+            self.ui.record_widget.hide()
             seconds = minutes = 0
             self.ui.media_btn.setEnabled(True)
             self.ui.send_btn.setEnabled(True)
@@ -683,7 +658,7 @@ class MainWindow(QMainWindow):
             slider = parent.findChild(QSlider)
 
             path = title_label.objectName().split("|")[1]
-            # self.player = Player()
+            self.player = Player()
             self.player._play(path)
 
             # Show GUI indications of playing state

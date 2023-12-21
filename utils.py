@@ -108,13 +108,13 @@ def create_rounded_image(image_path, width, height=None, radius=None):
     return rounded_pixmap
 
 
-def clear_layout(layout: QLayout):
+def clear_layout(layout: QLayout, start=0, end=1):
     """
     Remove widgets from a layout
     """
     # Remove old list
     count = layout.count()
-    for i in reversed(range(count - 1)):
+    for i in reversed(range(start, count - end)):
         item = layout.itemAt(i)
         widget = item.widget()
 
