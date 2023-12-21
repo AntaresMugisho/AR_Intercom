@@ -44,8 +44,15 @@ class MainWindow(QMainWindow):
 
         # REMOVE DEFAULT WINDOW FRAME
         self.ui.app_margins.setContentsMargins(0, 0, 0, 0)
-        # self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
-        # self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+
+        # SET MOVE EVENT ON THE WINDOW
+        self.dragPos = None
+        self.ui.app_brand.mouseMoveEvent = self.move_window
+        self.ui.auth_user_box.mouseMoveEvent = self.move_window
+        self.ui.title_bar.mouseMoveEvent = self.move_window
+        self.ui.app_title.mouseMoveEvent = self.move_window
 
         # DROP SHADOW
         self.shadow = QGraphicsDropShadowEffect(self)
@@ -62,7 +69,7 @@ class MainWindow(QMainWindow):
         self.ui.record_widget.hide()
         self.ui.chat_page_layout.removeWidget(self.ui.media_bg)
 
-        # CONNECT BUTTONS
+        # CONNECT BUTTONSf
         self.ui.menu_btn.clicked.connect(self.toggle_menu)
         self.ui.settings_btn.clicked.connect(self.toggle_settings)
         self.ui.emoji_btn.clicked.connect(self.toggle_emojis)
@@ -86,7 +93,7 @@ class MainWindow(QMainWindow):
         self.ui.chat_btn.clicked.connect(self.menu_click)
         self.ui.about_btn.clicked.connect(self.menu_click)
 
-        self.ui.chat_scroll_layout.itemAt(1).spacerItem()
+        # self.ui.chat_scroll_layout.itemAt(1).spacerItem()
 
         # Start on home page
         self.ui.home_btn.clicked.emit()
@@ -134,6 +141,15 @@ class MainWindow(QMainWindow):
             self.WINDOW_MAXIMIZED = False
             self.ui.maximize_restore_btn.setStatusTip("Maximize")
             self.ui.maximize_restore_btn.setStyleSheet("background-image:url(:/cils/cils/icon_maximize.png);")
+
+    def move_window(self, event):
+        if event.buttons() == Qt.MouseButton.LeftButton:
+            self.move(self.pos() + event.globalPosition().toPoint() - self.dragPos.toPoint())
+            self.dragPos = event.globalPosition()
+            event.accept()
+
+    def mousePressEvent(self, event):
+        self.dragPos = event.globalPosition()
 
     @Slot()
     def menu_click(self):

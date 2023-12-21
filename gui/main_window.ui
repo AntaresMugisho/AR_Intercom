@@ -1886,7 +1886,7 @@ background-position: left center;</string>
              <widget class="QStackedWidget" name="chat_stacked_widget">
               <property name="minimumSize">
                <size>
-                <width>576</width>
+                <width>585</width>
                 <height>581</height>
                </size>
               </property>
@@ -1894,7 +1894,7 @@ background-position: left center;</string>
                <string notr="true"/>
               </property>
               <property name="currentIndex">
-               <number>2</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="widgets_page">
                <widget class="QFrame" name="bubble_container_2">
@@ -4147,15 +4147,15 @@ border-radius:4px;</string>
                </widget>
               </widget>
               <widget class="QWidget" name="home_page">
-               <layout class="QVBoxLayout" name="verticalLayout_22">
+               <layout class="QVBoxLayout" name="home_layout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
                 <property name="leftMargin">
-                 <number>32</number>
+                 <number>90</number>
                 </property>
                 <property name="rightMargin">
-                 <number>32</number>
+                 <number>90</number>
                 </property>
                 <item>
                  <spacer name="verticalSpacer_5">
@@ -4165,13 +4165,13 @@ border-radius:4px;</string>
                   <property name="sizeHint" stdset="0">
                    <size>
                     <width>20</width>
-                    <height>344</height>
+                    <height>300</height>
                    </size>
                   </property>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label">
+                 <widget class="QLabel" name="home_logo">
                   <property name="minimumSize">
                    <size>
                     <width>201</width>
@@ -4191,7 +4191,7 @@ border-radius:4px;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_3">
+                 <widget class="QLabel" name="home_app_name">
                   <property name="minimumSize">
                    <size>
                     <width>261</width>
@@ -4212,7 +4212,7 @@ border-radius:4px;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_4">
+                 <widget class="QLabel" name="home_app_description">
                   <property name="minimumSize">
                    <size>
                     <width>451</width>
@@ -4224,8 +4224,11 @@ border-radius:4px;</string>
                     <pointsize>10</pointsize>
                    </font>
                   </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
                   <property name="text">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#878787;&quot;&gt;Facilitate business communication - the key of seamless and instant professional exchanges, unlocking the collaborative potential of your team !&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#878787;&quot;&gt;Easy to use - Free - Secured&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#878787;&quot;&gt;Facilitate business communication - the key of seamless and instant professional exchanges, unlocking the collaborative potential of your team !&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#878787;&quot;&gt;Easy to use - Free - Secure&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -4243,7 +4246,7 @@ border-radius:4px;</string>
                   <property name="sizeHint" stdset="0">
                    <size>
                     <width>20</width>
-                    <height>100</height>
+                    <height>300</height>
                    </size>
                   </property>
                  </spacer>
@@ -4484,8 +4487,8 @@ border-radius:4px;</string>
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>567</width>
-                     <height>204</height>
+                     <width>563</width>
+                     <height>121</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="chat_scroll_layout">
@@ -4513,8 +4516,8 @@ border-radius:4px;</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">background-color: rgba(31, 32, 33, 50);
-color:#333;
+                       <string notr="true">background-color: rgb(31, 32, 33);
+color:#aa77ff;
 padding:8px;
 border-radius:8px;</string>
                       </property>
@@ -4626,8 +4629,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>151</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout">
@@ -4680,8 +4683,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>151</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_15">
@@ -4728,8 +4731,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>151</height>
+                            <width>100</width>
+                            <height>30</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_14">
@@ -4791,8 +4794,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>151</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_13">
@@ -4839,8 +4842,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>151</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_12">
@@ -4887,8 +4890,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>151</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_11">
@@ -4935,8 +4938,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>151</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_10">
@@ -4983,8 +4986,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>151</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_3">
@@ -5363,7 +5366,7 @@ border-radius:20px;}</string>
                         <property name="styleSheet">
                          <string notr="true">QPushButton{
 	image: url(:/cils/cils/cil-media-record-bl.png);
-	background:#00FF00;
+	background:#009900;
 	border-top-left-radius:10px;
 	border-bottom-left-radius:10px;
 }</string>
@@ -5450,7 +5453,7 @@ border-radius:20px;}</string>
              <widget class="QStackedWidget" name="right_stacked_widget">
               <property name="minimumSize">
                <size>
-                <width>251</width>
+                <width>250</width>
                 <height>581</height>
                </size>
               </property>

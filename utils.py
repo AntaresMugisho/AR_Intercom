@@ -114,9 +114,7 @@ def clear_layout(layout: QLayout, start: int = 0, end: int = 1):
     """
     # Remove old list
     count = layout.count()
-    print("Count: ", count)
     for i in reversed(range(start, count - end)):
-        print(i)
         item = layout.itemAt(i)
         widget = item.widget()
 

@@ -51,6 +51,8 @@ class ClientWidget(QFrame):
     def setup_ui(self):
         font = QFont()
         font.setPointSize(10)
+        color = "#009900" if self.online else "#555"
+
 
         # PROFILE PICTURE
         self.client_picture = QLabel(self)
@@ -85,16 +87,13 @@ class ClientWidget(QFrame):
         self.online_toast.setStyleSheet(u"QLabel{\n"
                                         "	border-radius:8px;\n"
                                         "	border:2px solid rgb(20,20,20);\n"
-                                        "	background-color: #00FF00;	\n"
+                                        f"	background-color: {color};	\n"
                                         "}")
-        if not self.online:
-            self.online_toast.hide()
 
         # LAST SEEN
         self.last_seen_0 = QLabel(self)
         self.last_seen_0.setObjectName(u"last_seen_0")
         self.last_seen_0.setGeometry(QRect(198, 39, 61, 20))
-        color = "#009900" if self.online else "#555"
         self.last_seen_0.setStyleSheet(u"QLabel{\n"
                                        "	background-color:transparent;\n"
                                        f"	color:{color};\n"
