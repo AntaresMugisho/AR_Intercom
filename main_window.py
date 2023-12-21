@@ -299,29 +299,16 @@ class MainWindow(QMainWindow):
         """
         Load users conversation list from users who are registered in database
         """
-        # Save spacer item
-        chat_list_layout_count = self.ui.chat_list_layout.count()
-        spacer = self.ui.chat_list_layout.itemAt(chat_list_layout_count - 1)
-
-        # Remove old list
-        for i in reversed(range(chat_list_layout_count - 1)):
-            widget = self.ui.chat_list_layout.itemAt(i).widget()
-            try:
-                widget.deleteLater()
-            except Exception as e :
-                print("ERROR WHILE TRYING TO REMOVE CLIENT LIST WIDGET: ", e)
-            self.ui.chat_list_layout.removeWidget(widget)
+        # Clear layout
+        utils.clear_layout(self.ui.chat_list_layout)
 
         # Add new user's list
-        users = User.where("id", ">", 1).order_by("updated_at").get()
+        users = User.where("id", ">", 1).order_by("updated_at", "DESC").get()
         for user in users:
             widget = ClientWidget(user)
             last_index = self.ui.chat_list_layout.count() - 1
             self.ui.chat_list_layout.insertWidget(last_index, widget, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
             widget.clicked.connect(self.show_conversations)
-
-        # Add spacer
-        self.ui.chat_list_layout.addItem(spacer)
 
     def initialize_chat(self):
         # START SERVER
@@ -389,13 +376,14 @@ class MainWindow(QMainWindow):
             self.ui.active_client_picture.setText(user.get_user_name()[0])
 
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
-        try:
-            for index in reversed(range(1, self.ui.chat_scroll_layout.count())):
-                self.ui.chat_scroll_layout.itemAt(index).widget().deleteLater()
-                # The widget at index 0 is a layout spacer, we don't need to delete it
-                # That's why we end with index 1
-        except Exception as e:  # If chat field was not visible or is empty
-            print(e)
+        utils.clear_layout(self.ui.chat_scroll_layout)
+        # try:
+        #     for index in reversed(range(1, self.ui.chat_scroll_layout.count())):
+        #         self.ui.chat_scroll_layout.itemAt(index).widget().deleteLater()
+        #         # The widget at index 0 is a layout spacer, we don't need to delete it
+        #         # That's why we end with index 1
+        # except Exception as e:  # If chat field was not visible or is empty
+        #     print(e)
 
         # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
         message_counter = self.ui.chat_list_scroll.findChild(QLabel, f"{user_uuid}_counter")
@@ -414,7 +402,7 @@ class MainWindow(QMainWindow):
         # message_counter.parent().setStyleSheet(Clients.frame_normal)
 
         # Connect delete messages button
-        # self.ui.delete_btn.clicked.connect(self.delete_messages)
+        self.ui.delete_btn.clicked.connect(self.delete_messages)
 
     def show_bubble(self, message: Message):
 
@@ -620,15 +608,14 @@ class MainWindow(QMainWindow):
         messages = user.messages()
 
         print("Deleting conversation of you with", user.get_user_name())
-        for index in reversed(range(1, self.ui.chat_scroll_layout.count())):
-            self.ui.chat_scroll_layout.itemAt(index).widget().deleteLater()
+        utils.clear_layout(self.ui.chat_scroll_layout)
 
         for message in messages:
-            if message.get_kind() != "text":
+            if message.get_kind() == "voice":
                 try:
                     os.remove(message.get_body())
                 except Exception as e:
-                    print("Error while trying to delete file: ", e)
+                    print("Error while deleting file: ", e)
 
             message.delete()
 

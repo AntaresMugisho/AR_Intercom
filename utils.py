@@ -5,6 +5,7 @@ import os
 import socket
 import sqlite3
 
+from PySide6.QtWidgets import QLayout
 from PySide6.QtGui import QPixmap, QPainter, QPainterPath
 from PySide6.QtCore import Qt, QTimer
 
@@ -105,6 +106,24 @@ def create_rounded_image(image_path, width, height=None, radius=None):
     painter.drawPixmap(0, 0, pixmap)
 
     return rounded_pixmap
+
+
+def clear_layout(layout: QLayout):
+    """
+    Remove widgets from a layout
+    """
+    # Remove old list
+    count = layout.count()
+    for i in reversed(range(count - 1)):
+        item = layout.itemAt(i)
+        widget = item.widget()
+
+        if widget:
+            layout.removeWidget(widget)
+            widget.deleteLater()
+        else:
+            print("ERR in utils : No widget to remove")
+            # clear_layout(item.layout())
 
 
 def get_private_ip():

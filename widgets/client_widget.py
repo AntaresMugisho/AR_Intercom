@@ -81,14 +81,13 @@ class ClientWidget(QFrame):
         # ONLINE TOAST
         self.online_toast = QLabel(self)
         self.online_toast.setObjectName(f"{self.user_uuid}_toast")
-        self.online_toast.setGeometry(QRect(47, 41, 12, 12))
+        self.online_toast.setGeometry(QRect(47, 41, 16, 16))
         self.online_toast.setStyleSheet(u"QLabel{\n"
-                                        "	border-radius:6px;\n"
+                                        "	border-radius:8px;\n"
                                         "	border:2px solid rgb(20,20,20);\n"
                                         "	background-color: #00FF00;	\n"
                                         "}")
-        # if not
-        if self.online:
+        if not self.online:
             self.online_toast.hide()
 
         # LAST SEEN
