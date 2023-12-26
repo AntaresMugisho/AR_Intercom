@@ -453,8 +453,8 @@ class Ui_MainWindow(object):
 "     background: none;\n"
 " }\n"
 "")
-        self.verticalLayout_3 = QVBoxLayout(self.stylesheet)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_27 = QVBoxLayout(self.stylesheet)
+        self.verticalLayout_27.setObjectName(u"verticalLayout_27")
         self.app_bg = QWidget(self.stylesheet)
         self.app_bg.setObjectName(u"app_bg")
         self.app_bg.setStyleSheet(u"")
@@ -621,7 +621,7 @@ class Ui_MainWindow(object):
         self.chat_list_scroll.setWidgetResizable(True)
         self.chat_list_widget = QWidget()
         self.chat_list_widget.setObjectName(u"chat_list_widget")
-        self.chat_list_widget.setGeometry(QRect(0, 0, 291, 491))
+        self.chat_list_widget.setGeometry(QRect(0, 0, 291, 641))
         self.chat_list_widget.setStyleSheet(u"")
         self.chat_list_layout = QVBoxLayout(self.chat_list_widget)
         self.chat_list_layout.setObjectName(u"chat_list_layout")
@@ -820,18 +820,26 @@ class Ui_MainWindow(object):
         self.scan_page = QWidget()
         self.scan_page.setObjectName(u"scan_page")
         self.scan_page.setStyleSheet(u"background:transparent;")
+        self.verticalLayout_29 = QVBoxLayout(self.scan_page)
+        self.verticalLayout_29.setSpacing(6)
+        self.verticalLayout_29.setObjectName(u"verticalLayout_29")
+        self.verticalLayout_29.setContentsMargins(9, 9, 9, 9)
         self.scan_scroll = QScrollArea(self.scan_page)
         self.scan_scroll.setObjectName(u"scan_scroll")
-        self.scan_scroll.setGeometry(QRect(0, 0, 281, 601))
         self.scan_scroll.setStyleSheet(u"QScrollArea{border:none;}")
         self.scan_scroll.setWidgetResizable(True)
         self.scan_widget = QWidget()
         self.scan_widget.setObjectName(u"scan_widget")
-        self.scan_widget.setGeometry(QRect(0, 0, 281, 601))
-        self.socket_info = QWidget(self.scan_widget)
+        self.scan_widget.setGeometry(QRect(0, 0, 273, 577))
+        self.scan_list_layout = QVBoxLayout(self.scan_widget)
+        self.scan_list_layout.setObjectName(u"scan_list_layout")
+        self.scan_list_layout.setContentsMargins(0, 0, 0, 0)
+        self.socket_info = QFrame(self.scan_widget)
         self.socket_info.setObjectName(u"socket_info")
-        self.socket_info.setGeometry(QRect(7, 9, 281, 51))
+        self.socket_info.setMinimumSize(QSize(0, 42))
+        self.socket_info.setMaximumSize(QSize(16777215, 42))
         self.socket_info.setStyleSheet(u"#socket_info{background-color:rgb(16, 17, 18);\n"
+"border-radius:21px;\n"
 "}\n"
 "\n"
 "#device_icon{\n"
@@ -843,12 +851,10 @@ class Ui_MainWindow(object):
 "	border-bottom-left-radius:20px;\n"
 "}\n"
 "\n"
-"#socket_name, #socket_adress{\n"
+"#host_name, #host_address{\n"
 "	padding-left:5px;\n"
 "	background-color:rgb(30, 32, 33);}\n"
 "\n"
-"#socket_name{\n"
-"	}\n"
 "	\n"
 "#add_to_contact_btn{\n"
 "	background-color:rgb(30, 32, 33);\n"
@@ -862,31 +868,84 @@ class Ui_MainWindow(object):
 "\n"
 "#add_to_contact_btn:pressed{\n"
 "	background-color:rgb(27, 28, 29);}")
+        self.horizontalLayout_4 = QHBoxLayout(self.socket_info)
+        self.horizontalLayout_4.setSpacing(3)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalLayout_4.setContentsMargins(0, 1, 0, 1)
         self.device_icon = QLabel(self.socket_info)
         self.device_icon.setObjectName(u"device_icon")
-        self.device_icon.setGeometry(QRect(3, 7, 40, 40))
+        self.device_icon.setMinimumSize(QSize(40, 40))
+        self.device_icon.setMaximumSize(QSize(40, 40))
         self.device_icon.setStyleSheet(u"")
         self.device_icon.setPixmap(QPixmap(u":/image/1.png"))
         self.device_icon.setScaledContents(True)
-        self.socket_adress = QLabel(self.socket_info)
-        self.socket_adress.setObjectName(u"socket_adress")
-        self.socket_adress.setGeometry(QRect(44, 32, 186, 15))
-        self.socket_adress.setStyleSheet(u"")
-        self.socket_adress.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.socket_name = QLabel(self.socket_info)
-        self.socket_name.setObjectName(u"socket_name")
-        self.socket_name.setGeometry(QRect(44, 7, 186, 25))
-        self.socket_name.setStyleSheet(u"")
+
+        self.horizontalLayout_4.addWidget(self.device_icon)
+
+        self.verticalLayout_3 = QVBoxLayout()
+        self.verticalLayout_3.setSpacing(0)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.host_name = QLabel(self.socket_info)
+        self.host_name.setObjectName(u"host_name")
+        self.host_name.setStyleSheet(u"")
+
+        self.verticalLayout_3.addWidget(self.host_name)
+
+        self.host_address = QLabel(self.socket_info)
+        self.host_address.setObjectName(u"host_address")
+        self.host_address.setStyleSheet(u"color:gray;")
+        self.host_address.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_3.addWidget(self.host_address)
+
+
+        self.horizontalLayout_4.addLayout(self.verticalLayout_3)
+
         self.add_to_contact_btn = QPushButton(self.socket_info)
         self.add_to_contact_btn.setObjectName(u"add_to_contact_btn")
-        self.add_to_contact_btn.setGeometry(QRect(231, 7, 40, 40))
+        self.add_to_contact_btn.setMinimumSize(QSize(40, 40))
+        self.add_to_contact_btn.setMaximumSize(QSize(40, 40))
         self.add_to_contact_btn.setStyleSheet(u"background-image: url(:/cils/cils/cil-user-follow.png);\n"
 "")
-        self.socket_name.raise_()
-        self.socket_adress.raise_()
+
+        self.horizontalLayout_4.addWidget(self.add_to_contact_btn)
+
         self.add_to_contact_btn.raise_()
         self.device_icon.raise_()
+
+        self.scan_list_layout.addWidget(self.socket_info)
+
+        self.verticalSpacer_7 = QSpacerItem(20, 526, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.scan_list_layout.addItem(self.verticalSpacer_7)
+
         self.scan_scroll.setWidget(self.scan_widget)
+
+        self.verticalLayout_29.addWidget(self.scan_scroll)
+
+        self.start_scan_btn = QPushButton(self.scan_page)
+        self.start_scan_btn.setObjectName(u"start_scan_btn")
+        self.start_scan_btn.setMinimumSize(QSize(261, 40))
+        self.start_scan_btn.setStyleSheet(u"QPushButton{\n"
+"	background-color:rgb(21, 22, 23);\n"
+"	border-radius:20px;\n"
+"	padding:8px;\n"
+"	border:2px solid rgb(31,32,33);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(31, 32, 33);\n"
+"	border:2px solid rgb(21,22,23);\n"
+"	\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	background-color: rgb(51, 52, 53);\n"
+"}\n"
+"")
+
+        self.verticalLayout_29.addWidget(self.start_scan_btn)
+
         self.contacts_stack.addWidget(self.scan_page)
 
         self.verticalLayout_5.addWidget(self.contacts_stack)
@@ -3026,14 +3085,14 @@ class Ui_MainWindow(object):
         self.app_margins.addWidget(self.right_side_container)
 
 
-        self.verticalLayout_3.addWidget(self.app_bg)
+        self.verticalLayout_27.addWidget(self.app_bg)
 
         MainWindow.setCentralWidget(self.stylesheet)
 
         self.retranslateUi(MainWindow)
 
-        self.left_side_container.setCurrentIndex(1)
-        self.contacts_stack.setCurrentIndex(0)
+        self.left_side_container.setCurrentIndex(0)
+        self.contacts_stack.setCurrentIndex(1)
         self.chat_stacked_widget.setCurrentIndex(1)
         self.emoji_tab_widget.setCurrentIndex(0)
         self.right_stacked_widget.setCurrentIndex(0)
@@ -3072,9 +3131,10 @@ class Ui_MainWindow(object):
         self.messege_number_5.setText(QCoreApplication.translate("MainWindow", u"123", None))
         self.last_seen_2.setText(QCoreApplication.translate("MainWindow", u"27 min ago", None))
         self.device_icon.setText("")
-        self.socket_adress.setText(QCoreApplication.translate("MainWindow", u"192.168.1.100", None))
-        self.socket_name.setText(QCoreApplication.translate("MainWindow", u"DESKTOP-LKJOK-KJL", None))
+        self.host_name.setText(QCoreApplication.translate("MainWindow", u"DESKTOP-LKJOK-KJL", None))
+        self.host_address.setText(QCoreApplication.translate("MainWindow", u"192.168.1.100", None))
         self.add_to_contact_btn.setText("")
+        self.start_scan_btn.setText(QCoreApplication.translate("MainWindow", u"SCAN", None))
         self.signal_text.setText(QCoreApplication.translate("MainWindow", u"You're connected !", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:8pt; color:#4b4b4d;\">AR Intercom<br/>From a Creative Mind !</span></p><p align=\"center\"><span style=\" font-size:8pt; color:#4b4b4d;\">www.artrevolutionlabel.com</span></p></body></html>", None))
         self.app_title.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>AR Intercom <span style=\" font-weight:400; color:#878787;\">Enterprise</span></p></body></html>", None))
@@ -3170,19 +3230,19 @@ class Ui_MainWindow(object):
         self.save_password_btn.setText(QCoreApplication.translate("MainWindow", u"Update password", None))
         self.set_profile_label.setText(QCoreApplication.translate("MainWindow", u"Profile", None))
         self.label_19.setText(QCoreApplication.translate("MainWindow", u"Name", None))
-        self.username.setText(QCoreApplication.translate("MainWindow", u"Antares", None))
+        self.username.setText(QCoreApplication.translate("MainWindow", u"User", None))
         self.username_btn.setText("")
         self.label_20.setText(QCoreApplication.translate("MainWindow", u"E-mail", None))
-        self.user_email.setText(QCoreApplication.translate("MainWindow", u"antaresmugisho@gmail.com", None))
+        self.user_email.setText(QCoreApplication.translate("MainWindow", u"user@artrev.com", None))
         self.user_eail_btn.setText("")
         self.label_21.setText(QCoreApplication.translate("MainWindow", u"Status", None))
         self.user_status.setText(QCoreApplication.translate("MainWindow", u"We live we love we die !", None))
         self.user_status_btn.setText("")
         self.label_28.setText(QCoreApplication.translate("MainWindow", u"Role", None))
-        self.user_role.setText(QCoreApplication.translate("MainWindow", u"Programmer", None))
+        self.user_role.setText(QCoreApplication.translate("MainWindow", u"Worker", None))
         self.user_role_btn.setText("")
         self.label_29.setText(QCoreApplication.translate("MainWindow", u"Department", None))
-        self.user_department.setText(QCoreApplication.translate("MainWindow", u"AR Software", None))
+        self.user_department.setText(QCoreApplication.translate("MainWindow", u"AR Label", None))
         self.user_department_btn.setText("")
         self.status_bar.setText(QCoreApplication.translate("MainWindow", u"Creative Mind", None))
     # retranslateUi

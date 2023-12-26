@@ -23,7 +23,7 @@ from player import Player
 from netscanner import NetScanner
 from notification import NotificationWidget
 from gui import Ui_MainWindow
-from widgets import Bubble, ClientWidget, DateLabel, EmojiButton
+from widgets import Bubble, ClientWidget, DateLabel, EmojiButton, ScanResult
 
 # Global variables for recorder time counter
 seconds = minutes = 0
@@ -75,6 +75,7 @@ class MainWindow(QMainWindow):
         self.ui.emoji_btn.clicked.connect(self.toggle_emojis)
         self.ui.close_emoji_btn.clicked.connect(self.toggle_emojis)
         self.ui.media_btn.clicked.connect(self.toggle_media)
+        self.ui.start_scan_btn.clicked.connect(self.scan_network)
 
         # Choose media buttons
         self.ui.media_doc.clicked.connect(self.choose_media)
@@ -165,6 +166,9 @@ class MainWindow(QMainWindow):
             self.ui.chat_stacked_widget.setCurrentWidget(self.ui.home_page)
 
         elif menu == "scan_btn":
+            # Clear layout
+            utils.clear_layout(self.ui.scan_list_layout)
+
             self.ui.left_side_container.setCurrentWidget(self.ui.contact_page)
             self.ui.contacts_stack.setCurrentWidget(self.ui.scan_page)
 
@@ -760,11 +764,15 @@ class MainWindow(QMainWindow):
         """
         Scan network to find connected devices and put them in server_host dictionary.
         """
+
+        self.ui.start_scan_btn.setText("SCANNING...")
+
         my_ip = utils.get_private_ip()
         if my_ip.startswith("127.0"):
-            print("Aucune connexion détectée.\nVeuillez vous connecter à un réseau !")
+            self.ui.signal_text.setText("Please connect to a network !")
 
         else:
+            self.ui.signal_text.setText("You're connected !")
             my_ip_bytes = my_ip.split(".")
             net_id = ".".join(my_ip_bytes[:3])
 
@@ -786,44 +794,50 @@ class MainWindow(QMainWindow):
         """
         Checks online devices and show or hide green online indicator widget.
         """
-        clients = []
-        threads = []
+        for i in hosts.keys():
+            last_index = self.ui.scan_list_layout.count() - 1
+            widget = ScanResult(hosts[i], i)
+            self.ui.scan_list_layout.insertWidget(last_index, widget)
 
-        # Hosts
+        self.ui.start_scan_btn.setText("SCAN")
 
-        for host_address in hosts.keys():
-            client = Client(host_address)
-            clients.append(client)
-
-            th = threading.Thread(target=client.connect_to_server)
-            threads.append(th)
-
-        for thread in threads:
-            thread.start()
-
-        for client in clients:
-            user = User.first_where("host_name", "=", hosts.get(client.server_host))
-
-            # Show green online toast cause the client is online
-            if user:
-                user_uuid = user.get_uuid()
-                online_toast = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_toast")
-
-                if client.online:
-                    print(f"[+] {client.server_host} online")
-                    online_toast.show()
-
-                    # Send my ID to the connected client
-                    message = Message()
-                    message.set_kind("ID")
-                    client.send_message(message)
-
-                else:
-                    print(f"[-] {client.server_host} offline")
-                    online_toast.hide()
-            else:
-                if client.online:
-                    self.add_user(client.server_host, hosts.get(client.server_host))
+        # clients = []
+        # threads = []
+        #
+        # # Hosts
+        # for host_address in hosts.keys():
+        #     client = Client(host_address)
+        #     clients.append(client)
+        #
+        #     th = threading.Thread(target=client.connect_to_server)
+        #     threads.append(th)
+        #
+        # for thread in threads:
+        #     thread.start()
+        #
+        # for client in clients:
+        #     user = User.first_where("host_name", "=", hosts.get(client.server_host))
+        #
+        #     # Show green online toast cause the client is online
+        #     if user:
+        #         user_uuid = user.get_uuid()
+        #         online_toast = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_toast")
+        #
+        #         if client.online:
+        #             print(f"[+] {client.server_host} online")
+        #             # online_toast.show()
+        #
+        #             # Send my ID to the connected client
+        #             message = Message()
+        #             message.set_kind("ID")
+        #             client.send_message(message)
+        #
+        #         else:
+        #             print(f"[-] {client.server_host} offline")
+        #             # online_toast.hide()
+        #     else:
+        #         if client.online:
+        #             self.add_user(client.server_host, hosts.get(client.server_host))
 
     def add_user(self, host_address, host_name):
         """

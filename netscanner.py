@@ -43,13 +43,14 @@ class NetScanner(Thread):
 
         try:
             hostname, _, _ = socket.gethostbyaddr(address)
-            NetScanner.hosts[address] = hostname
+            if hostname is not None:
+                NetScanner.hosts[address] = hostname
         except socket.herror:
-            NetScanner.hosts[address] = None
+            pass
 
         finally:
             NetScanner.COUNTER += 1
-            if NetScanner.COUNTER == 254:
+            if NetScanner.COUNTER >= 253:
                 self.signal.scanFinished.emit(NetScanner.hosts)
 
 
@@ -57,8 +58,12 @@ class NetScanner(Thread):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
+    def pprint(h):
+        for i in h.keys():
+            print(f"{i} => {h[i]}")
+
     my_ip = utils.get_private_ip()
-    if my_ip.startswith("127.0"):
+    if my_ip.startswith("127"):
         print("Aucune connexion détectée.\nVeuillez vous connecter à un réseau !")
 
     else:
@@ -70,7 +75,7 @@ if __name__ == "__main__":
             # if host_id != int(my_ip_bytes[3]):
             address = f"{net_id}.{host_id}"
             scanner = NetScanner(address)
-            scanner.signal.scanFinished.connect(lambda h: print(h))
+            scanner.signal.scanFinished.connect(pprint)
 
             threads.append(scanner)
 

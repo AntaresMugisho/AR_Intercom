@@ -435,7 +435,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
  }
 </string>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <layout class="QVBoxLayout" name="verticalLayout_27">
     <item>
      <widget class="QWidget" name="app_bg" native="true">
       <property name="styleSheet">
@@ -708,7 +708,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="contact_page">
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -875,7 +875,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
               <string notr="true"/>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="chat_list_page">
               <property name="styleSheet">
@@ -923,7 +923,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
                     <x>0</x>
                     <y>0</y>
                     <width>291</width>
-                    <height>491</height>
+                    <height>641</height>
                    </rect>
                   </property>
                   <property name="styleSheet">
@@ -1388,41 +1388,69 @@ border-radius:28px;</string>
               <property name="styleSheet">
                <string notr="true">background:transparent;</string>
               </property>
-              <widget class="QScrollArea" name="scan_scroll">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>0</y>
-                 <width>281</width>
-                 <height>601</height>
-                </rect>
+              <layout class="QVBoxLayout" name="verticalLayout_29">
+               <property name="spacing">
+                <number>6</number>
                </property>
-               <property name="styleSheet">
-                <string notr="true">QScrollArea{border:none;}</string>
+               <property name="leftMargin">
+                <number>9</number>
                </property>
-               <property name="widgetResizable">
-                <bool>true</bool>
+               <property name="topMargin">
+                <number>9</number>
                </property>
-               <widget class="QWidget" name="scan_widget">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>0</y>
-                  <width>281</width>
-                  <height>601</height>
-                 </rect>
-                </property>
-                <widget class="QWidget" name="socket_info" native="true">
-                 <property name="geometry">
-                  <rect>
-                   <x>7</x>
-                   <y>9</y>
-                   <width>281</width>
-                   <height>51</height>
-                  </rect>
-                 </property>
+               <property name="rightMargin">
+                <number>9</number>
+               </property>
+               <property name="bottomMargin">
+                <number>9</number>
+               </property>
+               <item>
+                <widget class="QScrollArea" name="scan_scroll">
                  <property name="styleSheet">
-                  <string notr="true">#socket_info{background-color:rgb(16, 17, 18);
+                  <string notr="true">QScrollArea{border:none;}</string>
+                 </property>
+                 <property name="widgetResizable">
+                  <bool>true</bool>
+                 </property>
+                 <widget class="QWidget" name="scan_widget">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>273</width>
+                    <height>577</height>
+                   </rect>
+                  </property>
+                  <layout class="QVBoxLayout" name="scan_list_layout">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QFrame" name="socket_info">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>42</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>42</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">#socket_info{background-color:rgb(16, 17, 18);
+border-radius:21px;
 }
 
 #device_icon{
@@ -1434,12 +1462,10 @@ border-radius:28px;</string>
 	border-bottom-left-radius:20px;
 }
 
-#socket_name, #socket_adress{
+#host_name, #host_address{
 	padding-left:5px;
 	background-color:rgb(30, 32, 33);}
 
-#socket_name{
-	}
 	
 #add_to_contact_btn{
 	background-color:rgb(30, 32, 33);
@@ -1453,88 +1479,159 @@ border-radius:28px;</string>
 
 #add_to_contact_btn:pressed{
 	background-color:rgb(27, 28, 29);}</string>
-                 </property>
-                 <widget class="QLabel" name="device_icon">
-                  <property name="geometry">
-                   <rect>
-                    <x>3</x>
-                    <y>7</y>
-                    <width>40</width>
-                    <height>40</height>
-                   </rect>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="pixmap">
-                   <pixmap>:/image/1.png</pixmap>
-                  </property>
-                  <property name="scaledContents">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                 <widget class="QLabel" name="socket_adress">
-                  <property name="geometry">
-                   <rect>
-                    <x>44</x>
-                    <y>32</y>
-                    <width>186</width>
-                    <height>15</height>
-                   </rect>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="text">
-                   <string>192.168.1.100</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                 <widget class="QLabel" name="socket_name">
-                  <property name="geometry">
-                   <rect>
-                    <x>44</x>
-                    <y>7</y>
-                    <width>186</width>
-                    <height>25</height>
-                   </rect>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="text">
-                   <string>DESKTOP-LKJOK-KJL</string>
-                  </property>
-                 </widget>
-                 <widget class="QPushButton" name="add_to_contact_btn">
-                  <property name="geometry">
-                   <rect>
-                    <x>231</x>
-                    <y>7</y>
-                    <width>40</width>
-                    <height>40</height>
-                   </rect>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-image: url(:/cils/cils/cil-user-follow.png);
+                     </property>
+                     <layout class="QHBoxLayout" name="horizontalLayout_4">
+                      <property name="spacing">
+                       <number>3</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>1</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>1</number>
+                      </property>
+                      <item>
+                       <widget class="QLabel" name="device_icon">
+                        <property name="minimumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true"/>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="pixmap">
+                         <pixmap>:/image/1.png</pixmap>
+                        </property>
+                        <property name="scaledContents">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_3">
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <item>
+                         <widget class="QLabel" name="host_name">
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="text">
+                           <string>DESKTOP-LKJOK-KJL</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="host_address">
+                          <property name="styleSheet">
+                           <string notr="true">color:gray;</string>
+                          </property>
+                          <property name="text">
+                           <string>192.168.1.100</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="add_to_contact_btn">
+                        <property name="minimumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>40</width>
+                          <height>40</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background-image: url(:/cils/cils/cil-user-follow.png);
 </string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                     <zorder>add_to_contact_btn</zorder>
+                     <zorder>device_icon</zorder>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_7">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>526</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
                  </widget>
-                 <zorder>socket_name</zorder>
-                 <zorder>socket_adress</zorder>
-                 <zorder>add_to_contact_btn</zorder>
-                 <zorder>device_icon</zorder>
                 </widget>
-               </widget>
-              </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="start_scan_btn">
+                 <property name="minimumSize">
+                  <size>
+                   <width>261</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+	background-color:rgb(21, 22, 23);
+	border-radius:20px;
+	padding:8px;
+	border:2px solid rgb(31,32,33);
+}
+
+QPushButton:hover {
+	background-color: rgb(31, 32, 33);
+	border:2px solid rgb(21,22,23);
+	
+}
+
+QPushButton:pressed {
+	background-color: rgb(51, 52, 53);
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string>SCAN</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </widget>
            </item>
@@ -5977,7 +6074,7 @@ background-color:rgb(30,32,33);
 padding:4px;</string>
                        </property>
                        <property name="text">
-                        <string>Antares</string>
+                        <string>User</string>
                        </property>
                        <property name="textInteractionFlags">
                         <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -6063,7 +6160,7 @@ background-color:rgb(30,32,33);
 padding:4px;</string>
                        </property>
                        <property name="text">
-                        <string>antaresmugisho@gmail.com</string>
+                        <string>user@artrev.com</string>
                        </property>
                        <property name="textInteractionFlags">
                         <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -6229,7 +6326,7 @@ background-color:rgb(30,32,33);
 padding:4px;</string>
                        </property>
                        <property name="text">
-                        <string>Programmer</string>
+                        <string>Worker</string>
                        </property>
                        <property name="alignment">
                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -6315,7 +6412,7 @@ background-color:rgb(30,32,33);
 padding:4px;</string>
                        </property>
                        <property name="text">
-                        <string>AR Software</string>
+                        <string>AR Label</string>
                        </property>
                        <property name="alignment">
                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
