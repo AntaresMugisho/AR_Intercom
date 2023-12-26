@@ -10,7 +10,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QFileDialog, QPushButton, Q
 from PySide6.QtGui import QColor, QPixmap
 from PySide6.QtCore import Qt, QTimer, QPoint
 
-from gui.register_window import Ui_SigninWindow
+from gui.ui_register_window import Ui_SigninWindow
 from styles import LineEdit, ComboBox, Features
 from user import User
 from main_window import MainWindow
@@ -25,7 +25,7 @@ class RegisterWindow(QWidget):
         QWidget.__init__(self)
         self.ui = Ui_SigninWindow()
         self.ui.setupUi(self)
-        self.setWindowTitle("AR Intercom - Création de compte")
+        self.setWindowTitle("AR Intercom - Sign up")
 
         # REMOVE TITLE BAR
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
@@ -150,6 +150,9 @@ class RegisterWindow(QWidget):
                 pass
             self.ui.passcode2.setStyleSheet(LineEdit.style_normal)
             self.user.set_password(self.ui.passcode.show_text_bubble())
+
+        # self.user.set_email()
+        # self.user.set_phone()
 
         # IF NECESSARY DATA IS COLLECTED, GO TO THE NEXT PAGE
         print(errors)

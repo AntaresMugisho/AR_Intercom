@@ -51,6 +51,8 @@ def create_databases():
             host_address VARCHAR,
             host_name VARCHAR,
             user_name VARCHAR,
+            email VARCHAR,
+            phone VARCHAR,
             user_status VARCHAR,
             password VARCHAR,
             image_path VARCHAR DEFAULT('user/default.png'),

@@ -16,6 +16,8 @@ class User(Model):
         self.host_address = None
         self.host_name = None
         self.user_name = None
+        self.email = None
+        self.phone = None
         self.user_status = None
         self.password = None
         self.image_path = None
@@ -28,7 +30,7 @@ class User(Model):
     # SETTERS
     def set_id(self, id: int):
         self.id = id
-        uuid = hashlib.sha1(str(id).encode()).hexdigest()
+        uuid = hashlib.sha1(str(self.email).encode()).hexdigest()
         self.uuid = uuid
 
     def set_host_address(self, host_address: str):
@@ -39,6 +41,12 @@ class User(Model):
 
     def set_user_name(self, user_name: str):
         self.user_name = user_name
+
+    def set_email(self, email):
+        self.email = email
+
+    def set_phone(self, number):
+        self.phone = number
 
     def set_user_status(self, user_status: str):
         self.user_status = user_status
@@ -78,6 +86,12 @@ class User(Model):
 
     def get_password(self):
         return self.password
+
+    def get_phone(self):
+        return self.phone
+
+    def get_email(self):
+        return self.email
 
     def get_image_path(self):
         return self.image_path

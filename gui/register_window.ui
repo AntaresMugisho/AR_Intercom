@@ -14,7 +14,7 @@
    <string>Signin</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../resources/img.qrc">
+   <iconset>
     <normaloff>:/icons/icons/app_icon.png</normaloff>:/icons/icons/app_icon.png</iconset>
   </property>
   <widget class="QStackedWidget" name="stackedWidget">
@@ -108,9 +108,9 @@ border-radius:10px;</string>
       <property name="geometry">
        <rect>
         <x>3</x>
-        <y>312</y>
+        <y>282</y>
         <width>268</width>
-        <height>150</height>
+        <height>201</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -152,6 +152,36 @@ QLineEdit:hover,  QLineEdit:focus{
          </property>
          <property name="placeholderText">
           <string>Nom d'utilisateur</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="phone">
+         <property name="minimumSize">
+          <size>
+           <width>250</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Saisissez votre nom d'utilisateur.</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit{
+	border:2px solid; 
+	border-radius:20px;
+	font-size:18px;
+	padding-left:15px;
+	padding-right:15px; 
+	border-color:#FFF; 
+	background-color:#FFFFFF;}
+
+QLineEdit:hover,  QLineEdit:focus{
+	border-color: rgba(57, 146, 240, 180); 
+}</string>
+         </property>
+         <property name="placeholderText">
+          <string>Numero de téléphone</string>
          </property>
         </widget>
        </item>
@@ -266,7 +296,7 @@ color: rgb(255, 255, 255);font-size:16px; font-weight:bold; font-family:Roboto ;
       <property name="geometry">
        <rect>
         <x>2</x>
-        <y>210</y>
+        <y>195</y>
         <width>270</width>
         <height>81</height>
        </rect>
@@ -320,7 +350,7 @@ QPushButton:hover{
       <property name="geometry">
        <rect>
         <x>71</x>
-        <y>144</y>
+        <y>129</y>
         <width>131</width>
         <height>131</height>
        </rect>
