@@ -25,7 +25,7 @@ counter = 0
 
 class SplashScreen(QWidget):
     """
-    Shows splashscreen before launching app.
+    Shows splashscreen before launching app
     """
     def __init__(self):
         QWidget.__init__(self)

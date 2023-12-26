@@ -166,9 +166,6 @@ class MainWindow(QMainWindow):
             self.ui.chat_stacked_widget.setCurrentWidget(self.ui.home_page)
 
         elif menu == "scan_btn":
-            # Clear layout
-            utils.clear_layout(self.ui.scan_list_layout)
-
             self.ui.left_side_container.setCurrentWidget(self.ui.contact_page)
             self.ui.contacts_stack.setCurrentWidget(self.ui.scan_page)
 
@@ -764,97 +761,60 @@ class MainWindow(QMainWindow):
         """
         Scan network to find connected devices and put them in server_host dictionary.
         """
-
+        utils.clear_layout(self.ui.scan_list_layout)
         self.ui.start_scan_btn.setText("SCANNING...")
 
         my_ip = utils.get_private_ip()
-        if my_ip.startswith("127.0"):
-            self.ui.signal_text.setText("Please connect to a network !")
+        if my_ip.startswith("127."):
+            self.ui.signal_text.setText("Network error. Please connect to a network.")
+            self.ui.start_scan_btn.setText("SCAN")
 
         else:
             self.ui.signal_text.setText("You're connected !")
             my_ip_bytes = my_ip.split(".")
             net_id = ".".join(my_ip_bytes[:3])
 
-            # Create threads
+            # Create network scanner threads
             threads = []
             for host_id in range(1, 255):
-                if host_id != int(my_ip_bytes[3]):
-                    address = f"{net_id}.{host_id}"
-                    scanner = NetScanner(address)
-                    scanner.signal.scanFinished.connect(self.check_online)
+                # if host_id != int(my_ip_bytes[3]):
+                address = f"{net_id}.{host_id}"
+                scanner = NetScanner(address)
+                scanner.signal.scanFinished.connect(self.check_online)
 
-                    threads.append(scanner)
+                threads.append(scanner)
 
-            # Start threads
+            # Start network scanner threads
             for scanner in threads:
                 scanner.start()
 
     def check_online(self, hosts: dict):
         """
-        Checks online devices and show or hide green online indicator widget.
+        Display discovered hosts
         """
-        for i in hosts.keys():
+        for item in hosts.items():
             last_index = self.ui.scan_list_layout.count() - 1
-            widget = ScanResult(hosts[i], i)
+            widget = ScanResult(item[1], item[0])
             self.ui.scan_list_layout.insertWidget(last_index, widget)
+
+            widget.clicked.connect(self.add_user)
 
         self.ui.start_scan_btn.setText("SCAN")
 
-        # clients = []
-        # threads = []
-        #
-        # # Hosts
-        # for host_address in hosts.keys():
-        #     client = Client(host_address)
-        #     clients.append(client)
-        #
-        #     th = threading.Thread(target=client.connect_to_server)
-        #     threads.append(th)
-        #
-        # for thread in threads:
-        #     thread.start()
-        #
-        # for client in clients:
-        #     user = User.first_where("host_name", "=", hosts.get(client.server_host))
-        #
-        #     # Show green online toast cause the client is online
-        #     if user:
-        #         user_uuid = user.get_uuid()
-        #         online_toast = self.ui.left_scroll.findChild(QLabel, f"{user_uuid}_toast")
-        #
-        #         if client.online:
-        #             print(f"[+] {client.server_host} online")
-        #             # online_toast.show()
-        #
-        #             # Send my ID to the connected client
-        #             message = Message()
-        #             message.set_kind("ID")
-        #             client.send_message(message)
-        #
-        #         else:
-        #             print(f"[-] {client.server_host} offline")
-        #             # online_toast.hide()
-        #     else:
-        #         if client.online:
-        #             self.add_user(client.server_host, hosts.get(client.server_host))
-
-    def add_user(self, host_address, host_name):
+    def add_user(self, host_address):
         """
         Add new user in the database
         """
-        # Save user database
-        if host_name is not None:
-            host_name = host_name.capitalize()
-            print(f"Adding new user {host_name}")
-            user = User()
-            user.set_user_name(host_name)
-            user.set_host_address(host_address)
-            user.set_host_name(host_name)
-            user.set_image_path()
-            user.save()
+        print(f'Find user {host_address}')
 
-            self.show_user_widget(user, online=True)
+        client = Client(host_address)
+        client.connect_to_server()
+
+        if client.online:
+            # Send my ID to the connected client
+            message = Message()
+            message.set_kind("ID")
+            client.send_message(message)
 
 
 if __name__ == "__main__":

@@ -58,9 +58,9 @@ class NetScanner(Thread):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
-    def pprint(h):
-        for i in h.keys():
-            print(f"{i} => {h[i]}")
+    def pprint(h: dict):
+        for item in h.items():
+            print(f"{item[0]} => {item[1]}")
 
     my_ip = utils.get_private_ip()
     if my_ip.startswith("127"):
