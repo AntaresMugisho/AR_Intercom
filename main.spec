@@ -12,7 +12,7 @@ a = Analysis(
     binaries=[],
     datas=[
         ("resources", "resources"),
-        ("ui/*.py", "ui"),
+        ("gui/*.py", "gui"),
         ("user/default.png", "user")
     ],
     hiddenimports=[],
