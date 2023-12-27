@@ -14,6 +14,9 @@ class Client:
     """
     # OWNER SERVER IP ADDRESS
     PRIVATE_IP = utils.get_private_ip()
+    user = User.first_where("id", "=", 1)
+    if user:
+        UUID = user.get_uuid()
 
     # Port Unique for all clients
     PORT = 33511
@@ -82,20 +85,21 @@ class Client:
             department = me.get_department()
             role = me.get_role()
             profile_picture_path = me.get_image_path()
-            
+
             profile_picture_size = os.path.getsize(profile_picture_path)
-        
-            id_message = f"{self.PRIVATE_IP}|{message_kind}|{profile_picture_size}|{profile_picture_path}|" \
+
+            id_message = f"{self.UUID}|{message_kind}|{profile_picture_size}|{profile_picture_path}|" \
                          f"{host_name}|{user_name}|{user_status}|{department}|{role}"
 
-            # SEND MY IDS
+            # SEND ID MESSAGE
+            # id_message = f"{self.UUID}|{message_kind}"
             self.reliable_send(id_message)
             if profile_picture_path != "user/default.png":
                 self.upload_file(profile_picture_path)
 
         elif message_kind == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
-            text_message = f"{self.PRIVATE_IP}|{message_kind}|{message.get_body()}"
+            text_message = f"{self.UUID}|{message_kind}|{message.get_body()}"
             self.reliable_send(text_message)
             message.set_status(self.message_delivered)
 
@@ -107,7 +111,7 @@ class Client:
             file_name = os.path.basename(path)
 
             # SEND CLIENT ID AND FILE INFORMATION THEN UPLOAD FILE
-            media_message = f"{self.PRIVATE_IP}|{message_kind}|{file_size}|{file_name}"
+            media_message = f"{self.UUID}|{message_kind}|{file_size}|{file_name}"
             self.reliable_send(media_message)
             self.upload_file(path)
 

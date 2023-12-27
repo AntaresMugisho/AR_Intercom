@@ -9,9 +9,10 @@ from PySide6.QtCore import QObject, Qt, Signal, Slot
 from gui.login_window import Ui_LoginWindow
 from styles import LineEdit
 from user import User
+from main_window import MainWindow
 
 
-class LoginWindow(QWidget, QObject):
+class LoginWindow(QWidget):
     """
     Manage authentication's functions
     """
@@ -43,16 +44,19 @@ class LoginWindow(QWidget, QObject):
         self.ui.connect_log.clicked.connect(self.auth)
         self.ui.connect_log.keyPressEvent = self.auth
 
+        # SHOW WINDOW
+        self.show()
+
     def check_username(self):
         """
         Check if the username is authentic
         """
-        if not self.ui.log_username.show_text_bubble():
+        if not self.ui.log_username.text():
             self.ui.log_username.setStyleSheet(LineEdit.style_error)
             self.ui.name_warning.show()
             self.ui.name_warning.setText("Entrez votre nom d'utilisateur")
 
-        elif self.ui.log_username.show_text_bubble() != self.user_name:
+        elif self.ui.log_username.text() != self.user_name:
             self.ui.name_warning.show()
             self.ui.name_warning.setText("Nom d'utilisateur incorrect !")
 
@@ -64,10 +68,10 @@ class LoginWindow(QWidget, QObject):
         """
         CHeck if the password is authentic
         """
-        ui_password = self.ui.log_password.show_text_bubble()
+        ui_password = self.ui.log_password.text()
         self.ui_password = hashlib.sha1(ui_password.encode()).hexdigest()
 
-        if not self.ui.log_password.show_text_bubble():
+        if not self.ui.log_password.text():
             self.ui.log_password.setStyleSheet(LineEdit.style_error)
             self.ui.psw_warning.show()
             self.ui.psw_warning.setText("Entrez votre mot de passe")
@@ -89,8 +93,10 @@ class LoginWindow(QWidget, QObject):
             self.check_username()
             self.check_password()
 
-        if (self.ui.log_username.show_text_bubble(), self.ui_password) == (self.user_name, self.password):
+        if (self.ui.log_username.text(), self.ui_password) == (self.user_name, self.password):
             self.authenticated.emit()
+            self.main_window = MainWindow()
+            self.close()
 
 
 if __name__ == "__main__":
@@ -98,5 +104,4 @@ if __name__ == "__main__":
     if not app:
         app = QApplication(sys.argv)
     login_window = LoginWindow()
-    login_window.show()
     sys.exit(app.exec())

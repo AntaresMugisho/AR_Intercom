@@ -14,6 +14,7 @@ from gui.ui_register_window import Ui_SigninWindow
 from styles import LineEdit, ComboBox, Features
 from user import User
 from main_window import MainWindow
+from login_window import LoginWindow
 import utils
 
 
@@ -80,6 +81,8 @@ class RegisterWindow(QWidget):
         # CONNECT "TERMINATE" BUTTON
         self.ui.terminate.clicked.connect(self.terminate)
 
+        # SHOW WINDOW
+        self.show()
 
     def move_window(self, event):
         if event.buttons() == Qt.MouseButton.LeftButton:
@@ -238,8 +241,8 @@ class RegisterWindow(QWidget):
         self.close()
 
         # Show Main window
-        self.main_window = MainWindow()
-        self.main_window.show()
+        self.login_window = LoginWindow()
+        # self.main_window = MainWindow()
 
 
 
@@ -248,5 +251,4 @@ if __name__ == "__main__":
     if not app:
         app = QApplication(sys.argv)
     register_window = RegisterWindow()
-    register_window.show()
     sys.exit(app.exec())

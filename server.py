@@ -89,7 +89,6 @@ class Server(QObject):
                         packet = packet.split("|")
                         client_id = packet[0]
                         message_kind = packet[1]
-                        print(packet)
 
                     except BrokenPipeError:
                         pass
@@ -105,7 +104,7 @@ class Server(QObject):
                         print("[-] Error while receiving message", e)
 
                     else:
-                        sender = User.first_where("host_address", "=", client_id)
+                        sender = User.first_where("uuid", "=", client_id)
                         sender_id = sender.get_id()
 
                         message = Message()
@@ -128,7 +127,7 @@ class Server(QObject):
                                 self.download_file(client, message_kind, profile_picture_size, file_name)
 
                             # Store or update user's information in database
-                            user_exists = User.first_where("host_name", "=", host_name)
+                            user_exists = sender
                             if user_exists:
                                 user = user_exists
                             else:

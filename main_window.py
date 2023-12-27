@@ -811,9 +811,9 @@ class MainWindow(QMainWindow):
         client.connect_to_server()
 
         if client.online:
-            # Send my ID to the connected client
+            # ASK FOR CLIENT ID
             message = Message()
-            message.set_kind("ID")
+            message.set_kind("ID REQUEST")
             client.send_message(message)
 
 
