@@ -127,7 +127,7 @@ class RegisterWindow(QWidget):
 
         # CHECK LINES EDIT
         for widget in self.ui.form.findChildren(QLineEdit):
-            if not widget.show_text_bubble():
+            if not widget.text():
                 errors.append("1")
                 widget.setStyleSheet(LineEdit.style_error)
             else:
@@ -137,10 +137,13 @@ class RegisterWindow(QWidget):
                     pass
                 widget.setStyleSheet(LineEdit.style_normal)
                 if widget.objectName() == "user_name":
-                    self.user.set_user_name(self.ui.user_name.show_text_bubble())
+                    self.user.set_user_name(self.ui.user_name.text())
+                self.user.set_phone(self.ui.phone.text())
+                self.user.set_uuid()
+
 
         # CHECK IDENTICAL PASSWORDS
-        if self.ui.passcode2.show_text_bubble() != self.ui.passcode.show_text_bubble():
+        if self.ui.passcode2.text() != self.ui.passcode.text():
             errors.append("1")
             self.ui.passcode2.setStyleSheet(LineEdit.style_error)
         else:
@@ -149,13 +152,10 @@ class RegisterWindow(QWidget):
             except IndexError:
                 pass
             self.ui.passcode2.setStyleSheet(LineEdit.style_normal)
-            self.user.set_password(self.ui.passcode.show_text_bubble())
+            self.user.set_password(self.ui.passcode.text())
 
-        # self.user.set_email()
-        # self.user.set_phone()
 
         # IF NECESSARY DATA IS COLLECTED, GO TO THE NEXT PAGE
-        print(errors)
         if len(errors) == 0:
             self.ui.stackedWidget.setCurrentIndex(1)
             self.ui.return_button.show()

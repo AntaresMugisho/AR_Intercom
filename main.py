@@ -9,6 +9,7 @@ from PySide6.QtCore import Qt, Slot
 
 from gui import Ui_SplashScreen
 from main_window import MainWindow
+from register_window import RegisterWindow
 from user import User
 import utils
 
@@ -80,6 +81,7 @@ class SplashScreen(QWidget):
         global counter
         value = counter
 
+
         # SET VALUE TO PROGRESS BAR
 
         # Fix value error if > 1.000
@@ -97,7 +99,7 @@ class SplashScreen(QWidget):
             # SHOW REGISTER WINDOW OR LOGIN WINDOW
             if not User.find(1):
                 self.register_window = RegisterWindow()
-                # self.register_window.show()
+                self.register_window.show()
             else:
                 self.main_window = MainWindow()
                 self.main_window.show()
