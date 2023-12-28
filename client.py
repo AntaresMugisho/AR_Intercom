@@ -84,9 +84,10 @@ class Client:
             # GET MY IDS FROM DATABASE
             me = User.first_where("uuid", "=", self.UUID)
             print(f"User to send info : {me.__dict__}")
-            host_name = me.get_host_name()
+            host_name = socket.gethostname()
             user_name = me.get_user_name()
             user_status = me.get_user_status()
+            phone = me.get_phone()
             department = me.get_department()
             role = me.get_role()
             profile_picture_path = me.get_image_path()
@@ -94,7 +95,7 @@ class Client:
             profile_picture_size = os.path.getsize(profile_picture_path)
 
             id_message = f"{self.UUID}|{message_kind}|{profile_picture_size}|{profile_picture_path}|" \
-                         f"{host_name}|{user_name}|{user_status}|{department}|{role}"
+                         f"{host_name}|{user_name}|{user_status}|{department}|{role}|{phone}"
 
             self.reliable_send(id_message)
             if profile_picture_path != "user/default.png":

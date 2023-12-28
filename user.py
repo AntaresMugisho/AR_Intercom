@@ -28,8 +28,11 @@ class User(Model):
         self.deleted_at = None
 
     # SETTERS
-    def set_uuid(self):
-        uuid = hashlib.sha1(str(self.phone).encode()).hexdigest()
+    def set_uuid(self, id=None):
+        if id is not None:
+            uuid = hashlib.sha1(str(id).encode()).hexdigest()
+        else:
+            uuid = hashlib.sha1(str(self.phone).encode()).hexdigest()
         self.uuid = uuid
 
     def set_host_address(self, host_address: str):

@@ -316,7 +316,8 @@ class MainWindow(QMainWindow):
             widget.clicked.connect(self.show_conversations)
 
     @staticmethod
-    def send_id(self, host_address: str):
+    def send_id(host_address: str):
+        print(f"Sending ID RESPONSE to : {host_address}")
         client = Client(host_address)
         message = Message()
         message.set_kind("ID_RESPONSE")
@@ -331,6 +332,7 @@ class MainWindow(QMainWindow):
         # LISTEN FOR MESSAGE SIGNALS
         self.server.messageReceived.connect(self.show_incoming_message)
         self.server.idRequested.connect(self.send_id)
+        self.server.userAdded.connect(self.load_user_list)
 
         # SCAN NETWORK TO FIND CONNECTED DEVICES
         self.server_hosts = {}
@@ -357,7 +359,7 @@ class MainWindow(QMainWindow):
     # MESSAGES AND CONVERSATIONS -------------------------------------------------------
 
     @Slot(str)
-    def show_conversations(self, button_object_name: str = "356a192b7913b04c54574d18c28d46e6395428ac"):
+    def show_conversations(self, button_object_name: str):
         """
         Shows conversation bubbles with a specified user
         """
@@ -813,7 +815,7 @@ class MainWindow(QMainWindow):
         """
         Add new user in the database
         """
-        print(f'Find user {host_address}')
+        print(f'Try to add user {host_address}')
 
         client = Client(host_address)
         client.connect_to_server()

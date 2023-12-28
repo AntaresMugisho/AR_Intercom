@@ -19,6 +19,7 @@ class Server(QObject):
     """
     messageReceived = Signal(int)
     idRequested = Signal(str)
+    userAdded = Signal()
 
     # ONLINE CLIENTS LIST
     CONNECTED_CLIENTS = []
@@ -88,6 +89,7 @@ class Server(QObject):
                         client.send("[+] Message sent and received successfully".encode())
                         packet = packet.split("|")
                         client_id = packet[0]
+                        client_address = client.getpeername()[0]
                         message_kind = packet[1]
 
                     except BrokenPipeError:
@@ -104,8 +106,12 @@ class Server(QObject):
                         print("[-] Error while receiving message", e)
 
                     else:
+
                         sender = User.first_where("uuid", "=", client_id)
-                        sender_id = sender.get_id()
+                        if sender is not None:
+                            sender_id = sender.get_id()
+                        else:
+                            sender_id = 1
 
                         message = Message()
                         message.set_sender_id(sender_id)
@@ -113,7 +119,7 @@ class Server(QObject):
                         message.set_kind(message_kind)
 
                         if message_kind == "ID_REQUEST":
-                            self.idRequested.emit(client.getsockname()[0])
+                            self.idRequested.emit(client_address)
 
                         elif message_kind == "ID_RESPONSE":
                             profile_picture_size = int(packet[2])
@@ -123,6 +129,7 @@ class Server(QObject):
                             user_status = packet[6]
                             department = packet[7]
                             role = packet[8]
+                            phone = packet[9]
 
                             if profile_picture_path != "user/default.png":
                                 extension = os.path.splitext(profile_picture_path)[1]
@@ -130,15 +137,16 @@ class Server(QObject):
                                 self.download_file(client, message_kind, profile_picture_size, file_name)
 
                             # Store or update user's information in database
-                            user_exists = sender
-                            if user_exists:
-                                user = user_exists
+                            if sender is not None:
+                                user = sender
                             else:
                                 user = User()
 
+                            user.set_uuid(client_id)
                             user.set_host_name(host_name)
                             user.set_user_name(user_name)
-                            user.set_host_address(client_id)
+                            user.set_host_address(client_address)
+                            user.set_phone(phone)
                             user.set_image_path(profile_picture_path)
                             user.set_user_status(user_status)
                             user.set_department(department)
@@ -146,10 +154,12 @@ class Server(QObject):
 
                             print(f"User received info : {user.__dict__}")
 
-                            if user_exists:
+                            if sender is not None:
                                 user.update()
                             else:
                                 user.save()
+
+                            self.userAdded.emit()
 
                         elif message_kind == "text":
                             # Call signal sender
