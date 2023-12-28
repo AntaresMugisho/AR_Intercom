@@ -315,14 +315,22 @@ class MainWindow(QMainWindow):
             self.ui.chat_list_layout.insertWidget(last_index, widget, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignTop)
             widget.clicked.connect(self.show_conversations)
 
+    @staticmethod
+    def send_id(self, host_address: str):
+        client = Client(host_address)
+        message = Message()
+        message.set_kind("ID_RESPONSE")
+        client.send_message(message)
+
     def initialize_chat(self):
         # START SERVER
         self.server = Server()
-        # self.server.start()
+        self.server.start()
         # QTimer().singleShot(10_000, self.server.start) # TO be deleted
 
         # LISTEN FOR MESSAGE SIGNALS
         self.server.messageReceived.connect(self.show_incoming_message)
+        self.server.idRequested.connect(self.send_id)
 
         # SCAN NETWORK TO FIND CONNECTED DEVICES
         self.server_hosts = {}
@@ -766,7 +774,7 @@ class MainWindow(QMainWindow):
 
         my_ip = utils.get_private_ip()
         if my_ip.startswith("127."):
-            self.ui.signal_text.setText("Network error. Please connect to a network.")
+            self.ui.signal_text.setText("Please connect to a network.")
             self.ui.start_scan_btn.setText("SCAN")
 
         else:
@@ -777,12 +785,12 @@ class MainWindow(QMainWindow):
             # Create network scanner threads
             threads = []
             for host_id in range(1, 255):
-                # if host_id != int(my_ip_bytes[3]):
-                address = f"{net_id}.{host_id}"
-                scanner = NetScanner(address)
-                scanner.signal.scanFinished.connect(self.check_online)
+                if host_id != int(my_ip_bytes[3]):
+                    address = f"{net_id}.{host_id}"
+                    scanner = NetScanner(address)
+                    scanner.signal.scanFinished.connect(self.check_online)
 
-                threads.append(scanner)
+                    threads.append(scanner)
 
             # Start network scanner threads
             for scanner in threads:
@@ -812,9 +820,13 @@ class MainWindow(QMainWindow):
 
         if client.online:
             # ASK FOR CLIENT ID
+            print("The client is online")
             message = Message()
-            message.set_kind("ID REQUEST")
+            message.set_kind("ID_REQUEST")
             client.send_message(message)
+            self.ui.signal_text.setText("User added")
+        else:
+            print("Client offline")
 
 
 if __name__ == "__main__":

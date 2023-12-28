@@ -19,7 +19,7 @@ class Client:
         UUID = user.get_uuid()
 
     # Port Unique for all clients
-    PORT = 33511
+    PORT = 33522
 
     CONNECTED_SERVERS = []
 
@@ -75,9 +75,14 @@ class Client:
         self.connect_to_server()
         message_kind = message.get_kind()
 
-        if message_kind == "ID":
+        if message_kind == "ID_REQUEST":
+            # SEND ID MESSAGE
+            id_request = f"{self.UUID}|{message_kind}"
+            self.reliable_send(id_request)
+
+        elif message_kind == "ID_RESPONSE":
             # GET MY IDS FROM DATABASE
-            me = User.first_where("id", "=", 1)
+            me = User.first_where("uuid", "=", self.UUID)
             print(f"User to send info : {me.__dict__}")
             host_name = me.get_host_name()
             user_name = me.get_user_name()
@@ -91,8 +96,6 @@ class Client:
             id_message = f"{self.UUID}|{message_kind}|{profile_picture_size}|{profile_picture_path}|" \
                          f"{host_name}|{user_name}|{user_status}|{department}|{role}"
 
-            # SEND ID MESSAGE
-            # id_message = f"{self.UUID}|{message_kind}"
             self.reliable_send(id_message)
             if profile_picture_path != "user/default.png":
                 self.upload_file(profile_picture_path)
@@ -103,7 +106,7 @@ class Client:
             self.reliable_send(text_message)
             message.set_status(self.message_delivered)
 
-        else:  # If kind in ["image", "document", "video", "audio", "voice"]
+        elif message_kind in ["image", "document", "video", "audio", "voice"]:
             path = message.get_body()
 
             # COLLECT MEDIA METADATA FIRST
@@ -149,11 +152,11 @@ if __name__ == "__main__":
 
     # This while loop will run only if the connection is established
     while True:
-        message_type = input("Choose an option :\n0.IDs\n1.Text message\n2.Media message\n3.Exit\n>>> ")
+        message_type = input("Choose an option :\n0.ID REQ\n1.Text message\n2.Media message\n3.Exit\n>>> ")
         message = Message()
 
         if message_type == "0":
-            message.set_kind("ID")
+            message.set_kind("ID_REQUEST")
 
         elif message_type == "1":
             text = input("Type your text message\n>>> ")

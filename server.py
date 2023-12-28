@@ -18,6 +18,7 @@ class Server(QObject):
     Server to listen, accept connections and receive text messages and files from other connected devices.
     """
     messageReceived = Signal(int)
+    idRequested = Signal(str)
 
     # ONLINE CLIENTS LIST
     CONNECTED_CLIENTS = []
@@ -26,7 +27,7 @@ class Server(QObject):
     def __init__(self):
         QObject.__init__(self)
         self.host = "0.0.0.0"
-        self.port = 33511
+        self.port = 33522
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def accept_connections(self):
@@ -85,7 +86,6 @@ class Server(QObject):
                     try:
                         packet = client.recv(1024).decode()
                         client.send("[+] Message sent and received successfully".encode())
-
                         packet = packet.split("|")
                         client_id = packet[0]
                         message_kind = packet[1]
@@ -112,7 +112,10 @@ class Server(QObject):
                         message.set_receiver_id(1)
                         message.set_kind(message_kind)
 
-                        if message_kind == "ID":
+                        if message_kind == "ID_REQUEST":
+                            self.idRequested.emit(client.getsockname()[0])
+
+                        elif message_kind == "ID_RESPONSE":
                             profile_picture_size = int(packet[2])
                             profile_picture_path = packet[3]
                             host_name = packet[4]
@@ -123,7 +126,7 @@ class Server(QObject):
 
                             if profile_picture_path != "user/default.png":
                                 extension = os.path.splitext(profile_picture_path)[1]
-                                file_name = f"{client_id}_profile{extension}"
+                                file_name = f"{client_id[:7]}_profile{extension}"
                                 self.download_file(client, message_kind, profile_picture_size, file_name)
 
                             # Store or update user's information in database
@@ -157,7 +160,7 @@ class Server(QObject):
                             message.save()
                             self.messageReceived.emit(message.get_id())
 
-                        else:
+                        elif message_kind in ["image", "document", "video", "audio", "voice"]:
                             # Download file
                             file_size = int(packet[2])
                             file_name = packet[3]

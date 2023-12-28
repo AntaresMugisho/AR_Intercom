@@ -86,7 +86,7 @@ class SplashScreen(QWidget):
         # SET VALUE TO PROGRESS BAR
 
         # Fix value error if > 1.000
-        if value >= 100: value = 1.000
+        if value >= 100 : value = 1.000
         self.progress_value(value)
 
         # CLOSE SPLASHSCREEN AND OPEN APP
@@ -101,8 +101,8 @@ class SplashScreen(QWidget):
             if not User.find(1):
                 self.register_window = RegisterWindow()
             else:
-                # self.main_window = MainWindow()
-                self.login_window = LoginWindow()
+                self.main_window = MainWindow()
+                # self.login_window = LoginWindow()
         # INCREASE COUNTER
         counter += 0.2
 
