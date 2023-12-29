@@ -127,7 +127,7 @@
 }</string>
     </property>
     <property name="text">
-     <string>AR Intercom 2.1</string>
+     <string>AR Intercom 3</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

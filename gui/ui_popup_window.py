@@ -51,7 +51,7 @@ class Ui_NotificationWidget(object):
         self.logo.setObjectName(u"logo")
         self.logo.setGeometry(QRect(10, 13, 61, 51))
         self.logo.setStyleSheet(u"QPushButton{\n"
-"	image: url(:/icons/icons/app_icon.png);\n"
+"	image: url(:/icons/icons/ARsoftlogo.png);\n"
 "	border:none;\n"
 "}")
         self.sender_name = QLabel(self.global_frame)
@@ -85,6 +85,6 @@ class Ui_NotificationWidget(object):
         NotificationWidget.setWindowTitle(QCoreApplication.translate("NotificationWidget", u"AR Notifier", None))
         self.title.setText(QCoreApplication.translate("NotificationWidget", u"<html><head/><body><p><span style=\" font-size:10pt;\">Nouveau message</span></p></body></html>", None))
         self.sender_name.setText(QCoreApplication.translate("NotificationWidget", u"Username sent you a massage", None))
-        self.sender_name_2.setText(QCoreApplication.translate("NotificationWidget", u"AR Intercom 2.1", None))
+        self.sender_name_2.setText(QCoreApplication.translate("NotificationWidget", u"AR Intercom 3", None))
     # retranslateUi
 
