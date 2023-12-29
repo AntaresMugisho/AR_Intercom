@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "AR Intercom"
-#define MyAppVersion "2.0"
+#define MyAppVersion "3"
 #define MyAppPublisher "Art Revolution Software"
-#define MyAppURL "https://www.artrevolution.one/software"
-#define MyAppExeName "ArIntercom.exe"
+#define MyAppURL "https://software.artrevolutionlabel.com"
+#define MyAppExeName "AR Intercom.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -20,17 +20,17 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=D:\Coding\Python\Reseau\AR_Intercom_v2\dist_resources\CGU_Intercom.rtf
+LicenseFile=D:\Coding\Python\AR_Intercom\dist_resources\CGU_Intercom.rtf
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=D:\Coding\Python\Reseau\AR_Intercom_v2
-OutputBaseFilename=Setapp
-SetupIconFile=D:\Coding\Python\Reseau\AR_Intercom_v2\resources\ARsoftlogo.ico
+OutputDir=D:\Coding\Python\Setups\AR_Intercom
+OutputBaseFilename=Setup
+SetupIconFile=D:\Coding\Python\AR_Intercom\dist_resources\app_icon.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
-WizardImageFile=D:\Coding\Python\Reseau\AR_Intercom_v2\dist_resources\Intercomcover.bmp
-WizardSmallImageFile= D:\Coding\Python\Reseau\AR_Intercom_v2\dist_resources\ARsoftlogo.bmp
+WizardImageFile=D:\Coding\Python\AR_Intercom\dist_resources\cover.bmp
+WizardSmallImageFile= D:\Coding\Python\AR_Intercom\dist_resources\app_icon.bmp
 
 [Languages]
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"
@@ -39,12 +39,7 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "D:\Coding\Python\Reseau\AR_Intercom_v2\build\exe.win-amd64-3.9\{#MyAppExeName}"; DestDir: "{app}"; Flags: replacesameversion
-Source: "D:\Coding\Python\Reseau\AR_Intercom_v2\build\exe.win-amd64-3.9\lib\*"; DestDir: "{app}\lib"; Flags: recursesubdirs replacesameversion
-Source: "D:\Coding\Python\Reseau\AR_Intercom_v2\build\exe.win-amd64-3.9\*.dll"; DestDir: "{app}"; Flags: replacesameversion
-Source: "D:\Coding\Python\Reseau\AR_Intercom_v2\resources\*"; DestDir: "{app}\resources"; Flags: replacesameversion recursesubdirs
-Source: "D:\Coding\Python\Reseau\AR_Intercom_v2\ui\*"; DestDir: "{app}\ui"; Flags: replacesameversion recursesubdirs
-Source: "D:\Coding\Python\Reseau\AR_Intercom_v2\user\*"; DestDir: "{app}\user"; Flags: replacesameversion recursesubdirs
+Source: "D:\Coding\Python\AR_Intercom\dist\main\*"; DestDir: "{app}"; Flags: replacesameversion recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

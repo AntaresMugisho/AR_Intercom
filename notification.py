@@ -9,6 +9,7 @@ from PySide6.QtCore import QTimer, Qt
 from gui.ui_popup_window import Ui_NotificationWidget
 from player import Player
 
+
 class NotificationWidget(QWidget):
 
     def __init__(self, sender_name):
