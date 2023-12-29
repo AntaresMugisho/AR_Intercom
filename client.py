@@ -63,7 +63,7 @@ class Client:
             print("[-] Error while sending message: ", e)
             # Need to catch 2 exceptions,
             # One if the message was not sent
-            # Another if the message was sent but the server didn't send feedback
+            # Another if the mess age was sent but the server didn't send feedback
             self.message_delivered = False
 
     def send_message(self, message: Message):
@@ -84,6 +84,7 @@ class Client:
             # GET MY IDS FROM DATABASE
             me = User.first_where("uuid", "=", self.UUID)
             print(f"User to send info : {me.__dict__}")
+
             host_name = socket.gethostname()
             user_name = me.get_user_name()
             user_status = me.get_user_status()
@@ -98,7 +99,7 @@ class Client:
                          f"{host_name}|{user_name}|{user_status}|{department}|{role}|{phone}"
 
             self.reliable_send(id_message)
-            if profile_picture_path != "user/default.png":
+            if profile_picture_path != "default.png":
                 self.upload_file(profile_picture_path)
 
         elif message_kind == "text":
@@ -122,7 +123,6 @@ class Client:
             message.set_status(self.message_delivered)
 
         return message
-
 
 
     def upload_file(self, path: str):

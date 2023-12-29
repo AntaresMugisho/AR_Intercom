@@ -19,7 +19,7 @@ from widgets import Bubble, ClientWidget, DateLabel, EmojiButton
 from styles import Clients, SendButton, Player as PlayerStyle
 from server import Server
 from client import Client
-from user import User
+from storage import User
 from message import Message
 from recorder import Recorder
 from player import Player
@@ -81,13 +81,13 @@ class ChatFunctions:
         # self.ui.playButtonPressed.connect(self.play)
 
         # Just for testing
-        self.show_emojis()
+        # self.show_emojis()
 
         user = User.find(1)
         self.ui.me_username.setText(user.get_user_name())
         self.ui.me_status.setText(user.get_user_status())
         profile_path = user.get_image_path()
-        if profile_path != "user/default.png":
+        if profile_path != "default.png":
             profile_picture = utils.create_rounded_image(profile_path,  self.ui.me_picture.width())
             self.ui.me_picture.setPixmap(profile_picture)
         else:
@@ -148,7 +148,7 @@ class ChatFunctions:
         # self.ui.active_client_picture.setPixmap(picture)
 
         profile_path = user.get_image_path()
-        if profile_path != "user/default.png":
+        if profile_path != "default.png":
             profile_picture = utils.create_rounded_image(profile_path, self.ui.active_client_picture.width())
             self.ui.active_client_picture.setPixmap(profile_picture)
         else:

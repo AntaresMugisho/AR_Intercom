@@ -106,8 +106,9 @@ class Server(QObject):
                         print("[-] Error while receiving message", e)
 
                     else:
-
                         sender = User.first_where("uuid", "=", client_id)
+
+                        print(f"Sender {client_id} is: {sender}")
                         if sender is not None:
                             sender_id = sender.get_id()
                         else:
@@ -131,10 +132,8 @@ class Server(QObject):
                             role = packet[8]
                             phone = packet[9]
 
-                            if profile_picture_path != "user/default.png":
-                                extension = os.path.splitext(profile_picture_path)[1]
-                                file_name = f"{client_id[:7]}_profile{extension}"
-                                self.download_file(client, message_kind, profile_picture_size, file_name)
+                            if profile_picture_path != "default.png":
+                                self.download_file(client, message_kind, profile_picture_size, profile_picture_path)
 
                             # Store or update user's information in database
                             if sender is not None:
@@ -189,12 +188,13 @@ class Server(QObject):
         """
         Download and save file from distant client machine.
         """
+        print(file_size)
         home_directory = utils.get_home_directory()
         directory = f"{home_directory}/AR_Intercom/Media/{kind.capitalize()}s"
 
         # SET DIFFERENT DIRECTORY IF IT IS A PROFILE PICTURE
-        if kind == "ID":
-            directory = "user"
+        if kind == "ID_RESPONSE":
+            directory = utils.get_storage_path()
 
         # SET FILE NAME IF IT IS A VOICE
         elif kind == "voice":

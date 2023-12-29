@@ -294,7 +294,7 @@ class MainWindow(QMainWindow):
         self.ui.me_username.setText(user.get_user_name())
         self.ui.me_status.setText(user.get_user_status())
         profile_path = user.get_image_path()
-        if profile_path != "user/default.png":
+        if profile_path != "default.png":
             profile_picture = utils.create_rounded_image(profile_path, self.ui.me_picture.width())
             self.ui.me_picture.setPixmap(profile_picture)
         else:
@@ -318,10 +318,23 @@ class MainWindow(QMainWindow):
     @staticmethod
     def send_id(host_address: str):
         print(f"Sending ID RESPONSE to : {host_address}")
+
+        # SEND MY IDs
         client = Client(host_address)
         message = Message()
         message.set_kind("ID_RESPONSE")
         client.send_message(message)
+
+        # REQUEST ID
+        message = Message()
+        message.set_kind("ID_REQUEST")
+        client.send_message(message)
+
+    # def request_id(self):
+    #     # REQUEST ID
+    #     message = Message()
+    #     message.set_kind("ID_REQUEST")
+    #     client.send_message(message)
 
     def initialize_chat(self):
         # START SERVER
@@ -384,7 +397,7 @@ class MainWindow(QMainWindow):
 
         # DISPLAY PROFILE PICTURE
         profile_path = user.get_image_path()
-        if profile_path != "user/default.png":
+        if profile_path != "default.png":
             profile_picture = utils.create_rounded_image(profile_path, self.ui.active_client_picture.width())
             self.ui.active_client_picture.setPixmap(profile_picture)
         else:
@@ -411,6 +424,12 @@ class MainWindow(QMainWindow):
 
         # Connect delete messages button
         self.ui.delete_btn.clicked.connect(self.delete_messages)
+
+        # SEND MY IDs
+        client = Client(user.get_host_address())
+        message = Message()
+        message.set_kind("ID_RESPONSE")
+        client.send_message(message)
 
     def show_bubble(self, message: Message):
 
@@ -454,6 +473,7 @@ class MainWindow(QMainWindow):
         """
         message = Message.find(id)
         user = User.find(message.get_sender_id())
+        print(user.__dict__)
 
         if self.ui.active_client_name.isVisible() and self.ui.active_client_name.objectName() == user.get_uuid():
             # Show message in the bubble
@@ -464,8 +484,9 @@ class MainWindow(QMainWindow):
             self.notification_widget.show()
 
             # Increase the unread message counter badge
-            message_count = self.ui.left_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
-            unread_msg = int(message_count.text()) + 1
+            message_count = self.ui.chat_list_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
+            unread_msg = int(message_count.text())
+            unread_msg += 1
             message_count.setText(f"{unread_msg}")
 
             message_count.show()
@@ -826,7 +847,7 @@ class MainWindow(QMainWindow):
             message = Message()
             message.set_kind("ID_REQUEST")
             client.send_message(message)
-            self.ui.signal_text.setText("User added")
+            # self.ui.signal_text.setText("User added")
         else:
             print("Client offline")
 

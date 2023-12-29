@@ -7,7 +7,7 @@ import sqlite3
 
 from PySide6.QtWidgets import QLayout
 from PySide6.QtGui import QPixmap, QPainter, QPainterPath
-from PySide6.QtCore import Qt, QTimer
+from PySide6.QtCore import Qt
 
 
 def get_home_directory():
@@ -21,6 +21,9 @@ def get_home_directory():
 
     return home
 
+def get_storage_path():
+    return "storage"
+
 
 def create_media_folders():
     """
@@ -30,7 +33,7 @@ def create_media_folders():
     folders = ["Audios", "Documents", "Images", "Videos", "Voices"]
 
     for folder in folders:
-        path = f"{home_directory}/AR_Intercom/Media/{folder}"
+        path = os.path.join(home_directory, "AR_Intercom", "Media", folder)
         if not os.path.exists(path):
             try:
                 os.makedirs(path)
@@ -42,7 +45,7 @@ def create_databases():
     """
     Create databases and tables if they not exists
     """
-    db_path = "user/database.db"
+    db_path = os.path.join(get_storage_path(), "database.db")
 
     create_users_table = """
         CREATE TABLE IF NOT EXISTS users(
@@ -55,7 +58,7 @@ def create_databases():
             phone VARCHAR,
             user_status VARCHAR,
             password VARCHAR,
-            image_path VARCHAR DEFAULT('user/default.png'),
+            image_path VARCHAR DEFAULT('default.png'),
             department VARCHAR,
             role VARCHAR,
             created_at TIMESTAMP,
@@ -139,3 +142,7 @@ def get_private_ip():
         return ip_address
     except OSError:
         return "127.0.0.1"
+
+
+if __name__ == "__main__":
+    create_databases()

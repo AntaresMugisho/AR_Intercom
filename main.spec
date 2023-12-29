@@ -13,7 +13,7 @@ a = Analysis(
     datas=[
         ("resources", "resources"),
         ("gui/*.py", "gui"),
-        ("user/default.png", "user")
+        ("storage/default.png", "storage")
     ],
     hiddenimports=[],
     hookspath=[],

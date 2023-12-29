@@ -84,9 +84,8 @@ class Ui_SplashScreen(object):
         self.loading.setAlignment(Qt.AlignCenter)
         self.app_name = QLabel(self.circular_progress)
         self.app_name.setObjectName(u"app_name")
-        self.app_name.setGeometry(QRect(83, 26, 101, 21))
-        self.app_name.setMinimumSize(QSize(101, 21))
-        self.app_name.setMaximumSize(QSize(101, 21))
+        self.app_name.setGeometry(QRect(68, 30, 131, 21))
+        self.app_name.setMinimumSize(QSize(116, 21))
         self.app_name.setStyleSheet(u"QLabel{	\n"
 "	border-radius:5;\n"
 "	\n"
@@ -118,6 +117,6 @@ class Ui_SplashScreen(object):
     def retranslateUi(self, SplashScreen):
         SplashScreen.setWindowTitle(QCoreApplication.translate("SplashScreen", u"AR Intercom", None))
         self.loading.setText(QCoreApplication.translate("SplashScreen", u"<html><head/><body><p><span style=\" font-weight:400;\">Edited by Antares</span></p></body></html>", None))
-        self.app_name.setText(QCoreApplication.translate("SplashScreen", u"AR Intercom 2", None))
+        self.app_name.setText(QCoreApplication.translate("SplashScreen", u"<html><head/><body><p>AR Intercom 3 <span style=\" font-weight:400;\">beta</span></p></body></html>", None))
     # retranslateUi
 

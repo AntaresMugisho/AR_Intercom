@@ -3,6 +3,7 @@
 import os
 import shutil
 import sys
+import socket
 from functools import partial
 
 from PySide6 import QtWidgets
@@ -111,8 +112,7 @@ class RegisterWindow(QWidget):
         Select a profile picture in a file dialog
         """
         if event.buttons() == Qt.MouseButton.LeftButton:
-            home_directory = utils.get_home_directory()
-            picture_dialogue = QFileDialog.getOpenFileName(self, "Profile picture", home_directory, "Photos *.jpg *.PNG")
+            picture_dialogue = QFileDialog.getOpenFileName(self, "Profile picture", '', "Photos *.jpg *.png")
             path = picture_dialogue[0]
 
             if path:
@@ -139,11 +139,6 @@ class RegisterWindow(QWidget):
                 except IndexError:
                     pass
                 widget.setStyleSheet(LineEdit.style_normal)
-                if widget.objectName() == "user_name":
-                    self.user.set_user_name(self.ui.user_name.text())
-                self.user.set_phone(self.ui.phone.text())
-                self.user.set_uuid()
-
 
         # CHECK IDENTICAL PASSWORDS
         if self.ui.passcode2.text() != self.ui.passcode.text():
@@ -167,9 +162,16 @@ class RegisterWindow(QWidget):
         """
         Verify if user agrees to the terms of use then save his information in database
         """
+        self.user.set_user_name(self.ui.user_name.text())
+        self.user.set_phone(self.ui.phone.text())
+        self.user.set_uuid()
+        self.user.set_host_name(socket.gethostname())
+        self.user.set_host_address(utils.get_private_ip())
+
         if self.ui.iaggree.isChecked():
             try:
-                user_profile_path = f"user/owner_profile{os.path.splitext(self.user.get_image_path())[1]}"
+                user_profile_path = os.path.join(utils.get_storage_path(),
+                                f"{self.user.get_uuid()[:16]}{os.path.splitext(self.user.get_image_path())[1]}")
                 shutil.copyfile(self.user.get_image_path(), user_profile_path)
                 self.user.set_image_path(user_profile_path)
             except TypeError:

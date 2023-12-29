@@ -28,10 +28,8 @@ class User(Model):
         self.deleted_at = None
 
     # SETTERS
-    def set_uuid(self, id=None):
-        if id is not None:
-            uuid = hashlib.sha1(str(id).encode()).hexdigest()
-        else:
+    def set_uuid(self, uuid=None):
+        if uuid is None:
             uuid = hashlib.sha1(str(self.phone).encode()).hexdigest()
         self.uuid = uuid
 
@@ -56,7 +54,7 @@ class User(Model):
     def set_password(self, password: str):
         self.password = hashlib.sha1(password.encode()).hexdigest()
 
-    def set_image_path(self, path: str = "user/default.png"):
+    def set_image_path(self, path: str = "default.png"):
         self.image_path = path
 
     def set_department(self, department: str):

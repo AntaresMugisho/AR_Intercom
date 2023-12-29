@@ -88,7 +88,7 @@ class ChatFunctions:
         self.ui.me_username.setText(user.get_user_name())
         self.ui.me_status.setText(user.get_user_status())
         profile_path = user.get_image_path()
-        if profile_path != "user/default.png":
+        if profile_path != "default.png":
             profile_picture = utils.create_rounded_image(profile_path,  self.ui.me_picture.width())
             self.ui.me_picture.setPixmap(profile_picture)
         else:
@@ -123,7 +123,7 @@ class ChatFunctions:
         # self.ui.active_client_picture.setPixmap(picture)
 
         profile_path = user.get_image_path()
-        if profile_path != "user/default.png":
+        if profile_path != "default.png":
             profile_picture = utils.create_rounded_image(profile_path, self.ui.active_client_picture.width())
             self.ui.active_client_picture.setPixmap(profile_picture)
         else:

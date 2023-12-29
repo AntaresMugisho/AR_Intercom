@@ -26,7 +26,7 @@ class ClientWidget(QFrame):
         self.username = self.user.get_user_name()
         self.user_profile_picture_path = user.get_image_path()
 
-        if self.user_profile_picture_path == "user/default.png":
+        if self.user_profile_picture_path == "default.png":
             self.user_profile_picture_path = ":/icons/icons/avatar.png"
 
         self.messages = self.user.messages()

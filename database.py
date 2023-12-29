@@ -1,6 +1,8 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
 import sqlite3
+import os
+import utils
 
 
 class Database:
@@ -17,7 +19,7 @@ class Database:
 
 
     def __init__(self, fetch_class=None):
-        self.connection = sqlite3.connect("user/database.db",
+        self.connection = sqlite3.connect(os.path.join(utils.get_storage_path(), "database.db"),
                                           detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         self.cursor = self.connection.cursor()
 
@@ -87,8 +89,9 @@ class Database:
 
 
     def _close(self):
-        self.cursor.close()
-        self.connection.close()
+        pass
+        # self.cursor.close()
+        # self.connection.close()
 
     @classmethod
     def set_fetch_mode(cls, fetch_class: str):

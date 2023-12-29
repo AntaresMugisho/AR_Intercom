@@ -14,7 +14,7 @@
    <string>AR Intercom</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../resources/img.qrc">
+   <iconset>
     <normaloff>:/icons/icons/app_icon.png</normaloff>:/icons/icons/app_icon.png</iconset>
   </property>
   <property name="styleSheet">
@@ -171,21 +171,15 @@ border-color: rgb(79, 0, 0);</string>
        <widget class="QLabel" name="app_name">
         <property name="geometry">
          <rect>
-          <x>83</x>
-          <y>26</y>
-          <width>101</width>
+          <x>68</x>
+          <y>30</y>
+          <width>131</width>
           <height>21</height>
          </rect>
         </property>
         <property name="minimumSize">
          <size>
-          <width>101</width>
-          <height>21</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>101</width>
+          <width>116</width>
           <height>21</height>
          </size>
         </property>
@@ -201,7 +195,7 @@ border-color: rgb(79, 0, 0);</string>
 }</string>
         </property>
         <property name="text">
-         <string>AR Intercom 2</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;AR Intercom 3 &lt;span style=&quot; font-weight:400;&quot;&gt;beta&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
