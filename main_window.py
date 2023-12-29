@@ -44,8 +44,8 @@ class MainWindow(QMainWindow):
 
         # REMOVE DEFAULT WINDOW FRAME
         self.ui.app_margins.setContentsMargins(0, 0, 0, 0)
-        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
-        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        # self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        # self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
 
         # SET MOVE EVENT ON THE WINDOW
         self.dragPos = None
@@ -60,9 +60,10 @@ class MainWindow(QMainWindow):
         self.shadow.setXOffset(0)
         self.shadow.setYOffset(0)
         self.shadow.setColor(QColor(0, 0, 0, 150))
-        self.ui.app_bg.setGraphicsEffect(self.shadow)
+        # self.ui.app_bg.setGraphicsEffect(self.shadow)
 
-        # HIDE SETTINGS PANEL, EMOJI WIDGET, MEDIA BUTTONS AND RECORD WIDGET ON START UP
+        # HIDE SOME WIDGETS ON START UP
+        self.ui.system_menu.hide()
         self.ui.right_stacked_widget.setFixedWidth(0)
         self.ui.emoji_widget.setFixedHeight(0)
         self.ui.media_bg.setFixedHeight(0)

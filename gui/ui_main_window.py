@@ -27,12 +27,13 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1315, 840)
+        MainWindow.resize(1281, 803)
         MainWindow.setMinimumSize(QSize(1202, 720))
         icon = QIcon()
         icon.addFile(u":/icons/icons/ARsoftlogo.png", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"")
+        MainWindow.setTabShape(QTabWidget.Triangular)
         self.actionAide = QAction(MainWindow)
         self.actionAide.setObjectName(u"actionAide")
         self.actionQuitter = QAction(MainWindow)
@@ -366,6 +367,19 @@ class Ui_MainWindow(object):
 "	border:none;\n"
 "}\n"
 "\n"
+"/*RIGHT SIDE - SETTINGS */\n"
+"\n"
+"#right_stacked_widget > QWidget {\n"
+"	border-left:3px solid rgb(30,32,33);\n"
+"	background-color:rgb(21,22,23);\n"
+"}\n"
+"\n"
+"#settings_stacked_widget > QWidget{\n"
+"	background-color:rgb(21,22,23);\n"
+"}\n"
+"\n"
+"\n"
+"\n"
 "\n"
 "/*SCROLL BARS*/\n"
 "\n"
@@ -376,7 +390,8 @@ class Ui_MainWindow(object):
 "    margin: 0px 21px 0 21px;\n"
 "	border-radius: 0px;\n"
 "}\n"
-"QScrollBar::handle:horizontal {\n"
+""
+                        "QScrollBar::handle:horizontal {\n"
 "    background: rgb(47, 48, 50);\n"
 "    min-width: 25px;\n"
 "	border-radius: 4px\n"
@@ -386,8 +401,7 @@ class Ui_MainWindow(object):
 "    border: none;\n"
 "    background: rgb(55, 63, 77);\n"
 "    width: 20px;\n"
-"	border-top"
-                        "-right-radius: 4px;\n"
+"	border-top-right-radius: 4px;\n"
 "    border-bottom-right-radius: 4px;\n"
 "    subcontrol-position: right;\n"
 "    subcontrol-origin: margin;\n"
@@ -417,7 +431,8 @@ class Ui_MainWindow(object):
 "	border:none;\n"
 "    background:rgb(52, 59, 72);\n"
 "    width: 8px;\n"
-"    margin: 18px 0 18px 0;\n"
+"    margin: 18"
+                        "px 0 18px 0;\n"
 " }\n"
 "\n"
 " QScrollBar::handle:vertical {\n"
@@ -429,8 +444,7 @@ class Ui_MainWindow(object):
 "     border: none;\n"
 "     background: rgb(47, 48, 50);\n"
 "     height: 16px;\n"
-"     "
-                        "border-bottom-left-radius:4px;\n"
+"     border-bottom-left-radius:4px;\n"
 "     border-bottom-right-radius:4px;\n"
 "     subcontrol-position: bottom;\n"
 "     subcontrol-origin: margin;\n"
@@ -453,8 +467,10 @@ class Ui_MainWindow(object):
 "     background: none;\n"
 " }\n"
 "")
-        self.verticalLayout_27 = QVBoxLayout(self.stylesheet)
-        self.verticalLayout_27.setObjectName(u"verticalLayout_27")
+        self.main_window_layout = QVBoxLayout(self.stylesheet)
+        self.main_window_layout.setSpacing(0)
+        self.main_window_layout.setObjectName(u"main_window_layout")
+        self.main_window_layout.setContentsMargins(0, 0, 0, 0)
         self.app_bg = QWidget(self.stylesheet)
         self.app_bg.setObjectName(u"app_bg")
         self.app_bg.setStyleSheet(u"")
@@ -621,7 +637,7 @@ class Ui_MainWindow(object):
         self.chat_list_scroll.setWidgetResizable(True)
         self.chat_list_widget = QWidget()
         self.chat_list_widget.setObjectName(u"chat_list_widget")
-        self.chat_list_widget.setGeometry(QRect(0, 0, 291, 641))
+        self.chat_list_widget.setGeometry(QRect(0, 0, 291, 491))
         self.chat_list_widget.setStyleSheet(u"")
         self.chat_list_layout = QVBoxLayout(self.chat_list_widget)
         self.chat_list_layout.setObjectName(u"chat_list_layout")
@@ -830,7 +846,7 @@ class Ui_MainWindow(object):
         self.scan_scroll.setWidgetResizable(True)
         self.scan_widget = QWidget()
         self.scan_widget.setObjectName(u"scan_widget")
-        self.scan_widget.setGeometry(QRect(0, 0, 273, 577))
+        self.scan_widget.setGeometry(QRect(0, 0, 273, 558))
         self.scan_list_layout = QVBoxLayout(self.scan_widget)
         self.scan_list_layout.setObjectName(u"scan_list_layout")
         self.scan_list_layout.setContentsMargins(0, 0, 0, 0)
@@ -2162,7 +2178,7 @@ class Ui_MainWindow(object):
         self.chat_scroll.setWidgetResizable(True)
         self.chat_scroll_widget = QWidget()
         self.chat_scroll_widget.setObjectName(u"chat_scroll_widget")
-        self.chat_scroll_widget.setGeometry(QRect(0, 0, 563, 121))
+        self.chat_scroll_widget.setGeometry(QRect(0, 0, 567, 191))
         self.chat_scroll_layout = QVBoxLayout(self.chat_scroll_widget)
         self.chat_scroll_layout.setSpacing(9)
         self.chat_scroll_layout.setObjectName(u"chat_scroll_layout")
@@ -2213,7 +2229,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 92, 34))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 541, 145))
         self.gridLayout = QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout.setObjectName(u"gridLayout")
         self.pushButton = QPushButton(self.scrollAreaWidgetContents)
@@ -2238,7 +2254,7 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
-        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 92, 34))
+        self.scrollAreaWidgetContents_2.setGeometry(QRect(0, 0, 541, 145))
         self.gridLayout_15 = QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_15.setObjectName(u"gridLayout_15")
         self.pushButton_2 = QPushButton(self.scrollAreaWidgetContents_2)
@@ -2262,7 +2278,7 @@ class Ui_MainWindow(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.scrollAreaWidgetContents_3 = QWidget()
         self.scrollAreaWidgetContents_3.setObjectName(u"scrollAreaWidgetContents_3")
-        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 100, 30))
+        self.scrollAreaWidgetContents_3.setGeometry(QRect(0, 0, 541, 145))
         self.gridLayout_14 = QGridLayout(self.scrollAreaWidgetContents_3)
         self.gridLayout_14.setObjectName(u"gridLayout_14")
         self.gridLayout_14.setHorizontalSpacing(3)
@@ -2288,7 +2304,7 @@ class Ui_MainWindow(object):
         self.scrollArea_4.setWidgetResizable(True)
         self.scrollAreaWidgetContents_4 = QWidget()
         self.scrollAreaWidgetContents_4.setObjectName(u"scrollAreaWidgetContents_4")
-        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 92, 34))
+        self.scrollAreaWidgetContents_4.setGeometry(QRect(0, 0, 541, 145))
         self.gridLayout_13 = QGridLayout(self.scrollAreaWidgetContents_4)
         self.gridLayout_13.setObjectName(u"gridLayout_13")
         self.pushButton_4 = QPushButton(self.scrollAreaWidgetContents_4)
@@ -2312,7 +2328,7 @@ class Ui_MainWindow(object):
         self.scrollArea_6.setWidgetResizable(True)
         self.scrollAreaWidgetContents_6 = QWidget()
         self.scrollAreaWidgetContents_6.setObjectName(u"scrollAreaWidgetContents_6")
-        self.scrollAreaWidgetContents_6.setGeometry(QRect(0, 0, 92, 34))
+        self.scrollAreaWidgetContents_6.setGeometry(QRect(0, 0, 541, 145))
         self.gridLayout_12 = QGridLayout(self.scrollAreaWidgetContents_6)
         self.gridLayout_12.setObjectName(u"gridLayout_12")
         self.pushButton_5 = QPushButton(self.scrollAreaWidgetContents_6)
@@ -2336,7 +2352,7 @@ class Ui_MainWindow(object):
         self.scrollArea_7.setWidgetResizable(True)
         self.scrollAreaWidgetContents_7 = QWidget()
         self.scrollAreaWidgetContents_7.setObjectName(u"scrollAreaWidgetContents_7")
-        self.scrollAreaWidgetContents_7.setGeometry(QRect(0, 0, 92, 34))
+        self.scrollAreaWidgetContents_7.setGeometry(QRect(0, 0, 541, 145))
         self.gridLayout_11 = QGridLayout(self.scrollAreaWidgetContents_7)
         self.gridLayout_11.setObjectName(u"gridLayout_11")
         self.pushButton_6 = QPushButton(self.scrollAreaWidgetContents_7)
@@ -2360,7 +2376,7 @@ class Ui_MainWindow(object):
         self.scrollArea_8.setWidgetResizable(True)
         self.scrollAreaWidgetContents_8 = QWidget()
         self.scrollAreaWidgetContents_8.setObjectName(u"scrollAreaWidgetContents_8")
-        self.scrollAreaWidgetContents_8.setGeometry(QRect(0, 0, 92, 34))
+        self.scrollAreaWidgetContents_8.setGeometry(QRect(0, 0, 541, 145))
         self.gridLayout_10 = QGridLayout(self.scrollAreaWidgetContents_8)
         self.gridLayout_10.setObjectName(u"gridLayout_10")
         self.pushButton_7 = QPushButton(self.scrollAreaWidgetContents_8)
@@ -2384,7 +2400,7 @@ class Ui_MainWindow(object):
         self.scrollArea_9.setWidgetResizable(True)
         self.scrollAreaWidgetContents_9 = QWidget()
         self.scrollAreaWidgetContents_9.setObjectName(u"scrollAreaWidgetContents_9")
-        self.scrollAreaWidgetContents_9.setGeometry(QRect(0, 0, 92, 34))
+        self.scrollAreaWidgetContents_9.setGeometry(QRect(0, 0, 541, 145))
         self.gridLayout_3 = QGridLayout(self.scrollAreaWidgetContents_9)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.pushButton_8 = QPushButton(self.scrollAreaWidgetContents_9)
@@ -2618,36 +2634,34 @@ class Ui_MainWindow(object):
 
         self.right_stacked_widget = QStackedWidget(self.right_side_container)
         self.right_stacked_widget.setObjectName(u"right_stacked_widget")
-        self.right_stacked_widget.setMinimumSize(QSize(250, 581))
-        self.right_stacked_widget.setMaximumSize(QSize(0, 16777215))
-        self.right_stacked_widget.setStyleSheet(u"\n"
-"QStackedWidget > QWidget {\n"
-"	border-left:3px solid rgb(30,32,33);\n"
-"	background-color:rgb(21,22,23);\n"
-"\n"
-"}")
+        self.right_stacked_widget.setStyleSheet(u"")
         self.page_1 = QWidget()
         self.page_1.setObjectName(u"page_1")
+        self.verticalLayout_25 = QVBoxLayout(self.page_1)
+        self.verticalLayout_25.setSpacing(6)
+        self.verticalLayout_25.setObjectName(u"verticalLayout_25")
+        self.verticalLayout_25.setContentsMargins(9, 6, 9, 6)
         self.settings_title = QLabel(self.page_1)
         self.settings_title.setObjectName(u"settings_title")
-        self.settings_title.setGeometry(QRect(10, 10, 171, 31))
+        self.settings_title.setMaximumSize(QSize(16777215, 21))
         self.settings_title.setFont(font)
+
+        self.verticalLayout_25.addWidget(self.settings_title)
+
         self.breadcrumb = QLabel(self.page_1)
         self.breadcrumb.setObjectName(u"breadcrumb")
-        self.breadcrumb.setGeometry(QRect(10, 40, 231, 21))
-        self.breadcrumb.setMaximumSize(QSize(16777215, 24))
+        self.breadcrumb.setMaximumSize(QSize(16777215, 21))
         self.breadcrumb.setFont(font5)
         self.breadcrumb.setStyleSheet(u"padding-bottom:4px;\n"
 "color:gray;\n"
 "border-bottom:3px solid red;\n"
 "")
+
+        self.verticalLayout_25.addWidget(self.breadcrumb)
+
         self.settings_stacked_widget = QStackedWidget(self.page_1)
         self.settings_stacked_widget.setObjectName(u"settings_stacked_widget")
-        self.settings_stacked_widget.setGeometry(QRect(0, 65, 241, 671))
-        self.settings_stacked_widget.setMinimumSize(QSize(241, 571))
-        self.settings_stacked_widget.setStyleSheet(u"#settings_stacked_widget{\n"
-"border-top:2px dotted rgb(30,32,33);\n"
-"}")
+        self.settings_stacked_widget.setStyleSheet(u"")
         self.page_7 = QWidget()
         self.page_7.setObjectName(u"page_7")
         self.checkBox = QCheckBox(self.page_7)
@@ -2659,10 +2673,14 @@ class Ui_MainWindow(object):
         self.settings_stacked_widget.addWidget(self.page_7)
         self.account_settings = QWidget()
         self.account_settings.setObjectName(u"account_settings")
+        self.verticalLayout_22 = QVBoxLayout(self.account_settings)
+        self.verticalLayout_22.setSpacing(6)
+        self.verticalLayout_22.setObjectName(u"verticalLayout_22")
+        self.verticalLayout_22.setContentsMargins(0, 0, 0, 0)
         self.profile_picture_frame = QFrame(self.account_settings)
         self.profile_picture_frame.setObjectName(u"profile_picture_frame")
-        self.profile_picture_frame.setGeometry(QRect(10, 7, 231, 91))
-        self.profile_picture_frame.setMaximumSize(QSize(16777215, 114))
+        self.profile_picture_frame.setMinimumSize(QSize(221, 91))
+        self.profile_picture_frame.setMaximumSize(QSize(229, 91))
         self.profile_picture_frame.setStyleSheet(u"background-color:#000;\n"
 "border-radius:8px;")
         self.profile_picture_frame.setFrameShape(QFrame.StyledPanel)
@@ -2691,144 +2709,13 @@ class Ui_MainWindow(object):
         self.user_profile_picture.setScaledContents(True)
         self.user_profile_picture.raise_()
         self.edit_profile_picture_btn.raise_()
-        self.layoutWidget = QWidget(self.account_settings)
-        self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(10, 420, 231, 244))
-        self.password_form_layout = QVBoxLayout(self.layoutWidget)
-        self.password_form_layout.setSpacing(4)
-        self.password_form_layout.setObjectName(u"password_form_layout")
-        self.password_form_layout.setContentsMargins(0, 0, 0, 0)
-        self.set_password_title = QLabel(self.layoutWidget)
-        self.set_password_title.setObjectName(u"set_password_title")
-        self.set_password_title.setMaximumSize(QSize(16777215, 26))
-        self.set_password_title.setFont(font)
-        self.set_password_title.setStyleSheet(u"")
 
-        self.password_form_layout.addWidget(self.set_password_title)
+        self.verticalLayout_22.addWidget(self.profile_picture_frame)
 
-        self.verticalLayout_14 = QVBoxLayout()
-        self.verticalLayout_14.setSpacing(0)
-        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
-        self.label_23 = QLabel(self.layoutWidget)
-        self.label_23.setObjectName(u"label_23")
-        self.label_23.setMinimumSize(QSize(0, 20))
-        self.label_23.setMaximumSize(QSize(16777215, 20))
-        self.label_23.setFont(font1)
-        self.label_23.setStyleSheet(u"color:gray;")
-
-        self.verticalLayout_14.addWidget(self.label_23)
-
-        self.active_password = QLineEdit(self.layoutWidget)
-        self.active_password.setObjectName(u"active_password")
-        self.active_password.setMinimumSize(QSize(0, 30))
-        self.active_password.setStyleSheet(u"QLineEdit{\n"
-"	border-radius:4px;\n"
-"	border: 2px solid rgb(30,32,33);\n"
-"	padding:4px;\n"
-"	background-color:transparent;\n"
-"}\n"
-"\n"
-"QLineEdit:hover, QLineEdit:focus{\n"
-"	border: 2px solid rgb(40,42,43);\n"
-"}")
-
-        self.verticalLayout_14.addWidget(self.active_password)
-
-
-        self.password_form_layout.addLayout(self.verticalLayout_14)
-
-        self.verticalLayout_15 = QVBoxLayout()
-        self.verticalLayout_15.setSpacing(0)
-        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
-        self.label_24 = QLabel(self.layoutWidget)
-        self.label_24.setObjectName(u"label_24")
-        self.label_24.setMinimumSize(QSize(0, 20))
-        self.label_24.setFont(font1)
-        self.label_24.setStyleSheet(u"color:gray;")
-
-        self.verticalLayout_15.addWidget(self.label_24)
-
-        self.new_password = QLineEdit(self.layoutWidget)
-        self.new_password.setObjectName(u"new_password")
-        self.new_password.setMinimumSize(QSize(0, 30))
-        self.new_password.setStyleSheet(u"QLineEdit{\n"
-"	border-radius:4px;\n"
-"	border: 2px solid rgb(30,32,33);\n"
-"	padding:4px;\n"
-"	background-color:transparent;\n"
-"}\n"
-"\n"
-"QLineEdit:hover, QLineEdit:focus{\n"
-"	border: 2px solid rgb(40,42,43);\n"
-"}")
-
-        self.verticalLayout_15.addWidget(self.new_password)
-
-
-        self.password_form_layout.addLayout(self.verticalLayout_15)
-
-        self.verticalLayout_16 = QVBoxLayout()
-        self.verticalLayout_16.setSpacing(0)
-        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
-        self.label_25 = QLabel(self.layoutWidget)
-        self.label_25.setObjectName(u"label_25")
-        self.label_25.setMinimumSize(QSize(0, 20))
-        self.label_25.setFont(font1)
-        self.label_25.setStyleSheet(u"color:gray;")
-
-        self.verticalLayout_16.addWidget(self.label_25)
-
-        self.confirm_password = QLineEdit(self.layoutWidget)
-        self.confirm_password.setObjectName(u"confirm_password")
-        self.confirm_password.setMinimumSize(QSize(0, 30))
-        self.confirm_password.setMaximumSize(QSize(16777215, 30))
-        self.confirm_password.setStyleSheet(u"QLineEdit{\n"
-"	border-radius:4px;\n"
-"	border: 2px solid rgb(30,32,33);\n"
-"	padding:4px;\n"
-"	background-color:transparent;\n"
-"}\n"
-"\n"
-"QLineEdit:hover, QLineEdit:focus{\n"
-"	border: 2px solid rgb(40,42,43);\n"
-"}")
-
-        self.verticalLayout_16.addWidget(self.confirm_password)
-
-
-        self.password_form_layout.addLayout(self.verticalLayout_16)
-
-        self.error_label = QLabel(self.layoutWidget)
-        self.error_label.setObjectName(u"error_label")
-        self.error_label.setMaximumSize(QSize(16777215, 16))
-        self.error_label.setFont(font5)
-        self.error_label.setStyleSheet(u"color:red;\n"
-"padding-left:4px;")
-
-        self.password_form_layout.addWidget(self.error_label)
-
-        self.save_password_btn = QPushButton(self.layoutWidget)
-        self.save_password_btn.setObjectName(u"save_password_btn")
-        self.save_password_btn.setMinimumSize(QSize(0, 30))
-        self.save_password_btn.setStyleSheet(u"QPushButton{\n"
-"	border-radius:4px;\n"
-"	background-color: rgb(30,32,33);\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	background-color:rgb(40,42,43);\n"
-"}")
-
-        self.password_form_layout.addWidget(self.save_password_btn)
-
-        self.layoutWidget1 = QWidget(self.account_settings)
-        self.layoutWidget1.setObjectName(u"layoutWidget1")
-        self.layoutWidget1.setGeometry(QRect(10, 100, 231, 311))
-        self.profile_form_layout = QVBoxLayout(self.layoutWidget1)
+        self.profile_form_layout = QVBoxLayout()
         self.profile_form_layout.setSpacing(4)
         self.profile_form_layout.setObjectName(u"profile_form_layout")
-        self.profile_form_layout.setContentsMargins(0, 0, 0, 0)
-        self.set_profile_label = QLabel(self.layoutWidget1)
+        self.set_profile_label = QLabel(self.account_settings)
         self.set_profile_label.setObjectName(u"set_profile_label")
         self.set_profile_label.setMaximumSize(QSize(16777215, 26))
         self.set_profile_label.setFont(font)
@@ -2839,7 +2726,7 @@ class Ui_MainWindow(object):
         self.name_layout = QGridLayout()
         self.name_layout.setObjectName(u"name_layout")
         self.name_layout.setVerticalSpacing(0)
-        self.label_19 = QLabel(self.layoutWidget1)
+        self.label_19 = QLabel(self.account_settings)
         self.label_19.setObjectName(u"label_19")
         self.label_19.setMinimumSize(QSize(0, 20))
         self.label_19.setMaximumSize(QSize(16777215, 20))
@@ -2848,7 +2735,7 @@ class Ui_MainWindow(object):
 
         self.name_layout.addWidget(self.label_19, 0, 0, 1, 1)
 
-        self.username = QLabel(self.layoutWidget1)
+        self.username = QLabel(self.account_settings)
         self.username.setObjectName(u"username")
         self.username.setMinimumSize(QSize(0, 30))
         self.username.setStyleSheet(u"border-radius:4px;\n"
@@ -2858,7 +2745,7 @@ class Ui_MainWindow(object):
 
         self.name_layout.addWidget(self.username, 2, 0, 1, 1)
 
-        self.username_btn = QPushButton(self.layoutWidget1)
+        self.username_btn = QPushButton(self.account_settings)
         self.username_btn.setObjectName(u"username_btn")
         self.username_btn.setMinimumSize(QSize(30, 30))
         self.username_btn.setMaximumSize(QSize(30, 30))
@@ -2881,7 +2768,7 @@ class Ui_MainWindow(object):
         self.email_layout = QGridLayout()
         self.email_layout.setObjectName(u"email_layout")
         self.email_layout.setVerticalSpacing(0)
-        self.label_20 = QLabel(self.layoutWidget1)
+        self.label_20 = QLabel(self.account_settings)
         self.label_20.setObjectName(u"label_20")
         self.label_20.setMinimumSize(QSize(0, 20))
         self.label_20.setMaximumSize(QSize(16777215, 30))
@@ -2890,7 +2777,7 @@ class Ui_MainWindow(object):
 
         self.email_layout.addWidget(self.label_20, 0, 0, 1, 1)
 
-        self.user_email = QLabel(self.layoutWidget1)
+        self.user_email = QLabel(self.account_settings)
         self.user_email.setObjectName(u"user_email")
         self.user_email.setMinimumSize(QSize(0, 30))
         self.user_email.setStyleSheet(u"border-radius:4px;\n"
@@ -2900,7 +2787,7 @@ class Ui_MainWindow(object):
 
         self.email_layout.addWidget(self.user_email, 1, 0, 1, 1)
 
-        self.user_eail_btn = QPushButton(self.layoutWidget1)
+        self.user_eail_btn = QPushButton(self.account_settings)
         self.user_eail_btn.setObjectName(u"user_eail_btn")
         self.user_eail_btn.setMinimumSize(QSize(30, 30))
         self.user_eail_btn.setMaximumSize(QSize(30, 30))
@@ -2923,7 +2810,7 @@ class Ui_MainWindow(object):
         self.status_layout = QGridLayout()
         self.status_layout.setObjectName(u"status_layout")
         self.status_layout.setVerticalSpacing(0)
-        self.label_21 = QLabel(self.layoutWidget1)
+        self.label_21 = QLabel(self.account_settings)
         self.label_21.setObjectName(u"label_21")
         self.label_21.setMinimumSize(QSize(0, 20))
         self.label_21.setFont(font1)
@@ -2931,7 +2818,7 @@ class Ui_MainWindow(object):
 
         self.status_layout.addWidget(self.label_21, 0, 0, 1, 1)
 
-        self.user_status = QLabel(self.layoutWidget1)
+        self.user_status = QLabel(self.account_settings)
         self.user_status.setObjectName(u"user_status")
         self.user_status.setMinimumSize(QSize(0, 30))
         self.user_status.setStyleSheet(u"border-radius:4px;\n"
@@ -2943,7 +2830,7 @@ class Ui_MainWindow(object):
 
         self.status_layout.addWidget(self.user_status, 1, 0, 1, 1)
 
-        self.user_status_btn = QPushButton(self.layoutWidget1)
+        self.user_status_btn = QPushButton(self.account_settings)
         self.user_status_btn.setObjectName(u"user_status_btn")
         self.user_status_btn.setMinimumSize(QSize(30, 30))
         self.user_status_btn.setMaximumSize(QSize(30, 30))
@@ -2966,7 +2853,7 @@ class Ui_MainWindow(object):
         self.role_layout = QGridLayout()
         self.role_layout.setObjectName(u"role_layout")
         self.role_layout.setVerticalSpacing(0)
-        self.label_28 = QLabel(self.layoutWidget1)
+        self.label_28 = QLabel(self.account_settings)
         self.label_28.setObjectName(u"label_28")
         self.label_28.setMinimumSize(QSize(0, 20))
         self.label_28.setFont(font1)
@@ -2974,7 +2861,7 @@ class Ui_MainWindow(object):
 
         self.role_layout.addWidget(self.label_28, 0, 0, 1, 1)
 
-        self.user_role = QLabel(self.layoutWidget1)
+        self.user_role = QLabel(self.account_settings)
         self.user_role.setObjectName(u"user_role")
         self.user_role.setMinimumSize(QSize(0, 30))
         self.user_role.setStyleSheet(u"border-radius:4px;\n"
@@ -2986,7 +2873,7 @@ class Ui_MainWindow(object):
 
         self.role_layout.addWidget(self.user_role, 1, 0, 1, 1)
 
-        self.user_role_btn = QPushButton(self.layoutWidget1)
+        self.user_role_btn = QPushButton(self.account_settings)
         self.user_role_btn.setObjectName(u"user_role_btn")
         self.user_role_btn.setMinimumSize(QSize(30, 30))
         self.user_role_btn.setMaximumSize(QSize(30, 30))
@@ -3009,7 +2896,7 @@ class Ui_MainWindow(object):
         self.department_layout = QGridLayout()
         self.department_layout.setObjectName(u"department_layout")
         self.department_layout.setVerticalSpacing(0)
-        self.label_29 = QLabel(self.layoutWidget1)
+        self.label_29 = QLabel(self.account_settings)
         self.label_29.setObjectName(u"label_29")
         self.label_29.setMinimumSize(QSize(0, 20))
         self.label_29.setFont(font1)
@@ -3017,7 +2904,7 @@ class Ui_MainWindow(object):
 
         self.department_layout.addWidget(self.label_29, 0, 0, 1, 1)
 
-        self.user_department = QLabel(self.layoutWidget1)
+        self.user_department = QLabel(self.account_settings)
         self.user_department.setObjectName(u"user_department")
         self.user_department.setMinimumSize(QSize(0, 30))
         self.user_department.setStyleSheet(u"border-radius:4px;\n"
@@ -3029,7 +2916,7 @@ class Ui_MainWindow(object):
 
         self.department_layout.addWidget(self.user_department, 1, 0, 1, 1)
 
-        self.user_department_btn = QPushButton(self.layoutWidget1)
+        self.user_department_btn = QPushButton(self.account_settings)
         self.user_department_btn.setObjectName(u"user_department_btn")
         self.user_department_btn.setMinimumSize(QSize(30, 30))
         self.user_department_btn.setMaximumSize(QSize(30, 30))
@@ -3049,10 +2936,145 @@ class Ui_MainWindow(object):
 
         self.profile_form_layout.addLayout(self.department_layout)
 
+
+        self.verticalLayout_22.addLayout(self.profile_form_layout)
+
+        self.password_form_layout = QVBoxLayout()
+        self.password_form_layout.setSpacing(4)
+        self.password_form_layout.setObjectName(u"password_form_layout")
+        self.set_password_title = QLabel(self.account_settings)
+        self.set_password_title.setObjectName(u"set_password_title")
+        self.set_password_title.setMaximumSize(QSize(16777215, 26))
+        self.set_password_title.setFont(font)
+        self.set_password_title.setStyleSheet(u"")
+
+        self.password_form_layout.addWidget(self.set_password_title)
+
+        self.verticalLayout_14 = QVBoxLayout()
+        self.verticalLayout_14.setSpacing(0)
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.label_23 = QLabel(self.account_settings)
+        self.label_23.setObjectName(u"label_23")
+        self.label_23.setMinimumSize(QSize(0, 20))
+        self.label_23.setMaximumSize(QSize(16777215, 20))
+        self.label_23.setFont(font1)
+        self.label_23.setStyleSheet(u"color:gray;")
+
+        self.verticalLayout_14.addWidget(self.label_23)
+
+        self.active_password = QLineEdit(self.account_settings)
+        self.active_password.setObjectName(u"active_password")
+        self.active_password.setMinimumSize(QSize(0, 30))
+        self.active_password.setStyleSheet(u"QLineEdit{\n"
+"	border-radius:4px;\n"
+"	border: 2px solid rgb(30,32,33);\n"
+"	padding:4px;\n"
+"	background-color:transparent;\n"
+"}\n"
+"\n"
+"QLineEdit:hover, QLineEdit:focus{\n"
+"	border: 2px solid rgb(40,42,43);\n"
+"}")
+
+        self.verticalLayout_14.addWidget(self.active_password)
+
+
+        self.password_form_layout.addLayout(self.verticalLayout_14)
+
+        self.verticalLayout_15 = QVBoxLayout()
+        self.verticalLayout_15.setSpacing(0)
+        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
+        self.label_24 = QLabel(self.account_settings)
+        self.label_24.setObjectName(u"label_24")
+        self.label_24.setMinimumSize(QSize(0, 20))
+        self.label_24.setFont(font1)
+        self.label_24.setStyleSheet(u"color:gray;")
+
+        self.verticalLayout_15.addWidget(self.label_24)
+
+        self.new_password = QLineEdit(self.account_settings)
+        self.new_password.setObjectName(u"new_password")
+        self.new_password.setMinimumSize(QSize(0, 30))
+        self.new_password.setStyleSheet(u"QLineEdit{\n"
+"	border-radius:4px;\n"
+"	border: 2px solid rgb(30,32,33);\n"
+"	padding:4px;\n"
+"	background-color:transparent;\n"
+"}\n"
+"\n"
+"QLineEdit:hover, QLineEdit:focus{\n"
+"	border: 2px solid rgb(40,42,43);\n"
+"}")
+
+        self.verticalLayout_15.addWidget(self.new_password)
+
+
+        self.password_form_layout.addLayout(self.verticalLayout_15)
+
+        self.verticalLayout_16 = QVBoxLayout()
+        self.verticalLayout_16.setSpacing(0)
+        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
+        self.label_25 = QLabel(self.account_settings)
+        self.label_25.setObjectName(u"label_25")
+        self.label_25.setMinimumSize(QSize(0, 20))
+        self.label_25.setFont(font1)
+        self.label_25.setStyleSheet(u"color:gray;")
+
+        self.verticalLayout_16.addWidget(self.label_25)
+
+        self.confirm_password = QLineEdit(self.account_settings)
+        self.confirm_password.setObjectName(u"confirm_password")
+        self.confirm_password.setMinimumSize(QSize(0, 30))
+        self.confirm_password.setMaximumSize(QSize(16777215, 30))
+        self.confirm_password.setStyleSheet(u"QLineEdit{\n"
+"	border-radius:4px;\n"
+"	border: 2px solid rgb(30,32,33);\n"
+"	padding:4px;\n"
+"	background-color:transparent;\n"
+"}\n"
+"\n"
+"QLineEdit:hover, QLineEdit:focus{\n"
+"	border: 2px solid rgb(40,42,43);\n"
+"}")
+
+        self.verticalLayout_16.addWidget(self.confirm_password)
+
+
+        self.password_form_layout.addLayout(self.verticalLayout_16)
+
+        self.error_label = QLabel(self.account_settings)
+        self.error_label.setObjectName(u"error_label")
+        self.error_label.setMaximumSize(QSize(16777215, 16))
+        self.error_label.setFont(font5)
+        self.error_label.setStyleSheet(u"color:red;\n"
+"padding-left:4px;")
+
+        self.password_form_layout.addWidget(self.error_label)
+
+        self.save_password_btn = QPushButton(self.account_settings)
+        self.save_password_btn.setObjectName(u"save_password_btn")
+        self.save_password_btn.setMinimumSize(QSize(0, 30))
+        self.save_password_btn.setStyleSheet(u"QPushButton{\n"
+"	border-radius:4px;\n"
+"	background-color: rgb(30,32,33);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color:rgb(40,42,43);\n"
+"}")
+
+        self.password_form_layout.addWidget(self.save_password_btn)
+
+
+        self.verticalLayout_22.addLayout(self.password_form_layout)
+
         self.settings_stacked_widget.addWidget(self.account_settings)
         self.page_3 = QWidget()
         self.page_3.setObjectName(u"page_3")
         self.settings_stacked_widget.addWidget(self.page_3)
+
+        self.verticalLayout_25.addWidget(self.settings_stacked_widget)
+
         self.right_stacked_widget.addWidget(self.page_1)
         self.settings_title.raise_()
         self.settings_stacked_widget.raise_()
@@ -3085,7 +3107,7 @@ class Ui_MainWindow(object):
         self.app_margins.addWidget(self.right_side_container)
 
 
-        self.verticalLayout_27.addWidget(self.app_bg)
+        self.main_window_layout.addWidget(self.app_bg)
 
         MainWindow.setCentralWidget(self.stylesheet)
 
@@ -3131,7 +3153,7 @@ class Ui_MainWindow(object):
         self.messege_number_5.setText(QCoreApplication.translate("MainWindow", u"123", None))
         self.last_seen_2.setText(QCoreApplication.translate("MainWindow", u"27 min ago", None))
         self.device_icon.setText("")
-        self.host_name.setText(QCoreApplication.translate("MainWindow", u"DESKTOP-LKJOK-KJL", None))
+        self.host_name.setText(QCoreApplication.translate("MainWindow", u"DESKTOP-ID", None))
         self.host_address.setText(QCoreApplication.translate("MainWindow", u"192.168.1.100", None))
         self.add_to_contact_btn.setText("")
         self.start_scan_btn.setText(QCoreApplication.translate("MainWindow", u"SCAN", None))
@@ -3222,12 +3244,6 @@ class Ui_MainWindow(object):
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Mon compte", None))
         self.edit_profile_picture_btn.setText("")
         self.user_profile_picture.setText("")
-        self.set_password_title.setText(QCoreApplication.translate("MainWindow", u"Change password", None))
-        self.label_23.setText(QCoreApplication.translate("MainWindow", u"Actual password", None))
-        self.label_24.setText(QCoreApplication.translate("MainWindow", u"New password", None))
-        self.label_25.setText(QCoreApplication.translate("MainWindow", u"New password again", None))
-        self.error_label.setText(QCoreApplication.translate("MainWindow", u"Incorrect password", None))
-        self.save_password_btn.setText(QCoreApplication.translate("MainWindow", u"Update password", None))
         self.set_profile_label.setText(QCoreApplication.translate("MainWindow", u"Profile", None))
         self.label_19.setText(QCoreApplication.translate("MainWindow", u"Name", None))
         self.username.setText(QCoreApplication.translate("MainWindow", u"User", None))
@@ -3244,6 +3260,12 @@ class Ui_MainWindow(object):
         self.label_29.setText(QCoreApplication.translate("MainWindow", u"Department", None))
         self.user_department.setText(QCoreApplication.translate("MainWindow", u"AR Label", None))
         self.user_department_btn.setText("")
+        self.set_password_title.setText(QCoreApplication.translate("MainWindow", u"Change password", None))
+        self.label_23.setText(QCoreApplication.translate("MainWindow", u"Actual password", None))
+        self.label_24.setText(QCoreApplication.translate("MainWindow", u"New password", None))
+        self.label_25.setText(QCoreApplication.translate("MainWindow", u"New password again", None))
+        self.error_label.setText(QCoreApplication.translate("MainWindow", u"Incorrect password", None))
+        self.save_password_btn.setText(QCoreApplication.translate("MainWindow", u"Update password", None))
         self.status_bar.setText(QCoreApplication.translate("MainWindow", u"Creative Mind", None))
     # retranslateUi
 
