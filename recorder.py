@@ -49,7 +49,7 @@ class Recorder(QMediaRecorder):
             print("Recording paused.")
             self.pause()
         elif self.recorderState() == QMediaRecorder.PausedState:
-            print("Continuing recorder")
+            print("Continuing recording")
             self.record()
 
     def _stop(self):

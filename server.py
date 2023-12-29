@@ -132,7 +132,7 @@ class Server(QObject):
                             role = packet[8]
                             phone = packet[9]
 
-                            if profile_picture_path != "default.png":
+                            if profile_picture_path != "None":
                                 self.download_file(client, message_kind, profile_picture_size, profile_picture_path)
 
                             # Store or update user's information in database

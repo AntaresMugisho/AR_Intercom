@@ -58,7 +58,7 @@ def create_databases():
             phone VARCHAR,
             user_status VARCHAR,
             password VARCHAR,
-            image_path VARCHAR DEFAULT('default.png'),
+            image_path VARCHAR,
             department VARCHAR,
             role VARCHAR,
             created_at TIMESTAMP,

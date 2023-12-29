@@ -23,7 +23,7 @@ class Client:
 
     CONNECTED_SERVERS = []
 
-    def __init__(self, server_host="127.0.0.1"):
+    def __init__(self, server_host):
         self.server_host = server_host
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.online = False
@@ -41,13 +41,13 @@ class Client:
             self.sock.settimeout(None)
             self.CONNECTED_SERVERS.append(self.server_host)
 
-        except ConnectionRefusedError:
-            pass
-            # print(f"[-] Connection refused on {self.server_host}:{self.PORT}")
-
         except Exception as e:
-            pass
-            # print(f"[-] Error while trying to connect on server {self.server_host}:{self.PORT} : ", e)
+            print(f"ERR client : {e}")
+            self.online = False
+            try:
+                self.CONNECTED_SERVERS.pop(self.server_host)
+            except:
+                pass
 
     def reliable_send(self, packet):
         """
@@ -83,7 +83,6 @@ class Client:
         elif message_kind == "ID_RESPONSE":
             # GET MY IDS FROM DATABASE
             me = User.first_where("uuid", "=", self.UUID)
-            print(f"User to send info : {me.__dict__}")
 
             host_name = socket.gethostname()
             user_name = me.get_user_name()
@@ -93,14 +92,15 @@ class Client:
             role = me.get_role()
             profile_picture_path = me.get_image_path()
 
-            profile_picture_size = os.path.getsize(profile_picture_path)
+            if profile_picture_path is not None:
+                profile_picture_size = os.path.getsize(profile_picture_path)
+                self.upload_file(profile_picture_path)
+            else:
+                profile_picture_size = 0
 
             id_message = f"{self.UUID}|{message_kind}|{profile_picture_size}|{profile_picture_path}|" \
                          f"{host_name}|{user_name}|{user_status}|{department}|{role}|{phone}"
-
             self.reliable_send(id_message)
-            if profile_picture_path != "default.png":
-                self.upload_file(profile_picture_path)
 
         elif message_kind == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE

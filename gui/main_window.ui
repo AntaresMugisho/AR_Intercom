@@ -24,7 +24,8 @@
     <normaloff>:/icons/icons/ARsoftlogo.png</normaloff>:/icons/icons/ARsoftlogo.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QMainWindow{
+background-color:black;}</string>
   </property>
   <property name="tabShape">
    <enum>QTabWidget::Triangular</enum>
@@ -4615,8 +4616,8 @@ border-radius:4px;</string>
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>567</width>
-                     <height>191</height>
+                     <width>563</width>
+                     <height>121</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="chat_scroll_layout">
@@ -4757,8 +4758,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>145</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout">
@@ -4811,8 +4812,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>145</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_15">
@@ -4859,8 +4860,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>145</height>
+                            <width>100</width>
+                            <height>30</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_14">
@@ -4922,8 +4923,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>145</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_13">
@@ -4970,8 +4971,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>145</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_12">
@@ -5018,8 +5019,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>145</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_11">
@@ -5066,8 +5067,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>145</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_10">
@@ -5114,8 +5115,8 @@ border-radius:8px;</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>541</width>
-                            <height>145</height>
+                            <width>92</width>
+                            <height>34</height>
                            </rect>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_3">

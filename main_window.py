@@ -106,9 +106,9 @@ class MainWindow(QMainWindow):
         self.ui.send_btn.clicked.connect(self.send_text_or_record)
 
         # Load / show components
-        self.load_auth_user_details()
-        self.load_user_list()
-        self.load_emojis()
+        QTimer().singleShot(1000, self.load_auth_user_details)
+        QTimer().singleShot(1500, self.load_user_list)
+        QTimer().singleShot(2000, self.load_emojis)
 
         # Initialize chat functions
         self.initialize_chat()
@@ -295,7 +295,7 @@ class MainWindow(QMainWindow):
         self.ui.me_username.setText(user.get_user_name())
         self.ui.me_status.setText(user.get_user_status())
         profile_path = user.get_image_path()
-        if profile_path != "default.png":
+        if profile_path is not None:
             profile_picture = utils.create_rounded_image(profile_path, self.ui.me_picture.width())
             self.ui.me_picture.setPixmap(profile_picture)
         else:
@@ -340,8 +340,7 @@ class MainWindow(QMainWindow):
     def initialize_chat(self):
         # START SERVER
         self.server = Server()
-        self.server.start()
-        # QTimer().singleShot(10_000, self.server.start) # TO be deleted
+        QTimer().singleShot(1000, self.server.start)
 
         # LISTEN FOR MESSAGE SIGNALS
         self.server.messageReceived.connect(self.show_incoming_message)
@@ -350,14 +349,6 @@ class MainWindow(QMainWindow):
 
         # SCAN NETWORK TO FIND CONNECTED DEVICES
         self.server_hosts = {}
-
-        # Scan on startup
-        # QTimer().singleShot(60_000, self.scan_network)
-
-        # Scan network to refresh active servers list
-        self.net_scanner = QTimer()
-        self.net_scanner.timeout.connect(self.scan_network)
-        # self.net_scanner.start(300_000)
 
         # CREATE RECORDER INSTANCE AND ASSOCIATED TIME COUNTER
         self.recorder = Recorder()
@@ -398,7 +389,7 @@ class MainWindow(QMainWindow):
 
         # DISPLAY PROFILE PICTURE
         profile_path = user.get_image_path()
-        if profile_path != "default.png":
+        if profile_path is not None:
             profile_picture = utils.create_rounded_image(profile_path, self.ui.active_client_picture.width())
             self.ui.active_client_picture.setPixmap(profile_picture)
         else:
@@ -430,7 +421,7 @@ class MainWindow(QMainWindow):
         client = Client(user.get_host_address())
         message = Message()
         message.set_kind("ID_RESPONSE")
-        client.send_message(message)
+        QTimer().singleShot(1000, partial(client.send_message, message))
 
     def show_bubble(self, message: Message):
 

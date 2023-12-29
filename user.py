@@ -54,7 +54,7 @@ class User(Model):
     def set_password(self, password: str):
         self.password = hashlib.sha1(password.encode()).hexdigest()
 
-    def set_image_path(self, path: str = "default.png"):
+    def set_image_path(self, path: str):
         self.image_path = path
 
     def set_department(self, department: str):

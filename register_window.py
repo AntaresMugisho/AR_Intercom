@@ -169,16 +169,12 @@ class RegisterWindow(QWidget):
         self.user.set_host_address(utils.get_private_ip())
 
         if self.ui.iaggree.isChecked():
-            try:
+            if self.user.get_image_path() is not None:
                 user_profile_path = os.path.join(utils.get_storage_path(),
                                 f"{self.user.get_uuid()[:16]}{os.path.splitext(self.user.get_image_path())[1]}")
                 shutil.copyfile(self.user.get_image_path(), user_profile_path)
                 self.user.set_image_path(user_profile_path)
-            except TypeError:
-                pass
 
-            if self.user.get_image_path() is None:
-                self.user.set_image_path()  # Default image path will apply
             self.user.save()
 
             self.ui.stackedWidget.setCurrentIndex(2)

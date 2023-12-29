@@ -7,6 +7,7 @@ from PySide6.QtCore import QSize, Qt, QRect, Signal
 
 from message import Message
 from user import User
+from client import Client
 import utils
 
 
@@ -19,14 +20,14 @@ class ClientWidget(QFrame):
         QFrame.__init__(self)
 
         self.user = user
-        self.online = online
+        self.online = self.user.get_host_address() in Client.CONNECTED_SERVERS
 
         # GET USER INFORMATION
         self.user_uuid = self.user.get_uuid()
         self.username = self.user.get_user_name()
         self.user_profile_picture_path = user.get_image_path()
 
-        if self.user_profile_picture_path == "default.png":
+        if self.user_profile_picture_path is None:
             self.user_profile_picture_path = ":/icons/icons/avatar.png"
 
         self.messages = self.user.messages()

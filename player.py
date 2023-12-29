@@ -17,7 +17,7 @@ class Player(QMediaPlayer):
 
         self.errorOccurred.connect(lambda error: print(error))
 
-    def _play(self, path="music.mp3"):
+    def _play(self, path):
         self.setSource(QUrl.fromLocalFile(path))
         self.play()
 

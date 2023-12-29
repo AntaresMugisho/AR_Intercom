@@ -8,7 +8,6 @@ from PySide6.QtGui import QColor
 from PySide6.QtCore import Qt, Slot
 
 from gui import Ui_SplashScreen
-from main_window import MainWindow
 from register_window import RegisterWindow
 from login_window import LoginWindow
 from user import User
@@ -82,7 +81,6 @@ class SplashScreen(QWidget):
         global counter
         value = counter
 
-
         # SET VALUE TO PROGRESS BAR
 
         # Fix value error if > 1.000
@@ -101,8 +99,7 @@ class SplashScreen(QWidget):
             if not User.find(1):
                 self.register_window = RegisterWindow()
             else:
-                self.main_window = MainWindow()
-                # self.login_window = LoginWindow()
+                self.login_window = LoginWindow()
         # INCREASE COUNTER
         counter += 0.2
 
