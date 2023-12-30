@@ -102,13 +102,11 @@ class Server(QObject):
                         pass
 
                     except Exception as e:
-                        # pass
-                        print("[-] Error while receiving message", e)
+                        pass
 
                     else:
                         sender = User.first_where("uuid", "=", client_id)
 
-                        print(f"Sender {client_id} is: {sender}")
                         if sender is not None:
                             sender_id = sender.get_id()
                         else:
