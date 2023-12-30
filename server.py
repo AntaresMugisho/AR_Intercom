@@ -146,10 +146,14 @@ class Server(QObject):
                             user.set_user_name(user_name)
                             user.set_host_address(client_address)
                             user.set_phone(phone)
-                            user.set_image_path(profile_picture_path)
                             user.set_user_status(user_status)
-                            user.set_department(department)
-                            user.set_role(role)
+
+                            if profile_picture_path != "None":
+                                user.set_image_path(profile_picture_path)
+                            if department != "None":
+                                user.set_department(department)
+                            if role != "None":
+                                user.set_role(role)
 
                             print(f"User received info : {user.__dict__}")
 

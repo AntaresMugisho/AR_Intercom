@@ -1,7 +1,7 @@
 #!/bin/sh
-test -f AR_Intercom_v2.1_macOS_installer.dmg && rm AR_Intercom_v2.1_macOS_installer.dmg
+test -f AR_Intercom_3.dmg && rm AR_Intercom_3.dmg
 create-dmg \
-  --volname "AR_Intercom_v2.1_macOS_installer" \
+  --volname "AR_Intercom_3" \
   --volicon "resources/app_icon.icns" \
   --background "dist_resources/macOS_dmg_bg" \
   --window-pos 200 120 \
@@ -11,5 +11,5 @@ create-dmg \
   --hide-extension "AR Intercom.app" \
   --app-drop-link 600 185 \
 
-  "AR_Intercom_v2.1_macOS_installer.dmg" \
+  "AR_Intercom_3.dmg" \
   "source_folder"

@@ -45,8 +45,8 @@ class Client:
             print(f"ERR client : {e}")
             self.online = False
             try:
-                self.CONNECTED_SERVERS.pop(self.server_host)
-            except:
+                self.CONNECTED_SERVERS.remove(self.server_host)
+            except ValueError:
                 pass
 
     def reliable_send(self, packet):

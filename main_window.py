@@ -64,6 +64,7 @@ class MainWindow(QMainWindow):
 
         # HIDE SOME WIDGETS ON START UP
         self.ui.system_menu.hide()
+        self.ui.last_seen.hide()
         self.ui.right_stacked_widget.setFixedWidth(0)
         self.ui.emoji_widget.setFixedHeight(0)
         self.ui.media_bg.setFixedHeight(0)
@@ -477,6 +478,7 @@ class MainWindow(QMainWindow):
 
             # Increase the unread message counter badge
             message_count = self.ui.chat_list_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
+            print(f"Message_counter : {message_count}")
             unread_msg = int(message_count.text())
             unread_msg += 1
             message_count.setText(f"{unread_msg}")
@@ -831,17 +833,15 @@ class MainWindow(QMainWindow):
         print(f'Try to add user {host_address}')
 
         client = Client(host_address)
-        client.connect_to_server()
 
-        if client.online:
-            # ASK FOR CLIENT ID
-            print("The client is online")
-            message = Message()
-            message.set_kind("ID_REQUEST")
-            client.send_message(message)
-            # self.ui.signal_text.setText("User added")
-        else:
-            print("Client offline")
+        message = Message()
+        message.set_kind("ID_REQUEST")
+        client.send_message(message)
+
+        if host_address in Client.CONNECTED_SERVERS:
+            self.ui.signal_text.setText("User added")
+
+        QTimer().singleShot(5_000, lambda: self.ui.signal_text.setText("You're connected !"))
 
 
 if __name__ == "__main__":
