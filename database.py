@@ -89,9 +89,8 @@ class Database:
 
 
     def _close(self):
-        pass
-        # self.cursor.close()
-        # self.connection.close()
+        self.cursor.close()
+        self.connection.close()
 
     @classmethod
     def set_fetch_mode(cls, fetch_class: str):

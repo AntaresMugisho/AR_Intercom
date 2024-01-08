@@ -79,6 +79,7 @@ class ClientWidget(QFrame):
         self.msg_countrer.setFont(font3)
         self.msg_countrer.setStyleSheet(u"QLabel{border-radius:8px;color: white;background-color: red;}")
         self.msg_countrer.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+        self.msg_countrer.setText("0")
         self.msg_countrer.hide()
 
         # ONLINE TOAST

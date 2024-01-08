@@ -17,7 +17,6 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QLineEdit,
     QPushButton, QSizePolicy, QWidget)
-
 from resources import img_rc
 
 class Ui_LoginWindow(object):
@@ -28,7 +27,7 @@ class Ui_LoginWindow(object):
         LoginWindow.setMinimumSize(QSize(690, 437))
         LoginWindow.setMaximumSize(QSize(690, 437))
         icon = QIcon()
-        icon.addFile(u":/icons/icons/app_icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/icons/icons/ARsoftlogo.png", QSize(), QIcon.Normal, QIcon.Off)
         LoginWindow.setWindowIcon(icon)
         self.log_password = QLineEdit(LoginWindow)
         self.log_password.setObjectName(u"log_password")
@@ -72,7 +71,7 @@ class Ui_LoginWindow(object):
         self.logo_log.setStyleSheet(u"border-left:4px solid;\n"
 "border-left-color: rgb(255, 170, 0);\n"
 "background-color: rgb(11, 11, 106);\n"
-"image: url(:/icons/icons/app_icon.png);\n"
+"image: url(:/icons/icons/ARsoftlogo.png);\n"
 "")
         self.log_username = QLineEdit(LoginWindow)
         self.log_username.setObjectName(u"log_username")
@@ -326,6 +325,7 @@ class Ui_LoginWindow(object):
         QWidget.setTabOrder(self.log_password, self.connect_log)
 
         self.retranslateUi(LoginWindow)
+        self.log_password.returnPressed.connect(self.connect_log.click)
 
         QMetaObject.connectSlotsByName(LoginWindow)
     # setupUi

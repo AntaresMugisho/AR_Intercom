@@ -14,9 +14,7 @@ class Client:
     """
     # OWNER SERVER IP ADDRESS
     PRIVATE_IP = utils.get_private_ip()
-    user = User.first_where("id", "=", 1)
-    if user:
-        UUID = user.get_uuid()
+    UUID = None
 
     # Port Unique for all clients
     PORT = 33522
@@ -24,6 +22,11 @@ class Client:
     CONNECTED_SERVERS = []
 
     def __init__(self, server_host):
+        if Client.UUID is None:
+            Client.UUID = User.first_where("id", "=", 1).get_uuid()
+
+            print(f"Owner => {Client.UUID}")
+
         self.server_host = server_host
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.online = False

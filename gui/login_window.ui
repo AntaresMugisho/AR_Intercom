@@ -881,5 +881,22 @@ QPushButton:hover{
  <resources>
   <include location="../resources/img.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>log_password</sender>
+   <signal>returnPressed()</signal>
+   <receiver>connect_log</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>511</x>
+     <y>276</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>484</x>
+     <y>360</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

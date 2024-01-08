@@ -479,8 +479,7 @@ class MainWindow(QMainWindow):
             # Increase the unread message counter badge
             message_count = self.ui.chat_list_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
             print(f"Message_counter : {message_count}")
-            unread_msg = int(message_count.text())
-            unread_msg += 1
+            unread_msg = int(message_count.text()) + 1
             message_count.setText(f"{unread_msg}")
 
             message_count.show()
@@ -831,7 +830,6 @@ class MainWindow(QMainWindow):
         Add new user in the database
         """
         print(f'Try to add user {host_address}')
-
         client = Client(host_address)
 
         message = Message()

@@ -2,3 +2,4 @@
 
 from .ui_main_window import Ui_MainWindow
 from .ui_splash import Ui_SplashScreen
+from .ui_login_window import Ui_LoginWindow

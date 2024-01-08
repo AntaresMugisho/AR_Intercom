@@ -107,10 +107,7 @@ class Server(QObject):
                     else:
                         sender = User.first_where("uuid", "=", client_id)
 
-                        if sender is not None:
-                            sender_id = sender.get_id()
-                        else:
-                            sender_id = 1
+                        sender_id = sender.get_id() if sender is not None else -1
 
                         message = Message()
                         message.set_sender_id(sender_id)
