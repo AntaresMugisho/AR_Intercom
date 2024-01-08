@@ -422,7 +422,7 @@ class MainWindow(QMainWindow):
         client = Client(user.get_host_address())
         message = Message()
         message.set_kind("ID_RESPONSE")
-        QTimer().singleShot(1000, partial(client.send_message, message))
+        client.send_message(message)
 
     def show_bubble(self, message: Message):
 
