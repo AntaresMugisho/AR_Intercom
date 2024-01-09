@@ -10,6 +10,12 @@ from PySide6.QtGui import QPixmap, QPainter, QPainterPath
 from PySide6.QtCore import Qt
 
 
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STORAGE_DIR = os.path.join(BASE_DIR, "storage")
+
+print(BASE_DIR)
+
 def get_home_directory():
     """"
     Returns user's home directory for Windows, macOS or Linux

@@ -25,8 +25,6 @@ class Client:
         if Client.UUID is None:
             Client.UUID = User.first_where("id", "=", 1).get_uuid()
 
-            print(f"Owner => {Client.UUID}")
-
         self.server_host = server_host
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.online = False
