@@ -8,8 +8,9 @@ from PySide6.QtCore import QObject, Qt, Signal, Slot
 
 from gui.ui_login_window import Ui_LoginWindow
 from styles import LineEdit
-from user import User
 from main_window import MainWindow
+from models.base import db
+from models import User
 
 
 class LoginWindow(QWidget):
@@ -33,9 +34,9 @@ class LoginWindow(QWidget):
         self.ui.toogle_button.leaveEvent = lambda event: self.ui.log_password.setEchoMode(QLineEdit.EchoMode.Password)
 
         # GET USER INFORMATION FROM DATABASE
-        user = User.find(1)
-        self.user_name = user.get_user_name()
-        self.password = user.get_password()
+        user = User.query.first()
+        self.user_name = user.user_name
+        self.password = user.password
 
         # The inputted password
         self.ui_password = None
