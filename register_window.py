@@ -13,8 +13,10 @@ from PySide6.QtCore import Qt, QTimer, QPoint
 
 from gui.ui_register_window import Ui_SigninWindow
 from styles import LineEdit, ComboBox, Features
-from user import User
-from main_window import MainWindow
+
+from models.base import db
+from models import User
+
 from login_window import LoginWindow
 import utils
 
@@ -47,6 +49,7 @@ class RegisterWindow(QWidget):
 
         # Initialize a new user
         self.user = User()
+        self.user.set_uuid()
 
         # SET MOVE EVENT ON THE WINDOW
         self.dragPos = None
@@ -119,7 +122,7 @@ class RegisterWindow(QWidget):
                 # Show image on the label
                 rounded_pixmap = utils.create_rounded_image(path, self.ui.choose_profilepicture.height())
                 self.ui.choose_profilepicture.setPixmap(rounded_pixmap)
-                self.user.set_image_path(path)
+                self.user.image_path = path
 
     def validate(self):
         """
@@ -162,20 +165,20 @@ class RegisterWindow(QWidget):
         """
         Verify if user agrees to the terms of use then save his information in database
         """
-        self.user.set_user_name(self.ui.user_name.text())
-        self.user.set_phone(self.ui.phone.text())
-        self.user.set_uuid()
-        self.user.set_host_name(socket.gethostname())
-        self.user.set_host_address(utils.get_private_ip())
+        self.user.user_name = self.ui.user_name.text()
+        self.user.phone = self.ui.phone.text()
+        self.user.host_name = socket.gethostname()
+        self.user.host_address = utils.get_private_ip()
 
         if self.ui.iaggree.isChecked():
-            if self.user.get_image_path() is not None:
+            if self.user.image_path is not None:
                 user_profile_path = os.path.join(utils.get_storage_path(),
-                                f"{self.user.get_uuid()[:16]}{os.path.splitext(self.user.get_image_path())[1]}")
+                                f"{self.user.uuid.split('-')[0]}{os.path.splitext(self.user.image_path)[1]}")
                 shutil.copyfile(self.user.get_image_path(), user_profile_path)
                 self.user.set_image_path(user_profile_path)
 
-            self.user.save()
+            db.add(self.user)
+            db.commit()
 
             self.ui.stackedWidget.setCurrentIndex(2)
             QTimer.singleShot(2900, lambda: self.ui.prev_feature.setStyleSheet(Features.prev))
@@ -238,10 +241,8 @@ class RegisterWindow(QWidget):
         # Close registration window
         self.close()
 
-        # Show Main window
+        # Show login window
         self.login_window = LoginWindow()
-        # self.main_window = MainWindow()
-
 
 
 if __name__ == "__main__":

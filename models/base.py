@@ -7,7 +7,7 @@ from utils import STORAGE_DIR
 
 engine = create_engine(f"sqlite:///{STORAGE_DIR}/db.db", echo=True)
 
-session = scoped_session(
+db = scoped_session(
     sessionmaker(
         autoflush=False,
         autocommit=False,
@@ -23,7 +23,7 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 
 
 Model = declarative_base()
-Model.query = session.query_property()
+Model.query = db.query_property()
 
 
 class TimeStampedModel(Model):
