@@ -10,15 +10,9 @@ from PySide6.QtCore import Qt, Slot
 from gui import Ui_SplashScreen
 from register_window import RegisterWindow
 from login_window import LoginWindow
-from user import User
 import utils
 
-try:
-    from ctypes import windll
-    app_id = "com.intercom"
-    windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
-except ImportError:
-    pass
+from model import User
 
 # GLOBALS
 counter = 0
@@ -34,12 +28,6 @@ class SplashScreen(QWidget):
         self.ui.setupUi(self)
 
         self.setWindowTitle("AR Intercom")
-
-        # CREATE DATABASES IF NOT EXISTS
-        utils.create_databases()
-
-        # CREATE MEDIA FOLDERS IF NOT EXISTS
-        utils.create_media_folders()
 
         # REMOVE TITLE BAR
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
@@ -58,17 +46,23 @@ class SplashScreen(QWidget):
         # PROGRESS START AT ZERO
         self.progress_value(0)
 
+        # FIND THE FIRST USER
+        self.user = User.query.first()
+
+        # CREATE MEDIA FOLDERS IF NOT EXISTS
+        utils.create_media_folders()
+
         # TIMER
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
         self.timer.start(10)  # Run timer every 10 milliseconds
 
         # CHANGE LOADING LABEL TEXT
-        QtCore.QTimer.singleShot(1400, lambda: self.ui.loading.setText("Checking Network"))
-        QtCore.QTimer.singleShot(2500, lambda: self.ui.loading.setText("Analysing Databases"))
-        QtCore.QTimer.singleShot(3500, lambda: self.ui.loading.setText("Starting Server"))
-        QtCore.QTimer.singleShot(4050, lambda: self.ui.loading.setText("Loading User Interface"))
-        QtCore.QTimer.singleShot(4500, lambda: self.ui.loading.setText("Launching..."))
+        QtCore.QTimer.singleShot(1000, lambda: self.ui.loading.setText("Checking Network"))
+        QtCore.QTimer.singleShot(1500, lambda: self.ui.loading.setText("Analysing Databases"))
+        QtCore.QTimer.singleShot(2500, lambda: self.ui.loading.setText("Starting Server"))
+        QtCore.QTimer.singleShot(2800, lambda: self.ui.loading.setText("Loading User Interface"))
+        QtCore.QTimer.singleShot(3000, lambda: self.ui.loading.setText("Launching..."))
 
         # SHOW SPLASH SCREEN
         self.show()
@@ -83,12 +77,12 @@ class SplashScreen(QWidget):
 
         # SET VALUE TO PROGRESS BAR
 
-        # Fix value error if > 1.000
-        if value >= 100 : value = 1.000
+        # Fix value error if > 100
+        if value >= 99: value = 100
         self.progress_value(value)
 
         # CLOSE SPLASHSCREEN AND OPEN APP
-        if counter > 100:
+        if counter > 150:
             # Stop timer
             self.timer.stop()
 
@@ -96,12 +90,15 @@ class SplashScreen(QWidget):
             self.close()
 
             # SHOW REGISTER WINDOW OR LOGIN WINDOW
-            if not User.find(1):
+
+            if not self.user:
+                print("No user")
                 self.register_window = RegisterWindow()
             else:
+                print(self.user)
                 self.login_window = LoginWindow()
         # INCREASE COUNTER
-        counter += 0.2
+        counter += 0.4
 
     def progress_value(self, value):
         """
@@ -118,7 +115,7 @@ class SplashScreen(QWidget):
         progress = (100 - value) / 100.0
 
         # SET NEW VALUES
-        stop_1 = str(progress - 0.001)
+        stop_1 = str(progress - 0.0001)
         stop_2 = str(progress)
 
         # SET NEW STYLESHEET

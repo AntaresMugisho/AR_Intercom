@@ -8,14 +8,14 @@ from functools import partial
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QApplication, QWidget, QFileDialog, QPushButton, QLineEdit
-from PySide6.QtGui import QColor, QPixmap
-from PySide6.QtCore import Qt, QTimer, QPoint
+from PySide6.QtGui import QColor
+from PySide6.QtCore import Qt, QTimer
 
 from gui.ui_register_window import Ui_SigninWindow
-from styles import LineEdit, ComboBox, Features
+from styles import LineEdit, Features
 
-from models.base import db
-from models import User
+from model.base import engine, db, Model
+from model import User
 
 from login_window import LoginWindow
 import utils
@@ -46,6 +46,9 @@ class RegisterWindow(QWidget):
         self.setGraphicsEffect(self.shadow)
 
         self.ui.choose_profilepicture.setToolTip("Photo de profile")
+
+        # Create database
+        Model.metadata.create_all(engine)
 
         # Initialize a new user
         self.user = User()
@@ -243,7 +246,6 @@ class RegisterWindow(QWidget):
 
         # Show login window
         self.login_window = LoginWindow()
-
 
 if __name__ == "__main__":
     app = QApplication.instance()

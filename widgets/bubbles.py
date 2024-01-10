@@ -9,7 +9,7 @@ from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton, QSizePolicy,
 from PySide6.QtGui import QFont, QCursor, QPixmap, QImage, QScreen
 from PySide6.QtCore import QSize, Qt, QRect, QUrl, Signal
 
-from message import Message
+from model import Message
 import utils
 
 

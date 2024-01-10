@@ -16,8 +16,7 @@ import utils
 from styles import Clients, SendButton, Player as PlayerStyle
 from server import Server
 from client import Client
-from user import User
-from message import Message
+from model import User, Message
 from recorder import Recorder
 from player import Player
 from netscanner import NetScanner

@@ -9,8 +9,7 @@ from PySide6.QtCore import QObject, Qt, Signal, Slot
 from gui.ui_login_window import Ui_LoginWindow
 from styles import LineEdit
 from main_window import MainWindow
-from models.base import db
-from models import User
+from model import User
 
 
 class LoginWindow(QWidget):

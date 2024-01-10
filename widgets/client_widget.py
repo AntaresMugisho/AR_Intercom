@@ -5,8 +5,7 @@ from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton
 from PySide6.QtGui import QFont, QCursor, QMouseEvent
 from PySide6.QtCore import QSize, Qt, QRect, Signal
 
-from message import Message
-from user import User
+from model import User, Message
 from client import Client
 import utils
 

@@ -9,9 +9,7 @@ import time
 from PySide6.QtCore import QObject, Signal
 
 import utils
-from message import Message
-from user import User
-
+from model import User, Message
 
 class Server(QObject):
     """

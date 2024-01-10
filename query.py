@@ -1,6 +1,6 @@
 
-from models.base import session
-from models import User, Message
+from model.base import session
+from model import User, Message
 from sqlalchemy.orm import joinedload
 
 

@@ -3,8 +3,9 @@ import uuid
 
 from sqlalchemy import Column, Integer, String, Boolean, Text, ForeignKey
 from sqlalchemy.orm import Relationship
+from sqlalchemy.exc import InvalidRequestError
 
-from models.base import engine, Model, TimeStampedModel
+from model.base import engine, Model, TimeStampedModel
 
 
 class User(TimeStampedModel):
@@ -68,5 +69,8 @@ class Message(TimeStampedModel):
 
 
 if __name__ == "__main__":
-    Model.metadata.create_all(engine)
+    try:
+        Model.metadata.create_all(engine)
+    except InvalidRequestError:
+        pass
 

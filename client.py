@@ -4,9 +4,7 @@ import os
 import socket
 
 import utils
-from user import User
-from message import Message
-
+from model import User, Message
 
 class Client:
     """
