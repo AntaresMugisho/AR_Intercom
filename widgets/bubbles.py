@@ -27,30 +27,26 @@ class Bubble(QFrame):
         self.left_style = u".QFrame{border-radius:20px;border-top-left-radius:8px;background-color: rgb(40, 40, 43);}"
         self.right_style = u".QFrame{border-radius:20px;border-top-right-radius:8px;background-color: rgb(10, 11, 12)};"
 
-        self.message_kind = self.message.get_kind()
-        self.message_body = self.message.get_body()
-        self.message_time = datetime.strftime(self.message.get_created_at(), self.STRING_FORMAT_TIME)
-        self.message_received = self.message.get_status()
+        self.message_time = datetime.strftime(self.message.created_at, self.STRING_FORMAT_TIME)
 
         # Know which bubble have tot be rendered
-
-        if self.message_kind == "text":
+        if self.message.kind == "text":
             self.show_text_bubble()
 
-        elif self.message_kind == "voice":
+        elif self.message.kind == "voice":
             self.show_voice_bubble()
 
-        elif self.message_kind == "image":
+        elif self.message.kind == "image":
             self.show_image_bubble()
             pass
 
-        elif self.message_kind == "document":
+        elif self.message.kind == "document":
             self.show_document_bubble()
             pass
-        elif self.message_kind == "video":
+        elif self.message.kind == "video":
             pass
 
-        elif self.message_kind == "audio":
+        elif self.message.kind == "audio":
             pass
 
     def show_text_bubble(self):
@@ -70,7 +66,7 @@ class Bubble(QFrame):
         self.message_label.setWordWrap(True)
         self.message_label.setTextInteractionFlags(
             Qt.LinksAccessibleByKeyboard | Qt.LinksAccessibleByMouse | Qt.TextBrowserInteraction | Qt.TextSelectableByKeyboard | Qt.TextSelectableByMouse)
-        self.message_label.setText(self.message_body)
+        self.message_label.setText(self.message.body)
 
         label_width = self.message_label.fontMetrics().boundingRect(self.message_label.text()).width()
         self.message_label.setMaximumWidth(400)
@@ -155,7 +151,7 @@ class Bubble(QFrame):
             self.ticks.setStyleSheet(f"image: url(:/cils/cils/{received_icon});"
                                      "background-color:rgba(255,255,255,0.1);border-radius:7px;padding:1px;")
             self.time_label_layout.addWidget(self.ticks)
-            if not self.message_received:
+            if not self.message.received:
                 self.ticks.setObjectName(f"error_{self.message.get_id()}")
 
         self.vertical_layout = QVBoxLayout(bubble_widget)
@@ -178,7 +174,7 @@ class Bubble(QFrame):
         self.arv_bubble.setStyleSheet(u"QFrame{background-color:#22FFFFFF;border-radius:10px;}")
 
         # Voice note title
-        path = self.message_body
+        path = self.message.body
         filename = os.path.splitext(os.path.basename(path))[0] + ".arv"
 
         self.title = QLabel(self.arv_bubble)
@@ -294,7 +290,7 @@ class Bubble(QFrame):
         self.document_icon.setAlignment(Qt.AlignCenter)
         self.document_icon.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
-        path = self.message_body
+        path = self.message.body
         extension = os.path.splitext(path)[1][1:]
         self.document_icon.setText(extension.upper())
 
