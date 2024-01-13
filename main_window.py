@@ -11,8 +11,10 @@ from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
 from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel, QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget, QFileDialog, QSlider
 from PySide6.QtGui import QColor
 from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt
+from sqlalchemy import or_
 
 import utils
+from model.base import db
 from styles import Clients, SendButton, Player as PlayerStyle
 from server import Server
 from client import Client
@@ -291,15 +293,16 @@ class MainWindow(QMainWindow):
                 layout.addWidget(btn, row, column)
 
     def load_auth_user_details(self):
-        user = User.find(1)
-        self.ui.me_username.setText(user.get_user_name())
-        self.ui.me_status.setText(user.get_user_status())
-        profile_path = user.get_image_path()
+        user = User.query.first()
+        self.ui.me_username.setText(user.user_name)
+        self.ui.me_status.setText(user.user_status)
+        profile_path = user.image_path
+
         if profile_path is not None:
             profile_picture = utils.create_rounded_image(profile_path, self.ui.me_picture.width())
             self.ui.me_picture.setPixmap(profile_picture)
         else:
-            self.ui.me_picture.setText(user.get_user_name()[0])
+            self.ui.me_picture.setText(user.user_name[0])
 
     def load_user_list(self):
         """
@@ -309,7 +312,7 @@ class MainWindow(QMainWindow):
         utils.clear_layout(self.ui.chat_list_layout)
 
         # Add new user's list
-        users = User.where("id", ">", 1).order_by("updated_at", "DESC").get()
+        users = User.query.filter(User.id > 1).order_by(User.updated_at.desc()).all()
         for user in users:
             widget = ClientWidget(user)
             last_index = self.ui.chat_list_layout.count() - 1
@@ -323,19 +326,8 @@ class MainWindow(QMainWindow):
         # SEND MY IDs
         client = Client(host_address)
         message = Message()
-        message.set_kind("ID_RESPONSE")
+        message.kind = "ID_RESPONSE"
         client.send_message(message)
-
-        # REQUEST ID
-        message = Message()
-        message.set_kind("ID_REQUEST")
-        client.send_message(message)
-
-    # def request_id(self):
-    #     # REQUEST ID
-    #     message = Message()
-    #     message.set_kind("ID_REQUEST")
-    #     client.send_message(message)
 
     def initialize_chat(self):
         # START SERVER
@@ -376,30 +368,27 @@ class MainWindow(QMainWindow):
 
         # GET USER UUID
         user_uuid = button_object_name
-
-        user = User.first_where("uuid", "=", user_uuid)
-        user_name = user.get_user_name()
-        user_status = user.get_user_status()
+        user = User.query.filter(User.uuid == user_uuid)
 
         # SET NAME AND STATUS TO THE ACTIVE CLIENT LABEL
         self.ui.chat_stacked_widget.setCurrentWidget(self.ui.chat_page)
-        self.ui.active_client_name.setText(user_name)
-        self.ui.active_client_name.setObjectName(user_uuid)
-        self.ui.active_client_status.setText(user_status)
+        self.ui.active_client_name.setText(user.user_name)
+        self.ui.active_client_name.setObjectName(user.uuid)
+        self.ui.active_client_status.setText(user.user_status)
 
         # DISPLAY PROFILE PICTURE
-        profile_path = user.get_image_path()
+        profile_path = user.image_path
         if profile_path is not None:
             profile_picture = utils.create_rounded_image(profile_path, self.ui.active_client_picture.width())
             self.ui.active_client_picture.setPixmap(profile_picture)
         else:
-            self.ui.active_client_picture.setText(user.get_user_name()[0])
+            self.ui.active_client_picture.setText(user.user_name[0])
 
         # REMOVE ACTUAL VISIBLE CHAT BUBBLES
         utils.clear_layout(self.ui.chat_scroll_layout, start=2, end=0)
 
         # CLEAR MESSAGE COUNTER AND SHOW ONLINE TOAST IF SELECTED USER IS ONLINE
-        message_counter = self.ui.chat_list_scroll.findChild(QLabel, f"{user_uuid}_counter")
+        message_counter = self.ui.chat_list_scroll.findChild(QLabel, f"{user.uuid}_counter")
         message_counter.setText("0")
         message_counter.hide()
 
@@ -407,7 +396,7 @@ class MainWindow(QMainWindow):
         self.DATE = None
 
         # SHOW OLDER MESSAGES WITH THE ACTIVE USER IN NEW BUBBLES
-        messages = user.messages()
+        messages = Message.query.filter(or_(Message.sender == user, Message.receiver == user)).all()
         for message in messages:
             self.show_bubble(message)
 
@@ -418,15 +407,15 @@ class MainWindow(QMainWindow):
         self.ui.delete_btn.clicked.connect(self.delete_messages)
 
         # SEND MY IDs
-        client = Client(user.get_host_address())
+        client = Client(user.host_address)
         message = Message()
-        message.set_kind("ID_RESPONSE")
+        message.kind = "ID_RESPONSE"
         client.send_message(message)
 
     def show_bubble(self, message: Message):
 
         # FORMAT DATE LABEL
-        date = message.get_created_at()
+        date = message.created_at
         today = datetime.today()
         yesterday = datetime.now() - timedelta(days=1)
 
@@ -443,7 +432,7 @@ class MainWindow(QMainWindow):
             self.ui.chat_scroll_layout.addWidget(date_label, Qt.AlignmentFlag.AlignCenter, Qt.AlignmentFlag.AlignCenter)
 
         # SHOW BUBBLE
-        if message.get_sender_id() == 1:
+        if message.sender_id == 1:
             bubble = Bubble(message, "right")
             self.ui.chat_scroll_layout.addWidget(bubble, 0, Qt.AlignmentFlag.AlignRight)
         else:
@@ -451,7 +440,7 @@ class MainWindow(QMainWindow):
             self.ui.chat_scroll_layout.addWidget(bubble, 0, Qt.AlignmentFlag.AlignLeft)
 
         # Connect play button if the bubble is of playable media type:
-        if message.get_kind() in ["voice", "audio", "video"]:
+        if message.kind in ["voice", "audio", "video"]:
             bubble.playButtonClicked.connect(self.play)
 
         # UPDATE SCROLL POSITION
@@ -463,21 +452,20 @@ class MainWindow(QMainWindow):
         """
         Shows incoming message bubble or increase new message counter
         """
-        message = Message.find(id)
-        user = User.find(message.get_sender_id())
-        print(user.__dict__)
+        message = Message.query.filter(Message.id == id).first()
+        user = message.sender
 
-        if self.ui.active_client_name.isVisible() and self.ui.active_client_name.objectName() == user.get_uuid():
+        if self.ui.active_client_name.isVisible() and self.ui.active_client_name.objectName() == user.uuid:
             # Show message in the bubble
             self.show_bubble(message)
         else:
             # Show notification widget
-            self.notification_widget = NotificationWidget(user.get_user_name())
+            self.notification_widget = NotificationWidget(user.user_name)
             self.notification_widget.show()
 
             # Increase the unread message counter badge
             message_count = self.ui.chat_list_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
-            print(f"Message_counter : {message_count}")
+            print(f"Message_count : {message_count.text()}")
             unread_msg = int(message_count.text()) + 1
             message_count.setText(f"{unread_msg}")
 
@@ -486,8 +474,8 @@ class MainWindow(QMainWindow):
             # message_count.parent().setStyleSheet(Clients.frame_unread_msg)
 
         # Update user's list
-        user.set_updated_at() # Now
         user.update()
+        db.commit()
         self.load_user_list()
 
     @Slot()
@@ -515,25 +503,24 @@ class MainWindow(QMainWindow):
 
         # SEND TEXT MESSAGE
         if text_message:
-            receiver = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
-            receiver_id = receiver.get_id()
+            receiver = User.query.filter(User.uuid == self.ui.active_client_name.objectName()).first()
 
             message = Message()
-            message.set_sender_id(1)
-            message.set_receiver_id(receiver_id)
-            message.set_kind("text")
-            message.set_body(text_message)
+            message.sender = User.query.first()
+            message.receiver = receiver
+            message.kind = "text"
+            message.body = text_message
 
             # Send message and get it back with the status report modified
-            client = Client(receiver.get_host_address())
+            client = Client(receiver.host_address)
             message = client.send_message(message)
 
             # Save text message in database
-            message.save()
+            db.add(message)
 
             # Update user's list
-            receiver.set_updated_at()  # Now
             receiver.update()
+            db.commit()
             self.load_user_list()
 
             # Show bubble
@@ -555,25 +542,24 @@ class MainWindow(QMainWindow):
         """
         Sends the media message and shows bubble
         """
-        receiver = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
-        receiver_id = receiver.get_id()
+        receiver = User.query.filter(User.uuid == self.ui.active_client_name.objectName()).first()
 
         message = Message()
-        message.set_sender_id(1)
-        message.set_receiver_id(receiver_id)
-        message.set_kind(kind)
-        message.set_body(path)
+        message.sender = User.query.first()
+        message.receiver = receiver
+        message.kind = kind
+        message.body = path
 
         # Send message and get it back with the status report modified
-        client = Client(receiver.get_host_address())
+        client = Client(receiver.host_address)
         message = client.send_message(message)
 
         # Save media message in database
-        message.save()
+        db.add(message)
 
         # Update user's list
-        receiver.set_updated_at()  # Now
         receiver.update()
+        db.commit()
         self.load_user_list()
 
         # Show bubble
@@ -619,15 +605,16 @@ class MainWindow(QMainWindow):
 
         # Find message and user by id from the object name of clicked button
         message_id = clicked_button.objectName().split("_")[1]
-        message = Message.find(int(message_id))
-        receiver = User.find(message.get_receiver_id())
+        message = Message.query.filter(Message.id == int(message_id)).first()
+        receiver = Message.receiver
 
         # Send message
-        client = Client(receiver.get_host_address())
+        client = Client(receiver.host_address)
         message = client.send_message(message)
 
         # Update in database
         message.update()
+        db.commit()
 
         # Delete old bubble and create a new one
         # clicked_button.parent().deleteLater()
@@ -635,15 +622,17 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def delete_messages(self):
-        user = User.first_where("uuid", "=", self.ui.active_client_name.objectName())
-        messages = user.messages()
+        user = User.query.filter(User.uuid == self.ui.active_client_name.objectName()).first()
+        messages = Message.query.filter(or_(Message.sender == user, Message.receiver == user)).all()
 
         utils.clear_layout(self.ui.chat_scroll_layout, start=2, end=0)
 
         for message in messages:
-            message.soft_delete()
+            db.delete(message)
 
-        self.show_conversations(user.get_uuid())
+        db.commit()
+
+        self.show_conversations(user.uuid)
 
     # MEDIA RECORDER -----------------------------------------------------------------
 
@@ -832,11 +821,11 @@ class MainWindow(QMainWindow):
         client = Client(host_address)
 
         message = Message()
-        message.set_kind("ID_REQUEST")
+        message.kind = "ID_REQUEST"
         client.send_message(message)
 
         if host_address in Client.CONNECTED_SERVERS:
-            self.ui.signal_text.setText("User added")
+            self.ui.signal_text.setText("Adding user...")
 
         QTimer().singleShot(5_000, lambda: self.ui.signal_text.setText("You're connected !"))
 

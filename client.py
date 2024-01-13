@@ -6,6 +6,7 @@ import socket
 import utils
 from model import User, Message
 
+
 class Client:
     """
     Client to ask connection on different servers, and send them messages.
@@ -21,7 +22,7 @@ class Client:
 
     def __init__(self, server_host):
         if Client.UUID is None:
-            Client.UUID = User.first_where("id", "=", 1).get_uuid()
+            Client.UUID = User.query.first().uuid
 
         self.server_host = server_host
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -81,34 +82,27 @@ class Client:
 
         elif message_kind == "ID_RESPONSE":
             # GET MY IDS FROM DATABASE
-            me = User.first_where("uuid", "=", self.UUID)
+            me: User = User.filter(User.uuid == self.UUID).first()
 
-            host_name = socket.gethostname()
-            user_name = me.get_user_name()
-            user_status = me.get_user_status()
-            phone = me.get_phone()
-            department = me.get_department()
-            role = me.get_role()
-            profile_picture_path = me.get_image_path()
-
+            profile_picture_path = me.image_path
             if profile_picture_path is not None:
                 profile_picture_size = os.path.getsize(profile_picture_path)
                 self.upload_file(profile_picture_path)
             else:
                 profile_picture_size = 0
 
-            id_message = f"{self.UUID}|{message_kind}|{profile_picture_size}|{profile_picture_path}|" \
-                         f"{host_name}|{user_name}|{user_status}|{department}|{role}|{phone}"
+            id_message = f"{self.UUID}|{message.kind}|{profile_picture_size}|{me.image_path}|" \
+                         f"{me.host_name}|{me.user_name}|{me.user_status}|{me.department}|{me.role}|{me.phone}"
             self.reliable_send(id_message)
 
         elif message_kind == "text":
             # SEND CLIENT ID AND HIS TEXT MESSAGE
-            text_message = f"{self.UUID}|{message_kind}|{message.get_body()}"
+            text_message = f"{self.UUID}|{message.kind}|{message.body}"
             self.reliable_send(text_message)
-            message.set_status(self.message_delivered)
+            message.received = self.message_delivered
 
         elif message_kind in ["image", "document", "video", "audio", "voice"]:
-            path = message.get_body()
+            path = message.body
 
             # COLLECT MEDIA METADATA FIRST
             file_size = os.path.getsize(path)
@@ -119,7 +113,7 @@ class Client:
             self.reliable_send(media_message)
             self.upload_file(path)
 
-            message.set_status(self.message_delivered)
+            message.received = self.message_delivered
 
         return message
 
@@ -145,9 +139,9 @@ class Client:
 
 
 if __name__ == "__main__":
-    from message import Message
+    from model import Message
 
-    client = Client()
+    client = Client("192.168.1.109")
     client.connect_to_server()
 
     # This while loop will run only if the connection is established

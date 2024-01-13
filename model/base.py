@@ -30,4 +30,4 @@ class TimeStampedModel(Model):
     __abstract__ = True
 
     created_at = Column(DateTime, default=datetime.utcnow())
-    update_at = Column(DateTime, onupdate=datetime.utcnow())
+    updated_at = Column(DateTime, onupdate=datetime.utcnow())

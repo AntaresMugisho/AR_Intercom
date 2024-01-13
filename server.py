@@ -10,6 +10,8 @@ from PySide6.QtCore import QObject, Signal
 
 import utils
 from model import User, Message
+from model.base import db
+
 
 class Server(QObject):
     """
@@ -90,6 +92,8 @@ class Server(QObject):
                         client_address = client.getpeername()[0]
                         message_kind = packet[1]
 
+                        self.sender = User.query.filter(User.uuid == client_id).first()
+
                     except BrokenPipeError:
                         pass
 
@@ -100,18 +104,9 @@ class Server(QObject):
                         pass
 
                     except Exception as e:
-                        pass
+                        print("Error in server:", e)
 
                     else:
-                        sender = User.first_where("uuid", "=", client_id)
-
-                        sender_id = sender.get_id() if sender is not None else -1
-
-                        message = Message()
-                        message.set_sender_id(sender_id)
-                        message.set_receiver_id(1)
-                        message.set_kind(message_kind)
-
                         if message_kind == "ID_REQUEST":
                             self.idRequested.emit(client_address)
 
@@ -125,59 +120,60 @@ class Server(QObject):
                             role = packet[8]
                             phone = packet[9]
 
-                            if profile_picture_path != "None":
-                                self.download_file(client, message_kind, profile_picture_size, profile_picture_path)
 
                             # Store or update user's information in database
-                            if sender is not None:
-                                user = sender
+                            if self.sender is not None:
+                                user = self.sender
                             else:
                                 user = User()
 
-                            user.set_uuid(client_id)
-                            user.set_host_name(host_name)
-                            user.set_user_name(user_name)
-                            user.set_host_address(client_address)
-                            user.set_phone(phone)
-                            user.set_user_status(user_status)
+                            user.uuid = client_id
+                            user.host_name = host_name
+                            user.user_name = user_name
+                            user.host_address = client_address
+                            user.phone = phone
+                            user.user_status = user_status
 
-                            if profile_picture_path != "None":
-                                user.set_image_path(profile_picture_path)
                             if department != "None":
-                                user.set_department(department)
+                                user.department = department
                             if role != "None":
-                                user.set_role(role)
+                                user.role = role
 
-                            print(f"User received info : {user.__dict__}")
+                            print(f"Profile picture path : {profile_picture_path}")
+                            if profile_picture_path != "None":
+                                user.image_path = profile_picture_path
+                                self.download_file(client, message_kind, profile_picture_size, profile_picture_path)
 
-                            if sender is not None:
+                            if self.sender is not None:
                                 user.update()
                             else:
-                                user.save()
+                                db.add(user)
 
+                            db.commit()
                             self.userAdded.emit()
 
-                        elif message_kind == "text":
-                            # Call signal sender
-                            message_body = packet[2]
+                        else:
+                            message = Message()
+                            message.sender = self.sender
+                            message.receiver = User.query.first()
+                            message.kind = message_kind
 
-                            message.set_body(message_body)
+                            if message_kind == "text":
+                                message.body = packet[2]
+
+                            elif message_kind in ["image", "document", "video", "audio", "voice"]:
+                                # Download file
+                                file_size = int(packet[2])
+                                file_name = packet[3]
+                                path = self.download_file(client, message_kind, file_size, file_name)
+
+                                message.body = path
+
                             # Save message and emit signal so that it can be displayed in the GUI
-                            message.save()
-                            self.messageReceived.emit(message.get_id())
-
-                        elif message_kind in ["image", "document", "video", "audio", "voice"]:
-                            # Download file
-                            file_size = int(packet[2])
-                            file_name = packet[3]
-                            path = self.download_file(client, message_kind, file_size, file_name)
-
-                            message.set_body(path)
-
-                            # Save message and emit signal so that it can be displayed in the GUI
-                            message.save()
-                            self.messageReceived.emit(message.get_id())
-
+                            db.add(message)
+                            db.commit()
+                            print(message.id)
+                            self.messageReceived.emit(message.id)
 
 
     @staticmethod
@@ -185,7 +181,6 @@ class Server(QObject):
         """
         Download and save file from distant client machine.
         """
-        print(file_size)
         home_directory = utils.get_home_directory()
         directory = f"{home_directory}/AR_Intercom/Media/{kind.capitalize()}s"
 
