@@ -4,6 +4,7 @@ import os.path
 from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton
 from PySide6.QtGui import QFont, QCursor, QMouseEvent
 from PySide6.QtCore import QSize, Qt, QRect, Signal
+from sqlalchemy import or_, desc
 
 from model import User, Message
 from client import Client
@@ -19,20 +20,14 @@ class ClientWidget(QFrame):
         QFrame.__init__(self)
 
         self.user = user
-        self.online = self.user.get_host_address() in Client.CONNECTED_SERVERS
+        self.online = self.user.host_address in Client.CONNECTED_SERVERS
+        self.messages = Message.query.filter(or_(Message.sender == self.user, Message.receiver == self.user)).all()
 
-        # GET USER INFORMATION
-        self.user_uuid = self.user.get_uuid()
-        self.username = self.user.get_user_name()
-        self.user_profile_picture_path = user.get_image_path()
-
-        if self.user_profile_picture_path is None:
-            self.user_profile_picture_path = ":/icons/icons/avatar.png"
-
-        self.messages = self.user.messages()
+        if self.user.image_path is None:
+            self.user.image_path = ":/icons/icons/avatar.png"
 
         # DRAW USER WIDGET
-        self.setObjectName(f"{self.user_uuid}")
+        self.setObjectName(f"{self.user.uuid}")
         self.setMinimumSize(QSize(271, 61))
         self.setMaximumSize(QSize(271, 61))
         self.setCursor(QCursor(Qt.PointingHandCursor))
@@ -61,14 +56,14 @@ class ClientWidget(QFrame):
         self.client_picture.setStyleSheet("border-radius:28px;border:none;")
 
         # Create rounded pixmap
-        rounded_pixmap = utils.create_rounded_image(self.user_profile_picture_path, self.client_picture.width())
+        rounded_pixmap = utils.create_rounded_image(self.user.image_path, self.client_picture.width())
         self.client_picture.setPixmap(rounded_pixmap)
         self.client_picture.setScaledContents(True)
 
 
         # UNREAD MESSAGE COUNTER
         self.msg_countrer = QLabel(self)
-        self.msg_countrer.setObjectName(f"{self.user_uuid}_counter")
+        self.msg_countrer.setObjectName(f"{self.user.uuid}_counter")
         self.msg_countrer.setGeometry(QRect(243, 7, 16, 16))
         font3 = QFont()
         font3.setFamilies([u"Segoe UI"])
@@ -83,7 +78,7 @@ class ClientWidget(QFrame):
 
         # ONLINE TOAST
         self.online_toast = QLabel(self)
-        self.online_toast.setObjectName(f"{self.user_uuid}_toast")
+        self.online_toast.setObjectName(f"{self.user.uuid}_toast")
         self.online_toast.setGeometry(QRect(47, 41, 16, 16))
         self.online_toast.setStyleSheet(u"QLabel{\n"
                                         "	border-radius:8px;\n"
@@ -115,7 +110,7 @@ class ClientWidget(QFrame):
                                        "	background-color:none;\n"
                                        "	color: white;\n"
                                        "}")
-        self.client_name.setText(self.username)
+        self.client_name.setText(self.user.user_name)
 
         # LAST MESSAGE
         self.last_message = QLabel(self)

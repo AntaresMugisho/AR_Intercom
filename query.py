@@ -1,5 +1,6 @@
+from sqlalchemy import or_
 
-from model.base import session
+from model.base import db
 from model import User, Message
 from sqlalchemy.orm import joinedload
 
@@ -17,8 +18,8 @@ user1.phone = "+2439790"
 user1.set_uuid()
 user1.set_password("1234")
 
-# session.add(user1)
-# session.commit()
+# db.add(user1)
+# db.commit()
 
 owner = User.query.first()
 u4 = User.query.filter(User.id == 4).first()
@@ -54,8 +55,8 @@ message3.body = "Jabo"
 message3.kind = "text"
 message3.received = True
 
-# session.add_all([message, message1, message2, message3])
-# session.commit()
+# db.add_all([message, message1, message2, message3])
+# db.commit()
 
 
 # # Querying
@@ -64,16 +65,13 @@ message3.received = True
 #
 # print(first_user)
 #
-# messages = Message.query.all()
+messages = Message\
+    .query.filter(
+        or_(Message.sender == owner,
+            Message.receiver == owner)
+    ).order_by(Message.id.desc()).all()
 
-ms = u4.sent_messages
-
-for m in ms:
-    print(m)
-
-# for message in messages:
-#     print(message.sender)
-# #
+print(messages)
 #
 # # Updating
 #
