@@ -10,7 +10,7 @@ import EmojiStore
 from PySide6.QtMultimedia import QMediaRecorder, QMediaPlayer
 from PySide6.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QWidget, QPushButton, QLabel, QScrollArea, QGridLayout, QHBoxLayout, QVBoxLayout, QTabWidget, QFileDialog, QSlider
 from PySide6.QtGui import QColor
-from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt
+from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Slot, QTimer, Qt, QTranslator, QLocale
 from sqlalchemy import or_
 
 import utils
@@ -418,9 +418,9 @@ class MainWindow(QMainWindow):
         yesterday = today - timedelta(days=1)
 
         if datetime.strftime(message.created_at, "%x") == datetime.strftime(today, "%x"):
-            text = "Today"
+            text = self.tr("Today")
         elif datetime.strftime(message.created_at, "%x") == datetime.strftime(yesterday, "%x"):
-            text = "Yesterday"
+            text = self.tr("Yesterday")
         else:
             text = datetime.strftime(message.created_at, "%d - %m - %Y")
 
@@ -570,21 +570,21 @@ class MainWindow(QMainWindow):
 
         if media.objectName() == "media_audio":
             kind = "audio"
-            filters = "Audio files (*.mp3 *.m4a *.aac *.wav)"
+            filters = self.tr("Audio files (*.mp3 *.m4a *.aac *.wav)")
 
         elif media.objectName() == "media_video":
             kind = "video"
-            filters = "Video files (*.mp4 *.avi *.mpeg *.mkv)"
+            filters = self.tr("Video files (*.mp4 *.avi *.mpeg *.mkv)")
 
         elif media.objectName() == "media_image":
             kind = "image"
-            filters = "Image files (*.jpeg *.jpg *.png)"
+            filters = self.tr("Image files (*.jpeg *.jpg *.png)")
 
         else:
             kind = "document"
-            filters = "Any file (*)"
+            filters = self.tr("Any file (*)")
 
-        paths = QFileDialog.getOpenFileNames(self, "Seletionner le.s fichier.s à envoyer", "", filters)[0]
+        paths = QFileDialog.getOpenFileNames(self, self.tr("Select files"), "", filters)[0]
 
         # Close media buttons
         self.toggle_media()
@@ -771,15 +771,15 @@ class MainWindow(QMainWindow):
         Scan network to find connected devices and put them in server_host dictionary.
         """
         utils.clear_layout(self.ui.scan_list_layout)
-        self.ui.start_scan_btn.setText("SCANNING...")
+        self.ui.start_scan_btn.setText(self.tr("SCANNING..."))
 
         my_ip = utils.get_private_ip()
         if my_ip.startswith("127."):
-            self.ui.signal_text.setText("Please connect to a network.")
+            self.ui.signal_text.setText(self.tr("Please connect to a network."))
             self.ui.start_scan_btn.setText("SCAN")
 
         else:
-            self.ui.signal_text.setText("You're connected !")
+            self.ui.signal_text.setText(self.tr("You're connected !"))
             my_ip_bytes = my_ip.split(".")
             net_id = ".".join(my_ip_bytes[:3])
 
@@ -814,7 +814,6 @@ class MainWindow(QMainWindow):
         """
         Add new user in the database
         """
-        print(f'Try to add user {host_address}')
         client = Client(host_address)
 
         message = Message()
@@ -822,9 +821,9 @@ class MainWindow(QMainWindow):
         client.send_message(message)
 
         if host_address in Client.CONNECTED_SERVERS:
-            self.ui.signal_text.setText("Adding user...")
+            self.ui.signal_text.setText(self.tr("Adding user..."))
 
-        QTimer().singleShot(5_000, lambda: self.ui.signal_text.setText("You're connected !"))
+        QTimer().singleShot(5_000, lambda: self.ui.signal_text.setText(self.tr("You're connected !")))
 
 
 if __name__ == "__main__":

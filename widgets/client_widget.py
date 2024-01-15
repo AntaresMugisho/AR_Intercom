@@ -99,9 +99,9 @@ class ClientWidget(QFrame):
                                        "}")
         self.last_seen_0.setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
         if self.online:
-            self.last_seen_0.setText("online")
+            self.last_seen_0.setText(self.tr("online"))
         else:
-            self.last_seen_0.setText("offline")
+            self.last_seen_0.setText(self.tr("offline"))
 
         # NAME
         self.client_name = QLabel(self)
@@ -131,7 +131,7 @@ class ClientWidget(QFrame):
             else:
                 last_message_text = os.path.basename(last_message.body)
         else:
-            last_message_text = "[No message yet]"
+            last_message_text = self.tr("[No message yet]")
 
         self.last_message.setText(last_message_text if len(last_message_text) <= 23 else f"{last_message_text[:20]}...")
 

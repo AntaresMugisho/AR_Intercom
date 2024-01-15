@@ -320,7 +320,7 @@ class Bubble(QFrame):
         self.document_size.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
         self.document_size.setTextInteractionFlags(Qt.TextSelectableByMouse)
         size = round((os.path.getsize(path) / 1024 / 1024), 2)
-        self.document_size.setText(f"{size} Mb")
+        self.document_size.setText(f"{size} MB")
 
         self.document_title_size_layout.addWidget(self.document_size)
 
@@ -362,7 +362,7 @@ class Bubble(QFrame):
         self.image_info = QLabel(self.bubble)
         self.image_info.setGeometry(QRect(9, 6, 270, 20))
         self.image_info.setStyleSheet(u"background-color:transparent;")
-        self.image_info.setText(f"<p><span style='color:#848484;'>{size} Mb</span> • {filename}</p>")
+        self.image_info.setText(f"<p><span style='color:#848484;'>{size} MB</span> • {filename}</p>")
         self.image_info.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
         # Add message label and time
@@ -370,6 +370,7 @@ class Bubble(QFrame):
 
         # Add frame on the widget
         self.render_bubble()
+
 
     def show_video_bubble(self):
         # Collect image metadata

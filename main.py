@@ -5,7 +5,7 @@ import sys
 from PySide6 import QtWidgets, QtCore
 from PySide6.QtWidgets import QApplication, QWidget
 from PySide6.QtGui import QColor
-from PySide6.QtCore import Qt, Slot
+from PySide6.QtCore import Qt, Slot, QTranslator, QLocale, QLibraryInfo
 from sqlalchemy import exc
 
 from gui import Ui_SplashScreen
@@ -132,5 +132,12 @@ if __name__ == "__main__":
     app = QApplication.instance()
     if not app:
         app = QApplication(sys.argv)
+
+
+    translator = QTranslator()
+    locale = QLocale()
+    print(translator.load("fr_FR", "lang"))
+
+    app.installTranslator(translator)
     run = SplashScreen()
     sys.exit(app.exec())
