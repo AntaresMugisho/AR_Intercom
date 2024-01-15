@@ -18,7 +18,7 @@ class User(TimeStampedModel):
     user_name = Column(String(64))
     email = Column(String(128))
     phone = Column(String(16))
-    user_status = Column(String(512))
+    user_status = Column(String(512), default="Hello, I'm using AR Intercom !")
     password = Column(String(256))
     image_path = Column(String(512))
     department = Column(String(256))

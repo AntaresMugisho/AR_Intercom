@@ -394,15 +394,13 @@ class MainWindow(QMainWindow):
         self.DATE = None
 
         # SHOW OLDER MESSAGES WITH THE ACTIVE USER IN NEW BUBBLES
-        messages = Message.query.filter(or_(Message.sender_id == user.id, Message.receiver_id == user.id)).order_by(Message.updated_at).all()
+        messages = Message.query.filter(or_(Message.receiver == user, Message.sender == user)).order_by(Message.id).all()
         for message in messages:
             self.show_bubble(message)
             if not message.read:
                 message.read = True
 
         db.commit()
-        # Reset to normal style sheet (important in case of unread messages)
-        # message_counter.parent().setStyleSheet(Clients.frame_normal)
 
         # Connect delete messages button
         self.ui.delete_btn.clicked.connect(self.delete_messages)
@@ -416,16 +414,15 @@ class MainWindow(QMainWindow):
     def show_bubble(self, message: Message):
 
         # FORMAT DATE LABEL
-        date = message.created_at
         today = datetime.today()
-        yesterday = datetime.now() - timedelta(days=1)
+        yesterday = today - timedelta(days=1)
 
-        if datetime.strftime(date, "%x") == datetime.strftime(today, "%x"):
+        if datetime.strftime(message.created_at, "%x") == datetime.strftime(today, "%x"):
             text = "Today"
-        elif datetime.strftime(date, "%x") == datetime.strftime(yesterday, "%x"):
+        elif datetime.strftime(message.created_at, "%x") == datetime.strftime(yesterday, "%x"):
             text = "Yesterday"
         else:
-            text = datetime.strftime(date, "%d - %m - %Y")
+            text = datetime.strftime(message.created_at, "%d - %m - %Y")
 
         if text != self.DATE:
             self.DATE = text
