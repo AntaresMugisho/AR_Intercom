@@ -86,7 +86,7 @@ class Bubble(QFrame):
 
     def render_bubble(self):
 
-        if self.message_kind == "text":
+        if self.message.kind == "text":
             size = self.bubble.sizeHint()
         else:
             size = self.bubble.size()
@@ -152,7 +152,7 @@ class Bubble(QFrame):
                                      "background-color:rgba(255,255,255,0.1);border-radius:7px;padding:1px;")
             self.time_label_layout.addWidget(self.ticks)
             if not self.message.received:
-                self.ticks.setObjectName(f"error_{self.message.get_id()}")
+                self.ticks.setObjectName(f"error_{self.message.id}")
 
         self.vertical_layout = QVBoxLayout(bubble_widget)
         self.vertical_layout.setSpacing(2)
@@ -337,7 +337,7 @@ class Bubble(QFrame):
         font10.setBold(False)
 
         # Collect image metadata
-        path = self.message.get_body()
+        path = self.message.body
         filename = os.path.basename(path)
         size = round((os.path.getsize(path) / 1024 / 1024), 2)  # Size in Mb
 
@@ -373,7 +373,7 @@ class Bubble(QFrame):
 
     def show_video_bubble(self):
         # Collect image metadata
-        path = self.message.get_body()
+        path = self.message.body
         filename = os.path.basename(path)
         size = round((os.path.getsize(path) / 1024 / 1024), 2)
 

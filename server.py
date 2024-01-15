@@ -104,7 +104,7 @@ class Server(QObject):
                         pass
 
                     except Exception as e:
-                        print("Error in server:", e)
+                        pass
 
                     else:
                         if message_kind == "ID_REQUEST":
@@ -139,14 +139,12 @@ class Server(QObject):
                             if role != "None":
                                 user.role = role
 
-                            print(f"Profile picture path : {profile_picture_path}")
                             if profile_picture_path != "None":
-                                user.image_path = profile_picture_path
-                                self.download_file(client, message_kind, profile_picture_size, profile_picture_path)
+                                pass
+                                # user.image_path = profile_picture_path
+                                # self.download_file(client, message_kind, profile_picture_size, profile_picture_path)
 
-                            if self.sender is not None:
-                                user.update()
-                            else:
+                            if self.sender is None:
                                 db.add(user)
 
                             db.commit()
@@ -157,6 +155,7 @@ class Server(QObject):
                             message.sender = self.sender
                             message.receiver = User.query.first()
                             message.kind = message_kind
+                            message.read = False
 
                             if message_kind == "text":
                                 message.body = packet[2]
@@ -172,7 +171,6 @@ class Server(QObject):
                             # Save message and emit signal so that it can be displayed in the GUI
                             db.add(message)
                             db.commit()
-                            print(message.id)
                             self.messageReceived.emit(message.id)
 
 

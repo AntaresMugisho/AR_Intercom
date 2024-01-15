@@ -31,3 +31,6 @@ class TimeStampedModel(Model):
 
     created_at = Column(DateTime, default=datetime.utcnow())
     updated_at = Column(DateTime, onupdate=datetime.utcnow())
+
+    def update(self):
+        self.updated_at = datetime.utcnow()

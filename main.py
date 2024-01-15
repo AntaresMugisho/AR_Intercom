@@ -6,6 +6,7 @@ from PySide6 import QtWidgets, QtCore
 from PySide6.QtWidgets import QApplication, QWidget
 from PySide6.QtGui import QColor
 from PySide6.QtCore import Qt, Slot
+from sqlalchemy import exc
 
 from gui import Ui_SplashScreen
 from register_window import RegisterWindow
@@ -47,7 +48,10 @@ class SplashScreen(QWidget):
         self.progress_value(0)
 
         # FIND THE FIRST USER
-        self.user = User.query.first()
+        try:
+            self.user = User.query.first()
+        except exc.OperationalError:
+            self.user = None
 
         # CREATE MEDIA FOLDERS IF NOT EXISTS
         utils.create_media_folders()
@@ -91,14 +95,13 @@ class SplashScreen(QWidget):
 
             # SHOW REGISTER WINDOW OR LOGIN WINDOW
 
-            if not self.user:
+            if self.user is None:
                 print("No user")
                 self.register_window = RegisterWindow()
             else:
-                print(self.user)
                 self.login_window = LoginWindow()
         # INCREASE COUNTER
-        counter += 0.4
+        counter += 2
 
     def progress_value(self, value):
         """

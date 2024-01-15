@@ -59,12 +59,13 @@ class Message(TimeStampedModel):
     kind = Column(String(32))
     body = Column(Text())
     received = Column(Boolean)
+    read = Column(Boolean, default=True)
 
     sender = Relationship('User', foreign_keys=[sender_id])
     receiver = Relationship('User', foreign_keys=[receiver_id])
 
     def __repr__(self):
-        return f"{self.__class__.__name__}, sender: {self.sender_id}, receiver: {self.receiver_id} message: {self.body}," \
+        return f"{self.__class__.__name__}, kind: {self.kind}, sender: {self.sender_id}, receiver: {self.receiver_id} message: {self.body}," \
                f"sent_at: {self.created_at}, received: {self.received}"
 
 

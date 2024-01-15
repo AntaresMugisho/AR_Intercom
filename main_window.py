@@ -321,8 +321,6 @@ class MainWindow(QMainWindow):
 
     @staticmethod
     def send_id(host_address: str):
-        print(f"Sending ID RESPONSE to : {host_address}")
-
         # SEND MY IDs
         client = Client(host_address)
         message = Message()
@@ -368,7 +366,7 @@ class MainWindow(QMainWindow):
 
         # GET USER UUID
         user_uuid = button_object_name
-        user = User.query.filter(User.uuid == user_uuid)
+        user = User.query.filter(User.uuid == user_uuid).first()
 
         # SET NAME AND STATUS TO THE ACTIVE CLIENT LABEL
         self.ui.chat_stacked_widget.setCurrentWidget(self.ui.chat_page)
@@ -396,10 +394,13 @@ class MainWindow(QMainWindow):
         self.DATE = None
 
         # SHOW OLDER MESSAGES WITH THE ACTIVE USER IN NEW BUBBLES
-        messages = Message.query.filter(or_(Message.sender == user, Message.receiver == user)).all()
+        messages = Message.query.filter(or_(Message.sender_id == user.id, Message.receiver_id == user.id)).order_by(Message.updated_at).all()
         for message in messages:
             self.show_bubble(message)
+            if not message.read:
+                message.read = True
 
+        db.commit()
         # Reset to normal style sheet (important in case of unread messages)
         # message_counter.parent().setStyleSheet(Clients.frame_normal)
 
@@ -457,6 +458,7 @@ class MainWindow(QMainWindow):
 
         if self.ui.active_client_name.isVisible() and self.ui.active_client_name.objectName() == user.uuid:
             # Show message in the bubble
+            message.read = True
             self.show_bubble(message)
         else:
             # Show notification widget
@@ -464,14 +466,12 @@ class MainWindow(QMainWindow):
             self.notification_widget.show()
 
             # Increase the unread message counter badge
-            message_count = self.ui.chat_list_scroll.findChild(QLabel, f"{user.get_uuid()}_counter")
-            print(f"Message_count : {message_count.text()}")
+            message_count = self.ui.chat_list_scroll.findChild(QLabel, f"{user.uuid}_counter")
             unread_msg = int(message_count.text()) + 1
             message_count.setText(f"{unread_msg}")
 
             message_count.show()
             # Changing client frame design may be more user friendly
-            # message_count.parent().setStyleSheet(Clients.frame_unread_msg)
 
         # Update user's list
         user.update()

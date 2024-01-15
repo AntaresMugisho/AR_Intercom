@@ -118,7 +118,7 @@ class RegisterWindow(QWidget):
         Select a profile picture in a file dialog
         """
         if event.buttons() == Qt.MouseButton.LeftButton:
-            picture_dialogue = QFileDialog.getOpenFileName(self, "Profile picture", '', "Photos *.jpg *.png")
+            picture_dialogue = QFileDialog.getOpenFileName(self, "Profile picture", utils.get_home_directory(), "Photos *.jpg *.png")
             path = picture_dialogue[0]
 
             if path:
@@ -158,7 +158,6 @@ class RegisterWindow(QWidget):
             self.ui.passcode2.setStyleSheet(LineEdit.style_normal)
             self.user.set_password(self.ui.passcode.text())
 
-
         # IF NECESSARY DATA IS COLLECTED, GO TO THE NEXT PAGE
         if len(errors) == 0:
             self.ui.stackedWidget.setCurrentIndex(1)
@@ -177,8 +176,8 @@ class RegisterWindow(QWidget):
             if self.user.image_path is not None:
                 user_profile_path = os.path.join(utils.get_storage_path(),
                                 f"{self.user.uuid.split('-')[0]}{os.path.splitext(self.user.image_path)[1]}")
-                shutil.copyfile(self.user.get_image_path(), user_profile_path)
-                self.user.set_image_path(user_profile_path)
+                shutil.copyfile(self.user.image_path, user_profile_path)
+                self.user.image_path = user_profile_path
 
             db.add(self.user)
             db.commit()

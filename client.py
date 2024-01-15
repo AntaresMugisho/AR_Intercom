@@ -73,7 +73,7 @@ class Client:
         """
 
         self.connect_to_server()
-        message_kind = message.get_kind()
+        message_kind = message.kind
 
         if message_kind == "ID_REQUEST":
             # SEND ID MESSAGE
@@ -82,17 +82,19 @@ class Client:
 
         elif message_kind == "ID_RESPONSE":
             # GET MY IDS FROM DATABASE
-            me: User = User.filter(User.uuid == self.UUID).first()
+            me: User = User.query.filter(User.uuid == self.UUID).first()
 
             profile_picture_path = me.image_path
             if profile_picture_path is not None:
                 profile_picture_size = os.path.getsize(profile_picture_path)
-                self.upload_file(profile_picture_path)
+                # self.upload_file(profile_picture_path)
             else:
                 profile_picture_size = 0
 
+
             id_message = f"{self.UUID}|{message.kind}|{profile_picture_size}|{me.image_path}|" \
                          f"{me.host_name}|{me.user_name}|{me.user_status}|{me.department}|{me.role}|{me.phone}"
+
             self.reliable_send(id_message)
 
         elif message_kind == "text":
@@ -116,7 +118,6 @@ class Client:
             message.received = self.message_delivered
 
         return message
-
 
     def upload_file(self, path: str):
         """

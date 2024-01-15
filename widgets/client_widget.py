@@ -4,7 +4,7 @@ import os.path
 from PySide6.QtWidgets import QWidget, QFrame, QLabel, QPushButton
 from PySide6.QtGui import QFont, QCursor, QMouseEvent
 from PySide6.QtCore import QSize, Qt, QRect, Signal
-from sqlalchemy import or_, desc
+from sqlalchemy import or_, desc, and_
 
 from model import User, Message
 from client import Client
@@ -62,6 +62,8 @@ class ClientWidget(QFrame):
 
 
         # UNREAD MESSAGE COUNTER
+        unread_messages = Message.query.filter(and_(or_(Message.sender == self.user, Message.receiver == self.user), Message.read == False)).count()
+
         self.msg_countrer = QLabel(self)
         self.msg_countrer.setObjectName(f"{self.user.uuid}_counter")
         self.msg_countrer.setGeometry(QRect(243, 7, 16, 16))
@@ -73,8 +75,9 @@ class ClientWidget(QFrame):
         self.msg_countrer.setFont(font3)
         self.msg_countrer.setStyleSheet(u"QLabel{border-radius:8px;color: white;background-color: red;}")
         self.msg_countrer.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
-        self.msg_countrer.setText("0")
-        self.msg_countrer.hide()
+        self.msg_countrer.setText(f"{unread_messages}")
+        if unread_messages == 0:
+            self.msg_countrer.hide()
 
         # ONLINE TOAST
         self.online_toast = QLabel(self)
@@ -123,10 +126,10 @@ class ClientWidget(QFrame):
                                         "}")
         if self.messages:
             last_message: Message = self.messages[-1]
-            if last_message.get_kind() == "text":
-                last_message_text = last_message.get_body()
+            if last_message.kind == "text":
+                last_message_text = last_message.body
             else:
-                last_message_text = os.path.basename(last_message.get_body())
+                last_message_text = os.path.basename(last_message.body)
         else:
             last_message_text = "[No message yet]"
 
