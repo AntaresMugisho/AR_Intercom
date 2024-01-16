@@ -14,7 +14,7 @@ a = Analysis(
         ("resources", "resources"),
         ("lang/*.qm", "lang"),
         ("gui/*.py", "gui"),
-        ("storage", "storage")
+        ("storage", "storage"),
         ("theme", "theme")
     ],
     hiddenimports=[],

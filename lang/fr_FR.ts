@@ -22,12 +22,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../gui/main_window.ui" line="20"/>
-        <location filename="../gui/main_window.ui" line="564"/>
-        <source>AR Intercom</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../gui/main_window.ui" line="609"/>
         <source>Hide menu</source>
         <translation>Cacher</translation>
@@ -129,9 +123,61 @@
         <translation>SCANNER</translation>
     </message>
     <message>
+        <location filename="../main_window.py" line="444"/>
+        <source>Today</source>
+        <translation>Aujourd&apos;hui</translation>
+    </message>
+    <message>
+        <location filename="../main_window.py" line="446"/>
+        <source>Yesterday</source>
+        <translation>Hier</translation>
+    </message>
+    <message>
+        <location filename="../main_window.py" line="597"/>
+        <source>Audio files (*.mp3 *.m4a *.aac *.wav)</source>
+        <translation>Fichiers Audio (*.mp3 *.m4a *.aac *.wav)</translation>
+    </message>
+    <message>
+        <location filename="../main_window.py" line="601"/>
+        <source>Video files (*.mp4 *.avi *.mpeg *.mkv)</source>
+        <translation>Fichiers vidéos (*.mp4 *.avi *.mpeg *.mkv)</translation>
+    </message>
+    <message>
+        <location filename="../main_window.py" line="605"/>
+        <source>Image files (*.jpeg *.jpg *.png)</source>
+        <translation>Images (*.jpeg *.jpg *.png)</translation>
+    </message>
+    <message>
+        <location filename="../main_window.py" line="609"/>
+        <source>Any file (*)</source>
+        <translation>Tous les fichiers (*)</translation>
+    </message>
+    <message>
+        <location filename="../main_window.py" line="609"/>
+        <source>Select files</source>
+        <translation>Choisir les fichiers</translation>
+    </message>
+    <message>
+        <location filename="../main_window.py" line="796"/>
+        <source>SCANNING...</source>
+        <translation>SCAN EN COURS ...</translation>
+    </message>
+    <message>
+        <location filename="../main_window.py" line="800"/>
+        <source>Please connect to a network.</source>
+        <translation>Veuillez vous connecter sur un réseau.</translation>
+    </message>
+    <message>
         <location filename="../gui/main_window.ui" line="1729"/>
+        <location filename="../main_window.py" line="804"/>
+        <location filename="../main_window.py" line="848"/>
         <source>You&apos;re connected !</source>
         <translation>Vous êtes connectés !</translation>
+    </message>
+    <message>
+        <location filename="../main_window.py" line="846"/>
+        <source>Adding user...</source>
+        <translation>Ajout de l&apos;utilisateur ...</translation>
     </message>
     <message>
         <location filename="../gui/main_window.ui" line="1752"/>
@@ -360,7 +406,7 @@
     <message>
         <location filename="../gui/main_window.ui" line="5857"/>
         <source>User</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gui/main_window.ui" line="5925"/>
@@ -380,26 +426,47 @@
     <message>
         <location filename="../gui/main_window.ui" line="6023"/>
         <source>We live we love we die !</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/main_window.ui" line="6091"/>
+        <location filename="../gui/main_window.ui" line="6140"/>
+        <source>AR Label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/main_window.ui" line="6174"/>
+        <source>Worker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/main_window.ui" line="6235"/>
         <source>Role</source>
         <translation>Rôle</translation>
     </message>
     <message>
-        <location filename="../gui/main_window.ui" line="6109"/>
-        <source>Worker</source>
-        <translation></translation>
+        <location filename="../gui/main_window.ui" line="6518"/>
+        <source>Creative Mind</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gui/main_window.ui" line="6177"/>
+        <location filename="../gui/main_window.ui" line="6535"/>
+        <source>Aide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/main_window.ui" line="6540"/>
+        <source>Quitter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gui/main_window.ui" line="6091"/>
         <source>Department</source>
         <translation>Département</translation>
     </message>
     <message>
-        <location filename="../gui/main_window.ui" line="6195"/>
-        <source>AR Label</source>
+        <location filename="../gui/main_window.ui" line="20"/>
+        <location filename="../gui/main_window.ui" line="564"/>
+        <source>AR Intercom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -431,21 +498,6 @@
         <location filename="../gui/main_window.ui" line="6473"/>
         <source>Update password</source>
         <translation>Mettre à jour le mot de passe</translation>
-    </message>
-    <message>
-        <location filename="../gui/main_window.ui" line="6518"/>
-        <source>Creative Mind</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/main_window.ui" line="6535"/>
-        <source>Aide</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/main_window.ui" line="6540"/>
-        <source>Quitter</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
