@@ -1,11 +1,12 @@
 # -*- This python file uses the following encoding : utf-8 -*-
 
 import sys
+import os
 
 from PySide6 import QtWidgets, QtCore
 from PySide6.QtWidgets import QApplication, QWidget
 from PySide6.QtGui import QColor
-from PySide6.QtCore import Qt, Slot, QTranslator, QLocale, QLibraryInfo
+from PySide6.QtCore import Qt, Slot, QTranslator, QLocale
 from sqlalchemy import exc
 
 from gui import Ui_SplashScreen
@@ -17,6 +18,9 @@ from model import User
 
 # GLOBALS
 counter = 0
+
+# ADJUST QT FONT DPI FOR HIGH SCALE
+os.environ["QT_FONT_DPI"] = "100"
 
 
 class SplashScreen(QWidget):
@@ -129,15 +133,11 @@ class SplashScreen(QWidget):
 
 
 if __name__ == "__main__":
-    app = QApplication.instance()
-    if not app:
-        app = QApplication(sys.argv)
-
+    app = QApplication(sys.argv)
 
     translator = QTranslator()
-    locale = QLocale()
-    print(translator.load("fr_FR", "lang"))
+    if translator.load(QLocale().name(), "lang"):
+        app.installTranslator(translator)
 
-    app.installTranslator(translator)
     run = SplashScreen()
     sys.exit(app.exec())

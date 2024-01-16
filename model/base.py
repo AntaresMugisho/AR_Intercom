@@ -1,3 +1,6 @@
+# -*- This python file uses the following encoding : utf-8 -*-
+
+
 from datetime import datetime
 
 from sqlalchemy import create_engine, event, Engine, Column, DateTime
@@ -5,7 +8,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker, declarative_base
 from utils import STORAGE_DIR
 
 
-engine = create_engine(f"sqlite:///{STORAGE_DIR}/db.db", echo=True)
+engine = create_engine(f"sqlite:///{STORAGE_DIR}/db.db", echo=False)
 
 db = scoped_session(
     sessionmaker(
