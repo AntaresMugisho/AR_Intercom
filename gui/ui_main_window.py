@@ -639,7 +639,7 @@ class Ui_MainWindow(object):
         self.chat_list_scroll.setWidgetResizable(True)
         self.chat_list_widget = QWidget()
         self.chat_list_widget.setObjectName(u"chat_list_widget")
-        self.chat_list_widget.setGeometry(QRect(0, 0, 291, 491))
+        self.chat_list_widget.setGeometry(QRect(0, 0, 291, 615))
         self.chat_list_widget.setStyleSheet(u"")
         self.chat_list_layout = QVBoxLayout(self.chat_list_widget)
         self.chat_list_layout.setObjectName(u"chat_list_layout")
@@ -995,7 +995,7 @@ class Ui_MainWindow(object):
         self.about_page.setObjectName(u"about_page")
         self.label_6 = QLabel(self.about_page)
         self.label_6.setObjectName(u"label_6")
-        self.label_6.setGeometry(QRect(30, 740, 221, 61))
+        self.label_6.setGeometry(QRect(30, 710, 221, 61))
         self.label_6.setFont(font1)
         self.label_6.setAlignment(Qt.AlignCenter)
         self.label_6.setWordWrap(True)
@@ -2852,17 +2852,52 @@ class Ui_MainWindow(object):
 
         self.profile_form_layout.addLayout(self.status_layout)
 
+        self.department_layout = QGridLayout()
+        self.department_layout.setObjectName(u"department_layout")
+        self.department_layout.setVerticalSpacing(0)
+        self.label_29 = QLabel(self.account_settings)
+        self.label_29.setObjectName(u"label_29")
+        self.label_29.setMinimumSize(QSize(0, 20))
+        self.label_29.setFont(font1)
+        self.label_29.setStyleSheet(u"color:gray;")
+
+        self.department_layout.addWidget(self.label_29, 0, 0, 1, 1)
+
+        self.user_department_btn = QPushButton(self.account_settings)
+        self.user_department_btn.setObjectName(u"user_department_btn")
+        self.user_department_btn.setMinimumSize(QSize(30, 30))
+        self.user_department_btn.setMaximumSize(QSize(30, 30))
+        self.user_department_btn.setStyleSheet(u"QPushButton{\n"
+"	border-radius:4px;\n"
+"	border:1px solid rgb(30,32,33);\n"
+"	image: url(:/cils/cils/cil-pencil.png);\n"
+"	padding:7px;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color:rgb(30,32,33);\n"
+"}")
+
+        self.department_layout.addWidget(self.user_department_btn, 1, 1, 1, 1)
+
+        self.user_department = QLabel(self.account_settings)
+        self.user_department.setObjectName(u"user_department")
+        self.user_department.setMinimumSize(QSize(0, 30))
+        self.user_department.setStyleSheet(u"border-radius:4px;\n"
+"background-color:rgb(30,32,33);\n"
+"padding:4px;")
+        self.user_department.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.user_department.setWordWrap(True)
+        self.user_department.setTextInteractionFlags(Qt.TextSelectableByKeyboard|Qt.TextSelectableByMouse)
+
+        self.department_layout.addWidget(self.user_department, 1, 0, 1, 1)
+
+
+        self.profile_form_layout.addLayout(self.department_layout)
+
         self.role_layout = QGridLayout()
         self.role_layout.setObjectName(u"role_layout")
         self.role_layout.setVerticalSpacing(0)
-        self.label_28 = QLabel(self.account_settings)
-        self.label_28.setObjectName(u"label_28")
-        self.label_28.setMinimumSize(QSize(0, 20))
-        self.label_28.setFont(font1)
-        self.label_28.setStyleSheet(u"color:gray;")
-
-        self.role_layout.addWidget(self.label_28, 0, 0, 1, 1)
-
         self.user_role = QLabel(self.account_settings)
         self.user_role.setObjectName(u"user_role")
         self.user_role.setMinimumSize(QSize(0, 30))
@@ -2892,51 +2927,16 @@ class Ui_MainWindow(object):
 
         self.role_layout.addWidget(self.user_role_btn, 1, 1, 1, 1)
 
+        self.label_28 = QLabel(self.account_settings)
+        self.label_28.setObjectName(u"label_28")
+        self.label_28.setMinimumSize(QSize(0, 20))
+        self.label_28.setFont(font1)
+        self.label_28.setStyleSheet(u"color:gray;")
+
+        self.role_layout.addWidget(self.label_28, 0, 0, 1, 1)
+
 
         self.profile_form_layout.addLayout(self.role_layout)
-
-        self.department_layout = QGridLayout()
-        self.department_layout.setObjectName(u"department_layout")
-        self.department_layout.setVerticalSpacing(0)
-        self.label_29 = QLabel(self.account_settings)
-        self.label_29.setObjectName(u"label_29")
-        self.label_29.setMinimumSize(QSize(0, 20))
-        self.label_29.setFont(font1)
-        self.label_29.setStyleSheet(u"color:gray;")
-
-        self.department_layout.addWidget(self.label_29, 0, 0, 1, 1)
-
-        self.user_department = QLabel(self.account_settings)
-        self.user_department.setObjectName(u"user_department")
-        self.user_department.setMinimumSize(QSize(0, 30))
-        self.user_department.setStyleSheet(u"border-radius:4px;\n"
-"background-color:rgb(30,32,33);\n"
-"padding:4px;")
-        self.user_department.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.user_department.setWordWrap(True)
-        self.user_department.setTextInteractionFlags(Qt.TextSelectableByKeyboard|Qt.TextSelectableByMouse)
-
-        self.department_layout.addWidget(self.user_department, 1, 0, 1, 1)
-
-        self.user_department_btn = QPushButton(self.account_settings)
-        self.user_department_btn.setObjectName(u"user_department_btn")
-        self.user_department_btn.setMinimumSize(QSize(30, 30))
-        self.user_department_btn.setMaximumSize(QSize(30, 30))
-        self.user_department_btn.setStyleSheet(u"QPushButton{\n"
-"	border-radius:4px;\n"
-"	border:1px solid rgb(30,32,33);\n"
-"	image: url(:/cils/cils/cil-pencil.png);\n"
-"	padding:7px;\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"	background-color:rgb(30,32,33);\n"
-"}")
-
-        self.department_layout.addWidget(self.user_department_btn, 1, 1, 1, 1)
-
-
-        self.profile_form_layout.addLayout(self.department_layout)
 
 
         self.verticalLayout_22.addLayout(self.profile_form_layout)
@@ -3115,10 +3115,10 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.left_side_container.setCurrentIndex(0)
+        self.left_side_container.setCurrentIndex(1)
         self.contacts_stack.setCurrentIndex(1)
-        self.chat_stacked_widget.setCurrentIndex(2)
-        self.emoji_tab_widget.setCurrentIndex(0)
+        self.chat_stacked_widget.setCurrentIndex(1)
+        self.emoji_tab_widget.setCurrentIndex(1)
         self.right_stacked_widget.setCurrentIndex(0)
         self.settings_stacked_widget.setCurrentIndex(1)
 
@@ -3256,12 +3256,12 @@ class Ui_MainWindow(object):
         self.label_21.setText(QCoreApplication.translate("MainWindow", u"Status", None))
         self.user_status.setText(QCoreApplication.translate("MainWindow", u"We live we love we die !", None))
         self.user_status_btn.setText("")
-        self.label_28.setText(QCoreApplication.translate("MainWindow", u"Role", None))
+        self.label_29.setText(QCoreApplication.translate("MainWindow", u"Department", None))
+        self.user_department_btn.setText("")
+        self.user_department.setText(QCoreApplication.translate("MainWindow", u"AR Label", None))
         self.user_role.setText(QCoreApplication.translate("MainWindow", u"Worker", None))
         self.user_role_btn.setText("")
-        self.label_29.setText(QCoreApplication.translate("MainWindow", u"Department", None))
-        self.user_department.setText(QCoreApplication.translate("MainWindow", u"AR Label", None))
-        self.user_department_btn.setText("")
+        self.label_28.setText(QCoreApplication.translate("MainWindow", u"Role", None))
         self.set_password_title.setText(QCoreApplication.translate("MainWindow", u"Change password", None))
         self.label_23.setText(QCoreApplication.translate("MainWindow", u"Actual password", None))
         self.label_24.setText(QCoreApplication.translate("MainWindow", u"New password", None))

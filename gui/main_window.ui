@@ -746,7 +746,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="contact_page">
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -961,7 +961,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
                     <x>0</x>
                     <y>0</y>
                     <width>291</width>
-                    <height>491</height>
+                    <height>615</height>
                    </rect>
                   </property>
                   <property name="styleSheet">
@@ -1738,7 +1738,7 @@ background-position: left center;</string>
            <property name="geometry">
             <rect>
              <x>30</x>
-             <y>740</y>
+             <y>710</y>
              <width>221</width>
              <height>61</height>
             </rect>
@@ -2029,7 +2029,7 @@ background-position: left center;</string>
                <string notr="true"/>
               </property>
               <property name="currentIndex">
-               <number>2</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="widgets_page">
                <widget class="QFrame" name="bubble_container_2">
@@ -4729,7 +4729,7 @@ border-radius:8px;</string>
                       <enum>QTabWidget::Rounded</enum>
                      </property>
                      <property name="currentIndex">
-                      <number>0</number>
+                      <number>1</number>
                      </property>
                      <property name="tabsClosable">
                       <bool>false</bool>
@@ -6067,12 +6067,12 @@ QPushButton:hover{
                        </layout>
                       </item>
                       <item>
-                       <layout class="QGridLayout" name="role_layout">
+                       <layout class="QGridLayout" name="department_layout">
                         <property name="verticalSpacing">
                          <number>0</number>
                         </property>
                         <item row="0" column="0">
-                         <widget class="QLabel" name="label_28">
+                         <widget class="QLabel" name="label_29">
                           <property name="minimumSize">
                            <size>
                             <width>0</width>
@@ -6088,10 +6088,75 @@ QPushButton:hover{
                            <string notr="true">color:gray;</string>
                           </property>
                           <property name="text">
-                           <string>Role</string>
+                           <string>Department</string>
                           </property>
                          </widget>
                         </item>
+                        <item row="1" column="1">
+                         <widget class="QPushButton" name="user_department_btn">
+                          <property name="minimumSize">
+                           <size>
+                            <width>30</width>
+                            <height>30</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>30</width>
+                            <height>30</height>
+                           </size>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">QPushButton{
+	border-radius:4px;
+	border:1px solid rgb(30,32,33);
+	image: url(:/cils/cils/cil-pencil.png);
+	padding:7px;
+}
+
+QPushButton:hover{
+	background-color:rgb(30,32,33);
+}</string>
+                          </property>
+                          <property name="text">
+                           <string/>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="0">
+                         <widget class="QLabel" name="user_department">
+                          <property name="minimumSize">
+                           <size>
+                            <width>0</width>
+                            <height>30</height>
+                           </size>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">border-radius:4px;
+background-color:rgb(30,32,33);
+padding:4px;</string>
+                          </property>
+                          <property name="text">
+                           <string>AR Label</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                          </property>
+                          <property name="wordWrap">
+                           <bool>true</bool>
+                          </property>
+                          <property name="textInteractionFlags">
+                           <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QGridLayout" name="role_layout">
+                        <property name="verticalSpacing">
+                         <number>0</number>
+                        </property>
                         <item row="1" column="0">
                          <widget class="QLabel" name="user_role">
                           <property name="minimumSize">
@@ -6150,15 +6215,8 @@ QPushButton:hover{
                           </property>
                          </widget>
                         </item>
-                       </layout>
-                      </item>
-                      <item>
-                       <layout class="QGridLayout" name="department_layout">
-                        <property name="verticalSpacing">
-                         <number>0</number>
-                        </property>
                         <item row="0" column="0">
-                         <widget class="QLabel" name="label_29">
+                         <widget class="QLabel" name="label_28">
                           <property name="minimumSize">
                            <size>
                             <width>0</width>
@@ -6174,65 +6232,7 @@ QPushButton:hover{
                            <string notr="true">color:gray;</string>
                           </property>
                           <property name="text">
-                           <string>Department</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="0">
-                         <widget class="QLabel" name="user_department">
-                          <property name="minimumSize">
-                           <size>
-                            <width>0</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true">border-radius:4px;
-background-color:rgb(30,32,33);
-padding:4px;</string>
-                          </property>
-                          <property name="text">
-                           <string>AR Label</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                          </property>
-                          <property name="wordWrap">
-                           <bool>true</bool>
-                          </property>
-                          <property name="textInteractionFlags">
-                           <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="1">
-                         <widget class="QPushButton" name="user_department_btn">
-                          <property name="minimumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true">QPushButton{
-	border-radius:4px;
-	border:1px solid rgb(30,32,33);
-	image: url(:/cils/cils/cil-pencil.png);
-	padding:7px;
-}
-
-QPushButton:hover{
-	background-color:rgb(30,32,33);
-}</string>
-                          </property>
-                          <property name="text">
-                           <string/>
+                           <string>Role</string>
                           </property>
                          </widget>
                         </item>

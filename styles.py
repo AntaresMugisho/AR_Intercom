@@ -1,5 +1,33 @@
 
 
+class EditBtn:
+    normal = """
+        QPushButton{
+            border-radius:4px;
+            border:1px solid rgb(30,32,33);
+            image: url(:/cils/cils/cil-pencil.png);
+            padding:7px;
+        }
+        
+        QPushButton:hover{
+            background-color:rgb(30,32,33);
+        } 
+    """
+
+    validate = """
+        QPushButton{
+            border-radius:4px;
+            border:1px solid rgb(30,32,33);
+            background-color:rgb(0, 200, 0);
+            image: url(:/cils/cils/cil-check-alt.png);
+            padding:7px;
+        }
+
+        QPushButton:hover{
+            background-color:rgba(0,200,0,100);
+        }
+    """
+
 class LineEdit:
     style_normal = """
         QLineEdit{

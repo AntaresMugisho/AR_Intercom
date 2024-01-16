@@ -15,7 +15,7 @@ from sqlalchemy import or_
 
 import utils
 from model.base import db
-from styles import Clients, SendButton, Player as PlayerStyle
+from styles import SendButton, EditBtn, Player as PlayerStyle
 from server import Server
 from client import Client
 from model import User, Message
@@ -303,6 +303,28 @@ class MainWindow(QMainWindow):
             self.ui.me_picture.setPixmap(profile_picture)
         else:
             self.ui.me_picture.setText(user.user_name[0])
+
+        # Set values to the settings pannel
+        if profile_path is not None:
+            profile_picture2 = utils.create_rounded_image(profile_path, self.ui.user_profile_picture.width())
+            self.ui.user_profile_picture.setPixmap(profile_picture2)
+
+        self.ui.username.setText(user.user_name)
+        self.ui.user_status.setText(user.user_status)
+        self.ui.user_email.setText(user.email)
+        self.ui.user_department.setText(user.department)
+        self.ui.user_role.setText(user.role)
+
+        self.ui.username_btn.clicked.connect(partial(self.set_username, "username"))
+
+    def set_username(self, setting: str):
+        pass
+        # if setting == "username":
+        #     self.ui.username.setTextInteractionFlags(
+        #         Qt.TextInteractionFlag.TextEditable|
+        #         Qt.TextInteractionFlag.TextSelectableByKeyboard|
+        #         Qt.TextInteractionFlag.TextSelectableByMouse)
+        #     self.ui.username_btn.setStyleSheet(EditBtn.validate)
 
     def load_user_list(self):
         """
@@ -824,6 +846,7 @@ class MainWindow(QMainWindow):
             self.ui.signal_text.setText(self.tr("Adding user..."))
 
         QTimer().singleShot(5_000, lambda: self.ui.signal_text.setText(self.tr("You're connected !")))
+
 
 
 if __name__ == "__main__":

@@ -30,7 +30,7 @@
     <message>
         <location filename="../gui/main_window.ui" line="609"/>
         <source>Hide menu</source>
-        <translation>Cacher le menu</translation>
+        <translation>Cacher</translation>
     </message>
     <message>
         <location filename="../gui/main_window.ui" line="636"/>
@@ -244,7 +244,7 @@
     <message>
         <location filename="../gui/main_window.ui" line="4366"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#878787;&quot;&gt;Facilitate business communication - the key of seamless and instant professional exchanges, unlocking the collaborative potential of your team !&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#878787;&quot;&gt;Easy to use - Free - Secure&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#878787;&quot;&gt;Faciliter la communication en entreprise - la clé d&apos;échanges professionnels fluides et instantanés, libérant le potentiel collaboratif de votre équipe !&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#878787;&quot;&gt;Easy to use - Free - Secure&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#878787;&quot;&gt;Faciliter la communication en entreprise - la clé d&apos;échanges professionnels fluides et instantanés, libérant le potentiel collaboratif de votre équipe !&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#878787;&quot;&gt;Facile à utiliser - Gratuit - Securisé&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../gui/main_window.ui" line="4465"/>
